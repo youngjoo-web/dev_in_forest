@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>관리자 목록</title>
+	</head>
+	<body>
+		<div>
+			<h1>관리자 목록</h1>
+		</div>
+		<div>
+			<a th:href="@{/addAdmin}">관리자 추가</a>
+		</div>
+		<div>
+			<table>
+				<tr>
+					<th>이메일</th>
+					<th>닉네임</th>
+					<th>분류</th>
+					<th>가입일</th>
+				</tr>
+				<tr th:each="admin : ${adminList}">
+					<td th:text="${admin.adminEmail}"></td>
+					<td th:text="${admin.adminName}"></td>
+					<td th:text="${admin.accountKind}"></td>
+					<td th:text="${admin.adminDate}"></td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>
