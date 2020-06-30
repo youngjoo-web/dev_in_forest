@@ -4,7 +4,8 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.AdminMapper">
 	<!-- 관리자 목록 출력 -->
-	<select id="selectAdminList" 
+	<select id="selectAdminList"
+			parameterType="int"
 			resultType="com.devinforest.vo.Admin">
 		SELECT 
 			admin_email adminEmail,
@@ -12,6 +13,7 @@
 			account_kind accountKind,
 			admin_date adminDate
 		FROM dev_admin
+		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	<!-- 관리자 추가 -->
 	<insert id="insertAdmin" 
@@ -30,4 +32,11 @@
 				NOW()
 			)
 	</insert>
+	<!-- 관리자 totalCount -->
+	<select id="adminTotalCount"
+			resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM dev_admin
+	</select>
 </mapper>

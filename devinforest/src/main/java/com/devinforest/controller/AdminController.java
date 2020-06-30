@@ -1,6 +1,7 @@
 package com.devinforest.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.service.AdminService;
 import com.devinforest.vo.Admin;
@@ -16,17 +18,24 @@ import com.devinforest.vo.Admin;
 @Controller
 public class AdminController {
 	@Autowired private AdminService adminService;
-	
+	// 관리자 홈
+	@GetMapping("/adminHome")
+	public String adminHome(HttpSession session) {
+		return "admin/adminHome";
+	}
 	// 관리자 목록 출력
 	@GetMapping("/getAdminList")
-	public String getAdminList(HttpSession session, Model model) {
-			List<Admin> adminList = adminService.getAdminList();
-			model.addAttribute("adminList", adminList);
-			/*
-			for(Admin a : adminList) {
-				System.out.println(a);
-			}
-			*/
+	public String getAdminList(HttpSession session, 
+							   Model model,
+							   @RequestParam(defaultValue = "1") int currentPage,
+							   @RequestParam(defaultValue = "5") int rowPerPage) {
+			System.out.println(currentPage+" <- AdminController.getAdminList: currentPage");
+			Map<String, Object> map = adminService.getAdminList(currentPage, rowPerPage);
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("rowPerPage", rowPerPage);
+			model.addAttribute("adminTotalCount", map.get("adminTotalCount"));
+			model.addAttribute("lastPage", map.get("lastPage"));
+			model.addAttribute("adminList", map.get("adminList"));
 		return "admin/getAdminList";
 	}
 	

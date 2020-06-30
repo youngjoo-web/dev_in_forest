@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>관리자 홈</title>
+	</head>
+	<body>
+		<div>
+			<h1>관리자 홈</h1>
+		</div>
+		<div>
+			<div>
+				<h4>회원 관리</h4>
+			</div>
+			<div>
+				<a th:href="@{/}">일반회원조회</a>
+				<a th:href="@{/}">탈퇴회원조회</a>
+				<a th:href="@{/}">블랙회원조회</a>
+				<a th:href="@{/}">기업회원조회</a>
+			</div>
+		</div>
+		<div>
+			<div>
+				<h4>QnA 관리</h4>
+			</div>
+			<div>
+				<a th:href="@{/}">QnA 조회</a>
+			</div>
+		</div>
+		<div>
+			<div>
+				<h4>공지 및 문의</h4>
+			</div>
+			<div>
+				<a th:href="@{/}">공지사항</a>
+				<a th:href="@{/}">FAQ</a>
+				<a th:href="@{/}">문의내역</a>
+				<a th:href="@{/}">신고내역</a>
+			</div>
+		</div>
+		<div>
+			<div>
+				<h4>통계</h4>
+			</div>
+			<div>
+				<a th:href="@{/}">질문 통계</a>
+				<a th:href="@{/}">답변 통계</a>
+				<a th:href="@{/}">회원가입 통계</a>
+			</div>
+		</div>
+		<div>
+			<div>
+				<h4>관리자 설정</h4>
+			</div>
+			<div>
+				<a th:href="@{/getAdminList}">관리자 조회</a>
+				<a th:href="@{/addAdmin}">관리자 추가</a>
+			</div>
+		</div>
+	</body>
+</html>
