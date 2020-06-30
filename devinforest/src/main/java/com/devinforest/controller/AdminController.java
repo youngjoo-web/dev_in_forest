@@ -47,6 +47,10 @@ public class AdminController {
 	@PostMapping("/addAdmin")
 	public String addAdmin(HttpSession session, Admin admin) {
 		System.out.println(admin+" <- AdminController.addAdmin: admin");
+		String email = "@devinforest.com";
+		String adminEmail = admin.getAdminEmail()+email;
+		System.out.println(adminEmail+" <- AdminController.addAdmin: adminEmail");
+		admin.setAdminEmail(adminEmail);
 		adminService.addAdmin(admin);
 		return "redirect:/getAdminList";
 	}
