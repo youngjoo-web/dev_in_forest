@@ -28,14 +28,12 @@
 		<tr th:each="ql : ${questionList}">
 			<td th:text="${ql.questionNo}"></td>
 			<td th:text="${ql.memberName}"></td>
-			<td th:text="${ql.questionTitle}"></td>
-			<td th:text="${ql.questionContent}"></td>
-			<td th:text="${ql.reputation}"></td>
-			<td th:text="${ql.careatedate}"></td>
-			<td th:text="${ql.updatedate}"></td>
+			<td><a th:href="@{/getQuestionOne}" th:text="${ql.questionTitle}"></a></td>
+			<td th:text="${ql.questionReputation}"></td>
+			<td th:text="${ql.questionCreateDate}"></td>
+			<td th:text="${ql.questionUpdateDate}"></td>
 			<td th:text="${ql.questionIp}"></td>
 		</tr>
-	
 	</table>
 </body>
 </html>

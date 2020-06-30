@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devinforest.mapper.AnswerMapper">
+	<!-- 질문에 대한 답변 목록 -->
+	<select id="selectAnswerList" resultType="com.devinforest.vo.Answer" parameterType="int">
+		SELECT 
+			answer_no answerNo,
+			member_name memberName,
+			answer_content answerContent,
+			answer_createdate answerCreateDate,
+			answer_updatedate answerUpdateDate,
+			answer_ip answerIp
+		FROM dev_answer
+		WHERE question_no = #{questionNo}
+	</select>
+	
+	<!-- 답변 작성 -->
+	<insert id="insertAnswer" parameterType="com.devinforest.vo.Answer">
+		INSERT INTO 
+			dev_answer(
+				member_name,
+				question_no,
+				answer_content,
+				answer_createdate,
+				answer_updatedate,
+				answer_ip
+			)
+			VALUES(
+				#{memberName},
+				#{questionNo},
+				#{answerContent},
+				NOW(),
+				NOW(),
+				#{answerIp}
+			)
+	</insert>
+	
+	<!-- 답변 수정 -->
+	<update id="updateAnswer" parameterType="com.devinforest.vo.Answer">
+		UPDATE dev_answer 
+		SET 
+			answer_content = #{answer_content},
+			answer_updatedate = NOW(),
+			answer_ip = #{answerIp}
+		WHERE 
+			answer_no = #{answerNo} 
+	</update>
+	
+	<!-- 답변 삭제 -->
+	<delete id="deleteAnswer" parameterType="int">
+		DELETE FROM dev_answer
+		WHERE answer_no = #{answerNo}
+	</delete>
+	
+	<!-- 답변 삭제 후 백업 -->
+	<insert id="insertAnswerBack">
+	
+	</insert>
+</mapper>

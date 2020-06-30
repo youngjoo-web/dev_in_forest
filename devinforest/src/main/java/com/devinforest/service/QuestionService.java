@@ -22,4 +22,9 @@ public class QuestionService {
 		
 		return questionList;
 	}
+	
+	/* ---------- 질문 작성 ---------- */
+	public int addQuestion(Question question) {
+		return questionMapper.insertQuestion(question);
+	}
 }

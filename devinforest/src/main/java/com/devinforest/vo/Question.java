@@ -5,7 +5,7 @@ public class Question {
 	private String memberName;
 	private String questionTitle;
 	private String questionContent;
-	private int reputation;
+	private int questionReputation;
 	private String questionCreateDate;
 	private String questionUpdateDate;
 	private String questionIp;
@@ -33,11 +33,11 @@ public class Question {
 	public void setQuestionContent(String questionContent) {
 		this.questionContent = questionContent;
 	}
-	public int getReputation() {
-		return reputation;
+	public int getQuestionReputation() {
+		return questionReputation;
 	}
-	public void setReputation(int reputation) {
-		this.reputation = reputation;
+	public void setQuestionReputation(int questionReputation) {
+		this.questionReputation = questionReputation;
 	}
 	public String getQuestionCreateDate() {
 		return questionCreateDate;
@@ -45,10 +45,10 @@ public class Question {
 	public void setQuestionCreateDate(String questionCreateDate) {
 		this.questionCreateDate = questionCreateDate;
 	}
-	public String getQuestionUpdate() {
+	public String getQuestionUpdateDate() {
 		return questionUpdateDate;
 	}
-	public void setQuestionUpdate(String questionUpdateDate) {
+	public void setQuestionUpdateDate(String questionUpdateDate) {
 		this.questionUpdateDate = questionUpdateDate;
 	}
 	public String getQuestionIp() {
@@ -60,9 +60,8 @@ public class Question {
 	@Override
 	public String toString() {
 		return "Question [questionNo=" + questionNo + ", memberName=" + memberName + ", questionTitle=" + questionTitle
-				+ ", questionContent=" + questionContent + ", reputation=" + reputation + ", questionCreateDate="
-				+ questionCreateDate + ", questionUpdateDate=" + questionUpdateDate + ", questionIp=" + questionIp + "]";
+				+ ", questionContent=" + questionContent + ", questionReputation=" + questionReputation
+				+ ", questionCreateDate=" + questionCreateDate + ", questionUpdateDate=" + questionUpdateDate
+				+ ", questionIp=" + questionIp + "]";
 	}
-	
-	
 }
