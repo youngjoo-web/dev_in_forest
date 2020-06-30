@@ -1,5 +1,7 @@
 package com.devinforest.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.devinforest.service.QuestionService;
+import com.devinforest.vo.Question;
 
 @Controller
 public class QuestionController {
@@ -17,6 +20,8 @@ public class QuestionController {
    /* ---------- 질문 목록 ---------- */
    @GetMapping("/getQuestionList")
    public String getQuestionList(Model model) {
+	  List<Question> questionList = questionService.getQuestionList();
+	  model.addAttribute("questionList", questionList);
       return "getQuestionList";
    }
    
@@ -48,7 +53,7 @@ public class QuestionController {
    
    // 질문 수정 실행
    @PostMapping("/modifyQuestion")
-   public String modifyQuestion(Qeustion question) {
+   public String modifyQuestion(Question question) {
       return "redirect:/getQuestionList";
    }
    

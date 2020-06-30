@@ -1,3 +1,4 @@
+
 package com.devinforest.controller;
 
 import org.springframework.stereotype.Controller;
@@ -14,13 +15,13 @@ public class AnswerController {
    /* ---------- 답변 목록 ---------- */
    @GetMapping("/getAnswerList")
    public String getAnswerList(Model model) {
-      model.addAttribute("answerList", answerList);
+
       return "getQuestionOne";
    }
    
    /* ---------- 답변 작성하기 ---------- */
    @PostMapping("/addAnswer")
-   public String addAnswer(Answer answer) {
+   public String addAnswer() {
       return "redirect:/getQuestionOne?questionNo=";
    }
    
@@ -33,7 +34,7 @@ public class AnswerController {
    
    // 답변 수정 실행
    @PostMapping("/modifyAnswer")
-   public String modifyAnswer() {
+   public String modifyAnswer(String str) {
       return "redirect:/getQuestionOne?questionNo=";
    }
    

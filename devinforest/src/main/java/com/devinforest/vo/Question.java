@@ -7,7 +7,7 @@ public class Question {
 	private String questionContent;
 	private int reputation;
 	private String questionCreateDate;
-	private String questionUpdate;
+	private String questionUpdateDate;
 	private String questionIp;
 	public int getQuestionNo() {
 		return questionNo;
@@ -46,10 +46,10 @@ public class Question {
 		this.questionCreateDate = questionCreateDate;
 	}
 	public String getQuestionUpdate() {
-		return questionUpdate;
+		return questionUpdateDate;
 	}
-	public void setQuestionUpdate(String questionUpdate) {
-		this.questionUpdate = questionUpdate;
+	public void setQuestionUpdate(String questionUpdateDate) {
+		this.questionUpdateDate = questionUpdateDate;
 	}
 	public String getQuestionIp() {
 		return questionIp;
@@ -61,7 +61,7 @@ public class Question {
 	public String toString() {
 		return "Question [questionNo=" + questionNo + ", memberName=" + memberName + ", questionTitle=" + questionTitle
 				+ ", questionContent=" + questionContent + ", reputation=" + reputation + ", questionCreateDate="
-				+ questionCreateDate + ", questionUpdate=" + questionUpdate + ", questionIp=" + questionIp + "]";
+				+ questionCreateDate + ", questionUpdateDate=" + questionUpdateDate + ", questionIp=" + questionIp + "]";
 	}
 	
 	

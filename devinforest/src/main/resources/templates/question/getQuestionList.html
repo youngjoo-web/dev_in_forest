@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<h1 th:text="질문목록"></h1>
+	
+	<table border="1">
+		<tr>
+			<th>question_no</th>
+			<th>member_name</th>
+			<th>question_title</th>
+			<th>question_reputation</th>
+			<th>question_createdate</th>
+			<th>question_updatedate</th>
+			<th>question_ip</th>
+		</tr>
+		<tr th:each="ql : ${questionList}">
+			<td th:text="${ql.questionNo}"></td>
+			<td th:text="${ql.memberName}"></td>
+			<td th:text="${ql.questionTitle}"></td>
+			<td th:text="${ql.questionContent}"></td>
+			<td th:text="${ql.reputation}"></td>
+			<td th:text="${ql.careatedate}"></td>
+			<td th:text="${ql.updatedate}"></td>
+			<td th:text="${ql.questionIp}"></td>
+		</tr>
+	
+	</table>
+</body>
+</html>
