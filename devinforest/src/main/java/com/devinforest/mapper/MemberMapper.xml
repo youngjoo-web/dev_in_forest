@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devinforest.mapper.MemberMapper">
+	<!-- 회원탈퇴 -->
+	<update id="deleteMember" parameterType="com.devinforest.vo.LoginMember" >
+		UPDATE dev_member
+         SET member_state='N',
+         member_reputation='1',
+         member_phone=NULL,
+         member_link=NULL,
+         member_gender=null,
+         member_about=NULL,
+         member_birth=NULL,
+         member_date=NOW()
+      WHERE  member_password=PASSWORD(#{memberPassword}
+      AND member_email=#{memberEmail}
+	</update>
+	<!-- 회원정보 수정 쿼리문 -->
+	<update id="updateMember" parameterType="com.devinforest.vo.Member">
+		UPDATE dev_member
+			SET member_password=PASSWORD(#{memberPassword}),
+			member_name=#{memberName},
+			member_location=#{memberLocation},
+			member_phone=#{memberPhone},
+			member_link=#{memberLink},
+			member_gender=#{memberGender},
+			member_about=#{memberAbout},
+			member_birth=#{memberBirth}
+		WEHRE member_email=#{memberEmail}
+	</update>
+	<!-- 회원정보 보기 -->
+	<select id="selectMemberInfo" parameterType="com.devinforest.vo.LoginMember" resultType="com.devinforest.vo.Member">
+		SELECT
+			member_email as memberEmail,
+			member_name as memberName,
+			account_kind as accountKind,
+			member_reputation as memberReputation,
+			member_location as memberLocation,
+			member_phone as memberPhone,
+			member_link as memberLink,
+			member_gender as memberGender,
+			member_about as memberAbout,
+			member_birth as memberBirth,
+			member_date as memberDate,
+			member_state as memberState
+		FROM dev_member
+		WHERE member_email=#{memberEmail}
+	</select>
+	<!-- 비밀번호 찾기 쿼리문 -->
+	<update id="updateMemberPw" parameterType="java.util.Map">
+		UPDATE dev_member
+		SET member_password=PASSWORD(#{memberPassword})
+		WHERE member_email=#{memberEmail}
+		AND member_name=#{memberName}
+	</update>
+	<!-- 아이디 찾기 쿼리문 -->
+	<select id="selectEmailByMember" parameterType="com.devinforest.vo.loginMember" resultType="String">
+		SELECT
+			CONCAT(SUBSTRING (member_email,1,4),'***@***')
+		FROM dev_member
+		WHERE member_name=#{memberName}
+	</select>
+	<!-- 회원가입 쿼리문 -->
+	<insert id="insertMember" parameterType="com.devinforest.vo.Member">
+		INSERT INTO dev_member(
+			member_email,
+			member_password,
+			member_name
+			
+		)VALUES(
+			#{memberEmail},
+			PASSWORD(#{memberPassword}),
+			#{memberName}
+		)
+	</insert>
+</mapper>
