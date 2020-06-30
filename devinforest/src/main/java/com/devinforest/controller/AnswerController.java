@@ -1,6 +1,7 @@
 
 package com.devinforest.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +11,9 @@ import com.devinforest.service.AnswerService;
 
 @Controller
 public class AnswerController {
-   private AnswerService answerService;
+	
+	@Autowired
+	private AnswerService answerService;
    
    /* ---------- 답변 목록 ---------- */
    @GetMapping("/getAnswerList")
