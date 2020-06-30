@@ -13,7 +13,7 @@ import com.devinforest.vo.Member;
 public class MemberService {
 	@Autowired
 	private MemberMapper memberMapper;
-	
+	//회원가입
 	public int addMember(LoginMember loginMember) {
 		Member member = new Member();
 		member.setMemberEmail(loginMember.getMemberEmail());
@@ -22,5 +22,15 @@ public class MemberService {
 		int row=memberMapper.insertMember(member);
 		return row;
 	}
-	
+	//로그인
+	public LoginMember memberLogin(LoginMember loginMember) {
+		System.out.println("memberService"+loginMember);
+		return memberMapper.selectLoginMember(loginMember);
+	}
+	public String CheckMemberEmail (LoginMember loginMember) {
+		return memberMapper.selectMemberEmail(loginMember.getMemberEmail());
+	}
+	public String CheckMemberName (LoginMember loginMember) {
+		return memberMapper.selectMemberName(loginMember.getMemberName());
+	}
 }

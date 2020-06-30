@@ -19,8 +19,10 @@ public interface MemberMapper {
 	public int deleteMember(LoginMember lgoinMember);
 	//회원정보 불러오기
 	public Member selectMemberInfo(LoginMember loginMember);
-	//아이디 중복 확인
-	public String selectMemberId(String memberIdCheck);
+	//이름 중복 확인
+	public String selectMemberName(String memberNameCheck);
+	//이메일 중복 확인
+	public String selectMemberEmail(String memberEmailCheck);
 	//로그인
 	public LoginMember selectLoginMember(LoginMember loginMember);
 	//회원가입
