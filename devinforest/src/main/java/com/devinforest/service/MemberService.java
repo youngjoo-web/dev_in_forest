@@ -13,6 +13,7 @@ import com.devinforest.vo.Member;
 public class MemberService {
 	@Autowired
 	private MemberMapper memberMapper;
+	
 	public int addMember(LoginMember loginMember) {
 		Member member = new Member();
 		member.setMemberEmail(loginMember.getMemberEmail());
@@ -21,4 +22,5 @@ public class MemberService {
 		int row=memberMapper.insertMember(member);
 		return row;
 	}
+	
 }

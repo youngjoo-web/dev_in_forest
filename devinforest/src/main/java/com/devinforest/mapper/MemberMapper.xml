@@ -56,7 +56,7 @@
 		AND member_name=#{memberName}
 	</update>
 	<!-- 아이디 찾기 쿼리문 -->
-	<select id="selectEmailByMember" parameterType="com.devinforest.vo.loginMember" resultType="String">
+	<select id="selectEmailByMember" parameterType="com.devinforest.vo.LoginMember" resultType="String">
 		SELECT
 			CONCAT(SUBSTRING (member_email,1,4),'***@***')
 		FROM dev_member
@@ -67,12 +67,14 @@
 		INSERT INTO dev_member(
 			member_email,
 			member_password,
-			member_name
+			member_name,
+			member_date
 			
 		)VALUES(
 			#{memberEmail},
 			PASSWORD(#{memberPassword}),
-			#{memberName}
+			#{memberName},
+			now()
 		)
 	</insert>
 </mapper>
