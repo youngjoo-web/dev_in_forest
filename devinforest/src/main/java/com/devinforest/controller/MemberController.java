@@ -73,8 +73,13 @@ public class MemberController {
 			return "redirect:/";
 		}
 		memberService.modifyMember(member);
+		Member modifiedMember = new Member();
+		LoginMember loginMember = new LoginMember();
+		loginMember.setMemberEmail(member.getMemberEmail());
+		loginMember.setMemberName(member.getMemberName());
+		member=memberService.getMemberInfo(loginMember);
 		model.addAttribute("member",member);
-		return "redirect:/member/memberInfo";
+		return "member/memberInfo";
 	}
 	//회원정보 상세보기
 	@GetMapping("/getMemberInfo")

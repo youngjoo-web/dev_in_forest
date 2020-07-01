@@ -31,7 +31,7 @@
 		member_gender=#{memberGender},
 		member_about=#{memberAbout},
 		member_birth=#{memberBirth}
-		WEHRE member_email=#{memberEmail}
+		WHERE member_email=#{memberEmail}
 	</update>
 	<!-- 회원정보 보기 -->
 	<select id="selectMemberInfo"
