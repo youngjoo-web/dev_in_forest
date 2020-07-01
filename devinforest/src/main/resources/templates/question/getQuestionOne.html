@@ -20,16 +20,16 @@
 				<tr>
 					<th>제목</th>
 					<th>내용</th>
-					<th>조회수</th>
 					<th>작성자</th>
+					<th>조회수</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td th:text="${question.questionTitle}"></td>
 					<td th:text="${question.questionContent}"></td>
-					<td th:text="${question.questionViews}"></td>
 					<td th:text="${question.memberName}"></td>
+					<td th:text="${viewsCount}"></td>
 				</tr>
 			</tbody>
 		</table>

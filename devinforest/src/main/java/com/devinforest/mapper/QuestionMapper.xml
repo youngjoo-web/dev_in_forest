@@ -14,7 +14,6 @@
 			question_reputation reputation,
 			question_createdate questionCreateDate,
 			question_updatedate questionUpdateDate,
-			question_views questionViews,
 			question_ip questionIp
 		FROM dev_question
 		ORDER BY question_createdate DESC
@@ -39,6 +38,7 @@
 				NOW(),
 				NOW(),
 				#{questionIp}
+				
 			)
 	</insert>
 	
@@ -52,22 +52,13 @@
 			question_reputation questionReputation,
 			question_createdate questionCreateDate,
 			question_updatedate questionUpdateDate,
-			question_views questionViews,
 			question_ip questionIp
 		FROM dev_question
 		WHERE question_no = #{questionNo}
 	</select>
 	
-	<!-- 질문 조회수 +1  -->
-	<update id="plusViews" parameterType="int">
-		UPDATE dev_question 
-		SET
-			question_views = question_views + 1
-		WHERE question_no = #{questionNo}
-	</update>
-	
 	<!-- 질문 조회수 +1 (별도 테이블) -->
-	<insert id="insertViews" parameterType="com.devinforest.vo.Question">
+	<insert id="plusViews" parameterType="com.devinforest.vo.Question">
 		INSERT INTO 
 			dev_question_views(
 				question_no,
@@ -79,24 +70,34 @@
 		)
 	</insert>
 	
+	<!-- 조회수 +1한 회원 체크 -->
+	<select id="viewsCheck" resultType="String" parameterType="com.devinforest.vo.Question">
+		SELECT 
+			member_name
+		FROM dev_question_views
+		WHERE question_no = #{questionNo}
+		AND member_name = #{memberName}
+	</select>
+	
 	<!-- 조회수 카운트 -->
 	<select id="viewsCount" resultType="int" parameterType="com.devinforest.vo.Question">
-		SELECT
+		SELECT 
 			COUNT(*)
 		FROM dev_question_views
 		WHERE question_no=#{questionNo}
 	</select>
 	
 	<!-- 질문 삭제 -->
-	<delete id="deleteQuestion" parameterType="int">
+	<delete id="deleteQuestion" parameterType="com.devinforest.vo.Question">
 		DELETE FROM dev_question
 		WHERE question_no = #{questionNo}
 	</delete>
 	
-	<!-- 질문 삭제 후 백업 추가 -->
+	<!-- 질문 삭제 전 백업 추가 -->
 	<insert id="insertQuestionBack" parameterType="com.devinforest.vo.Question">
 		INSERT INTO 
-			dev_question(
+			dev_question_back(
+				question_no,
 				member_name,
 				question_title,
 				question_content,
@@ -105,6 +106,7 @@
 				question_updatedate,
 				question_ip
 			) VALUES(
+				#{questionNo},
 				#{memberName},
 				#{questionTitle},
 				#{questionContent},
@@ -115,4 +117,29 @@
 			)
 	</insert>
 	
+	<!-- 삭제된 질문 목록 -->
+	<select id="selectRomovedQuestion" resultType="com.devinforest.vo.Question" parameterType="com.devinforest.vo.Question">
+		SELECT 
+			question_no questionNo,
+			member_name memberName,
+			question_title questionTitle,
+			question_content questionContent,
+			question_reputation reputation,
+			question_createdate questionCreateDate,
+			question_updatedate questionUpdateDate,
+			question_ip questionIp
+		FROM dev_question_back
+	</select>
+	
+	<!-- 질문 수정 -->
+	<update id="updateQuestion" parameterType="com.devinforest.vo.Question">
+		UPDATE dev_question 
+		SET
+			question_title = #{questionTitle},
+			question_content = #{questionContent},
+			question_reputation = #{questionReputation},
+			question_updatedate = NOW(),
+			question_ip = #{questionIp}
+		WHERE question_no = #{questionNo}
+	</update>
 </mapper>

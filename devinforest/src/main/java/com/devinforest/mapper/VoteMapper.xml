@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devinforest.mapper.VoteMapper">
+	<!-- 질문 투표 +1 -->
+	<insert id="plusVote" parameterType="com.devinforest.vo.Vote">
+		INSERT INTO
+			dev_vote(
+				question_no,
+				member_name
+			)
+			VALUES(
+				#{questionNo},
+				#{memberName}
+			)
+	
+	</insert>
+</mapper>

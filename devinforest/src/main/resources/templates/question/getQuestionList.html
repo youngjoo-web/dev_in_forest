@@ -23,7 +23,6 @@
 			<th>question_reputation</th>
 			<th>question_createdate</th>
 			<th>question_updatedate</th>
-			<th>question_views</th>
 			<th>question_ip</th>
 		</tr>
 		<tr th:each="ql : ${questionList}">
@@ -33,7 +32,6 @@
 			<td th:text="${ql.questionReputation}"></td>
 			<td th:text="${ql.questionCreateDate}"></td>
 			<td th:text="${ql.questionUpdateDate}"></td>
-			<td th:text="${ql.questionViews}"></td>
 			<td th:text="${ql.questionIp}"></td>
 		</tr>
 	</table>
