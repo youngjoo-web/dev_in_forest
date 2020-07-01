@@ -5,7 +5,7 @@
 <mapper namespace="com.devinforest.mapper.AdminMapper">
 	<!-- 관리자 목록 출력 -->
 	<select id="selectAdminList"
-			parameterType="int"
+			parameterType="java.util.Map"
 			resultType="com.devinforest.vo.Admin">
 		SELECT 
 			admin_email adminEmail,
@@ -13,6 +13,7 @@
 			account_kind accountKind,
 			admin_date adminDate
 		FROM dev_admin
+		WHERE admin_email LIKE CONCAT('%',#{searchWord},'%')
 		ORDER BY admin_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
@@ -35,10 +36,12 @@
 	</insert>
 	<!-- 관리자 totalCount -->
 	<select id="adminTotalCount"
+			parameterType="String"
 			resultType="int">
 		SELECT 
 			COUNT(*)
 		FROM dev_admin
+		WHERE admin_email LIKE CONCAT('%',#{searchWord},'%')
 	</select>
 	<!-- 관리자 이메일 중복체크 -->
 	<select id="selectAdminEmail"

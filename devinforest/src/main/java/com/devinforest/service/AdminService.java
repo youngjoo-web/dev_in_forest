@@ -16,23 +16,27 @@ import com.devinforest.vo.Admin;
 public class AdminService {
 	@Autowired private AdminMapper adminMapper;
 	// 관리자 목록 출력
-	public Map<String, Object> getAdminList(int currentPage, int rowPerPage){
+	public Map<String, Object> getAdminList(int currentPage, int rowPerPage, String searchWord){
 		int beginRow=(currentPage-1)*rowPerPage;
-		int adminTotalCount = adminMapper.adminTotalCount();
+		int adminTotalCount = adminMapper.adminTotalCount(searchWord);
 		System.out.println(adminTotalCount+" <- adminService.getAdminList: adminTotalCount");
 		int lastPage = adminTotalCount/rowPerPage;
 		if(adminTotalCount % rowPerPage != 0) {
 			lastPage+=1;
 		}
-		List<Admin> adminList = adminMapper.selectAdminList(beginRow, rowPerPage);
+		Map<String, Object> inputMap = new HashMap<>();
+		inputMap.put("beginRow", beginRow);
+		inputMap.put("rowPerPage", rowPerPage);
+		inputMap.put("searchWord", searchWord);
+		List<Admin> adminList = adminMapper.selectAdminList(inputMap);
 		System.out.println(adminTotalCount+" <- AdminService.getAdmin: adminTotalCount");
 		System.out.println(lastPage+" <- AdminService.getAdmin: lastPage");
 		System.out.println(adminList+" <- AdminService.getAdmin: adminList");
-		Map<String, Object> map = new HashMap<>();
-		map.put("adminTotalCount", adminTotalCount);
-		map.put("lastPage", lastPage);
-		map.put("adminList", adminList);
-		return map;
+		Map<String, Object> outputMap = new HashMap<>();
+		outputMap.put("adminTotalCount", adminTotalCount);
+		outputMap.put("lastPage", lastPage);
+		outputMap.put("adminList", adminList);
+		return outputMap;
 	}
 	// 관리자 추가
 	public void addAdmin(Admin admin) {

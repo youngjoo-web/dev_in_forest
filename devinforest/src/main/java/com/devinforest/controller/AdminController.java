@@ -27,11 +27,14 @@ public class AdminController {
 	public String getAdminList(HttpSession session, 
 							   Model model,
 							   @RequestParam(defaultValue = "1") int currentPage,
-							   @RequestParam(defaultValue = "5") int rowPerPage) {
+							   @RequestParam(defaultValue = "5") int rowPerPage,
+							   @RequestParam(defaultValue = "") String searchWord) {
 			System.out.println(currentPage+" <- AdminController.getAdminList: currentPage");
-			Map<String, Object> map = adminService.getAdminList(currentPage, rowPerPage);
+			System.out.println(searchWord+" <- AdminController.getAdminList: searchWord");
+			Map<String, Object> map = adminService.getAdminList(currentPage, rowPerPage, searchWord);
 			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("rowPerPage", rowPerPage);
+			model.addAttribute("searchWord", searchWord);
 			model.addAttribute("adminTotalCount", map.get("adminTotalCount"));
 			model.addAttribute("lastPage", map.get("lastPage"));
 			model.addAttribute("adminList", map.get("adminList"));
