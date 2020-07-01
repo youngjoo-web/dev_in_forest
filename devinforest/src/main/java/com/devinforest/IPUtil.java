@@ -14,7 +14,7 @@ public class IPUtil {
 		}
 	   
 		String getIp = local.getHostAddress();
-		System.out.println(getIp + "<-- addQuestion ip");
+		System.out.println(getIp + "<-- IPUtil ip");
 		return getIp;
 	}
 }
