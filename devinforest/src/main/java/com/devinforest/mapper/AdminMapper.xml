@@ -8,10 +8,10 @@
 			parameterType="java.util.Map"
 			resultType="com.devinforest.vo.Admin">
 		SELECT 
-			admin_email adminEmail,
-			admin_name adminName,
+			admin_email  adminEmail,
+			admin_name   adminName,
 			account_kind accountKind,
-			admin_date adminDate
+			admin_date   adminDate
 		FROM dev_admin
 		WHERE admin_email LIKE CONCAT('%',#{searchWord},'%')
 		ORDER BY admin_date DESC

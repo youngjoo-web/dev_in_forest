@@ -29,9 +29,9 @@ public class AdminService {
 		inputMap.put("rowPerPage", rowPerPage);
 		inputMap.put("searchWord", searchWord);
 		List<Admin> adminList = adminMapper.selectAdminList(inputMap);
-		System.out.println(adminTotalCount+" <- AdminService.getAdmin: adminTotalCount");
-		System.out.println(lastPage+" <- AdminService.getAdmin: lastPage");
-		System.out.println(adminList+" <- AdminService.getAdmin: adminList");
+		System.out.println(adminTotalCount+" <- AdminService.getAdminList: adminTotalCount");
+		System.out.println(lastPage+" <- AdminService.getAdminList: lastPage");
+		System.out.println(adminList+" <- AdminService.getAdminList: adminList");
 		Map<String, Object> outputMap = new HashMap<>();
 		outputMap.put("adminTotalCount", adminTotalCount);
 		outputMap.put("lastPage", lastPage);

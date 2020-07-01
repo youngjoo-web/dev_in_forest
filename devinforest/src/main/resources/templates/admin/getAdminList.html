@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<meta charset="UTF-8">
 		<title>관리자 목록</title>
 	</head>
@@ -13,8 +14,9 @@
 		</div>
 		<div>
 			<form method="GET" th:action="@{/getAdminList}">
-				<input type="text" name="searchWord" th:value="${searchWord}" placeholder="아이디 검색">
+				<input id="search" type="text" name="searchWord" th:value="${searchWord}" placeholder="아이디 검색">
 				<button type="submit">검색</button>
+				<button id="resetBtn" type="button">초기화</button>
 			</form>
 		</div>
 		<div>
@@ -45,10 +47,17 @@
 			<a th:if="${currentPage == 1}" th:href="@{/getAdminList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
 			<a th:if="${currentPage > 1}" th:href="@{/getAdminList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
 			<span th:text="'-'+${currentPage}+'-'"></span>
+			<a th:if="${adminTotalCount == 0}" th:href="@{/getAdminList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
 			<a th:if="${currentPage < lastPage}" th:href="@{/getAdminList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
 			<a th:if="${currentPage == lastPage}" th:href="@{/getAdminList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-			<a th:href="@{/getAdminList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
-			
+			<a th:if="${adminTotalCount == 0}"th:href="@{/getAdminList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+			<a th:if="${adminTotalCount != 0}"th:href="@{/getAdminList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
 		</div>
 	</body>
+	<script>
+		// 검색창 초기화
+		$('#resetBtn').click(function(){
+			$('#search').val("");
+		});
+	</script>
 </html>
