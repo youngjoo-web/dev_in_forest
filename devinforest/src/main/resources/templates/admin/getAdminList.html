@@ -25,13 +25,11 @@
 				<tr>
 					<th>이메일</th>
 					<th>닉네임</th>
-					<th>분류</th>
 					<th>가입일</th>
 				</tr>
 				<tr th:each="admin : ${adminList}">
 					<td th:text="${admin.adminEmail}"></td>
 					<td th:text="${admin.adminName}"></td>
-					<td th:text="${admin.accountKind}"></td>
 					<td th:text="${admin.adminDate}"></td>
 				</tr>
 			</table>

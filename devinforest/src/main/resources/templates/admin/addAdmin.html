@@ -8,7 +8,7 @@
 			.none{
 				border: 0px;
 			}
-			.adminEmail{
+			.adminEmailArea{
 				border: 1px solid black;
 				padding : 1px;
 			}
@@ -25,15 +25,18 @@
 			<h1>관리자 추가</h1>		
 		</div>
 		<form id="form" method="post" th:action="@{/addAdmin}">
+			<input id="adminEmail" type="hidden" name="adminEmail" value="">
 			<div>
 				<div>
 					<span th:text="이메일"></span>
 				</div>
 				<div>
-					<span class="adminEmail">
-						<input id="adminEmail" class="none width1" type="text" name="adminEmail">
+					<span class="adminEmailArea">
+						<input id="adminEmail2" class="none width1" type="text" name="adminEmail2">
 						<span>@devinforest.com</span>
 					</span>
+					<button id="emailCheckBtn" type="button">중복확인</button>
+					<span id="msg"></span>
 				</div>
 			</div>
 			<div>
@@ -53,12 +56,13 @@
 				</div>
 			</div>
 			<div>
-				<button type="button" id="btn">가입</button>
+				<button type="button" id="signUpBtn">가입</button>
 			</div>
 		</form>
 	</body>
 	<script>
-	$('#btn').click(function(){
+	
+	$('#signUpBtn').click(function(){
 		let id = $('#adminEmail').val();
 		let idNum = id.search(/[0-9]/);
 		console.log(idNum+" <- idNum");
@@ -82,8 +86,8 @@
 		let pwEng = pw.search(/[a-z]/);
 		let pwSpe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/);
 		// 아이디 유효성 검사
-		if(id.length < 5 || id.length > 20){
-			 alert("아이디는 5자리 ~ 20자리 이내로 입력해주세요.");
+		if($('#adminEmail').val() == ''){
+			 alert("아이디를 중복체크 해주세요.");
 			 return;
 		}
 		if(id.search(/\s/) != -1){
@@ -128,6 +132,29 @@
 		console.log('유효성 검사 통과');
 		$('#form').submit();
 		
+	});
+	
+	$('#emailCheckBtn').click(function(){
+		let email = $('#adminEmail2').val();
+		if(email.length < 5 || email.length > 20){
+			 alert("아이디는 5자리 ~ 20자리 이내로 입력해주세요.");
+			 return;
+		}
+		
+		let adminEmail2 = $('#adminEmail2').val();
+		$.ajax({
+            url:'/checkAdminEmail'
+            ,type:'POST'
+            ,data:{'adminEmail2':adminEmail2}
+            ,success : function(data) {
+        		console.log(data);
+        		$('#msg').text(data);
+        		$('#adminEmail').val('');
+        		if(data == "사용가능한 이메일입니다.") {
+        			$('#adminEmail').val(email);
+        		}
+            }
+		});
 	});
 	</script>
 </html>

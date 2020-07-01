@@ -13,6 +13,7 @@
 			account_kind accountKind,
 			admin_date adminDate
 		FROM dev_admin
+		ORDER BY admin_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	<!-- 관리자 추가 -->
@@ -38,5 +39,14 @@
 		SELECT 
 			COUNT(*)
 		FROM dev_admin
+	</select>
+	<!-- 관리자 이메일 중복체크 -->
+	<select id="selectAdminEmail"
+			parameterType="String"
+			resultType="int">
+		SELECT
+			COUNT(*)
+		FROM dev_admin
+		WHERE admin_email = #{adminEmail}
 	</select>
 </mapper>

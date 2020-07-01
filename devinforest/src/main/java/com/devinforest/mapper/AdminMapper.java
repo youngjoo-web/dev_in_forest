@@ -14,4 +14,6 @@ public interface AdminMapper {
 	public void insertAdmin(Admin admin);
 	// 관리자 totalCount
 	public int adminTotalCount();
+	// 관리자 이메일 중복체크
+	public int selectAdminEmail(String adminEmail);
 }
