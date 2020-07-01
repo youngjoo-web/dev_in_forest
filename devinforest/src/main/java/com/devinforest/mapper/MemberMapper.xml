@@ -3,6 +3,37 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.MemberMapper">
+<!-- 회원 totalCount -->
+	<select id="memberTotalCount"
+			parameterType="String"
+			resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM dev_member
+		WHERE member_name LIKE CONCAT('%',#{searchWord},'%')
+		AND member_state = 'Y'
+	</select>
+	<!-- 회원목록 -->
+	<select id="selectMemberList" resultType="com.devinforest.vo.Member">
+		SELECT
+		member_email as memberEmail,
+		member_name as memberName,
+		account_kind as accountKind,
+		member_reputation as memberReputation,
+		member_location as memberLocation,
+		member_phone as memberPhone,
+		member_link as memberLink,
+		member_gender as memberGender,
+		member_about as memberAbout,
+		member_birth as memberBirth,
+		member_date as memberDate,
+		member_state as memberState
+		FROM dev_member
+		WHERE member_state = 'Y'
+		AND member_name LIKE CONCAT('%',#{searchWord},'%')
+		ORDER BY member_reputation DESC, member_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
 	<!-- 회원탈퇴 -->
 	<update id="deleteMember"
 		parameterType="com.devinforest.vo.LoginMember">

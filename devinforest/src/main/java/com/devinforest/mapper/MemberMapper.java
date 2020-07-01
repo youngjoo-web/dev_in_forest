@@ -1,5 +1,6 @@
 package com.devinforest.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -27,5 +28,8 @@ public interface MemberMapper {
 	public LoginMember selectLoginMember(LoginMember loginMember);
 	//회원가입
 	public int insertMember(Member member);
-
+	//회원목록
+	public List<Member> selectMemberList(Map<String, Object> map);
+	//회원 totalCount
+	public int memberTotalCount(String searchWord);
 }

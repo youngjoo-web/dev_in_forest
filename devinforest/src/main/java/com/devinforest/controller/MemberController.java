@@ -1,5 +1,8 @@
 package com.devinforest.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.mapper.MemberMapper;
 import com.devinforest.service.MemberService;
@@ -17,11 +21,30 @@ import com.devinforest.vo.Member;
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
+	//회원목록
+		@GetMapping("/getMemberList")
+		public String getMemberList(HttpSession session, Model model,
+				   @RequestParam(defaultValue = "1") int currentPage,
+				   @RequestParam(defaultValue = "5") int rowPerPage,
+				   @RequestParam(defaultValue = "") String searchWord) {
+			if(session.getAttribute("loginMember")==null) {
+				return "redirect:/index";
+			}
+			Map<String, Object> map = memberService.getMemberList(currentPage, rowPerPage, searchWord);
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("rowPerPage", rowPerPage);
+			model.addAttribute("searchWord", searchWord);
+			model.addAttribute("memberTotalCount", map.get("memberTotalCount"));
+			model.addAttribute("lastPage", map.get("lastPage"));
+			model.addAttribute("memberList", map.get("memberList"));
+			return "member/memberList";
+		}
+	
 	//회원탈퇴
 	@GetMapping("/removeMember")
 	public String removeMember(HttpSession session,Model model,LoginMember loginMember) {
 		if(session.getAttribute("loginMember")==null) {
-			return "redirect:/";
+			return "redirect:/index";
 		}
 		Member member = memberService.getMemberInfo(loginMember);
 		model.addAttribute("member", member);
@@ -41,14 +64,14 @@ public class MemberController {
 	@GetMapping("/modifyMember")
 	public String modifyMember(HttpSession session) {
 		if(session.getAttribute("loginMember")==null) {
-			return "redirect:/";
+			return "redirect:/index";
 		}
 		return "member/memberPwCheck";
 	}
 	@GetMapping("/memberPwCheck")
 	public String memberPwCheck(HttpSession session,LoginMember loginMember,Model model) {
 		if(session.getAttribute("loginMember")==null) {
-			return "redirect:/";
+			return "redirect:/index";
 		}
 		LoginMember returnLoginMember = memberService.memberLogin(loginMember);
 		
@@ -70,7 +93,7 @@ public class MemberController {
 	@PostMapping("/modifyMember")
 	public String modifyMember(HttpSession session,Member member,Model model) {
 		if(session.getAttribute("loginMember")==null) {
-			return "redirect:/";
+			return "redirect:/index";
 		}
 		memberService.modifyMember(member);
 		Member modifiedMember = new Member();
@@ -85,7 +108,7 @@ public class MemberController {
 	@GetMapping("/getMemberInfo")
 	public String getMemberInfo(HttpSession session, Model model, LoginMember loginMember) {
 		if(session.getAttribute("loginMember")==null) {
-			return "redirect:/";
+			return "redirect:/index";
 		}
 		Member member = new Member();
 		member=memberService.getMemberInfo(loginMember);
@@ -139,7 +162,7 @@ public class MemberController {
 	public String addMember(HttpSession session, Model model) {
 		//로그인 중일때
 		if(session.getAttribute("loginMember")!=null) {
-			return "redirect:/";
+			return "redirect:/index";
 		}
 		LoginMember loginMember = new LoginMember();
 		model.addAttribute("NameMsg", "");
@@ -152,7 +175,7 @@ public class MemberController {
 	public String addMember(LoginMember loginMember, HttpSession session, Model model) {
 		//로그인 중일때
 		if(session.getAttribute("loginMember")!=null) {
-			return "redirect:/";
+			return "redirect:/index";
 		}
 		memberService.addMember(loginMember);
 		model.addAttribute("loginMember", loginMember);
@@ -164,7 +187,7 @@ public class MemberController {
 	public String memberLogin(HttpSession session) {
 		//로그인 중일때
 		if(session.getAttribute("loginMember")!=null) {
-			return "redirect:/";
+			return "redirect:/index";
 		}
 		
 		return "member/memberLogin";
@@ -174,7 +197,7 @@ public class MemberController {
 	public String memberLogin(HttpSession session,LoginMember loginMember) {
 		//로그인 중일때
 		if(session.getAttribute("loginMember")!=null) {
-			return "redirect:/";
+			return "redirect:/index";
 		}
 		LoginMember returnLoginMember = memberService.memberLogin(loginMember);
 		
@@ -193,9 +216,10 @@ public class MemberController {
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		if(session.getAttribute("loginMember")==null) {
-			return "redirect:/";
+			return "redirect:/index";
 		}
 		session.invalidate();
 		return "redirect:/index";
 	}
+	
 }

@@ -49,6 +49,7 @@
 			<td th:text="${member.memberAbout}"></td>
 		</tr>
 	</table>
+	<a th:href="@{/home}">홈으로</a>
 	<form method="get" th:action="@{/modifyMember}">
 		<input type="hidden" name="memberEmail" th:value="${session.loginMember.memberEmail}" >
 		<button type="submit">회원정보수정</button>
