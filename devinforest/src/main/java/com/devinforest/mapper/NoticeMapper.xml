@@ -16,6 +16,7 @@
 			notice_ip      noticeIp
 		FROM dev_notice
 		WHERE notice_title LIKE CONCAT('%',#{searchWord},'%')
+		ORDER BY notice_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	<!-- 공지사항 totalCount -->
