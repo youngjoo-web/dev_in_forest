@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>회원정보 수정폼</h1>
+	<form id="nameForm" method="post" th:action="@{/checkModifyMemberName}" >
+         <label>이름 : </label>
+         <input type="hidden" name="memberPassword" th:value="${loginMember.memberPassword}">
+         <input type="text" name="memberName" th:value="${member.memberName}">
+         <button type="submit">중복체크</button>
+         <span th:text="${NameMsg}"></span>
+      </form>
+	<form method="post" th:action="@{/modifyMember}">
+		<input type="hidden" name="memberEmail" th:value="${member.memberEmail}">
+		<input type="hidden" name="memberName" th:value="${member.memberName}">
+		<label>비밀번호 : </label>
+		 <input type="text" name="memberPassword" th:value="${loginMember.memberPassword}">
+		 <br>
+		 <label>사용자 지역 : </label>
+         <input type="text"   name="memberLocation" th:value="${member.memberLocation}">
+          <br>
+         <label>사용자 전화번호 : </label>
+       	<input type="text"   name="memberPhone" th:value="${member.memberPhone}">
+       	 <br>
+       	<label>사용자 링크: </label>
+         <input type="text"   name="memberLink" th:value="${member.memberLink}">
+          <br>
+         <label>사용자 성별: </label>
+        <select    name="memberGender" th:value="${member.memberGender}">
+        	<option th:value="M">M</option>
+        	<option th:value="F">F</option>
+        </select>
+         <br>
+        <label>생년월일: </label>
+         <input type="Date"   name="memberBirth" th:value="${member.memberBirth}">
+          <br>
+         <label>사용자 정보 : </label>
+          <input type="text"   name="memberAbout" th:value="${member.memberAbout}">
+           <br>
+          <button type="submit">정보수정</button>
+	</form>
+</body>
+</html>

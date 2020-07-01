@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>회원정보</h1>
+	<table>
+		<tr>
+			<td>이메일</td>
+			<td th:text="${member.memberEmail}"></td>
+		</tr>
+		<tr>
+			<td>이름</td>
+			<td th:text="${member.memberName}"></td>
+		</tr>
+		<tr>
+			<td>내공</td>
+			<td th:text="${member.memberReputation}" ></td>
+		</tr>
+		<tr>
+			<td>사용자 지역</td>
+			<td th:text="${member.memberLocation}"></td>
+		</tr>
+		<tr>
+			<td>사용자 폰번호</td>
+			<td th:text="${member.memberPhone}"></td>
+		</tr>
+		<tr>
+			<td>사용자 링크</td>
+			<td th:text="${member.memberLink}"></td>
+		</tr>
+		<tr>
+			<td>사용자 성별</td>
+			<td th:text="${member.memberGender}"></td>
+		</tr>
+		<tr>
+			<td>생년월일</td>
+			<td th:text="${member.memberBirth}"></td>
+		</tr>
+		<tr>
+			<td>생성날짜</td>
+			<td th:text="${member.memberDate}"></td>
+		</tr>
+		<tr>
+			<td>사용자 정보</td>
+			<td th:text="${member.memberAbout}"></td>
+		</tr>
+	</table>
+	<form method="get" th:action="@{/modifyMember}">
+		<input type="hidden" name="memberEmail" th:value="${session.loginMember.memberEmail}" >
+		<button type="submit">회원정보수정</button>
+	</form>
+	<form method="get" th:action="@{/removeMember}">
+		<input type="hidden" name="memberEmail" th:value="${session.loginMember.memberEmail}" >
+		<button type="submit">회원탈퇴</button>
+	</form>
+</body>
+</html>

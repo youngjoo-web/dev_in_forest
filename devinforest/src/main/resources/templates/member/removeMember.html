@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>회원탈퇴</h1>
+	<form method="post" th:action="@{/removeMember}">
+		<input type="hidden" name="memberEmail" th:value="${session.loginMember.memberEmail}"> 
+		<input type="password" name="memberPassword">
+		<button type="submit">회원탈퇴</button>
+	</form>
+</body>
+</html>

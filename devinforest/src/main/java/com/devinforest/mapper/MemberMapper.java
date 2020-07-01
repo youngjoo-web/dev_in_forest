@@ -16,7 +16,7 @@ public interface MemberMapper {
 	//비밀번호 찾기
 	public int updateMemberPw(Map<String, Object> map);
 	//회원 탈퇴
-	public int deleteMember(LoginMember lgoinMember);
+	public int deleteMember(LoginMember loginMember);
 	//회원정보 불러오기
 	public Member selectMemberInfo(LoginMember loginMember);
 	//이름 중복 확인

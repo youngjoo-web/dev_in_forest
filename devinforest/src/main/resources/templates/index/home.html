@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>HOME</title>
@@ -7,5 +7,9 @@
 <body>
 	<h1>HOME</h1>
 	<a href="/logout">로그아웃</a>
+	<form method="get" th:action="@{/getMemberInfo}">
+		<input type="hidden" name="memberEmail" th:value="${session.loginMember.memberEmail}" >
+		<button type="submit">회원정보 보기</button>
+	</form>
 </body>
 </html>

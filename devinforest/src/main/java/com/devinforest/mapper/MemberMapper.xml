@@ -15,9 +15,8 @@
 		member_about=NULL,
 		member_birth=NULL,
 		member_date=NOW()
-		WHERE member_password=PASSWORD(#{memberPassword}
-		AND
-		member_email=#{memberEmail}
+		WHERE member_password=PASSWORD(#{memberPassword})
+		AND member_email=#{memberEmail}
 	</update>
 	<!-- 회원정보 수정 쿼리문 -->
 	<update id="updateMember"
@@ -40,20 +39,16 @@
 		resultType="com.devinforest.vo.Member">
 		SELECT
 		member_email as memberEmail,
-		member_name as
-		memberName,
+		member_name as memberName,
 		account_kind as accountKind,
-		member_reputation as
-		memberReputation,
+		member_reputation as memberReputation,
 		member_location as memberLocation,
-		member_phone as
-		memberPhone,
+		member_phone as memberPhone,
 		member_link as memberLink,
 		member_gender as memberGender,
 		member_about as memberAbout,
 		member_birth as memberBirth,
-		member_date as
-		memberDate,
+		member_date as memberDate,
 		member_state as memberState
 		FROM dev_member
 		WHERE
