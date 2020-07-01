@@ -22,14 +22,32 @@ public class AdminRestController {
 		int checkNum = adminService.checkAdminEmail(adminEmail);
 		System.out.println(checkNum + " <- AdminRestController.checkAdminEmail: checkNum");
 		
-		String msg = null;
+		String emailMsg = null;
 		if(checkNum == 1) {
-			msg = "사용할 수 없는 이메일입니다.";
+			emailMsg = "사용할 수 없는 이메일입니다.";
 		} else {
-			msg = "사용가능한 이메일입니다.";
+			emailMsg = "사용가능한 이메일입니다.";
 		}
-		System.out.println(msg + " <- AdminRestController.checkAdminEmail: msg");
+		System.out.println(emailMsg + " <- AdminRestController.checkAdminEmail: emailMsg");
 		
-		return msg;
+		return emailMsg;
+	}
+	
+	@PostMapping("/checkAdminName")
+	public String checkAdminName(@RequestParam(value = "adminName2") String adminName) {
+		System.out.println(adminName + " <- AdminRestController.checkAdminName: adminName");
+
+		int checkNum = adminService.checkAdminName(adminName);
+		System.out.println(checkNum + " <- AdminRestController.checkAdminName: checkNum");
+		
+		String nameMsg = null;
+		if(checkNum == 1) {
+			nameMsg = "사용할 수 없는 닉네임입니다.";
+		} else {
+			nameMsg = "사용가능한 닉네임입니다.";
+		}
+		System.out.println(nameMsg + " <- AdminRestController.checkAdminName: nameMsg");
+		
+		return nameMsg;
 	}
 }

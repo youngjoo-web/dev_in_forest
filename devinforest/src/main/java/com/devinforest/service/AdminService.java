@@ -46,4 +46,8 @@ public class AdminService {
 	public int checkAdminEmail(String adminEmail) {
 		return adminMapper.selectAdminEmail(adminEmail);
 	}
+	// 관리자 닉네임 중복체크
+	public int checkAdminName(String adminName) {
+		return adminMapper.selectAdminName(adminName);
+	}
 }

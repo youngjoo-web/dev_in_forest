@@ -52,4 +52,13 @@
 		FROM dev_admin
 		WHERE admin_email = #{adminEmail}
 	</select>
+	<!-- 관리자 닉네임 중복체크 -->
+	<select id="selectAdminName"
+			parameterType="String"
+			resultType="int">
+		SELECT
+			COUNT(*)
+		FROM dev_admin
+		WHERE admin_name = #{adminName}
+	</select>
 </mapper>

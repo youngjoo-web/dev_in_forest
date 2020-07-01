@@ -17,4 +17,6 @@ public interface AdminMapper {
 	public int adminTotalCount(String searchWord);
 	// 관리자 이메일 중복체크
 	public int selectAdminEmail(String adminEmail);
+	// 관리자 닉네임 중복체크
+	public int selectAdminName(String adminName);
 }
