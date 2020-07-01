@@ -11,18 +11,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#addBtn').click(function(){
+			if($('#questionTitle').val().length < 10) {
+				$('#questionTitle').text("제목을 10자 이상 입력하세요");
+				$('#questionTitle').focus();
+				return;
+			}
+			$('#addBtn').submit();
+		});
+	});
+</script>
 </head>
 <body>
 	<h1>질문작성</h1>
 	<form th:action="@{/addQuestion}" method="post">
 		<div>
-			<input type="text" name="questionTitle" placeholder="질문 제목">
+			<input type="text" name="questionTitle" id="questionTitle" placeholder="질문 제목">
 		</div>
 		<div>
-			<input type="text" name="questionContent" placeholder="질문 내용">
+			<input type="text" name="questionContent" id="questionContent" placeholder="질문 내용">
 		</div>
 		<div>
 			<select name="reputation">
+				<option value="0">0</option>
 				<option value="50">50</option>
 				<option value="100">100</option>
 				<option value="150">150</option>
@@ -35,7 +48,7 @@
 		<div>
 			<input type="hidden" name="memberName" th:value="${memberName}">
 		</div>
-		<button type="submit">작성</button>
+		<button id="addBtn">작성</button>
 	</form>
 </body>
 </html>

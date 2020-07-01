@@ -4,7 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.QuestionMapper">
 	
-	<!-- 질문 목록  -->
+	<!-- 질문 목록(최근순)  -->
 	<select id="selectQuestionList" resultType="com.devinforest.vo.Question" parameterType="com.devinforest.vo.Question">
 		SELECT 
 			question_no questionNo,
@@ -14,8 +14,10 @@
 			question_reputation reputation,
 			question_createdate questionCreateDate,
 			question_updatedate questionUpdateDate,
+			question_views questionViews,
 			question_ip questionIp
 		FROM dev_question
+		ORDER BY question_createdate DESC
 	</select>
 	
 	<!-- 질문 작성 -->
@@ -33,7 +35,7 @@
 				#{memberName},
 				#{questionTitle},
 				#{questionContent},
-				#{reputation},
+				#{questionReputation},
 				NOW(),
 				NOW(),
 				#{questionIp}
@@ -41,7 +43,7 @@
 	</insert>
 	
 	<!-- 상세보기 -->
-	<select id="selectQuestionOne" resultType="com.devinforest.vo.Question" parameterType="int">
+	<select id="selectQuestionOne" resultType="com.devinforest.vo.Question" parameterType="com.devinforest.vo.Question">
 		SELECT 
 			question_no questionNo,
 			member_name memberName,
@@ -50,9 +52,39 @@
 			question_reputation questionReputation,
 			question_createdate questionCreateDate,
 			question_updatedate questionUpdateDate,
+			question_views questionViews,
 			question_ip questionIp
 		FROM dev_question
 		WHERE question_no = #{questionNo}
+	</select>
+	
+	<!-- 질문 조회수 +1  -->
+	<update id="plusViews" parameterType="int">
+		UPDATE dev_question 
+		SET
+			question_views = question_views + 1
+		WHERE question_no = #{questionNo}
+	</update>
+	
+	<!-- 질문 조회수 +1 (별도 테이블) -->
+	<insert id="insertViews" parameterType="com.devinforest.vo.Question">
+		INSERT INTO 
+			dev_question_views(
+				question_no,
+				member_name
+			)
+		VALUES(
+			#{questionNo},
+			#{memberName}
+		)
+	</insert>
+	
+	<!-- 조회수 카운트 -->
+	<select id="viewsCount" resultType="int" parameterType="com.devinforest.vo.Question">
+		SELECT
+			COUNT(*)
+		FROM dev_question_views
+		WHERE question_no=#{questionNo}
 	</select>
 	
 	<!-- 질문 삭제 -->
