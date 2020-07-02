@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.IPUtil;
 import com.devinforest.service.QuestionService;
@@ -23,9 +24,17 @@ public class QuestionController {
    
 	/* ---------- 질문 목록 ---------- */
 	@GetMapping("/getQuestionList")
-	public String getQuestionList(Model model) {
-		List<Question> questionList = questionService.getQuestionList();
-		model.addAttribute("questionList", questionList);
+	public String getQuestionList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage,
+		@RequestParam(value="searchWord", defaultValue="") String searchWord) {
+		
+		Map<String, Object> questionList = questionService.getQuestionList(currentPage, searchWord);
+		model.addAttribute("questionList", questionList.get("questionList"));
+		model.addAttribute("lastPage", questionList.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		System.out.println(questionList.get("questionList"));
+		System.out.println(currentPage + " <-- currentPage");
+		System.out.println(searchWord + " <-- searchWord");
+		
 		return "question/getQuestionList";
 	}
    

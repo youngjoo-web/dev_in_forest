@@ -14,7 +14,10 @@
 </head>
 <body>
 	<h1 th:text="질문목록"></h1>
-	
+	<form method="get" th:action="@{/getQuestionList}">
+		<input type="text" name="searchWord" id="searchWord">
+		<button type="submit">검색</button>
+	</form>
 	<table border="1">
 		<tr>
 			<th>question_no</th>
@@ -35,5 +38,11 @@
 			<td th:text="${ql.questionIp}"></td>
 		</tr>
 	</table>
+	<div th:if="${currentPage} > 1">
+		<a th:href="@{/getQuestionList(currentPage=${currentPage}-1)}">이전</a>
+	</div>
+	<div th:if="${currentPage < lastPage}">
+		<a th:href="@{/getQuestionList(currentPage=${currentPage}+1)}">다음</a>
+	</div>
 </body>
 </html>

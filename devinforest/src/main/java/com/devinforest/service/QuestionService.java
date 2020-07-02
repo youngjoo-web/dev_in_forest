@@ -19,9 +19,36 @@ public class QuestionService {
 	private QuestionMapper questionMapper;
 	
 	/* ---------- 질문 목록 ---------- */
-	public List<Question> getQuestionList() {
-		List<Question> questionList = questionMapper.selectQuestionList();
-		return questionList;
+	public Map<String, Object> getQuestionList(int currentPage, String searchWord) {
+		System.out.println(searchWord + " <-- Service searchWord");
+		
+		
+		int rowPerPage = 5;
+		int beginRow = (currentPage -1) * rowPerPage;
+		int questionTotalRow = questionMapper.questionTotalRow(searchWord);
+		System.out.println(questionTotalRow + " <-- questionTotalRow");
+		int lastPage = questionTotalRow / rowPerPage;
+		if(questionTotalRow % rowPerPage != 0) {
+			lastPage += 1;
+		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("searchWord", searchWord);
+		map.put("beginRow", beginRow);
+		map.put("rowPerPage", rowPerPage);
+		
+		System.out.println(searchWord + " <--- searchWord");
+		System.out.println(beginRow + " <--- beginRow");
+		System.out.println(rowPerPage + " <--- rowPerPage");
+		
+		System.out.println(lastPage + "<--  questionServicelastPage");
+		List<Question> questionList = questionMapper.selectQuestionList(map);
+		
+		System.out.println(questionList);
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("questionList", questionList);
+		return returnMap;
 	}
 	
 	/* ---------- 질문 작성 ---------- */
@@ -41,7 +68,7 @@ public class QuestionService {
 		
 		int viewsCount = questionMapper.viewsCount(question);
 		Question questionOne = questionMapper.selectQuestionOne(question); 
-		
+			
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("viewsCount", viewsCount);
 		map.put("questionOne", questionOne);
