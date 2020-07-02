@@ -7,9 +7,12 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.devinforest.vo.LoginMember;
 import com.devinforest.vo.Member;
+import com.devinforest.vo.Restoration;
 
 @Mapper
 public interface MemberMapper {
+	//회원 재가입요청
+	public int insertRequestRestore(Restoration restoration);
 	//회원정보 수정
 	public int updateMember(Member member);
 	//아이디 찾기

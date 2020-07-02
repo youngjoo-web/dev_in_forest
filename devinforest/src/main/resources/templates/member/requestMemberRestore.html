@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>회원의 재가입요청</h1>
+	<form method="post" action="/requestMemberRestore">
+		<label th:text="제목"></label>
+			<input type="text" name="restorationTitle" placeholder="재가입 이메일 ">
+			<br>
+		<label th:text="내용"></label>
+			<input type="text" name="restorationContent" value="재가입해주세요.">
+			<br>
+			<button type="submit">재가입요청</button>
+	</form>
+</body>
+</html>

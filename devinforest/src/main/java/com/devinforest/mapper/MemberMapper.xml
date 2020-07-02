@@ -3,7 +3,20 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.MemberMapper">
-<!-- 회원 totalCount -->
+	<!-- 회원 재가입 요청 -->
+	<insert id="insertRequestRestore" parameterType="com.devinforest.vo.Restoration" >
+		Insert into dev_restoration(
+			restoration_title,
+			restoration_content,
+			restoration_date
+		)VALUES(
+			#{restorationTitle},
+			#{restorationContent},
+			NOW()
+			
+		)
+	</insert>
+	<!-- 회원 totalCount -->
 	<select id="memberTotalCount"
 			parameterType="String"
 			resultType="int">
@@ -98,10 +111,9 @@
 	<select id="selectEmailByMember"
 		parameterType="com.devinforest.vo.LoginMember" resultType="String">
 		SELECT
-		CONCAT(SUBSTRING (member_email,1,4),'***@***')
+			CONCAT(SUBSTRING(member_email,1,4),'***@***')
 		FROM dev_member
-		WHERE
-		member_name=#{memberName}
+		WHERE member_name=#{memberName}
 	</select>
 	<!-- 이메일 중복체크 -->
 	<select id="selectMemberEmail" parameterType="String"
