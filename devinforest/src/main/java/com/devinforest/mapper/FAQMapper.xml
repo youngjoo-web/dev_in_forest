@@ -17,6 +17,7 @@
 			notice_kind    noticeKind
 		FROM dev_notice
 		WHERE notice_title LIKE CONCAT('%',#{searchWord},'%')
+		AND notice_kind = 'FAQ'
 		ORDER BY notice_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
@@ -28,5 +29,9 @@
 			COUNT(*)
 		FROM dev_notice
 		WHERE notice_title LIKE CONCAT('%',#{searchWord},'%')
+		AND notice_kind = 'FAQ'
 	</select>
+	<insert id="">
+		
+	</insert>
 </mapper>

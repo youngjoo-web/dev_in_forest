@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>자주묻는질문 작성</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<div>
+			<h1>FAQ 작성</h1>
+		</div>
+		<div>
+			<span th:text="${admin}+'님께서 작성중이십니다.'"></span>
+		</div>
+		<div>
+			<form id="form" method="post" th:action="@{/addFAQ}">
+				<div>
+					<input id="noticeTitle" type="text" name="noticeTitle" placeholder="제목을 입력해주세요">
+					<span id="msg"></span>
+				</div>
+				<div>
+					<textarea rows="5" cols="20" id="noticeContent" name="noticeContent" placeholder="내용을 입력해주세요"></textarea>
+				</div>
+				<button id="btn" type="button">추가</button>
+			</form>
+		</div>
+	</body>
+	<script>
+	$('#btn').click(function(){
+		console.log($('#noticeTitle').val());
+		console.log($('#noticeContent').val());
+		
+		if($('#noticeTitle').val() == "") {
+			$('#msg').text('제목을 입력해주세요.');
+			return;
+		}
+		if($('#noticeContent').val() == "") {
+			$('#msg').text('내용을 입력해주세요.');
+			return;
+		}
+		
+		$('#form').submit();
+	});
+	</script>
+</html>

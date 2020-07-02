@@ -3,19 +3,24 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>자주묻는질문</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	</head>
 	<body>
 		<div>
-			<h1>자주 묻는질문 목록</h1>
+			<h1>FAQ 목록</h1>
+		</div>
+		<div>
+			<a th:href="@{/addFAQ}">FAQ 작성</a>
 		</div>
 		<div>
 			<form method="GET" th:action="@{/getFAQList}">
-				<input type="text" name="searchWord" th:value="${searchWord}" placeholder="질문 검색">
+				<input id="search" type="text" name="searchWord" th:value="${searchWord}" placeholder="제목 검색">
 				<button type="submit">검색</button>
+				<button id="resetBtn" type="button">초기화</button>
 			</form>
 		</div>
 		<div>
-			<span th:text="'FAQ : '+${FAQTotalCount}+명"></span>
+			<span th:text="'FAQ : '+${FAQTotalCount}+개"></span>
 		</div>
 		<div>
 			<a th:href="@{/getFAQList(rowPerPage=1, searchWord=${searchWord})}">1개씩</a>
@@ -32,7 +37,7 @@
 				</tr>
 				<tr th:each="FAQ : ${FAQList}">
 					<td th:text="${FAQ.noticeNo}"></td>
-					<td th:text="${FAQ.noticeTitle}"></td>
+					<td><a th:href="@{/getFAQOne}" th:text="${FAQ.noticeTitle}"></a></td>
 					<td th:text="${FAQ.noticeDate}"></td>
 				</tr>
 			</table>
@@ -42,9 +47,17 @@
 			<a th:if="${currentPage == 1}" th:href="@{/getFAQList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
 			<a th:if="${currentPage > 1}" th:href="@{/getFAQList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
 			<span th:text="'-'+${currentPage}+'-'"></span>
-			<a th:if="${currentPage < lastPage}" th:href="@{/getFAQList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+			<a th:if="${FAQTotalCount == 0}" th:href="@{/getFAQList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
 			<a th:if="${currentPage == lastPage}" th:href="@{/getFAQList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-			<a th:href="@{/getFAQList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+			<a th:if="${currentPage < lastPage}" th:href="@{/getFAQList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+			<a th:if="${FAQTotalCount == 0}"th:href="@{/getFAQList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+			<a th:if="${FAQTotalCount != 0}"th:href="@{/getFAQList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
 		</div>
 	</body>
+	<script>
+		// 검색창 초기화
+		$('#resetBtn').click(function(){
+			$('#search').val("");
+		});
+	</script>
 </html>
