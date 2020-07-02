@@ -2,9 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<title th:text="${notice.noticeTitle}"></title>
 	</head>
 	<body>
-		<h1>공지사항 상세보기</h1>
+		<div>
+			<h1>공지사항 상세보기</h1>
+		</div>
+		<div>
+			<div>
+				작성일 : 
+				<span th:text="${notice.noticeDate}"></span>
+			</div>
+			<div>
+				작성자 :
+				<span th:text="${notice.adminName}"></span>
+			</div>
+			<div>
+				제목 :
+				<span th:text="${notice.noticeTitle}"></span>
+			</div>
+			<div>
+				내용 :
+				<span th:text="${notice.noticeContent}"></span>
+			</div>
+		</div>
 	</body>
 </html>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.service.NoticeService;
+import com.devinforest.vo.Notice;
 
 @Controller
 public class NoticeController {
@@ -36,10 +37,12 @@ public class NoticeController {
 	}
 	// 공지사항 상세보기
 	@GetMapping("/getNoticeOne")
-	public String getNoticeOne(HttpSession session, Model model,
-								@RequestParam(value = "noticeNo") String noticeNo) {
+	public String getNoticeOne(HttpSession session, Model model, Notice notice){
+		int noticeNo = notice.getNoticeNo();
 		System.out.println(noticeNo+" <- NoticeController.getNoticeOne: noticeNo");
-		
+		notice = noticeService.getNoticeOne(noticeNo);
+		System.out.println(notice+" <- NoticeController.getNoticeOne: notice");
+		model.addAttribute("notice", notice);
 		return "notice/getNoticeOne";
 	}
 }

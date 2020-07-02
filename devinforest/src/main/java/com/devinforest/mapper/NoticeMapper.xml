@@ -16,6 +16,7 @@
 			notice_ip      noticeIp
 		FROM dev_notice
 		WHERE notice_title LIKE CONCAT('%',#{searchWord},'%')
+		AND notice_kind = 'notice'
 		ORDER BY notice_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
@@ -27,6 +28,7 @@
 			COUNT(*)
 		FROM dev_notice
 		WHERE notice_title LIKE CONCAT('%',#{searchWord},'%')
+		AND notice_kind = 'notice'
 	</select>
 	<!-- 공지사항 상세보기 -->
 	<select id="selectNoticeOne"
