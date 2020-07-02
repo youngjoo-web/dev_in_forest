@@ -2,7 +2,7 @@ package com.devinforest.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.IPUtil;
 import com.devinforest.service.QuestionService;
+import com.devinforest.vo.LoginMember;
 import com.devinforest.vo.Question;
 
 @Controller
@@ -22,31 +23,48 @@ public class QuestionController {
    
 	/* ---------- 질문 목록 ---------- */
 	@GetMapping("/getQuestionList")
-	public String getQuestionList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage,
+	public String getQuestionList(Model model, HttpSession session,
+		@RequestParam(value="currentPage", defaultValue="1") int currentPage,
 		@RequestParam(value="searchWord", defaultValue="") String searchWord) {
+		// 비로그인 시 "Guest"처리 
+		String memberName = "Guest";
+		// 로그인 시 memberId값
+		if(session.getAttribute("loginMember")!=null) {
+			memberName=((LoginMember)session.getAttribute("loginMember")).getMemberName();
+		}
+		System.out.println(memberName + "<--memberName");
 		
 		Map<String, Object> questionList = questionService.getQuestionList(currentPage, searchWord);
+		model.addAttribute("memberName", memberName);
 		model.addAttribute("questionList", questionList.get("questionList"));
 		model.addAttribute("lastPage", questionList.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
+		
+		System.out.println("↓QuestionController questionList↓");
 		System.out.println(questionList.get("questionList"));
-		System.out.println(currentPage + " <-- currentPage");
-		System.out.println(searchWord + " <-- searchWord");
+		System.out.println(currentPage + " <--- QuestionController currentPage");
+		System.out.println(searchWord + " <--- QuestionController searchWord");
 		
 		return "question/getQuestionList";
 	}
    
 	/* ---------- 질문 상세보기 ---------- */
 	@GetMapping("/getQuestionOne")
-	public String getQuestionOne(Model model, Question question) {
+	public String getQuestionOne(Model model, HttpSession session, Question question) {
 		System.out.println(question.getQuestionNo() + "<-- questionNo");
 		
-		// 로그인 세션 임시 대체
-		String memberName = "김경태";
+		String memberName = "Guest";
 		
+		if(session.getAttribute("loginMember")!=null) {
+			memberName=((LoginMember)session.getAttribute("loginMember")).getMemberName();
+		}
+
+		System.out.println(memberName + " <--- QuestionController memberName");
+
 		question.setMemberName(memberName);
 		
 		Map<String, Object> map = questionService.getQuestionOne(question);
+		model.addAttribute("memberName", memberName);
 		model.addAttribute("question", map.get("questionOne"));
 		model.addAttribute("viewsCount", map.get("viewsCount"));
 		
@@ -56,14 +74,16 @@ public class QuestionController {
 	/* ---------- 질문 작성하기 ---------- */
 	// 질문 작성 폼으로 이동
 	@GetMapping("/addQuestion")
-	public String addQuestion(Model model, HttpServletRequest request) {
-	   
+	public String addQuestion(Model model,HttpSession session, LoginMember loginMember) {
+		if(session.getAttribute("loginMember")==null) {
+			return "redirect:/memberLogin";
+		}
 		String getIp = IPUtil.getIPAddress();
 		System.out.println(getIp + "<-- addQuestion ip");
 	 
-		String memberName = "가재우"; // 로그인 세션 임시 대체
-		model.addAttribute("memberName", memberName);
+		model.addAttribute("memberName", loginMember.getMemberName());
 		model.addAttribute("questionIp", getIp);
+		System.out.println(loginMember.getMemberName()+"<--memberName");
 		
 		return "question/addQuestion";
 	}

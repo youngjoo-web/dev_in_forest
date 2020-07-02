@@ -11,13 +11,61 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function(){
+		let memberName = $('#memberName').val();
+		let questionNo = $('#questionNo').val();
+		$.ajax({
+			url: '/voteTotalCount',
+			type: 'GET',
+			data: {'questionNo' : questionNo},
+			success : function(data) {
+				$('#count').text(data);
+			}
+		});
+		$('#upBtn').click(function(){
+			$.ajax({
+				url: '/plusVote',
+				type: 'GET',
+				data: {'memberName' : memberName, 'questionNo' : questionNo},
+				success : function(data) {
+					$('#count').remove();
+					$('#voteTotalCount').append('<div id="count">' + data + '</div>');
+	                console.log("좋아요 성공");
+				}
+			});
+		});
+		$('#downBtn').click(function(){
+			$.ajax({
+				url: '/minusVote',
+				type: 'GET',
+				data: {'memberName' : memberName, 'questionNo' : questionNo},
+				success : function(data) {
+					$('#count').remove();
+					$('#voteTotalCount').append('<div id="count">' + data + '</div>');
+	                console.log("싫어요 성공");
+				}
+			});
+		});
+		
+	});
+
+</script>
+
 </head>
 <body>
 	<h1 th:text="상세보기"></h1>
 		
+		
+		<button type="button" id="upBtn">좋아요</button>
+		<div id="voteTotalCount">
+			<div id="count"></div>
+		</div>
+		<button type="button" id="downBtn">싫어요</button>
 		<table border="1">
 			<thead>
 				<tr>
+					<th>번호</th>
 					<th>제목</th>
 					<th>내용</th>
 					<th>작성자</th>
@@ -26,6 +74,7 @@
 			</thead>
 			<tbody>
 				<tr>
+					<td th:text="${question.questionNo}"></td>
 					<td th:text="${question.questionTitle}"></td>
 					<td th:text="${question.questionContent}"></td>
 					<td th:text="${question.memberName}"></td>
@@ -33,5 +82,7 @@
 				</tr>
 			</tbody>
 		</table>
+		<input type="hidden" id="questionNo" th:value="${question.questionNo}">
+		<input type="hidden" id="memberName" th:value="${memberName}">
 </body>
 </html>

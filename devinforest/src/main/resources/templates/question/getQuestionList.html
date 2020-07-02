@@ -18,6 +18,9 @@
 		<input type="text" name="searchWord" id="searchWord">
 		<button type="submit">검색</button>
 	</form>
+	<div th:if="${memberName}!='Guest'">
+		<a th:href="@{/addQuestion(memberName=${memberName})}">글작성</a>
+	</div>
 	<table border="1">
 		<tr>
 			<th>question_no</th>

@@ -3,17 +3,72 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.VoteMapper">
+	
+	<!-- 좋아요누른 회원 검사 -->
+	<select id="voteCheck" resultType="com.devinforest.vo.Vote" parameterType="com.devinforest.vo.Vote" >
+		SELECT
+			member_name memberName
+		FROM
+			dev_vote
+		WHERE
+			question_no = #{questionNo} AND member_name=#{memberName}
+	</select>
+	
+	<!-- 좋아요, 싫어요 삭제 -->
+	<delete id="deleteVote" parameterType="com.devinforest.vo.Vote">
+		DELETE FROM dev_vote
+		WHERE
+			question_no = #{questionNo} AND member_name=#{memberName}
+	</delete>
+	
 	<!-- 질문 투표 +1 -->
-	<insert id="plusVote" parameterType="com.devinforest.vo.Vote">
+	<insert id="insertPlusVote" parameterType="com.devinforest.vo.Vote">
 		INSERT INTO
 			dev_vote(
 				question_no,
-				member_name
+				member_name,
+				vote_point
 			)
 			VALUES(
 				#{questionNo},
-				#{memberName}
+				#{memberName},
+				1
 			)
-	
 	</insert>
+	<insert id="insertMinusVote" parameterType="com.devinforest.vo.Vote">
+		INSERT INTO
+			dev_vote(
+				question_no,
+				member_name,
+				vote_point
+			)
+			VALUES(
+				#{questionNo},
+				#{memberName},
+				0
+			)
+	</insert>
+	<update id="updatePlusVote" parameterType="com.devinforest.vo.Vote">
+		UPDATE
+			dev_vote
+		SET
+			vote_point=1
+		WHERE
+			memberName=#{memberName}
+	</update>
+	<update id="updateMinusVote" parameterType="com.devinforest.vo.Vote">
+		UPDATE
+			dev_vote
+		SET
+			vote_point=0
+		WHERE
+			memberName=#{memberName}
+	</update>
+	<select id="voteTotalCount" resultType="int" parameterType="com.devinforest.vo.Vote">
+		SELECT
+		(SELECT count(*) FROM dev_vote WHERE vote_point=1 AND question_no=#{questionNo})
+		-
+		(SELECT count(*) FROM dev_vote WHERE vote_point=0 AND question_no=#{questionNo})
+		FROM dual
+	</select>
 </mapper>
