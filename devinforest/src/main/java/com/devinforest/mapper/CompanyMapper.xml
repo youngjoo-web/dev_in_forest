@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devinforest.mapper.CompanyMapper">
+	<insert id="insertCompanyMember" parameterType="com.devinforest.vo.Company">
+	insert into dev_company	
+	( company_email, company_password,company_kor_name,company_eng_name,company_address,
+		company_phone,company_date)
+	values(
+		#{companyEmail},
+		#{companyPw},
+		#{companyKorName},
+		#{companyEngName},
+		#{companyAddress},
+		#{companyPhone},
+		NOW()
+		)
+	</insert>
+	<select id="selectCompanyEmail" parameterType="String" resultType="int">
+		SELECT
+		member_email AS memberEmail, member_name AS memberName, account_kind AS accountKind , member_password AS memberPassword
+		FROM (SELECT member_email, member_name, account_kind, member_password FROM dev_member
+		UNION
+		SELECT admin_email, admin_name, account_kind, admin_password FROM dev_admin
+		UNION
+		SELECT company_email, company_kor_name, account_kind, company_password FROM dev_company)e
+		WHERE member_email=#{companyEmail}
+		
+	</select>
+	<select id="selectCompanyKorName" parameterType="String" resultType="int">
+		SELECT
+		member_email AS memberEmail, member_name AS memberName, account_kind AS accountKind , member_password AS memberPassword
+		FROM (SELECT company_email, company_kor_name, account_kind, company_password FROM dev_company)e
+		WHERE member_name=#{companyKorName}
+	</select>
+	<select id="selectCompanyEngName" parameterType="String" resultType="int">
+		SELECT
+		member_email AS memberEmail, member_name AS memberName, account_kind AS accountKind , member_password AS memberPassword
+		FROM (SELECT company_email, company_eng_name, account_kind, company_password FROM dev_company)e
+		WHERE member_name=#{companyEngName}
+	</select>
+</mapper>
