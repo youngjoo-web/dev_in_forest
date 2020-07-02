@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>자주묻는질문 상세보기</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<div>
+			<h1>FAQ 상세보기</h1>
+		</div>
+		<div>
+			<button id="deleteBtn" type="button">삭제</button>
+			<button id="updateBtn" type="button">수정</button>
+			<form id="deleteForm" method="post" th:action="@{/removeFAQ(noticeNo=${FAQ.noticeNo})}">
+			</form>
+			<form id="updateForm" method="post" th:action="@{/modifyFAQForm(noticeNo=${FAQ.noticeNo})}">
+			</form>
+		</div>
+		<div>
+			FAQ No : 
+			<span th:text="${FAQ.noticeNo}"></span>
+		</div>
+		<div>
+			FAQ TITLE : 
+			<span th:text="${FAQ.noticeTitle}"></span>
+		</div>
+		<div>
+			FAQ AdminName : 
+			<span th:text="${FAQ.adminName}"></span>
+		</div>
+		<div>
+			FAQ NoticeDate : 
+			<span th:text="${FAQ.noticeDate}"></span>
+		</div>
+		<div>
+			FAQ NoticeContent : 
+			<span th:text="${FAQ.noticeContent}"></span>
+		</div>
+		<div>
+			FAQ IP : 
+			<span th:text="${FAQ.noticeIp}"></span>
+		</div>
+		<br>
+		<a th:href="@{/getFAQList}">목록으로 이동</a>
+	</body>
+	<script>
+	$('#updateBtn').click(function(){
+		let result = confirm('정말 게시글을 수정하시겠습니까?');
+		
+		if(!result) {
+			console.log('취소');
+			alert('취소하셨습니다.');
+			return;
+		} else {
+			console.log('취소');
+			$('#updateForm').submit();
+			alert('수정을 실행합니다...');
+		}
+	});
+	
+	$('#deleteBtn').click(function(){
+		let result = confirm('정말 게시글을 삭제하시겠습니까?');
+		
+		if(!result) {
+			console.log('취소');
+			alert('취소하셨습니다.');
+			return;
+		} else {
+			console.log('취소');
+			alert('삭제 실행합니다...');
+			$('#deleteForm').submit();
+		}
+	});
+	</script>
+</html>

@@ -2,26 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
-		<title>자주묻는질문 작성</title>
+		<title>자주묻는질문 수정</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	</head>
 	<body>
 		<div>
-			<h1>FAQ 작성</h1>
+			<h1>FAQ 수정</h1>
 		</div>
 		<div>
-			<span th:text="${admin}+'님께서 작성중이십니다.'"></span>
+			<span th:text="${admin}+'님께서 수정중이십니다.'"></span>
 		</div>
 		<div>
-			<form id="form" method="post" th:action="@{/addFAQ}">
+			<form id="form" method="post" th:action="@{/modifyFAQ}">
+				<input type="hidden" name="noticeNo" th:value="${FAQ.noticeNo}">
 				<div>
-					<input id="noticeTitle" type="text" name="noticeTitle" placeholder="제목을 입력해주세요">
+					<input id="noticeTitle" type="text" name="noticeTitle" th:value="${FAQ.noticeTitle}">
 					<span id="msg"></span>
 				</div>
 				<div>
-					<textarea rows="5" cols="20" id="noticeContent" name="noticeContent" placeholder="내용을 입력해주세요"></textarea>
+					<textarea rows="5" cols="20" id="noticeContent" name="noticeContent" th:text="${FAQ.noticeContent}"></textarea>
 				</div>
-				<button id="btn" type="button">추가</button>
+				<button id="btn" type="button">수정</button>
 			</form>
 		</div>
 	</body>

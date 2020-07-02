@@ -21,6 +21,7 @@
 		ORDER BY notice_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
+	
 	<!-- FAQ totalCount -->
 	<select id="FAQTotalCount"
 			parameterType="String"
@@ -31,7 +32,41 @@
 		WHERE notice_title LIKE CONCAT('%',#{searchWord},'%')
 		AND notice_kind = 'FAQ'
 	</select>
-	<insert id="">
-		
+	
+	<!-- FAQ 상세보기 출력 -->
+	<select id="selectFAQOne"
+			parameterType="java.util.Map"
+			resultType="com.devinforest.vo.Notice">
+		SELECT
+			notice_no      noticeNo,
+			admin_name     adminName,
+			notice_title   noticeTitle,
+			notice_content noticeContent,
+			notice_date    noticeDate,
+			notice_ip      noticeIp,
+			notice_kind    noticeKind
+		FROM dev_notice
+		WHERE notice_no = #{noticeNo}
+	</select>
+	
+	<!-- FAQ 추가 -->
+	<insert id="insertFAQ"
+			parameterType="com.devinforest.vo.Notice">
+		INSERT INTO dev_notice(admin_name, notice_title, notice_content, notice_date, notice_ip, notice_kind)
+		VALUES (#{adminName}, #{noticeTitle}, #{noticeContent}, now(), #{noticeIp}, 'FAQ')
 	</insert>
+	
+	<!-- FAQ 수정 -->
+	<update id="updateFAQ"
+			parameterType="com.devinforest.vo.Notice">
+		UPDATE dev_notice
+		SET notice_title = #{noticeTitle}, notice_content = #{noticeContent}
+		WHERE notice_no = #{noticeNo}
+	</update>
+	
+	<delete id="deleteFAQ"
+			parameterType="int">
+		DELETE FROM dev_notice
+		WHERE notice_no = #{noticeNo}
+	</delete>
 </mapper>

@@ -30,7 +30,7 @@ public class DevinforestApplication {
 	      javaMailSender.setUsername(username);
 	      javaMailSender.setPassword(password);
 	      
-	      Properties prop = new  Properties();//Properties ==HashMap<String, String>
+	      Properties prop = new Properties();//Properties ==HashMap<String, String>
 	      prop.setProperty("mail.smtp.auth", "true");
 	      prop.setProperty("mail.smtp.starttls.enable", "true");
 	      javaMailSender.setJavaMailProperties(prop);

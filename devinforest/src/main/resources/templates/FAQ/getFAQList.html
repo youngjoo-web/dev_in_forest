@@ -37,7 +37,7 @@
 				</tr>
 				<tr th:each="FAQ : ${FAQList}">
 					<td th:text="${FAQ.noticeNo}"></td>
-					<td><a th:href="@{/getFAQOne}" th:text="${FAQ.noticeTitle}"></a></td>
+					<td><a th:href="@{/getFAQOne(noticeNo=${FAQ.noticeNo})}" th:text="${FAQ.noticeTitle}"></a></td>
 					<td th:text="${FAQ.noticeDate}"></td>
 				</tr>
 			</table>

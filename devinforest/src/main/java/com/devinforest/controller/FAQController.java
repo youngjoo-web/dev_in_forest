@@ -15,7 +15,6 @@ import com.devinforest.vo.Notice;
 @Controller
 public class FAQController {
 	@Autowired private FAQService faqService;
-	String admin = "admin@devinforest.com";
 	
 	// FAQList 출력
 	@GetMapping("/getFAQList")
@@ -36,16 +35,65 @@ public class FAQController {
 		model.addAttribute("rowPerPage", rowPerPage);
 		return "FAQ/getFAQList";
 	}
-	// FAQ 추가
+	// FAQ 상세보기
+	@GetMapping("/getFAQOne")
+	public String getFAQOne(Model model,
+							@RequestParam(value = "noticeNo") int noticeNo) {
+		Notice FAQ = faqService.getFAQOne(noticeNo);
+		model.addAttribute("FAQ", FAQ);
+		return "FAQ/getFAQOne";
+	}
+	
+	// FAQ 추가 폼
 	@GetMapping("/addFAQ")
 	public String addFAQ(Model model) {
+		
+		// 로그인부분 구현되면 수정해야하는 부분
+		String admin = "관리자";
+		
 		model.addAttribute("admin", admin);
 		return "FAQ/addFAQ";
 	}
+	// FAQ 추가 입력
 	@PostMapping("/addFAQ")
-	public String addFAQ(Model model, Notice notice) {
+	public String addFAQ(Notice notice) {
 		System.out.println(notice + " <-- FAQController.addFAQ(post): notice");
+		
+		// 로그인부분 구현되면 수정해야하는 부분
+		String admin = "관리자";
+		notice.setAdminName(admin);
+		
+		faqService.addFAQ(notice);
+		
+		return "redirect:/getFAQList";
+	}
+	// FAQ 수정 폼
+	@PostMapping("/modifyFAQForm")
+	public String modifyFAQ(Model model,
+							@RequestParam(value = "noticeNo") int noticeNo) {
+		Notice FAQ = faqService.getFAQOne(noticeNo);
+		// 로그인부분 구현되면 수정해야하는 부분
+		String admin = "관리자";
+		
+		model.addAttribute("FAQ", FAQ);
 		model.addAttribute("admin", admin);
-		return "FAQ/addFAQ";
+		return "FAQ/modifyFAQ";
+	}
+	// FAQ 수정 입력
+	@PostMapping("/modifyFAQ")
+	public String modifyFAQ(Notice notice) {
+		System.out.println(notice + " <-- FAQController.modifyFAQ(post): notice");
+		
+		faqService.modifyFAQ(notice);
+		System.out.println(notice.getNoticeNo());
+		
+		return "redirect:/getFAQList";
+	}
+	// FAQ 삭제
+	@PostMapping("/removeFAQ")
+	public String removeFAQ(@RequestParam(value = "noticeNo") int noticeNo) {
+		System.out.println(noticeNo + " <-- FAQController.removeFAQ: noticeNo");
+		faqService.removeFAQ(noticeNo);
+		return "redirect:/getFAQList";
 	}
 }
