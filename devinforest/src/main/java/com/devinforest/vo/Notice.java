@@ -54,9 +54,9 @@ public class Notice {
 	
 	@Override
 	public String toString() {
-		return "Notice [noticeNo=" + noticeNo + ", adminName=" + adminName + ", noticeTitle=" + noticeTitle
-				+ ", noticeContent=" + noticeContent + ", noticeDate=" + noticeDate + ", noticeIp=" + noticeIp
-				+ ", noticeKind=" + noticeKind + "]";
+		return "Notice \n[noticeNo=" + noticeNo + ",\n adminName=" + adminName + ",\n noticeTitle=" + noticeTitle
+				+ ",\n noticeContent=" + noticeContent + ",\n noticeDate=" + noticeDate + ",\n noticeIp=" + noticeIp
+				+ ",\n noticeKind=" + noticeKind + "]";
 	}
 
 }

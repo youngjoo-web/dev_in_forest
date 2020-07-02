@@ -3,34 +3,39 @@
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<meta charset="UTF-8">
-		<title>공지사항 작성</title>
+		<title th:text="${notice.noticeTitle}+'글 수정'"></title>
 	</head>
 	<body>
 		<div>
-			<h1>공지사항 작성</h1>
+			<h1>공지사항 수정</h1>
 		</div>
 		<div>
-			<form id="addNoticeForm" method="post" th:action="@{/addNotice}">
+			<form id="modifyNoticeForm" method="post" th:action="@{/modifyNotice}">
+				<input type="hidden" name="noticeNo" th:value="${notice.noticeNo}">
 				<div>
-					<span>제목</span>
-					<input id="noticeTitle" type="text" name="noticeTitle">
+					작성일 : 
+					<span th:text="${notice.noticeDate}"></span>
 				</div>
 				<div>
-					<span>내용</span>
-					<textarea id="noticeContent" rows="5" cols="20" name="noticeContent"></textarea>
+					작성자 :
+					<span th:text="${notice.adminName}"></span>
 				</div>
 				<div>
-					<span>작성자</span>
-					<input type="text" value="로그인되있는 닉네임" readonly="readonly">
+					제목 :
+					<input id="noticeTitle" type="text" name="noticeTitle" th:value="${notice.noticeTitle}">
 				</div>
 				<div>
-					<button id="addNoticeBtn" type="button">작성완료</button>
+					내용 :
+					<textarea id="noticeContent" name="noticeContent" th:text="${notice.noticeContent}"></textarea>
+				</div>
+				<div>
+					<button id="modifyNoticeBtn" type="button">수정완료</button>
 				</div>
 			</form>
 		</div>
 	</body>
 	<script>
-		$('#addNoticeBtn').click(function(){
+		$('#modifyNoticeBtn').click(function(){
 			let noticeTitle = $('#noticeTitle').val();
 			//console.log(noticeTitle.search(/\s/)+' <- 공백');
 			if(noticeTitle == ''){
@@ -49,7 +54,7 @@
 				alert('내용을 입력해주세요.');
 				return;
 			}
-			$('#addNoticeForm').submit();
+			$('#modifyNoticeForm').submit();
 		});
 	</script>
 </html>

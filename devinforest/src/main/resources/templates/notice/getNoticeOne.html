@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<meta charset="UTF-8">
 		<title th:text="${notice.noticeTitle}"></title>
 	</head>
@@ -26,5 +27,35 @@
 				<span th:text="${notice.noticeContent}"></span>
 			</div>
 		</div>
+		<div>
+			<div>
+				<button id="removeNoticeBtn" type="button">게시글 삭제</button>
+				<form id="removeNoticeForm" method="post" th:action="@{/removeNotice(noticeNo=${notice.noticeNo})}"></form>
+			</div>
+			<div>
+				<button id="modifyNoticeBtn" type="button">게시글 수정</button>
+				<form id="modifyNoticeForm" method="post" th:action="@{/modifyNoticeForm(noticeNo=${notice.noticeNo})}"></form>	
+			</div>
+		</div>
 	</body>
+	<script>
+		$("#removeNoticeBtn").click(function(){
+			let result = confirm("정말 게시글을 삭제 하시겠습니까?");
+			if(!result){
+				console.log("취소");
+				return;
+			}
+			console.log("확인");
+			$('#removeNoticeForm').submit();
+		});
+		$("#modifyNoticeBtn").click(function(){
+			let result = confirm("정말 게시글을 수정 하시겠습니까?");
+			if(!result){
+				console.log("취소");
+				return;
+			}
+			console.log("확인");
+			$('#modifyNoticeForm').submit();
+		});
+	</script>
 </html>

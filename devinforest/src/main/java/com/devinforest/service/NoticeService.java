@@ -45,4 +45,12 @@ public class NoticeService {
 	public void addNotice(Notice notice) {
 		noticeMapper.insertNotice(notice);
 	}
+	// 공지사항 삭제
+	public void removeNotice(int noticeNo) {
+		noticeMapper.deleteNotice(noticeNo);
+	}
+	// 공지사항 수정
+	public void modifyNotice(Notice notice) {
+		noticeMapper.updateNotice(notice);
+	}
 }

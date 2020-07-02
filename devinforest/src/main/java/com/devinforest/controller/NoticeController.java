@@ -63,4 +63,30 @@ public class NoticeController {
 		noticeService.addNotice(notice);
 		return "redirect:/getNoticeList";
 	}
+	// 공지사항 삭제
+	@PostMapping("/removeNotice")
+	public String removeNotice(HttpSession session,
+								@RequestParam(value = "noticeNo") int noticeNo) {
+		System.out.println(noticeNo+" <- NoticeController.removeNotice: noticeNo");
+		noticeService.removeNotice(noticeNo);
+		return "redirect:/getNoticeList";
+	}
+	// 공지사항 수정
+	@PostMapping("/modifyNoticeForm")
+	public String modifyNotice(HttpSession session, Model model, Notice notice){
+		System.out.println(notice+" <- notice test");
+		int noticeNo = notice.getNoticeNo();
+		System.out.println(noticeNo+" <- NoticeController.modifyNotice: noticeNo");
+		notice = noticeService.getNoticeOne(noticeNo);
+		System.out.println(notice+" <- NoticeController.modifyNotice: notice(수정 전)");
+		model.addAttribute("notice", notice);
+		return "notice/modifyNotice";
+	}
+	@PostMapping("/modifyNotice")
+	public String modifyNotice(HttpSession session, Notice notice){
+		System.out.println(notice+" <- NoticeController.modifyNotice: notice(수정 후)");
+		int noticeNo = notice.getNoticeNo();
+		noticeService.modifyNotice(notice);
+		return "redirect:/getNoticeOne?noticeNo="+noticeNo;
+	}
 }

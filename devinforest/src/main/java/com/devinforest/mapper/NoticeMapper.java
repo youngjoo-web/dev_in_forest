@@ -17,4 +17,8 @@ public interface NoticeMapper {
 	public Notice selectNoticeOne(int noticeNo);
 	// 공지사항 추가
 	public void insertNotice(Notice notice);
+	// 공지사항 삭제
+	public void deleteNotice(int noticeNo);
+	// 공지사항 수정
+	public void updateNotice(Notice notice);
 }
