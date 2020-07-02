@@ -159,11 +159,12 @@
 		parameterType="com.devinforest.vo.LoginMember"
 		resultType="com.devinforest.vo.LoginMember">
 		SELECT
-		member_email AS memberEmail,
-		member_name AS memberName,
-		member_reputation As memberReputation,
-		account_kind As accountKind
-		FROM dev_member
+		member_email AS memberEmail, member_name AS memberName, account_kind AS accountKind , member_password AS memberPassword
+		FROM (SELECT member_email, member_name, account_kind, member_password FROM dev_member
+		UNION
+		SELECT admin_email, admin_name, account_kind, admin_password FROM dev_admin
+		UNION
+		SELECT company_email, company_kor_name, account_kind, company_password FROM dev_company)e
 		WHERE member_email=#{memberEmail}
 		and
 		member_password=PASSWORD(#{memberPassword})

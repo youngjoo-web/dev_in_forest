@@ -249,17 +249,36 @@ public class MemberController {
 			System.out.println("로그인실패");
 			//회원로그인 실패시 관리자 서비스 로그인 시도 
 			return "member/memberLogin";
-		}else {
-			System.out.println(returnLoginMember+"<-------로그인 컨트롤러 액션");
+		}
+		returnLoginMember.setMemberPassword("");//비밀번호 지워주기!!
+		//로그인 회원 종류 구별
+		//일반회원
+		if(returnLoginMember.getAccountKind().equals("M")) {
+			System.out.println(returnLoginMember+"<-------로그인 컨트롤러 액션");		
 			session.setAttribute("loginMember", returnLoginMember);
 			System.out.println("로그인성공");
-			return "redirect:/home";
+			return "index/home";
 			/*if(returnLoginMember.getAccountKind().equals("M")) {
 				return "redirect:/home";
 			}else if(returnLoginMember.getAccountKind().equals("A")) {
 				
 			}*/
 			
+		}
+		if(returnLoginMember.getAccountKind().equals("A")) {
+			System.out.println(returnLoginMember+"<-------로그인 컨트롤러 액션");	
+			session.setAttribute("loginMember", returnLoginMember);
+			System.out.println("로그인성공");
+			return "admin/adminHome";
+		}
+		if(returnLoginMember.getAccountKind().equals("C")) {
+			System.out.println(returnLoginMember+"<-------로그인 컨트롤러 액션");	
+			session.setAttribute("loginMember", returnLoginMember);
+			System.out.println("로그인성공");
+			return "index/companyHome";
+		}
+		else {
+			return "redirect:/index";
 		}
 	}
 	//로그인 아웃
