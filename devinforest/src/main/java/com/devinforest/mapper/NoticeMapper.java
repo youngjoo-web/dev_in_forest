@@ -15,4 +15,6 @@ public interface NoticeMapper {
 	public int adminTotalCount(String searchWord);
 	// 공지사항 상세보기
 	public Notice selectNoticeOne(int noticeNo);
+	// 공지사항 추가
+	public void insertNotice(Notice notice);
 }

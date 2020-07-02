@@ -41,4 +41,8 @@ public class NoticeService {
 	public Notice getNoticeOne(int noticeNo) {
 		return noticeMapper.selectNoticeOne(noticeNo);
 	}
+	// 공지사항 추가
+	public void addNotice(Notice notice) {
+		noticeMapper.insertNotice(notice);
+	}
 }
