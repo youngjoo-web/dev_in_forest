@@ -28,4 +28,18 @@
 		FROM dev_notice
 		WHERE notice_title LIKE CONCAT('%',#{searchWord},'%')
 	</select>
+	<!-- 공지사항 상세보기 -->
+	<select id="selectNoticeOne"
+			parameterType="int"
+			resultType="com.devinforest.vo.Notice">
+		SELECT
+			notice_no      noticeNo,
+			admin_name     adminName,
+			notice_title   noticeTitle,
+			notice_content noticeContent,
+			notice_date    noticeDate,
+			notice_ip      noticeIp
+		FROM dev_notice
+		WHERE notice_no = #{noticeNo}
+	</select>
 </mapper>

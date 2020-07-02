@@ -13,4 +13,6 @@ public interface NoticeMapper {
 	public List<Notice> selectNoticeList(Map<String, Object> map);
 	// 공지사항 totalCount
 	public int adminTotalCount(String searchWord);
+	// 공지사항 상세보기
+	public Notice selectNoticeOne(int noticeNo);
 }

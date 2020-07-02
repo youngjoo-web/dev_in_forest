@@ -7,6 +7,7 @@ public class Notice {
 	private String noticeContent;
 	private String noticeDate;
 	private String noticeIp;
+	private String noticeKind;
 	
 	public int getNoticeNo() {
 		return noticeNo;
@@ -44,10 +45,18 @@ public class Notice {
 	public void setNoticeIp(String noticeIp) {
 		this.noticeIp = noticeIp;
 	}
+	public String getNoticeKind() {
+		return noticeKind;
+	}
+	public void setNoticeKind(String noticeKind) {
+		this.noticeKind = noticeKind;
+	}
 	
 	@Override
 	public String toString() {
 		return "Notice [noticeNo=" + noticeNo + ", adminName=" + adminName + ", noticeTitle=" + noticeTitle
-				+ ", noticeContent=" + noticeContent + ", noticeDate=" + noticeDate + ", noticeIp=" + noticeIp + "]";
+				+ ", noticeContent=" + noticeContent + ", noticeDate=" + noticeDate + ", noticeIp=" + noticeIp
+				+ ", noticeKind=" + noticeKind + "]";
 	}
+
 }

@@ -34,4 +34,12 @@ public class NoticeController {
 		
 		return "notice/getNoticeList";
 	}
+	// 공지사항 상세보기
+	@GetMapping("/getNoticeOne")
+	public String getNoticeOne(HttpSession session, Model model,
+								@RequestParam(value = "noticeNo") String noticeNo) {
+		System.out.println(noticeNo+" <- NoticeController.getNoticeOne: noticeNo");
+		
+		return "notice/getNoticeOne";
+	}
 }

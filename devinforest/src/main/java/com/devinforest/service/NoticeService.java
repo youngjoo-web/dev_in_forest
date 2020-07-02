@@ -37,4 +37,6 @@ public class NoticeService {
 		outputMap.put("noticeList", noticeList);
 		return outputMap;
 	}
+	// 공지사항 상세보기
+	public Notice getNoticeOne(int noticeNo)
 }
