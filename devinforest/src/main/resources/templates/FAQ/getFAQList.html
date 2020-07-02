@@ -31,9 +31,9 @@
 					<th>작성일</th>
 				</tr>
 				<tr th:each="FAQ : ${FAQList}">
-					<td th:text="${FAQ.faqNo}"></td>
-					<td th:text="${FAQ.faqTitle}"></td>
-					<td th:text="${FAQ.faqDate}"></td>
+					<td th:text="${FAQ.noticeNo}"></td>
+					<td th:text="${FAQ.noticeTitle}"></td>
+					<td th:text="${FAQ.noticeDate}"></td>
 				</tr>
 			</table>
 		</div>

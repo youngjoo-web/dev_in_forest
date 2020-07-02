@@ -8,14 +8,16 @@
 			parameterType="java.util.Map"
 			resultType="com.devinforest.vo.FAQ">
 		SELECT
-			faq_no      faqNo,
-			admin_name  adminName,
-			faq_title   faqTitle,
-			faq_content faqContent,
-			faq_date    faqDate
-		FROM dev_faq 
-		WHERE faq_title like CONCAT('%',#{searchWord},'%')
-		ORDER BY faq_date desc
+			notice_no      noticeNo,
+			admin_name     adminName,
+			notice_title   noticeTitle,
+			notice_content noticeContent,
+			notice_date    noticeDate,
+			notice_ip      noticeIp,
+			notice_kind    noticeKind
+		FROM dev_notice
+		WHERE notice_title LIKE CONCAT('%',#{searchWord},'%')
+		ORDER BY notice_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	<!-- FAQ totalCount -->
@@ -24,7 +26,7 @@
 			resultType="int">
 		SELECT 
 			COUNT(*)
-		FROM dev_faq
-		WHERE faq_title LIKE CONCAT('%',#{searchWord},'%')
+		FROM dev_notice
+		WHERE notice_title LIKE CONCAT('%',#{searchWord},'%')
 	</select>
 </mapper>

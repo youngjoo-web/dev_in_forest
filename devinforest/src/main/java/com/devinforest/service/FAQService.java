@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devinforest.mapper.FAQMapper;
-import com.devinforest.vo.FAQ;
+import com.devinforest.vo.Notice;
 
 @Service
 @Transactional
@@ -26,7 +26,7 @@ public class FAQService {
 		inPutMap.put("beginRow", beginRow);
 		inPutMap.put("rowPerPage", rowPerPage);
 		
-		List<FAQ> FAQList = faqMapper.selectFAQList(inPutMap);
+		List<Notice> FAQList = faqMapper.selectFAQList(inPutMap);
 		
 		Map<String, Object> outPutMap = new HashMap<>();
 		outPutMap.put("FAQList", FAQList);
