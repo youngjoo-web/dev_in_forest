@@ -38,7 +38,8 @@
 			notice_title   noticeTitle,
 			notice_content noticeContent,
 			notice_date    noticeDate,
-			notice_ip      noticeIp
+			notice_ip      noticeIp,
+			notice_kind	   noticeKind
 		FROM dev_notice
 		WHERE notice_no = #{noticeNo}
 	</select>

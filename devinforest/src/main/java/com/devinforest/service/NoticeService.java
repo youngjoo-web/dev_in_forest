@@ -38,5 +38,7 @@ public class NoticeService {
 		return outputMap;
 	}
 	// 공지사항 상세보기
-	public Notice getNoticeOne(int noticeNo)
+	public Notice getNoticeOne(int noticeNo) {
+		return noticeMapper.selectNoticeOne(noticeNo);
+	}
 }
