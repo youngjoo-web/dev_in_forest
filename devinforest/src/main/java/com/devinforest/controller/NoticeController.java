@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.devinforest.IPUtil;
 import com.devinforest.service.NoticeService;
 import com.devinforest.vo.Notice;
 
@@ -41,8 +43,24 @@ public class NoticeController {
 		int noticeNo = notice.getNoticeNo();
 		System.out.println(noticeNo+" <- NoticeController.getNoticeOne: noticeNo");
 		notice = noticeService.getNoticeOne(noticeNo);
-		System.out.println(notice+" <- NoticeController.getNoticeOne: notice");
+		//System.out.println(notice+" <- NoticeController.getNoticeOne: notice");
 		model.addAttribute("notice", notice);
 		return "notice/getNoticeOne";
+	}
+	// 공지사항 추가
+	@GetMapping("/addNotice")
+	public String addNotice(HttpSession session) {
+		return "notice/addNotice";
+	}
+	@PostMapping("/addNotice")
+	public String addNotice(HttpSession session, Notice notice, IPUtil ipUtil) {
+		System.out.println(notice+" <- NoticeController.addNotice: notice(주입 전)");
+		String adminName = "최동빠이"; // 로그인 세션 적용시 세션에 들어있는 닉네임 값 가져와서 주입 시켜야함.
+		notice.setAdminName(adminName);
+		String noticeIp = ipUtil.getIPAddress();
+		notice.setNoticeIp(noticeIp); // IP주입
+		System.out.println(notice+" <- NoticeController.addNotice: notice(주입 후)");
+		noticeService.addNotice(notice);
+		return "redirect:/getNoticeList";
 	}
 }

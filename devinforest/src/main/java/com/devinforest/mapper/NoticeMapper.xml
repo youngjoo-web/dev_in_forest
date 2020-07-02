@@ -45,4 +45,25 @@
 		FROM dev_notice
 		WHERE notice_no = #{noticeNo}
 	</select>
+	<!-- 공지사항 추가 -->
+	<insert id="insertNotice"
+			parameterType="com.devinforest.vo.Notice">
+		INSERT INTO
+		dev_notice(
+			admin_name,
+			notice_title,
+			notice_content,
+			notice_date,
+			notice_ip,
+			notice_kind
+		)
+		VALUES(
+			#{adminName},
+			#{noticeTitle},
+			#{noticeContent},
+			NOW(),
+			#{noticeIp},
+			'notice'
+		)
+	</insert>
 </mapper>
