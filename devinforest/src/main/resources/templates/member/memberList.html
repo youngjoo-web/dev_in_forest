@@ -30,11 +30,11 @@
 			<a th:if="${currentPage == 1}" th:href="@{/getMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
 			<a th:if="${currentPage > 1}" th:href="@{/getMemberList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
 			<span th:text="'-'+${currentPage}+'-'"></span>
+			<a th:if="${memberTotalCount == 0}" th:href="@{/getMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
 			<a th:if="${currentPage < lastPage}" th:href="@{/getMemberList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
 			<a th:if="${currentPage == lastPage}" th:href="@{/getMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-			<a th:href="@{/getMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
-			
+			<a th:if="${memberTotalCount == 0}"th:href="@{/getMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+			<a th:if="${memberTotalCount != 0}"th:href="@{/getMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
 		</div>
-	
 </body>
 </html>

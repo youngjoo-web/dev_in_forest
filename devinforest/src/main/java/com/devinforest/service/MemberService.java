@@ -12,13 +12,17 @@ import com.devinforest.mapper.MemberMapper;
 import com.devinforest.vo.Admin;
 import com.devinforest.vo.LoginMember;
 import com.devinforest.vo.Member;
+import com.devinforest.vo.Restoration;
 
 @Service
 @Transactional
 public class MemberService {
 	@Autowired
 	private MemberMapper memberMapper;
-
+	//회원 재가입요청
+	public int addrequestRestoreMember(Restoration restoration) {
+		return memberMapper.insertRequestRestore(restoration);
+	}
 	// 회원목록
 	public Map<String, Object> getMemberList(int currentPage, int rowPerPage, String searchWord) {
 		int beginRow=(currentPage-1)*rowPerPage;
@@ -82,5 +86,9 @@ public class MemberService {
 	// 회원정보 수정
 	public int modifyMember(Member member) {
 		return memberMapper.updateMember(member);
+	}
+	//회원의 이메일 찾기
+	public String findMemberEmail(Member member) {
+		return memberMapper.selectEmailByMember(member);
 	}
 }

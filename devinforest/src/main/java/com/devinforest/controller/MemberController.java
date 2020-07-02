@@ -16,11 +16,53 @@ import com.devinforest.mapper.MemberMapper;
 import com.devinforest.service.MemberService;
 import com.devinforest.vo.LoginMember;
 import com.devinforest.vo.Member;
+import com.devinforest.vo.Restoration;
 
 @Controller
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
+	
+	//회원 재가입 요청
+	@GetMapping("/requestMemberRestore")
+	public String requestMemberRestore(HttpSession session) {
+		if(session.getAttribute("loginMember")!=null) {
+			return "redirect:/index";
+		}
+		return "member/requestMemberRestore";
+	}
+	@PostMapping("/requestMemberRestore")
+	public String requestMemberRestore(HttpSession session, Restoration restoration) {
+		if(session.getAttribute("loginMember")!=null) {
+			return "redirect:/index";
+		}
+		memberService.addrequestRestoreMember(restoration);
+		System.out.println(restoration+"<---post controller restoration");
+		return "index/index";
+	}
+	//회원이메일 찾기
+	@GetMapping("/findMemberEmail")
+	public String findMemberEmail(HttpSession session,LoginMember loginMember) {
+		if(session.getAttribute("loginMember")!=null) {
+			return "redirect:/index";
+		}
+		return "member/checkNameForEmail";
+	}
+	//회원이메일 찾기 액션
+	@PostMapping("/findMemberEmail")
+	public String findMemberEmail(HttpSession session,Model model,Member member) {
+		
+		if(session.getAttribute("loginMember")!=null) {
+			return "redirect:/index";
+		}
+		String findEmail = memberService.findMemberEmail(member);
+		if(findEmail == null) {
+			model.addAttribute("msg","이메일을 찾을 수 없습니다.");
+		}else {
+			model.addAttribute("msg",findEmail);
+		}
+		return "member/checkNameForEmail";
+	}
 	//회원목록
 		@GetMapping("/getMemberList")
 		public String getMemberList(HttpSession session, Model model,
