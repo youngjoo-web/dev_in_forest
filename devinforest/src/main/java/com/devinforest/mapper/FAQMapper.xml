@@ -6,7 +6,7 @@
 	<!-- FAQ 목록 출력 -->
 	<select id="selectFAQList"
 			parameterType="java.util.Map"
-			resultType="com.devinforest.vo.FAQ">
+			resultType="com.devinforest.vo.Notice">
 		SELECT
 			notice_no      noticeNo,
 			admin_name     adminName,
