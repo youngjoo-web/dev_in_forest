@@ -13,20 +13,42 @@
 			<form method="post" th:action="@{/addNotice}">
 				<div>
 					<span>제목</span>
-					<input type="text" name="noticeTitle">
+					<input id="noticeTitle" type="text" name="noticeTitle">
 				</div>
 				<div>
 					<span>내용</span>
-					<textarea rows="5" cols="20" name="noticeContent"></textarea>
+					<textarea id="noticeContent" rows="5" cols="20" name="noticeContent"></textarea>
 				</div>
 				<div>
 					<span>작성자</span>
 					<input type="text" value="로그인되있는 닉네임" readonly="readonly">
 				</div>
 				<div>
-					<button type="submit">작성완료</button>
+					<button id="addNoticeBtn" type="button">작성완료</button>
 				</div>
 			</form>
 		</div>
 	</body>
+	<script>
+		$('#addNoticeBtn').click(function(){
+			let noticeTitle = $('#noticeTitle').val();
+			console.log(noticeTitle.search(/\s/)+' <- 공백');
+			if(noticeTitle == ''){
+				alert('제목을 입력해주세요.');
+				return;
+			}
+			if(noticeTitle.length < 2 || noticeTitle.length > 20){
+				alert('제목은 2자리 ~ 20자리 이내로 입력해주세요.');
+				return;
+			}
+			if(noticeTitle.search(/\s/) == 0){
+				alert("제목은 공백으로 시작할 수 없습니다.");
+				return;
+			}
+			if($('#noticeContent').val()==''){
+				alert('내용을 입력해주세요.');
+				return;
+			}
+		});
+	</script>
 </html>
