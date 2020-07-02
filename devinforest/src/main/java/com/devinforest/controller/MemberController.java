@@ -247,11 +247,19 @@ public class MemberController {
 		System.out.println("returnloginMember-->"+returnLoginMember);
 		if(returnLoginMember == null) {
 			System.out.println("로그인실패");
+			//회원로그인 실패시 관리자 서비스 로그인 시도 
 			return "member/memberLogin";
 		}else {
+			System.out.println(returnLoginMember+"<-------로그인 컨트롤러 액션");
 			session.setAttribute("loginMember", returnLoginMember);
 			System.out.println("로그인성공");
 			return "redirect:/home";
+			/*if(returnLoginMember.getAccountKind().equals("M")) {
+				return "redirect:/home";
+			}else if(returnLoginMember.getAccountKind().equals("A")) {
+				
+			}*/
+			
 		}
 	}
 	//로그인 아웃

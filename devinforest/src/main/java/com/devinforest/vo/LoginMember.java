@@ -4,6 +4,8 @@ public class LoginMember {
 	private String memberEmail;
 	private String memberName;
 	private String memberPassword;
+	private String accountKind;
+	private int memberReputation;
 	public String getMemberEmail() {
 		return memberEmail;
 	}
@@ -22,9 +24,22 @@ public class LoginMember {
 	public void setMemberPassword(String memberPassword) {
 		this.memberPassword = memberPassword;
 	}
+	public String getAccountKind() {
+		return accountKind;
+	}
+	public void setAccountKind(String accountKind) {
+		this.accountKind = accountKind;
+	}
+	public int getMemberReputation() {
+		return memberReputation;
+	}
+	public void setMemberReputation(int memberReputation) {
+		this.memberReputation = memberReputation;
+	}
 	@Override
 	public String toString() {
 		return "LoginMember [memberEmail=" + memberEmail + ", memberName=" + memberName + ", memberPassword="
-				+ memberPassword + "]";
+				+ memberPassword + ", accountKind=" + accountKind + ", memberReputation=" + memberReputation + "]";
 	}
+	
 }

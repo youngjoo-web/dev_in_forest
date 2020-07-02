@@ -160,8 +160,9 @@
 		resultType="com.devinforest.vo.LoginMember">
 		SELECT
 		member_email AS memberEmail,
-		member_password AS
-		memberPassword
+		member_name AS memberName,
+		member_reputation As memberReputation,
+		account_kind As accountKind
 		FROM dev_member
 		WHERE member_email=#{memberEmail}
 		and
