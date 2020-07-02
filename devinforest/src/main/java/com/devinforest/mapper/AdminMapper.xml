@@ -29,7 +29,7 @@
 			)
 			VALUES(
 				#{adminEmail},
-				#{adminPw},
+				PASSWORD(#{adminPw}),
 				#{adminName},
 				NOW()
 			)
