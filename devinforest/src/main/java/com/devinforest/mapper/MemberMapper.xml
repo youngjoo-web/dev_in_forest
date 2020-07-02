@@ -99,7 +99,7 @@
 		member_email=#{memberEmail}
 	</select>
 	<!-- 비밀번호 찾기 쿼리문 -->
-	<update id="updateMemberPw" parameterType="java.util.Map">
+	<update id="findMemberPw" parameterType="com.devinforest.vo.LoginMember">
 		UPDATE dev_member
 		SET
 		member_password=PASSWORD(#{memberPassword})

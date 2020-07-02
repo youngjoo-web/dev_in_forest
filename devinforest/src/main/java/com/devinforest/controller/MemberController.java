@@ -40,13 +40,30 @@ public class MemberController {
 		System.out.println(restoration+"<---post controller restoration");
 		return "index/index";
 	}
+	//회원비밀번호 찾기
+	@GetMapping("/findMemberPw")
+	public String findMemberPw(HttpSession session) {
+		if(session.getAttribute("loginMember")!=null) {
+			return "redirect:/index";
+		}
+		return "member/findMemberPw";
+	}
+	@PostMapping("/findMemberPw")
+	public String findMemberPw(HttpSession session,LoginMember loginMember, Model model) {
+		if(session.getAttribute("loginMember")!=null) {
+			return "redirect:/index";
+		}
+		memberService.findMemberPw(loginMember);
+		model.addAttribute("msg","병경된 비밀번호를 이메일로 보냈습니다.");
+		return "member/findMemberPw";
+	}
 	//회원이메일 찾기
 	@GetMapping("/findMemberEmail")
 	public String findMemberEmail(HttpSession session,LoginMember loginMember) {
 		if(session.getAttribute("loginMember")!=null) {
 			return "redirect:/index";
 		}
-		return "member/checkNameForEmail";
+		return "member/findMemberEmail";
 	}
 	//회원이메일 찾기 액션
 	@PostMapping("/findMemberEmail")
@@ -61,7 +78,7 @@ public class MemberController {
 		}else {
 			model.addAttribute("msg",findEmail);
 		}
-		return "member/checkNameForEmail";
+		return "member/findMemberEmail";
 	}
 	//회원목록
 		@GetMapping("/getMemberList")

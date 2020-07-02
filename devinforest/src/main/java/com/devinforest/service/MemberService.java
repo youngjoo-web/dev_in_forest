@@ -3,8 +3,11 @@ package com.devinforest.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +22,8 @@ import com.devinforest.vo.Restoration;
 public class MemberService {
 	@Autowired
 	private MemberMapper memberMapper;
+	@Autowired
+	   private JavaMailSender javaMailSender;
 	//회원 재가입요청
 	public int addrequestRestoreMember(Restoration restoration) {
 		return memberMapper.insertRequestRestore(restoration);
@@ -86,6 +91,26 @@ public class MemberService {
 	// 회원정보 수정
 	public int modifyMember(Member member) {
 		return memberMapper.updateMember(member);
+	}
+	//회원의 비밀번호 찾기(변경해주기)
+	public int findMemberPw(LoginMember loginMember) {
+		//pw추가
+	      UUID uuid=UUID.randomUUID();      
+	      String memberPw=uuid.toString().substring(0,8);
+	      loginMember.setMemberPassword(memberPw);
+	      int row = memberMapper.findMemberPw(loginMember);
+	      //메일로 update성공한 랜덤 pw를 전송
+	      //메일객체 new JavaMailSender();
+	      if(row ==1) {
+	         System.out.println(memberPw+"<--update memberPw");
+	         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+	         simpleMailMessage.setTo(loginMember.getMemberEmail());//메일 받는사람
+	         simpleMailMessage.setFrom("youngjoo715@gmail.com");//메일 보내는사람
+	         simpleMailMessage.setSubject("devinforest 비밀번호찾기 메일");//메일제목
+	         simpleMailMessage.setText("변경된 비밀번호는"+memberPw+"입니다.");//메일 내용
+	         javaMailSender.send(simpleMailMessage);
+	      }
+	      return row;
 	}
 	//회원의 이메일 찾기
 	public String findMemberEmail(Member member) {

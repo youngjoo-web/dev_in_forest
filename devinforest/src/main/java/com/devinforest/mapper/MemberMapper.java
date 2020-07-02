@@ -18,7 +18,7 @@ public interface MemberMapper {
 	//아이디 찾기
 	public String selectEmailByMember(Member member);
 	//비밀번호 찾기
-	public int updateMemberPw(Map<String, Object> map);
+	public int findMemberPw(LoginMember loginMember);
 	//회원 탈퇴
 	public int deleteMember(LoginMember loginMember);
 	//회원정보 불러오기
