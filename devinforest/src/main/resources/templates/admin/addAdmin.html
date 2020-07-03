@@ -1,72 +1,402 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8">
-		<title>관리자 추가</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<style>
-			.none{
-				border: 0px;
-			}
-			.adminEmailArea{
-				border: 1px solid black;
-				padding : 1px;
-			}
-			.width1{
-				width: 80px;
-			}
-			.width2{
-				width: 110px;
-			}
-		</style>
-	</head>
-	<body>
-		<div>
-			<h1>관리자 추가</h1>		
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>관리자 등록</title>
+
+<!-- Custom fonts for this template-->
+<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+
+<!--  addAdmin template -->
+<link th:href="@{/css/addAdmin.css}" rel="stylesheet">
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<style>
+.none {
+	border: 0px;
+}
+
+.adminEmailArea {
+	border: 1px solid black;
+	padding: 1px;
+}
+
+.width1 {
+	width: 80px;
+}
+
+.width2 {
+	width: 110px;
+}
+</style>
+</head>
+<body id="page-top">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+
+		<!-- 사이드바 -->
+		<ul
+			class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion"
+			id="accordionSidebar">
+
+			<!-- Sidebar - Brand -->
+			<a
+				class="sidebar-brand d-flex align-items-center justify-content-center"
+				th:href="@{/adminHome}">
+				<div class="sidebar-brand-icon rotate-n-15">
+					<i class="fas fa-tree"></i>
+				</div>
+				<div class="sidebar-brand-text mx-3">Dev In Forest</div>
+			</a>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider my-0">
+
+			<!-- Nav Item - Dashboard -->
+			<li class="nav-item active"><a class="nav-link"
+				th:href="@{/adminHome}"> <i class="fas fa-fw fa-tachometer-alt"></i>
+					<span>관리자 홈</span>
+			</a></li>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<!-- Heading -->
+			<div class="sidebar-heading">회원관리</div>
+
+			<!-- Nav Item - 일반회원 관리 -->
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapse1" aria-expanded="true"
+				aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i> <span>일반회원
+						관리</span>
+			</a>
+				<div id="collapse1" class="collapse" aria-labelledby="headingTwo"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">일반회원 관리</h6>
+						<a class="collapse-item" href="#">일반회원 조회</a> <a
+							class="collapse-item" href="#">탈퇴회원 조회</a> <a
+							class="collapse-item" href="#">블랙회원 조회</a>
+					</div>
+				</div></li>
+
+			<!-- Nav Item - 기업회원 관리 -->
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapse2" aria-expanded="true"
+				aria-controls="collapseUtilities"> <i
+					class="fas fa-fw fa-wrench"></i> <span>기업회원 관리</span>
+			</a>
+				<div id="collapse2" class="collapse"
+					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">기업회원 관리</h6>
+						<a class="collapse-item" href="#">기업회원 조회</a>
+					</div>
+				</div></li>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<!-- Heading -->
+			<div class="sidebar-heading">QnA조회</div>
+
+			<!-- Nav Item - Charts -->
+			<li class="nav-item"><a class="nav-link" href="#"> <i
+					class="fas fa-fw fa-folder"></i> <span>QnA조회</span>
+			</a></li>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<!-- Heading -->
+			<div class="sidebar-heading">공지 및 문의</div>
+
+			<!-- Nav Item - 공지 관리 -->
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapse3" aria-expanded="true"
+				aria-controls="collapsePages"> <i class="fas fa-fw fa-folder"></i>
+					<span>공지 & FAQ관리</span>
+			</a>
+				<div id="collapse3" class="collapse" aria-labelledby="headingPages"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">공지 관리</h6>
+						<a class="collapse-item" href="#">공지사항 관리 </a> <a
+							class="collapse-item" href="#">FAQ 관리</a>
+					</div>
+				</div></li>
+
+			<!-- Nav Item - 공지 관리 -->
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapse4" aria-expanded="true"
+				aria-controls="collapsePages"> <i class="fas fa-fw fa-folder"></i>
+					<span>문의 & 신고관리</span>
+			</a>
+				<div id="collapse4" class="collapse" aria-labelledby="headingPages"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">문의 관리</h6>
+						<a class="collapse-item" href="#">문의 관리 </a> <a
+							class="collapse-item" href="#">신고 관리</a>
+					</div>
+				</div></li>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<!-- Heading -->
+			<div class="sidebar-heading">통계 확인</div>
+
+			<!-- Nav Item - 통계 -->
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapse5" aria-expanded="true"
+				aria-controls="collapsePages"> <i
+					class="fas fa-fw fa-chart-area"></i> <span>통계</span>
+			</a>
+				<div id="collapse5" class="collapse" aria-labelledby="headingPages"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">통계 확인</h6>
+						<a class="collapse-item" href="#">질문 통계 </a> <a
+							class="collapse-item" href="#">답변 통계</a> <a class="collapse-item"
+							href="#">회원가입 통계</a>
+					</div>
+				</div></li>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<!-- Heading -->
+			<div class="sidebar-heading">관리자 설정</div>
+
+			<!-- Nav Item - 관리자 관리 -->
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapse6" aria-expanded="true"
+				aria-controls="collapsePages"> <i
+					class="fas fa-fw fa-chart-area"></i> <span>관리자 설정</span>
+			</a>
+				<div id="collapse6" class="collapse" aria-labelledby="headingPages"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">관리자 설정</h6>
+						<a class="collapse-item" href="#">관리자 조회 </a> <a
+							class="collapse-item" href="#">관리자 등록</a>
+					</div>
+				</div></li>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider d-none d-md-block">
+
+			<!-- Sidebar Toggler (Sidebar) -->
+			<div class="text-center d-none d-md-inline">
+				<button class="rounded-circle border-0" id="sidebarToggle"></button>
+			</div>
+
+		</ul>
+		<!-- 사이드바 끝 -->
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<!-- Topbar -->
+				<nav
+					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+					<!-- Sidebar Toggle (Topbar) -->
+					<button id="sidebarToggleTop"
+						class="btn btn-link d-md-none rounded-circle mr-3">
+						<i class="fa fa-bars"></i>
+					</button>
+
+					<!-- 상단 검색창 -->
+					<form
+						class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+						<div class="input-group">
+							<input type="text" class="form-control bg-light border-0 small"
+								placeholder="Search for..." aria-label="Search"
+								aria-describedby="basic-addon2">
+							<div class="input-group-append">
+								<button class="btn btn-success" type="button">
+									<i class="fas fa-search fa-sm"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+
+					<!-- Topbar Navbar -->
+					<ul class="navbar-nav ml-auto">
+
+						<!-- Nav Item - Search Dropdown (Visible Only XS) -->
+						<li class="nav-item dropdown no-arrow d-sm-none"><a
+							class="nav-link dropdown-toggle" href="#" id="searchDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
+						</a> <!-- Dropdown - Messages -->
+							<div
+								class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+								aria-labelledby="searchDropdown">
+								<form class="form-inline mr-auto w-100 navbar-search">
+									<div class="input-group">
+										<input type="text"
+											class="form-control bg-light border-0 small"
+											placeholder="Search for..." aria-label="Search"
+											aria-describedby="basic-addon2">
+										<div class="input-group-append">
+											<button class="btn btn-primary" type="button">
+												<i class="fas fa-search fa-sm"></i>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div></li>
+
+						<!-- Nav Item - User Information -->
+						<li class="nav-item dropdown no-arrow"><a
+							class="nav-link dropdown-toggle" href="#" id="userDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> <span
+								class="mr-2 d-none d-lg-inline text-gray-600 small">로그인
+									관리자 닉네임</span> <img class="img-profile rounded-circle"
+								th:src="@{/adminBootstrap/img/img.png}">
+						</a> <!-- Dropdown - User Information -->
+							<div
+								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+								aria-labelledby="userDropdown">
+								<a class="dropdown-item" href="#" data-toggle="modal"
+									data-target="#logoutModal"> <i
+									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+									로그아웃
+								</a>
+							</div></li>
+
+					</ul>
+
+				</nav>
+				<!-- End of Topbar -->
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid pt-4 px-5 content">
+					<div class="row">
+						<div class="col-lg-10 col-xl-9 mx-auto">
+							<div class="card card-signin flex-row my-5">
+								<div class="card-img-left d-none d-md-flex">
+									<!-- Background image for card set in CSS! -->
+								</div>
+								<div class="card-body">
+									<h4 class="text-dark font-weight-bold mb-4 text-center">관리자 등록</h4>
+									<form class="form-signin" id="addAdminForm" method="post" th:action="@{/addAdmin}">
+										<input id="adminEmail" type="hidden" name="adminEmail" value="">
+										<input id="adminName" type="hidden" name="adminName" value="">
+										<div class="form-label-group">
+											<input type="text" id="inputUserame" class="form-control" name="adminEmail2" placeholder="아이디" required autofocus>
+											<label for="inputUserame">@devinforest.com</label>
+											<div>
+												<button id="emailCheckBtn" class="checkBtn btn-success" type="button">중복확인</button>
+												<span id="emailMsg"></span>
+											</div>
+										</div>
+
+										<div class="form-label-group">
+											<input type="text" id="inputEmail" class="form-control" name="adminName2" placeholder="닉네임" required>
+											<label for="inputEmail">닉네임</label>
+											<div>
+												<button id="nameCheckBtn" class="checkBtn btn-success" type="button">중복확인</button>
+												<span id="nameMsg"></span>
+											</div>
+										</div>
+										<div class="form-label-group">
+											<input type="password" id="inputPassword" class="form-control" name="adminPw" placeholder="비밀번호" required>
+											<label for="inputPassword">비밀번호</label>
+										</div>
+										<button id="signUpBtn" class="btn btn-lg btn-success btn-block text-uppercase" type="button">등록하기</button>
+									</form>
+									<hr>
+									<div class="text-center">
+										아이디는 자동으로 @devinforest.com 이메일 형식으로 생성됩니다.
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			<!-- End of Main Content -->
+
+			<!-- 하단 저작권 -->
+			<footer class="sticky-footer bg-white">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright &copy; Your Website 2020</span>
+					</div>
+				</div>
+			</footer>
+			<!-- 하단 저작권 끝 -->
+
 		</div>
-		<form id="form" method="post" th:action="@{/addAdmin}">
-			<input id="adminEmail" type="hidden" name="adminEmail" value="">
-			<input id="adminName" type="hidden" name="adminName" value="">
-			<div>
-				<div>
-					<span th:text="이메일"></span>
+		<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+
+	<!-- Logout Modal-->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">로그아웃</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
 				</div>
-				<div>
-					<span class="adminEmailArea">
-						<input id="adminEmail2" class="none width1" type="text" name="adminEmail2" placeholder="아이디">
-						<span>@devinforest.com</span>
-					</span>
-					<button id="emailCheckBtn" type="button">중복확인</button>
-					<span id="emailMsg"></span>
-				</div>
-			</div>
-			<div>
-				<div>
-					<span th:text="닉네임"></span>
-				</div>
-				<div>
-					<input id="adminName2" type="text" name="adminName2" placeholder="닉네임을 입력해주세요.">
-					<button id="nameCheckBtn" type="button">중복확인</button>
-					<span id="nameMsg"></span>
-				</div>
-			</div>
-			<div>
-				<div>
-					<span th:text="비밀번호"></span>
-				</div>
-				<div>
-					<input id="adminPw" type="password" name="adminPw" placeholder="비밀번호를 입력해주세요.">			
+				<div class="modal-body">정말 로그아웃 하시겠습니까?</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">취소</button>
+					<a class="btn btn-primary" th:href="@{/logout}">로그아웃</a>
 				</div>
 			</div>
-			<div>
-				<button type="button" id="signUpBtn">가입</button>
-			</div>
-		</form>
-	</body>
-	<script>
+		</div>
+	</div>
+
+	<!-- Bootstrap core JavaScript-->
+	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script th:src="@{/js/sb-admin-2.min.js}"></script>
+</body>
+<script>
 	// 회원가입 유효성 검사
 	$('#signUpBtn').click(function(){		
-		let pw = $('#adminPw').val();
+		let pw = $('#inputPassword').val();
 		let pwNum = pw.search(/[0-9]/);
 		let pwEng = pw.search(/[a-z]/);
 		let pwSpe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/);
@@ -97,13 +427,13 @@
 			return;
 		}
 		console.log('유효성 검사 통과');
-		$('#form').submit();
+		$('#addAdminForm').submit();
 		
 	});
 	// 아이디 중복체크
 	$('#emailCheckBtn').click(function(){
 		$('#adminEmail').val('');
-		let email = $('#adminEmail2').val();
+		let email = $('#inputUserame').val();
 		let emailNum = email.search(/[0-9]/);
 		console.log(emailNum+" <- emailNum");
 		let emailEng = email.search(/[a-z]/);
@@ -133,7 +463,7 @@
 			return;
 		}
 		
-		let adminEmail2 = $('#adminEmail2').val();
+		let adminEmail2 = $('#inputUserame').val();
 		$.ajax({
             url:'/checkAdminEmail'
             ,type:'POST'
@@ -150,7 +480,7 @@
 	
 	$('#nameCheckBtn').click(function(){
 		$('#adminName').val('');
-		let name = $('#adminName2').val();
+		let name = $('#inputEmail').val();
 		let nameNum = name.search(/[0-9]/);
 		let nameEng = name.search(/[a-z]/);
 		let nameSpe = name.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/);
@@ -168,7 +498,7 @@
 		 	return;
 		}
 		
-		let adminName2 = $('#adminName2').val();
+		let adminName2 = $('#inputEmail').val();
 		$.ajax({
             url:'/checkAdminName'
             ,type:'POST'
