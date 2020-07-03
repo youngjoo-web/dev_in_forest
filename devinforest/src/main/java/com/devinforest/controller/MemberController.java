@@ -292,7 +292,7 @@ public class MemberController {
 			
 			session.setAttribute("loginMember", returnLoginMember);
 			System.out.println("로그인성공");
-			return "index/companyHome";
+			return "company/companyHome";
 		}
 		else {
 			return "redirect:/index";

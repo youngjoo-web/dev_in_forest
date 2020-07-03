@@ -6,13 +6,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.devinforest.mapper.CompanyMapper;
 import com.devinforest.vo.Company;
+import com.devinforest.vo.LoginCompany;
 
 @Service
 @Transactional
 public class CompanyService {
 	@Autowired
 	private CompanyMapper companyMapper;
-
+	//기업 로그인
+	public LoginCompany companyLogin(LoginCompany loginCompany) {
+		System.out.println("companyService" + loginCompany);
+		return companyMapper.selectLoginCompanyMamber(loginCompany);
+	}
 	// 기업회원가입
 	public int addCompanyMember(Company company) {
 		return companyMapper.insertCompanyMember(company);

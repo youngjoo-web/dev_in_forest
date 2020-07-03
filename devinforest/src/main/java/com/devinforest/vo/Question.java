@@ -10,6 +10,7 @@ public class Question {
 	private String questionUpdateDate;
 	private int questionViews;
 	private String questionIp;
+
 	public int getQuestionNo() {
 		return questionNo;
 	}
@@ -64,6 +65,7 @@ public class Question {
 	public void setQuestionIp(String questionIp) {
 		this.questionIp = questionIp;
 	}
+	
 	@Override
 	public String toString() {
 		return "Question [questionNo=" + questionNo + ", memberName=" + memberName + ", questionTitle=" + questionTitle

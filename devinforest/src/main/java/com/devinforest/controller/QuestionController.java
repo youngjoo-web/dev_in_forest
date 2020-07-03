@@ -19,26 +19,32 @@ import com.devinforest.vo.Question;
 @Controller
 public class QuestionController {
    
-	@Autowired private QuestionService questionService;
+	@Autowired 
+	private QuestionService questionService;
    
 	/* ---------- 질문 목록 ---------- */
 	@GetMapping("/getQuestionList")
 	public String getQuestionList(Model model, HttpSession session,
 		@RequestParam(value="currentPage", defaultValue="1") int currentPage,
 		@RequestParam(value="searchWord", defaultValue="") String searchWord) {
+		
 		// 비로그인 시 "Guest"처리 
 		String memberName = "Guest";
+		
 		// 로그인 시 memberId값
-		if(session.getAttribute("loginMember")!=null) {
+		if(session.getAttribute("loginMember") != null) {
 			memberName=((LoginMember)session.getAttribute("loginMember")).getMemberName();
 		}
-		System.out.println(memberName + "<--memberName");
+		System.out.println(memberName + " <--- memberName");
 		
 		Map<String, Object> questionList = questionService.getQuestionList(currentPage, searchWord);
+		
+		
 		model.addAttribute("memberName", memberName);
 		model.addAttribute("questionList", questionList.get("questionList"));
 		model.addAttribute("lastPage", questionList.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
+		
 		
 		System.out.println("↓QuestionController questionList↓");
 		System.out.println(questionList.get("questionList"));
@@ -48,6 +54,36 @@ public class QuestionController {
 		return "question/getQuestionList";
 	}
    
+	/* ---------- 삭제된 질문 목록 ---------- */
+	@GetMapping("/getRemovedQuestionList")
+	public String getRemovedQuestionList(Model model, HttpSession session,
+		@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+		@RequestParam(value="searchWord", defaultValue="") String searchWord) {
+		
+		String memberName=((LoginMember)session.getAttribute("loginMember")).getMemberName();
+		
+		// 관리자 로그인이 아닐 시에 로그인창으로 돌려보냄
+		if(((LoginMember)session.getAttribute("loginMember")).getAccountKind() != "A") {
+			return "redirect:/memberLogin";
+		}
+		System.out.println(memberName + " <--- memberName");
+		
+		Map<String, Object> deletedQuestionList = questionService.getRemovedQuestionList(currentPage, searchWord);
+		
+		model.addAttribute("memberName", memberName);
+		model.addAttribute("questionList", deletedQuestionList.get("questionList"));
+		model.addAttribute("lastPage", deletedQuestionList.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		
+		
+		System.out.println("↓QuestionController deletedQuestionList↓");
+		System.out.println(deletedQuestionList.get("questionList"));
+		System.out.println(currentPage + " <--- QuestionController currentPage");
+		System.out.println(searchWord + " <--- QuestionController searchWord");
+		
+		return "question/getQuestionList";
+	}
+	
 	/* ---------- 질문 상세보기 ---------- */
 	@GetMapping("/getQuestionOne")
 	public String getQuestionOne(Model model, HttpSession session, Question question) {
@@ -98,17 +134,20 @@ public class QuestionController {
 	/* ---------- 질문 수정하기 ---------- */
 	// 질문 수정 폼으로 이동
 	@GetMapping("/modifyQuestion")
-	public String modifyQuestion(Model model, Question question) {
+	public String modifyQuestion(Model model, Question question,HttpSession session) {
+		if(session.getAttribute("loginMember")==null) {
+			return "redirect:/memberLogin";
+		}
 		Question modifyQuestion = questionService.getModifyQuestionOne(question);
 		model.addAttribute("modifyQuestion", modifyQuestion);
-		return "question/modifyQeustion";
+		return "question/modifyQuestion";
 	}
    
 	// 질문 수정 실행
 	@PostMapping("/modifyQuestion")
 	public String modifyQuestion(Question question) {
 		questionService.modifyQuestion(question);
-		return "redirect:/question/getQuestionList";
+		return "redirect:/getQuestionList?questionNo=" + question.getQuestionNo();
 	}
    
    
