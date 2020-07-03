@@ -30,6 +30,7 @@
 			<th>question_createdate</th>
 			<th>question_updatedate</th>
 			<th>question_ip</th>
+			<th>question_views</th>
 		</tr>
 		<tr th:each="ql : ${questionList}">
 			<td th:text="${ql.questionNo}"></td>
@@ -39,6 +40,7 @@
 			<td th:text="${ql.questionCreateDate}"></td>
 			<td th:text="${ql.questionUpdateDate}"></td>
 			<td th:text="${ql.questionIp}"></td>
+			<td th:text="${ql.questionViews}"></td>
 		</tr>
 	</table>
 	<div th:if="${currentPage} > 1">
