@@ -2,7 +2,42 @@
   --input-padding-x: 1.5rem;
   --input-padding-y: .75rem;
 }
-
+.searchText{
+	width:250px;
+	height: 40px;
+	color: #858796;
+	background-color: transparent;
+	border: solid transparent;
+	border: 1px solid #B5B5B5; 
+	border-radius: 5px;
+}
+.searchBtn{
+	height: 40px;
+	background: #148b61;
+	border-radius: 5px;
+	color : white;
+	font-weight: bold;
+}
+.selectBtn {
+	height: 40px;
+	border: 2px solid #1cc88a;
+	color: #1cc88a;
+	border-radius: 5px;
+	font-weight: bold;
+	padding : 8px;
+}
+.selectBtn:hover{
+	color: #148b61;
+}
+.pageBtn{
+	background: #148b61;
+	border-radius: 5px;
+	color : white;
+	font-weight: bold;
+}
+.pageBtn:hover{
+	color: white;
+}
 body {
   background: #007bff;
   background: linear-gradient(to right, #0062E6, #33AEFF);
