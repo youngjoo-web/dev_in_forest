@@ -5,24 +5,7 @@
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<style>
-		.none {
-			border: 0px;
-		}
-
-		.adminEmailArea {
-			border: 1px solid black;
-			padding: 1px;
-		}
-
-		.width1 {
-			width: 80px;
-		}
-
-		.width2 {
-			width: 110px;
-		}
-		</style>
+		
 	</head>
 	<body>
 	<div>
@@ -37,7 +20,7 @@
 			</div>
 			<div>
 					<span class="memberEmailArea">
-						<input id="memberEmail2" class="none width1" type="email" name="memberEmail2" placeholder="이메일">
+						<input id="memberEmail2"  type="email" name="memberEmail2" placeholder="이메일">
 					</span>
 					<button id="emailCheckBtn" type="button">중복확인</button>
 					<span id="emailMsg"></span>
@@ -58,7 +41,7 @@
 					<span th:text="비밀번호"></span>
 				</div>
 				<div>
-					<input id="memberPw" type="password" name="memberPw" placeholder="비밀번호를 입력해주세요.">			
+					<input id="memberPw" type="password" name="memberPassword" placeholder="비밀번호를 입력해주세요.">			
 			</div>
 		</div>
 		<div>
@@ -109,8 +92,8 @@
 	});
 	// 아이디 중복체크
 	$('#emailCheckBtn').click(function(){
-		$('#companyEmail').val('');
-		let email = $('#companyEmail2').val();
+		
+		let email = $('#memberEmail2').val();
 		let emailNum = email.search(/[0-9]/);
 		console.log(emailNum+" <- emailNum");
 		let emailEng = email.search(/[a-z]/);
@@ -134,95 +117,59 @@
 		
 		
 		
-		let companyEmail2 = $('#companyEmail2').val();
+		let memberEmail2 = $('#memberEmail2').val();
 		$.ajax({
-            url:'/checkCompanyEmail'
+            url:'/checkMemberEmail'
             ,type:'POST'
-            ,data:{'companyEmail2':companyEmail2}
+            ,data:{'memberEmail2':memberEmail2}
             ,success : function(data) {
         		console.log(data);
         		$('#emailMsg').text(data);
         		if(data == "사용가능한 이메일입니다.") {
-        			$('#companyEmail').val(email);
+        			$('#memberEmail').val(email);
         		}
             }
 		});
 	});
 	
 	$('#nameCheckBtn').click(function(){
-		$('#companyKorName').val('');
-		let korname = $('#companyKorName2').val();
-		let kornameNum = korname.search(/[0-9]/);
-		let kornameEng = korname.search(/[a-z]/);
-		let kornameSpe = korname.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/);
 		
-		if(korname.length < 2 || korname.length > 10){
+		let name = $('#memberName2').val();
+		let nameNum = name.search(/[0-9]/);
+		let nameEng = name.search(/[a-z]/);
+		let nameSpe = name.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/);
+		
+		if(name.length < 2 || name.length > 10){
 			 alert("닉네임은 2자리 ~ 10자리 이내로 입력해주세요.");
 			 return;
 		}
-		if(kornameEng != -1){
+		if(nameEng != -1){
 	 		alert("한글은 한글로만 입력해주세요.");
 		 	return;
 		}
-		if(korname.search(/\s/) != -1){
+		if(name.search(/\s/) != -1){
 	 		alert("닉네임은 공백 없이 입력해주세요.");
 		 	return;
 		}
-		if(kornameSpe != -1){
+		if(nameSpe != -1){
 	 		alert("닉네임은 특수문자를 포함할 수 없습니다.");
 		 	return;
 		}
 		
-		let companyKorName2 = $('#companyKorName2').val();
+		let memberName2 = $('#memberName2').val();
 		$.ajax({
-            url:'/checkCompanyKorName'
+            url:'/checkMemberName'
             ,type:'POST'
-            ,data:{'companyKorName2':companyKorName2}
+            ,data:{'memberName2':memberName2}
             ,success : function(data) {
         		console.log(data);
-        		$('#kornameMsg').text(data);
+        		$('#nameMsg').text(data);
         		if(data == "사용가능한 닉네임입니다.") {
-        			$('#companyKorName').val(korname);
+        			$('#memberName').val(name);
         		}
             }
 		});
 	});
-	$('#engnameCheckBtn').click(function(){
-		$('#companyEngName').val('');
-		let engname = $('#companyEngName2').val();
-		let engnameNum = engname.search(/[0-9]/);
-		let engnameKor = engname.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/);
-		let engnameSpe = engname.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/);
-		
-		if(engname.length < 2 || engname.length > 10){
-			 alert("닉네임은 2자리 ~ 10자리 이내로 입력해주세요.");
-			 return;
-		}
-		if(engname.search(/\s/) != -1){
-	 		alert("닉네임은 공백 없이 입력해주세요.");
-		 	return;
-		}
-		if(engnameSpe != -1){
-	 		alert("닉네임은 특수문자를 포함할 수 없습니다.");
-		 	return;
-		}
-		if(engnameKor != -1){
-	 		alert("영문이름은 영문으로만 입력해주세요.");
-		 	return;
-		}
-		let companyEngName2 = $('#companyEngName2').val();
-		$.ajax({
-            url:'/checkCompanyEngName'
-            ,type:'POST'
-            ,data:{'companyEngName2':companyEngName2}
-            ,success : function(data) {
-        		console.log(data);
-        		$('#engnameMsg').text(data);
-        		if(data == "사용가능한 닉네임입니다.") {
-        			$('#companyEngName').val(engname);
-        		}
-            }
-		});
-	});
+	
 	</script>
 </html>

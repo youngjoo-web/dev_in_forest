@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexCotroller {
 	@GetMapping({"/", "/index"})
-	public String index() {
+	public String index(HttpSession session) {
+		if(session.getAttribute("loginMember")!=null) {
+			return "index/home";
+		}
 		return "index/index";
 	}
 	@GetMapping("/home")

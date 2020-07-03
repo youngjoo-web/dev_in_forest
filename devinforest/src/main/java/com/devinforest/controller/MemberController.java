@@ -175,7 +175,7 @@ public class MemberController {
 		return "member/memberInfo";
 	}
 	//이메일 중복체크
-	@PostMapping("/checkMemberEmail")
+	/*@PostMapping("/checkMemberEmail")
 	public String checkMemberEmail(HttpSession session, Model model, LoginMember loginMember) {
 		String confirmMemberEmail = memberService.CheckMemberEmail(loginMember);
 		if(confirmMemberEmail != null) {//일치하는데이터가 있음
@@ -215,7 +215,7 @@ public class MemberController {
 			
 			model.addAttribute("loginMember", loginMember);
 			return "member/modifyMember";
-		}
+		}*/
 	//회원가입 폼으로 이동
 	@GetMapping("/addMember")
 	public String addMember(HttpSession session, Model model) {

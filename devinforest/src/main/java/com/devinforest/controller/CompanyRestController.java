@@ -12,7 +12,7 @@ import com.devinforest.vo.LoginMember;
 @RestController
 public class CompanyRestController {
 	@Autowired private CompanyService companyService;
-	@Autowired private MemberService memberService;
+	
 	
 	@PostMapping("/checkCompanyEmail")
 	public String checkCompanyEmail(@RequestParam(value = "companyEmail2") String companyEmail) {

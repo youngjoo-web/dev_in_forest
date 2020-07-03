@@ -16,6 +16,23 @@
 			
 		)
 	</insert>
+	<!-- 회원 이메일 중복확인 -->
+	<select id="checkMemberEmail"  parameterType="String" resultType="int">
+		SELECT SUM(t.cnt) FROM
+		(SELECT COUNT(*) AS cnt FROM dev_member WHERE member_email=#{memberEmail}
+		UNION all
+		SELECT COUNT(*) AS cnt FROM dev_admin WHERE admin_email=#{memberEmail}
+		UNION all
+		SELECT COUNT(*) AS cnt FROM dev_company  WHERE company_email=#{memberEmail}) t
+	</select>
+	<!-- 회원 닉네임 중복확인 -->
+	<select id="checkMemberName"  parameterType="String" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM 
+			dev_member
+		WHERE member_name=#{memberName}
+	</select>
 	<!-- 회원 totalCount -->
 	<select id="memberTotalCount"
 			parameterType="String"
@@ -114,30 +131,6 @@
 			CONCAT(SUBSTRING(member_email,1,4),'***@***')
 		FROM dev_member
 		WHERE member_name=#{memberName}
-	</select>
-	<!-- 이메일 중복체크 -->
-	<select id="selectMemberEmail" parameterType="String"
-		resultType="String">
-		SELECT
-		member_email AS memberEmail, member_name AS memberName, account_kind AS accountKind , member_password AS memberPassword
-		FROM (SELECT member_email, member_name, account_kind, member_password FROM dev_member
-		UNION
-		SELECT admin_email, admin_name, account_kind, admin_password FROM dev_admin
-		UNION
-		SELECT company_email, company_kor_name, account_kind, company_password FROM dev_company)e
-		WHERE
-		member_email=#{memberEmailCheck}
-	</select>
-	<!-- 닉네임 중복체크 -->
-	<select id="selectMemberName" parameterType="String"
-		resultType="String">
-		SELECT
-		member_name
-		FROM (SELECT member_name FROM dev_member
-		UNION
-		SELECT member_name FROM
-		dev_blacklist) t
-		WHERE member_name=#{memberNameCheck}
 	</select>
 	<!-- 회원가입 쿼리문 -->
 	<insert id="insertMember"

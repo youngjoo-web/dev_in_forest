@@ -69,13 +69,13 @@ public class MemberService {
 	}
 
 	// 이메일 중복확인
-	public String CheckMemberEmail(LoginMember loginMember) {
-		return memberMapper.selectMemberEmail(loginMember.getMemberEmail());
+	public int CheckMemberEmail(String memberEmail) {
+		return memberMapper.checkMemberEmail(memberEmail);
 	}
 
 	// 닉네임 중복확인
-	public String CheckMemberName(LoginMember loginMember) {
-		return memberMapper.selectMemberName(loginMember.getMemberName());
+	public int CheckMemberName(String memberName) {
+		return memberMapper.checkMemberName(memberName);
 	}
 
 	// 회원정보 상세보기

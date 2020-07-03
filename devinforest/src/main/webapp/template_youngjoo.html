@@ -3,16 +3,19 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
-		<title>타이틀 제목</title>
+		<title>회원</title>
 		
 		<!-- Custom fonts for this template-->
 		<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
 			rel="stylesheet" type="text/css">
-		<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+		<link
+			href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+			rel="stylesheet">
 		
 		<!-- Custom styles for this template-->
 		<link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
@@ -20,7 +23,8 @@
 		<!--  addAdmin template -->
 		<link th:href="@{/css/addAdmin.css}" rel="stylesheet">
 		
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		
 		<style>
 		.none {
@@ -59,14 +63,14 @@
 				<!-- 구분 줄 -->
 				<hr class="sidebar-divider my-0">
 	
-				<!-- 관리자 홈 -->
+				<!--  홈 -->
 				<li class="nav-item active">
 					<a class="nav-link" th:href="@{/adminHome}">
 						<i class="fas fa-fw fa-tachometer-alt"></i>
-						<span>관리자 홈</span>
+						<span> 홈</span>
 					</a>
 				</li>
-				<!-- 관리자 홈 끝 -->
+				<!--  홈 끝 -->
 				
 				<!-- 구분 줄 -->
 				<hr class="sidebar-divider">
@@ -305,42 +309,15 @@
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
 						
-						<!-- 테이블 제목 예시 -->
-						<h1 class="h3 mb-2 text-gray-800">회원목록</h1>
-						
-						<!-- 테이블 예시 -->
-						<div class="card shadow mb-4">
-							<div class="card-header py-3">
-							  <h6 class="m-0 font-weight-bold text-primary"></h6>
-							</div>
-							<div class="card-body">
-								<div class="table-responsive">
-									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-										<thead>
-											<tr>
-												<th>이메일</th>
-												<th>이름</th>
-												<th>내공</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr th:each="member :${memberList}">
-												<td><a
-								th:href="@{/getMemberInfo(memberEmail=${member.memberEmail})}"
-								th:text="${member.memberEmail}"></a></td>
-							<td><a
-								th:href="@{/getMemberInfo(memberEmail=${member.memberEmail})}"
-								th:text="${member.memberName}"></a></td>
-							<td><a
-								th:href="@{/getMemberInfo(memberEmail=${member.memberEmail})}"
-								th:text="${member.memberReputation}"></a></td>
-						</tr>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
+						<!-- 여기에 본문 넣으면댐 -->
+						<!-- 여기에 본문 넣으면댐 -->
+						<!-- 여기에 본문 넣으면댐 -->
+						<!-- 여기에 본문 넣으면댐 -->
+						<!-- 여기에 본문 넣으면댐 -->
+						<!-- 여기에 본문 넣으면댐 -->
+						<!-- 여기에 본문 넣으면댐 -->
+						<!-- 여기에 본문 넣으면댐 -->
+						<!-- 여기에 본문 넣으면댐 -->
 						
 					</div>
 						<!-- /.container-fluid -->
