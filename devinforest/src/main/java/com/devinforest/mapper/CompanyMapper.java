@@ -3,6 +3,7 @@ package com.devinforest.mapper;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.devinforest.vo.Company;
+import com.devinforest.vo.LoginCompany;
 
 @Mapper
 public interface CompanyMapper {
@@ -14,4 +15,6 @@ public interface CompanyMapper {
 	public int checkCompanyKorName(String companyKorName);
 	//영어이름중복확인
 	public int checkCompanyEngName(String companyEngName);
+	//기업 로그인
+	public LoginCompany selectLoginCompanyMamber(LoginCompany loginCompany);
 }

@@ -1,43 +1,228 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<h1>회원가입</h1>
-	<form id="emailForm" method="post" th:action="@{/checkMemberEmail}" >
-     
-         <label>아이디 :</label>
-         <input type="email"   name="memberEmail" th:value="${loginMember.memberEmail}">
-         <input type="hidden"   name="memberName" th:value="${loginMember.memberName}">
-         <input type="hidden"   name="memberPassword" th:value="${loginMember.memberPassword}">
-         <button type="submit">중복체크</button>
-         <span th:text="${EmailMsg}"></span>
-     
-      </form>
-      <form id="nameForm" method="post" th:action="@{/checkMemberName}" >
-    
-         <label>이름 : </label>
-         
-         <input type="hidden"   name="memberEmail" th:value="${loginMember.memberEmail}">
-         <input type="text" name="memberName" th:value="${loginMember.memberName}">
-         <input type="hidden" name="memberPassword" th:value="${loginMember.memberPassword}">
-         <button type="submit">중복체크</button>
-         <span th:text="${NameMsg}"></span>
-                
-     
-      </form>
-	<form method="post" th:action="@{/addMember}">
-		<input type="hidden" name="memberEmail" th:value="${loginMember.memberEmail}">
-		<input type="hidden" name="memberName" th:value="${loginMember.memberName}">
-		비밀번호 : <input type="password" name="memberPassword" th:value="${loginMember.memberPassword}">
-		<br>
-		비밀번호 확인 : <input type="password">
-		<br>
-		<button type="submit">회원가입</button>
-		
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<style>
+		.none {
+			border: 0px;
+		}
+
+		.adminEmailArea {
+			border: 1px solid black;
+			padding: 1px;
+		}
+
+		.width1 {
+			width: 80px;
+		}
+
+		.width2 {
+			width: 110px;
+		}
+		</style>
+	</head>
+	<body>
+	<div>
+		<h1>회원가입</h1>
+	</div>
+	<form id="form" method="post" th:action="@{/addMember}">
+		<input id="memberEmail" type="hidden" name="memberEmail" value="">
+		<input id="memberName" type="hidden" name="memberName" value="">
+		<div>
+			<div>
+				<span th:text="이메일"></span>
+			</div>
+			<div>
+					<span class="memberEmailArea">
+						<input id="memberEmail2" class="none width1" type="email" name="memberEmail2" placeholder="이메일">
+					</span>
+					<button id="emailCheckBtn" type="button">중복확인</button>
+					<span id="emailMsg"></span>
+				</div>
+		</div>
+		<div>
+				<div>
+					<span th:text="닉네임"></span>
+				</div>
+				<div>
+					<input id="memberName2" type="text" name="memberName2" placeholder="닉네임을 입력해주세요.">
+					<button id="nameCheckBtn" type="button">중복확인</button>
+					<span id="nameMsg"></span>
+				</div>
+		</div>
+		<div>
+			<div>
+					<span th:text="비밀번호"></span>
+				</div>
+				<div>
+					<input id="memberPw" type="password" name="memberPw" placeholder="비밀번호를 입력해주세요.">			
+			</div>
+		</div>
+		<div>
+				<button type="button" id="signUpBtn">가입</button>
+			</div>
+			
 	</form>
+	
+	
+	
 </body>
+<script>
+	// 회원가입 유효성 검사
+	$('#signUpBtn').click(function(){		
+		let pw = $('#memberPw').val();
+		let pwNum = pw.search(/[0-9]/);
+		let pwEng = pw.search(/[a-z]/);
+		let pwSpe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/);
+		
+		// 아이디 중복체크 검사
+		if($('#memberEmail').val() == ''){
+			 alert("아이디를 중복체크 해주세요.");
+			 return;
+		}
+		
+		// 닉네임 중복체크 검사
+		if($('#memberName').val() == ''){
+			 alert("한글기업이름을 중복체크 해주세요.");
+			 return;
+		}
+		
+		// 비밀번호 유효성 검사
+		if(pw.length < 8 || pw.length > 20){
+			 alert("비밀번호는 8자리 ~ 20자리 이내로 입력해주세요.");
+			 return;
+		}
+		if(pw.search(/\s/) != -1){
+			alert("비밀번호는 공백 없이 입력해주세요.");
+			return;
+		}
+		if(pwNum < 0 || pwEng < 0 || pwSpe < 0 ){
+		 	alert("영문, 숫자, 특수문자를 혼합하여 입력해주세요.");
+			return;
+		}
+		console.log('유효성 검사 통과');
+		$('#form').submit();
+		
+	});
+	// 아이디 중복체크
+	$('#emailCheckBtn').click(function(){
+		$('#companyEmail').val('');
+		let email = $('#companyEmail2').val();
+		let emailNum = email.search(/[0-9]/);
+		console.log(emailNum+" <- emailNum");
+		let emailEng = email.search(/[a-z]/);
+		console.log(emailEng+" <- emailEng");
+		let emailBigEng = email.search(/[A-Z]/);
+		console.log(emailBigEng+" <- emailBigEng");
+		let emailKor = email.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/);
+		console.log(emailKor+" <- emailKor");
+		let emailSpe = email.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/);
+		console.log(emailSpe+" <- emailSpe");
+		console.log("----------------------");
+		
+		if(email.length < 5 || email.length > 20){
+			 alert("아이디는 5자리 ~ 20자리 이내로 입력해주세요.");
+			 return;
+		}
+		if(email.search(/\s/) != -1){
+	 		alert("아이디는 공백 없이 입력해주세요.");
+		 	return;
+		}
+		
+		
+		
+		let companyEmail2 = $('#companyEmail2').val();
+		$.ajax({
+            url:'/checkCompanyEmail'
+            ,type:'POST'
+            ,data:{'companyEmail2':companyEmail2}
+            ,success : function(data) {
+        		console.log(data);
+        		$('#emailMsg').text(data);
+        		if(data == "사용가능한 이메일입니다.") {
+        			$('#companyEmail').val(email);
+        		}
+            }
+		});
+	});
+	
+	$('#nameCheckBtn').click(function(){
+		$('#companyKorName').val('');
+		let korname = $('#companyKorName2').val();
+		let kornameNum = korname.search(/[0-9]/);
+		let kornameEng = korname.search(/[a-z]/);
+		let kornameSpe = korname.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/);
+		
+		if(korname.length < 2 || korname.length > 10){
+			 alert("닉네임은 2자리 ~ 10자리 이내로 입력해주세요.");
+			 return;
+		}
+		if(kornameEng != -1){
+	 		alert("한글은 한글로만 입력해주세요.");
+		 	return;
+		}
+		if(korname.search(/\s/) != -1){
+	 		alert("닉네임은 공백 없이 입력해주세요.");
+		 	return;
+		}
+		if(kornameSpe != -1){
+	 		alert("닉네임은 특수문자를 포함할 수 없습니다.");
+		 	return;
+		}
+		
+		let companyKorName2 = $('#companyKorName2').val();
+		$.ajax({
+            url:'/checkCompanyKorName'
+            ,type:'POST'
+            ,data:{'companyKorName2':companyKorName2}
+            ,success : function(data) {
+        		console.log(data);
+        		$('#kornameMsg').text(data);
+        		if(data == "사용가능한 닉네임입니다.") {
+        			$('#companyKorName').val(korname);
+        		}
+            }
+		});
+	});
+	$('#engnameCheckBtn').click(function(){
+		$('#companyEngName').val('');
+		let engname = $('#companyEngName2').val();
+		let engnameNum = engname.search(/[0-9]/);
+		let engnameKor = engname.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/);
+		let engnameSpe = engname.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/);
+		
+		if(engname.length < 2 || engname.length > 10){
+			 alert("닉네임은 2자리 ~ 10자리 이내로 입력해주세요.");
+			 return;
+		}
+		if(engname.search(/\s/) != -1){
+	 		alert("닉네임은 공백 없이 입력해주세요.");
+		 	return;
+		}
+		if(engnameSpe != -1){
+	 		alert("닉네임은 특수문자를 포함할 수 없습니다.");
+		 	return;
+		}
+		if(engnameKor != -1){
+	 		alert("영문이름은 영문으로만 입력해주세요.");
+		 	return;
+		}
+		let companyEngName2 = $('#companyEngName2').val();
+		$.ajax({
+            url:'/checkCompanyEngName'
+            ,type:'POST'
+            ,data:{'companyEngName2':companyEngName2}
+            ,success : function(data) {
+        		console.log(data);
+        		$('#engnameMsg').text(data);
+        		if(data == "사용가능한 닉네임입니다.") {
+        			$('#companyEngName').val(engname);
+        		}
+            }
+		});
+	});
+	</script>
 </html>

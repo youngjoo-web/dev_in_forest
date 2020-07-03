@@ -69,6 +69,22 @@
 				</div>
 			</div>
 			<div>
+				<div>
+					<span th:text="회사주소"></span>
+				</div>
+				<div>
+					<input id="companyAddress" type="text" name="companyAddress" placeholder="회사주소를 입력해주세요.">			
+				</div>
+			</div>
+			<div>
+				<div>
+					<span th:text="대표번호"></span>
+				</div>
+				<div>
+					<input id="companyPhone" type="text" name="companyPhone" placeholder="대표번호를 입력해주세요.">			
+				</div>
+			</div>
+			<div>
 				<button type="button" id="signUpBtn">가입</button>
 			</div>
 		</form>
@@ -77,6 +93,12 @@
 	// 회원가입 유효성 검사
 	$('#signUpBtn').click(function(){		
 		let pw = $('#companyPw').val();
+		let address= $('#companyAddress').val();
+		let phone = $('#companyPhone').val();
+		let phoneNum = phone.search(/[0-9]/);
+		let phoneEng = phone.search(/[a-z]/);
+		let phoneSpe = phone.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/);
+		let phoneKor = phone.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/);
 		let pwNum = pw.search(/[0-9]/);
 		let pwEng = pw.search(/[a-z]/);
 		let pwSpe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/);
@@ -96,7 +118,24 @@
 			 alert("영어기업이름을 중복체크 해주세요.");
 			 return;
 		}
+		//대표번호 유효성 검사
 		
+		if(phoneEng != -1){
+	 		alert("전화번호는 영어를 포함할 수 없습니다.");
+		 	return;
+		}
+		if(phoneKor != -1){
+	 		alert("전화번호는 한글을 포함할 수 없습니다.");
+		 	return;
+		}
+		if(phoneSpe != -1){
+	 		alert("전화번호는 특수문자를 포함할 수 없습니다.");
+		 	return;
+		}
+		if(phone.search(/\s/) != -1){
+	 		alert("전화번호는 공백 없이 입력해주세요.");
+		 	return;
+		}
 		// 비밀번호 유효성 검사
 		if(pw.length < 8 || pw.length > 20){
 			 alert("비밀번호는 8자리 ~ 20자리 이내로 입력해주세요.");
@@ -167,6 +206,10 @@
 			 alert("닉네임은 2자리 ~ 10자리 이내로 입력해주세요.");
 			 return;
 		}
+		if(kornameEng != -1){
+	 		alert("한글은 한글로만 입력해주세요.");
+		 	return;
+		}
 		if(korname.search(/\s/) != -1){
 	 		alert("닉네임은 공백 없이 입력해주세요.");
 		 	return;
@@ -209,7 +252,10 @@
 	 		alert("닉네임은 특수문자를 포함할 수 없습니다.");
 		 	return;
 		}
-		
+		if(engnameKor != -1){
+	 		alert("영문이름은 영문으로만 입력해주세요.");
+		 	return;
+		}
 		let companyEngName2 = $('#companyEngName2').val();
 		$.ajax({
             url:'/checkCompanyEngName'
