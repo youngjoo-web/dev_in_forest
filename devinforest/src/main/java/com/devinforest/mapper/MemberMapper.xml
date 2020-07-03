@@ -118,6 +118,7 @@
 	<!-- 이메일 중복체크 -->
 	<select id="selectMemberEmail" parameterType="String"
 		resultType="String">
+		SELECT
 		member_email AS memberEmail, member_name AS memberName, account_kind AS accountKind , member_password AS memberPassword
 		FROM (SELECT member_email, member_name, account_kind, member_password FROM dev_member
 		UNION

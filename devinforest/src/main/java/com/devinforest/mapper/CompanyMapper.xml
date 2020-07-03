@@ -17,27 +17,21 @@
 		NOW()
 		)
 	</insert>
-	<select id="selectCompanyEmail" parameterType="String" resultType="int">
-		SELECT
-		member_email AS memberEmail, member_name AS memberName, account_kind AS accountKind , member_password AS memberPassword
-		FROM (SELECT member_email, member_name, account_kind, member_password FROM dev_member
-		UNION
-		SELECT admin_email, admin_name, account_kind, admin_password FROM dev_admin
-		UNION
-		SELECT company_email, company_kor_name, account_kind, company_password FROM dev_company)e
-		WHERE member_email=#{companyEmail}
+	<select id="checkCompanyEmail" parameterType="String" resultType="int">
+		SELECT SUM(t.cnt) FROM
+		(SELECT COUNT(*) AS cnt FROM dev_member WHERE member_email=#{companyEmail}
+		UNION all
+		SELECT COUNT(*) AS cnt FROM dev_admin WHERE admin_email=#{companyEmail}
+		UNION all
+		SELECT COUNT(*) AS cnt FROM dev_company  WHERE company_email=#{companyEmail}) t
 		
 	</select>
-	<select id="selectCompanyKorName" parameterType="String" resultType="int">
-		SELECT
-		member_email AS memberEmail, member_name AS memberName, account_kind AS accountKind , member_password AS memberPassword
-		FROM (SELECT company_email, company_kor_name, account_kind, company_password FROM dev_company)e
-		WHERE member_name=#{companyKorName}
+	<select id="checkCompanyKorName" parameterType="String" resultType="int">
+		SELECT SUM(t.cnt) FROM
+		(SELECT COUNT(*) AS cnt FROM dev_company  WHERE company_kor_name=#{companyKorName}) t
 	</select>
-	<select id="selectCompanyEngName" parameterType="String" resultType="int">
-		SELECT
-		member_email AS memberEmail, member_name AS memberName, account_kind AS accountKind , member_password AS memberPassword
-		FROM (SELECT company_email, company_eng_name, account_kind, company_password FROM dev_company)e
-		WHERE member_name=#{companyEngName}
+	<select id="checkCompanyEngName" parameterType="String" resultType="int">
+		SELECT SUM(t.cnt) FROM
+		(SELECT COUNT(*) AS cnt FROM dev_company  WHERE company_eng_name=#{companyEngName}) t
 	</select>
 </mapper>

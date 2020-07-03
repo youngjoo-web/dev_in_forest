@@ -21,7 +21,7 @@ public class CompanyService {
 
 	// 관리자 이메일 중복체크
 	public int checkCompanyEmail(String companyEmail) {
-		return companyMapper.selectselectCompanyEmail(companyEmail);
+		return companyMapper.checkCompanyEmail(companyEmail);
 	}
 
 	// 기업한글이름 중복체크

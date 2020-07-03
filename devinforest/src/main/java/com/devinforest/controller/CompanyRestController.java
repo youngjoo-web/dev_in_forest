@@ -15,15 +15,9 @@ public class CompanyRestController {
 	@Autowired private MemberService memberService;
 	
 	@PostMapping("/checkCompanyEmail")
-	public String checkAdminEmail(@RequestParam(value = "companyEmail2") String checkCompanyEmail) {
-		System.out.println(checkCompanyEmail + " <- CompanyRestController.checkCompanyEmail: checkCompanyEmail");
-		
-		String email = "@devinforest.com";
-		String companyEmail = checkCompanyEmail + email;
-		System.out.println(companyEmail + " <- AdminRestController.checkAdminEmail: adminEmail");
-		LoginMember loginMember = new LoginMember();
-		loginMember.setMemberEmail(checkCompanyEmail);
-		int checkNum = 0;
+	public String checkCompanyEmail(@RequestParam(value = "companyEmail2") String companyEmail) {
+		System.out.println(companyEmail + " <- CompanyRestController.checkCompanyEmail: checkCompanyEmail");
+		int checkNum = companyService.checkCompanyEmail(companyEmail);
 		System.out.println(checkNum + " <- AdminRestController.checkAdminEmail: checkNum");
 		
 		String emailMsg = null;
