@@ -1,6 +1,8 @@
 
 package com.devinforest.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,19 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.devinforest.service.AnswerService;
+import com.devinforest.vo.Answer;
 
 @Controller
 public class AnswerController {
 
 	@Autowired
 	private AnswerService answerService;
-
-	/* ---------- 답변 목록 ---------- */
-	@GetMapping("/getAnswerList")
-	public String getAnswerList(Model model) {
-
-		return "getQuestionOne";
-	}
 
 	/* ---------- 답변 작성하기 ---------- */
 	@PostMapping("/addAnswer")

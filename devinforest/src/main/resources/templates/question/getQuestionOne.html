@@ -15,6 +15,15 @@
 	$(document).ready(function(){
 		let memberName = $('#memberName').val();
 		let questionNo = $('#questionNo').val();
+		let questionCommentIp = $('#questionCommentIp').val();
+		let answerContent = $('#addAnswerContent').val();
+		
+		console.log(memberName);
+		console.log(questionNo);
+		console.log(questionCommentIp);
+		console.log(answerContent);
+		
+		
 		$.ajax({
 			url: '/voteTotalCount',
 			type: 'GET',
@@ -22,6 +31,39 @@
 			success : function(data) {
 				$('#count').text(data);
 			}
+		});
+		// 답글리스트 안보임 -> rowPerPage
+		$.ajax({
+			url: '/getQuestionCommentList',
+			type: 'GET',
+			data: {'questionNo' : questionNo, 'rowPerPage' : rowPerPage},
+			success: function(data) {
+				$(data).each(function(index, item){
+					$('#questionCommentList').append('<tr>');
+					$('#questionCommentList').append('<td>' + item.questionCommentContent +'</td>');
+					$('#questionCommentList').append('<td>' + item.memberName + '</td>');
+					$('#questionCommentList').append('</tr>');
+				console.log($(data).length);
+					
+				
+				});
+				if($(data).length >= 5) {
+					$('#showMore').append('<a id="changeRowPerPage" href="#">show more comment</a>');
+				}
+			
+			} 
+		});
+		$('#changeRowPerPage').click(function(){
+			$.ajax({
+				url: '/getQuestionCommentTotalRow',
+				type: 'GET',
+				data: {'questionNo' : questionNo},
+				success : function(data) {
+					$('#rowPerPage').val(data);
+					console.log("변경성공");
+				}
+			});
+			let rowPerPage = $('#rowPerPage').val();
 		});
 		$('#upBtn').click(function(){
 			$.ajax({
@@ -47,7 +89,39 @@
 				}
 			});
 		});
+		$('#writeQuestionCommentBtn').click(function() {
+			$('#writeQuestionCommentBtn').remove();
+			$('#questionComment').append('<input type="text" id="questionCommentContent"></input><button type="button" id="writeBtn">작성</button>');
+			
+			$('#writeBtn').click(function() {
+				console.log("writeBtn click");
+				
+				let questionCommentContent = $('#questionCommentContent').val();
+
+				$.ajax({
+					url: '/addQuestionComment',
+					type: 'POST',
+					data: {'questionNo' : questionNo, 'memberName' : memberName, 'questionCommentContent' : questionCommentContent, 'questionCommentIp' : questionCommentIp},
+					success : function() {
+						$('#questionCommentContent').remove();
+						$('#writeBtn').remove();
+						$('#questionComment').append('<a id="writeQuestionCommentBtn" href="#">댓글 작성</a>');
+						console.log("질문 댓글 작성 성공");
+					}
+				});
+			});
+		});
 		
+		$('#addAnswerBtn').click(function(){
+			$.ajax({
+				url: '/addAnswer',
+				type: 'POST',
+				data: {'questionNo' : questionNo, 'memberName' : memberName, 'answerContent' : answerContent},
+				success : function() {
+					console.log("답변생성성공");
+				}
+			});
+		});
 	});
 
 </script>
@@ -84,7 +158,45 @@
 				</tr>
 			</tbody>
 		</table>
+		<div id="questionCommentList">
+			
+		</div>
+		<div id="showMore">
+			
+		</div>
+		<div id="questionComment">
+			<a id="writeQuestionCommentBtn" href="#">댓글 작성</a>
+		</div>
+		
+		
+		<!-- 댓글 rowperpage가 안보임 -->
+		<!-- 답변 리스트 안보임 -->
+		<!-- restcontroller 완성해야함 -->
+		
+		<!-- 답변 리스트 -->
+		<hr>
+		<div th:each="al: ${answerList}">
+			
+		<div th:text="${al.answerContent}"></div>
+		
+		<div th:text="${al.memberName}"></div>
+		<hr>
+		</div>
+		
+		<!-- 답변 작성 -->
+		<form th:action="@{/addAnswer}" method="post">
+			<textarea rows="5" cols="100" id="addAnswerContent" placeholder="Enter your answer this area"></textarea>
+			<br>
+			<button id="addAnswerBtn">답변작성</button>
+		</form>
+		
+		<input type="hidden" id="rowPerPage">
 		<input type="hidden" id="questionNo" th:value="${question.questionNo}">
 		<input type="hidden" id="memberName" th:value="${memberName}">
+		<input type="hidden" id="questionCommentIp" th:value="${ip}">
+		
 </body>
+<script>
+	
+</script>
 </html>

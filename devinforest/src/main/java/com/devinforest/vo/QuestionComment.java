@@ -4,7 +4,6 @@ public class QuestionComment {
 	private int questionCommentNo;
 	private int questionNo;
 	private String memberName;
-	private String questionComment;
 	private String questionCommentContent;
 	private String questionCommentDate;
 	private String questionCommentIp;
@@ -25,12 +24,6 @@ public class QuestionComment {
 	}
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;
-	}
-	public String getQuestionComment() {
-		return questionComment;
-	}
-	public void setQuestionComment(String questionComment) {
-		this.questionComment = questionComment;
 	}
 	public String getQuestionCommentContent() {
 		return questionCommentContent;
@@ -53,11 +46,7 @@ public class QuestionComment {
 	@Override
 	public String toString() {
 		return "QuestionComment [questionCommentNo=" + questionCommentNo + ", questionNo=" + questionNo
-				+ ", memberName=" + memberName + ", questionComment=" + questionComment + ", questionCommentContent="
-				+ questionCommentContent + ", questionCommentDate=" + questionCommentDate + ", questionCommentIp="
-				+ questionCommentIp + "]";
+				+ ", memberName=" + memberName + ", questionCommentContent=" + questionCommentContent
+				+ ", questionCommentDate=" + questionCommentDate + ", questionCommentIp=" + questionCommentIp + "]";
 	}
-	
-	
-	
 }

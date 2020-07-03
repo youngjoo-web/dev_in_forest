@@ -4,7 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.AnswerMapper">
 	<!-- 질문에 대한 답변 목록 -->
-	<select id="selectAnswerList" resultType="com.devinforest.vo.Answer" parameterType="int">
+	<select id="selectAnswerList" resultType="com.devinforest.vo.Answer" parameterType="java.util.Map">
 		SELECT 
 			answer_no answerNo,
 			member_name memberName,
@@ -14,6 +14,18 @@
 			answer_ip answerIp
 		FROM dev_answer
 		WHERE question_no = #{questionNo}
+		ORDER BY answer_no DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- 답변  총 개수 -->
+	<select id="answerTotalRow" resultType="int" parameterType="com.devinforest.vo.Answer">
+		SELECT
+			COUNT(*)
+		FROM
+			dev_answer
+		WHERE
+			question_no = #{questionNo}
 	</select>
 	
 	<!-- 답변 작성 -->
@@ -49,13 +61,29 @@
 	</update>
 	
 	<!-- 답변 삭제 -->
-	<delete id="deleteAnswer" parameterType="int">
+	<delete id="deleteAnswer" parameterType="com.devinforest.vo.Answer">
 		DELETE FROM dev_answer
 		WHERE answer_no = #{answerNo}
 	</delete>
 	
 	<!-- 답변 삭제 후 백업 -->
-	<insert id="insertAnswerBack">
-	
+	<insert id="insertAnswerBack" parameterType="com.devinforest.vo.Answer">
+		INSERT INTO 
+			dev_answer_back(
+				member_name,
+				question_no,
+				answer_content,
+				answer_createdate,
+				answer_updatedate,
+				answer_ip
+			)
+			VALUES(
+				#{memberName},
+				#{questionNo},
+				#{answerContent},
+				NOW(),
+				NOW(),
+				#{answerIp}
+			)
 	</insert>
 </mapper>
