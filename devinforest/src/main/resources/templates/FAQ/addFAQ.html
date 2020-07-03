@@ -10,23 +10,22 @@
 			<h1>FAQ 작성</h1>
 		</div>
 		<div>
-			<span th:text="${admin}+'님께서 작성중이십니다.'"></span>
-		</div>
-		<div>
-			<form id="form" method="post" th:action="@{/addFAQ}">
+			<form id="addFAQForm" method="post" th:action="@{/addFAQ}">
 				<div>
 					<input id="noticeTitle" type="text" name="noticeTitle" placeholder="제목을 입력해주세요">
-					<span id="msg"></span>
 				</div>
 				<div>
 					<textarea rows="5" cols="20" id="noticeContent" name="noticeContent" placeholder="내용을 입력해주세요"></textarea>
 				</div>
-				<button id="btn" type="button">추가</button>
+				<div>
+					<span th:text="${admin}+'님께서 작성중이십니다.'"></span>
+				</div>
+				<button id="addFAQBtn" type="button">작성완료</button>
 			</form>
 		</div>
 	</body>
 	<script>
-	$('#btn').click(function(){
+	$('#addFAQBtn').click(function(){
 		console.log($('#noticeTitle').val());
 		console.log($('#noticeContent').val());
 		
@@ -34,18 +33,22 @@
 		let noticeContent = $('#noticeContent').val();
 		
 		if(noticeTitle == "") {
-			$('#msg').text('제목을 입력해주세요.');
+			alert('제목을 입력해주세요.');
 			return;
 		}
 		if(noticeTitle.length < 2 || noticeTitle.length > 20){
-			$('#msg').text('제목은 2자리 ~ 20자리 이내로 입력해주세요.');
+			alert('제목은 2자리 ~ 20자리 이내로 입력해주세요.');
+			return;
+		}
+		if(noticeTitle.search(/\s/) == 0){
+			alert("제목은 공백으로 시작할 수 없습니다.");
 			return;
 		}
 		if(noticeContent == "") {
-			$('#msg').text('내용을 입력해주세요.');
+			alert('내용을 입력해주세요.');
 			return;
 		}
-		$('#form').submit();
+		$('#addFAQForm').submit();
 	});
 	</script>
 </html>

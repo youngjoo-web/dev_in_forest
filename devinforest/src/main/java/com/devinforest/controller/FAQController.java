@@ -25,7 +25,7 @@ public class FAQController {
 		System.out.println(searchWord + " <-- FAQController.getFAQList: searchWord");
 		
 		Map<String, Object> map = faqService.getFAQList(searchWord, currentPage, rowPerPage);
-		
+		System.out.println(map.get("lastPage")+" <- FAQController.getFAQList: lastPage");
 		System.out.println(map.get("FAQTotalCount") + " <-- FAQController.getFAQList: map.get(\"FAQTotalCount\")");
 		model.addAttribute("FAQList", map.get("FAQList"));
 		model.addAttribute("FAQTotalCount", map.get("FAQTotalCount"));

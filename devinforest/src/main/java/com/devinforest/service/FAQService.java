@@ -22,7 +22,9 @@ public class FAQService {
 		int beginRow = (currentPage-1) * rowPerPage;
 		int FAQTotalCount = faqMapper.FAQTotalCount(searchWord);
 		int lastPage = FAQTotalCount / rowPerPage;
-		
+		if(FAQTotalCount % rowPerPage != 0) {
+			lastPage+=1;
+		}
 		Map<String, Object> inPutMap = new HashMap<>();
 		inPutMap.put("searchWord", searchWord);
 		inPutMap.put("beginRow", beginRow);
