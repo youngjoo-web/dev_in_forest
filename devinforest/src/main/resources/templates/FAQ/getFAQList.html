@@ -31,7 +31,7 @@
 		
 			<!-- 사이드 바 -->
 			<div>
-				<div th:include="/include/adminSide::adminSideBar"></div>
+				<div th:include="/include/adminSide::adminSideBar" style="height: 100%"></div>
 			</div>
 			<!-- 사이드바 끝 -->
 			
@@ -244,50 +244,3 @@
 		});
 	</script>
 </html>
-		<div>
-			<h1>자주묻는질문</h1>
-		</div>
-		<div>
-			<a th:href="@{/addFAQ}">FAQ 작성</a>
-		</div>
-		<div>
-			<form method="GET" th:action="@{/getFAQList}">
-				<input id="search" type="text" name="searchWord" th:value="${searchWord}" placeholder="제목 검색">
-				<button type="submit">검색</button>
-				<button id="resetBtn" type="button">초기화</button>
-			</form>
-		</div>
-		<div>
-			<span th:text="'FAQ : '+${FAQTotalCount}+개"></span>
-		</div>
-		<div>
-			<a th:href="@{/getFAQList(rowPerPage=1, searchWord=${searchWord})}">1개씩</a>
-			<a th:href="@{/getFAQList(rowPerPage=5, searchWord=${searchWord})}">5개씩</a>
-			<a th:href="@{/getFAQList(rowPerPage=10, searchWord=${searchWord})}">10개씩</a>
-			<a th:href="@{/getFAQList(rowPerPage=15, searchWord=${searchWord})}">15개씩</a>
-		</div>
-		<div>
-			<table border="1">
-				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>작성일</th>
-				</tr>
-				<tr th:each="FAQ : ${FAQList}">
-					<td th:text="${FAQ.noticeNo}"></td>
-					<td><a th:href="@{/getFAQOne(noticeNo=${FAQ.noticeNo})}" th:text="${FAQ.noticeTitle}"></a></td>
-					<td th:text="${FAQ.noticeDate}"></td>
-				</tr>
-			</table>
-		</div>
-		<div>
-			<a th:href="@{/getFAQList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">처음</a>
-			<a th:if="${currentPage == 1}" th:href="@{/getFAQList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
-			<a th:if="${currentPage > 1}" th:href="@{/getFAQList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
-			<span th:text="'-'+${currentPage}+'-'"></span>
-			<a th:if="${FAQTotalCount == 0}" th:href="@{/getFAQList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-			<a th:if="${currentPage == lastPage}" th:href="@{/getFAQList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-			<a th:if="${currentPage < lastPage}" th:href="@{/getFAQList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-			<a th:if="${FAQTotalCount == 0}"th:href="@{/getFAQList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
-			<a th:if="${FAQTotalCount != 0}"th:href="@{/getFAQList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
-		</div>
