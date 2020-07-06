@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>비밀번호 확인</h1>
+	<form method="get" th:action="@{/companyPwCheck}">
+		<input type="hidden" name="companyEmail" th:value="${session.loginCompany.companyEmail}"> 
+		<input type="password" name="companyPw">
+		<button type="submit">입력</button>
+	</form>
+</body>
+</html>
