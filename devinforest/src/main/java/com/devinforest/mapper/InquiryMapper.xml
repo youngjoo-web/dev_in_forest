@@ -30,4 +30,20 @@
 		FROM dev_inquiry
 		WHERE inquiry_title LIKE CONCAT('%',#{searchWord},'%')
 	</select>
+	<!-- 문의사항 상세보기 -->
+	<select id="selectInquiryOne"
+			parameterType="int"
+			resultType="com.devinforest.vo.Inquiry">
+		SELECT
+			inquiry_no      inquiryNo,
+			member_name     memberName,
+			inquiry_title   inquiryTitle,
+			inquiry_content inquiryContent,
+			inquiry_date    inquiryDate,
+			inquiry_kind    inquiryKind,
+			inquiry_answer  inquiryAnswer,
+			inquiry_state   inquiryState
+		FROM dev_inquiry
+		WHERE inquiry_no = #{inquiryNo}
+	</select>
 </mapper>

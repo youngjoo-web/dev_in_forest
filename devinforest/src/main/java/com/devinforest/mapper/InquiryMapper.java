@@ -13,4 +13,6 @@ public interface InquiryMapper {
 	public List<Inquiry> selectInquiryList(Map<String, Object> map);
 	// 문의사항 TotalCount
 	public int inquiryTotalCount(String searchWord);
+	// 문의사항 상세보기
+	public Inquiry selectInquiryOne(int inquiryNo);
 }

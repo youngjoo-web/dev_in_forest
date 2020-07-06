@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devinforest.mapper.InquiryMapper;
+import com.devinforest.vo.Inquiry;
 
 
 @Service
@@ -15,7 +16,7 @@ import com.devinforest.mapper.InquiryMapper;
 public class InquiryService {
 	@Autowired private InquiryMapper inquiryMapper;
 	// 문의사항 목록
-	public Map<String, Object> selectInquiryList(int currentPage, int rowPerPage, String searchWord){
+	public Map<String, Object> getInquiryList(int currentPage, int rowPerPage, String searchWord){
 		int beginRow = (currentPage-1)*rowPerPage;
 		int inquiryTotalCount = inquiryMapper.inquiryTotalCount(searchWord);
 		System.out.println(inquiryTotalCount+" <- InquiryService.selectInquiryList: inquiryTotalCount");
@@ -33,5 +34,9 @@ public class InquiryService {
 		outputMap.put("inquiryTotalCount", inquiryTotalCount);
 		outputMap.put("lastPage", lastPage);
 		return outputMap; 
+	}
+	// 문의사항 상세보기
+	public Inquiry getInquiryOne(int inquiryNo) {
+		return inquiryMapper.selectInquiryOne(inquiryNo);
 	}
 }

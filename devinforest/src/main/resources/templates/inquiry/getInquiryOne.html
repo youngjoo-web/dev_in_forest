@@ -7,7 +7,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
-		<title>문의사항 조회</title>
+		<title th:text="${#strings.abbreviate(inquiry.inquiryTitle,16)}"></title>
 		
 		<!-- Custom fonts for this template-->
 		<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
@@ -22,6 +22,13 @@
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		
+		<style>
+			th{
+				text-align: center;
+				color:white;
+				background: #148b61;
+			}
+		</style>
 	</head>
 	<body id="page-top">
 		<!-- Page Wrapper -->
@@ -29,7 +36,7 @@
 		
 			<!-- 사이드 바 -->
 			<div>
-				<div th:include="/include/adminSide::adminSideBar"></div>
+				<div th:include="/include/adminSide::adminSideBar" style="height: 100%"></div>
 			</div>
 			<!-- 사이드바 끝 -->
 			
@@ -113,73 +120,35 @@
 	
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
-						
+					
 						<div>
 							<h3 class="text-gray-800 mb-2 font-weight-bold">문의사항</h3>
 						</div>
-						<br>
-						<!-- 테이블 -->
-						<div class="card shadow mb-4">
-							<div class="card-header py-3">
-								<div>
-									<div>
-								  		<h5 class="m-0 font-weight-bold" style=" color:#148b61;" th:text="'문의사항 : '+${inquiryTotalCount}+개"></h5>
-									</div>
-								</div>
+						<hr>
+						<div>
+							<table class="table">
+								<tr>
+									<th width="10%">제목</th>
+									<td colspan="3" th:text="${inquiry.inquiryTitle}"></td>
+								</tr>
+								<tr>
+									<th>작성자</th>
+									<td width="50%" th:text="${inquiry.memberName}"></td>
+									<th width="10%">작성일</th>
+									<td th:text="${inquiry.inquiryDate}"></td>
+								</tr>
+							</table>
+						</div>
+						<hr>
+						<div>
+							<div style="padding:10px; word-break:break-all;" th:text="${inquiry.inquiryContent}">
+								
 							</div>
-							<div class="card-body">
-								<div class="table">
-									<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-										<div class="row">
-											<div class="col-sm-12 col-md-6">
-												<form method="GET" th:action="@{/getInquiryList}">
-													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="제목 검색">
-													<button class="btn searchBtn" type="submit">검색</button>
-													<button id="resetBtn" class="btn searchBtn" type="button">초기화</button>
-												</form>
-											</div>
-											<div class="col-sm-12 col-md-6">
-												<div class="text-right">
-													<a class="btn selectBtn" th:href="@{/getInquiryList(rowPerPage=1, searchWord=${searchWord})}">1개씩</a>
-													<a class="btn selectBtn" th:href="@{/getInquiryList(rowPerPage=5, searchWord=${searchWord})}">5개씩</a>
-													<a class="btn selectBtn" th:href="@{/getInquiryList(rowPerPage=10, searchWord=${searchWord})}">10개씩</a>
-													<a class="btn selectBtn" th:href="@{/getInquiryList(rowPerPage=15, searchWord=${searchWord})}">15개씩</a>
-												</div>
-											</div>
-										</div>
-									</div>
-									<table style="margin-top: 10px;" class="table table-bordered text-center">
-										<thead>
-											<tr>
-												<th width="10%">번호</th>
-												<th width="50%">제목</th>
-												<th width="20%">문의 회원</th>
-												<th width="20%">답변 여부</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr th:each="inquiry : ${inquiryList}">
-												<td th:text="${inquiry.inquiryNo}"></td>
-												<td>
-													<a th:href="@{/getInquiryOne(inquiryNo=${inquiry.inquiryNo})}" th:text="${inquiry.inquiryTitle}"></a>
-												</td>
-												<td th:text="${inquiry.inquiryContent}"></td>
-												<td th:text="${inquiry.inquiryState}"></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<div>
-									<a class="btn pageBtn" th:href="@{/getInquiryList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">처음</a>
-									<a class="btn pageBtn" th:if="${currentPage == 1}" th:href="@{/getInquiryList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
-									<a class="btn pageBtn" th:if="${currentPage > 1}" th:href="@{/getInquiryList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
-									<span th:text="'-'+${currentPage}+'-'"></span>
-									<a class="btn pageBtn" th:if="${inquiryTotalCount == 0}" th:href="@{/getInquiryList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn pageBtn" th:if="${currentPage < lastPage}" th:href="@{/getInquiryList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn pageBtn" th:if="${currentPage == lastPage}" th:href="@{/getInquiryList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn pageBtn" th:if="${inquiryTotalCount == 0}"th:href="@{/getInquiryList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
-									<a class="btn pageBtn" th:if="${inquiryTotalCount != 0}"th:href="@{/getInquiryList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
-								</div>
+						</div>
+						<hr>
+						<div style="padding: 0px 10px;">
+							<div>
+								<a class="btn pageBtn" th:href="@{/getInquiryList}">목록</a>
 							</div>
 						</div>
 						
@@ -237,10 +206,4 @@
 		<!-- Custom scripts for all pages-->
 		<script th:src="@{/js/sb-admin-2.min.js}"></script>
 	</body>
-	<script>
-		// 검색창 초기화
-		$('#resetBtn').click(function(){
-			$('#search').val("");
-		});
-	</script>
 </html>
