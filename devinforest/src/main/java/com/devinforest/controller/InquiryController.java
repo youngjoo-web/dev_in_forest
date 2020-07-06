@@ -19,7 +19,7 @@ public class InquiryController {
 	@GetMapping("/getInquiryList")
 	public String getInquiryList(HttpSession session, Model model,
 								@RequestParam(defaultValue = "1") int currentPage,
-								@RequestParam(defaultValue = "1") int rowPerPage,
+								@RequestParam(defaultValue = "10") int rowPerPage,
 								@RequestParam(defaultValue = "") String searchWord) {
 		System.out.println(currentPage+" <- InquiryController.getInquiryList: currentPage");
 		
