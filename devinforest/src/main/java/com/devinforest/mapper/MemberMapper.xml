@@ -44,7 +44,7 @@
 		AND member_state = 'Y'
 	</select>
 	<!-- 회원목록 -->
-	<select id="selectMemberList" resultType="com.devinforest.vo.Member">
+	<select id="selectMemberList" parameterType="java.util.Map" resultType="com.devinforest.vo.Member">
 		SELECT
 		member_email as memberEmail,
 		member_name as memberName,

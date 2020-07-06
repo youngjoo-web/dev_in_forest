@@ -3,22 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.CompanyMapper">
-	<!--  -->
-	<select id="checkCompanyPw" parameterType="com.devinforest.vo.LoginCompany" resultType="com.devinforest.vo.Company">
+	<!-- 비밀번호체크 -->
+	<select id="checkCompanyPw" parameterType="com.devinforest.vo.LoginCompany" resultType="int">
 	SELECT
-		company_email AS companyEmail,
-		company_kor_name AS companyKorName,
-		company_eng_name AS companyEngName, 
-		company_type AS companyType, 
-		company_address AS companyAddress, 
-		company_phone AS companyPhone, 
-		company_license AS companyLicense,
-		company_link AS companyLink, 
-		company_ceo AS companyCEO , 
-		company_sales AS companySales,
-		company_employees AS companyEmployees,
-		company_about AS companyAbout,
-		company_foundation AS companyFoundation
+		COUNT(*)
 		FROM dev_company
 		WHERE company_email=#{companyEmail}
 		AND company_password=PASSWORD(#{companyPw})
@@ -42,6 +30,28 @@
 		company_foundation =#{companyFoundation}
 		WHERE company_email=#{companyEmail}
 	</update>
+	<!-- 기업 검색결과 갯수 -->
+	<select id="selectSearchCompanyCount" parameterType="String" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM dev_company
+		WHERE (company_kor_name LIKE CONCAT('%',#{searchWord},'%'))OR(company_eng_name LIKE CONCAT('%',#{searchWord},'%'))
+	</select>
+	
+	<!-- 기업 리스트 출력 쿼리문 -->
+	<select id="selectCompanyList" parameterType="java.util.Map" resultType="com.devinforest.vo.Company">
+		SELECT
+		company_email AS companyEmail,
+		company_kor_name AS companyKorName,
+		company_eng_name AS companyEngName, 	
+		company_address AS companyAddress, 
+		company_phone AS companyPhone
+		FROM dev_company
+		WHERE (company_kor_name LIKE CONCAT('%',#{searchWord},'%'))OR(company_eng_name LIKE CONCAT('%',#{searchWord},'%'))
+		ORDER BY company_date desc
+		LIMIT #{beginRow}, #{rowPerPage}
+		
+	</select>
 	<!-- 기업의 정보 리스트 출력 쿼리문 -->
 	<select id="selectCompanyInfo" parameterType="com.devinforest.vo.LoginCompany" resultType="com.devinforest.vo.Company" >
 		SELECT

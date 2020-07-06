@@ -115,14 +115,11 @@
 							</div></li>
 
 						<!-- 닉네임 나오는 곳 - 상단 바 -->
-						<li class="nav-item dropdown no-arrow"><a
-							class="nav-link dropdown-toggle" href="#" id="userDropdown"
-							role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> <span
-								class="mr-2 d-none d-lg-inline text-gray-600 small"
-								th:text="${session.loginCompany.companyKorName}"></span> <img
-								class="img-profile rounded-circle" th:src="@{/img/img.png}">
-						</a> <!-- Dropdown - User Information -->
+						<li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${session.loginCompany.companyKorName}"></span>
+                <img class="img-profile rounded-circle" th:src="@{/img/img.png}">
+              </a> <!-- Dropdown - User Information -->
 							<div
 								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 								aria-labelledby="userDropdown">
@@ -149,21 +146,111 @@
 							<h6 class="m-0 font-weight-bold text-primary">기업회원정보보기</h6>
 						</div>
 						<div class="card-body">
-							<h1>비밀번호 확인</h1>
-							<form method="get" th:action="@{/companyPwCheck}">
-								<input type="hidden" name="companyEmail"
-									th:value="${session.loginCompany.companyEmail}"> <input
-									type="password" name="companyPw">
-								<button type="submit">입력</button>
-							</form>
+							<div class="table-responsive">
+							<form method="post" th:action="@{/modifyCompany}">
+								<table class="table table-bordered" id="dataTable" width="100%"
+									cellspacing="0">
+									<tr>
+										<td>기업이메일</td>
+										<td th:text="${company.companyEmail}">
+											<input type="hidden" name="companyEmail" th:value="${company.companyEmail}">
+										</td>
+									</tr>
+									<tr>
+										<td>한글사명</td>
+										<td>
+											<input type="text" name="companyKorName" th:value="${company.companyKorName}">
+										</td>
+									</tr>
 
+									<tr>
+										<td>영문사명</td>
+										<td>
+											<input type="text" name="companyEngName" th:value="${company.companyEngName}">
+										</td>
+									</tr>
+									<tr>
+										<td>산업분야</td>
+										<td>
+											<input type="text" name="companyType" th:value="${company.companyType}">
+										</td>
+									</tr>
+									<tr>
+										<td>회사주소</td>
+										<td>
+											<input type="text" name="companyAddress" th:value="${company.companyAddress}">
+										</td>
+									</tr>
+									<tr>
+										<td>대표번호</td>
+										<td>
+											<input type="text" name="companyPhone" th:value="${company.companyPhone}">
+										</td>
+									</tr>
+									<tr>
+										<td>사업자등록번호</td>
+										<td>
+											<input type="text" name="companyLicense" th:value="${company.companyLicense}">
+										</td>
+									</tr>
+									<tr>
+										<td>회사홈페이지</td>
+										<td>
+											<input type="text" name="companyLink" th:value="${company.companyLink}">
+										</td>
+									</tr>
+									<tr>
+										<td>대표자명</td>
+										<td>
+											<input type="text" name="companyCEO" th:value="${company.companyCEO}">
+										</td>
+									</tr>
+									<tr>
+										<td>매출액</td>
+										<td>
+											<input type="text" name="companySales" th:value="${company.companySales}">
+										</td>
+									</tr>
+									<tr>
+										<td>사원수</td>
+										<td>
+											<input type="text" name="companyEmployees" th:value="${company.companyEmployees}">
+										</td>
+									</tr>
+									<tr>
+										<td>회사소개</td>
+										<td>
+											<input type="text" name="companyAbout" th:value="${company.companyAbout}">
+										</td>
+									</tr>
+									<tr>
+										<td>설립일</td>
+										<td>
+											<input type="date" name="companyFoundation" th:value="${company.companyFoundation}">
+										</td>
+									</tr>
+									
+								</table>
+								<button type="submit" th:text="정보수정"></button>
+							</form>
+								
+								
+							</div>
+							<br>
+							<form method="get" th:action="@{/modifyCompany}">
+								<input type="hidden" name="companyEmail"
+									th:value="${session.loginCompany.companyEmail}">
+								<button type="submit">돌아가기</button>
+							</form>
+							<br>
+							
 						</div>
 					</div>
-
+					
 
 				</div>
 				<!-- /.container-fluid -->
-
+				
 			</div>
 			<!-- End of Main Content -->
 

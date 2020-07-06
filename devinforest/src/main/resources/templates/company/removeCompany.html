@@ -146,14 +146,15 @@
 					<!-- 테이블 예시 -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">기업회원정보보기</h6>
+							<h6 class="m-0 font-weight-bold text-primary">기업회원탈퇴</h6>
 						</div>
 						<div class="card-body">
-							<h1>비밀번호 확인</h1>
-							<form method="get" th:action="@{/companyPwCheck}">
+							<h1>비밀번호확인</h1>
+							<form method="post" th:action="@{/removeCompany}">
 								<input type="hidden" name="companyEmail"
-									th:value="${session.loginCompany.companyEmail}"> <input
-									type="password" name="companyPw">
+									th:value="${session.loginCompany.companyEmail}">
+									PASSWORD : 
+									<input type="password" name="companyPw">
 								<button type="submit">입력</button>
 							</form>
 
