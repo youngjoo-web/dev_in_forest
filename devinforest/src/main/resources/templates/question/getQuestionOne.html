@@ -15,12 +15,13 @@
 	$(document).ready(function(){
 		let memberName = $('#memberName').val();
 		let questionNo = $('#questionNo').val();
-		let questionCommentIp = $('#questionCommentIp').val();
+		let commentIp = $('#commentIp').val();
 		let answerContent = $('#addAnswerContent').val();
+		let showMore = true;
 		
 		console.log(memberName);
 		console.log(questionNo);
-		console.log(questionCommentIp);
+		console.log(commentIp);
 		console.log(answerContent);
 		
 		
@@ -32,63 +33,219 @@
 				$('#count').text(data);
 			}
 		});
-		// 답글리스트 안보임 -> rowPerPage
+		$.ajax({
+			url: '/getAnswerList',
+			type: 'GET',
+			data: {'questionNo' : questionNo},
+			success : function(data) {
+				console.log(data['answerList']);
+				console.log(data['lastPage']);
+				$.each(data['answerList'], function(index, item){
+					$('#answerList').append('<div>'+ item.answerContent + '</div>');
+					$('#answerList').append('<div>'+ item.memberName + '</div>');
+					$('#answerList').append('<div id="answerCommentList'+ index +'"></div>');
+					$('#answerList').append('<div id="answerCommentAllList'+ index +'"></div>');
+					$('#answerList').append('<div id="answerComment'+index +'"><a id="writeAnswerCommentBtn' + index + '" href="#">댓글 작성</a></div>');					
+					$('#answerList').append('<hr>');
+				});
+				
+				
+				// 출력 위치 수정
+				$.each(data['answerList'], function(index, item){
+					$.ajax({
+						url: '/getAnswerCommentList',
+						type: 'GET',
+						data: {'answerNo' : item.answerNo},
+						success: function(data) {
+							$(data).each(function(index, item){
+								$('#answerCommentList' + index).append('<tr>');
+								$('#answerCommentList' + index).append('<td>' + item.answerCommentContent +'</td>');
+								$('#answerCommentList' + index).append('<td>' + item.memberName + '</td>');
+								$('#answerCommentList' + index).append('</tr>');
+								
+								console.log($(data).length + "<--- AnswerCommentList");
+								
+							});
+								if($(data).length >= 5) {
+									$('#showMore').append('<a id="changeRowPerPage" href="#">show more comment</a>');
+								}
+						
+							$('#changeRowPerPage').click(function(){
+								$.ajax({
+									url: '/getAnswerCommentList',
+									type: 'GET',
+									data: {'answerNo' : item.answerNo, 'showMore' : showMore},
+									success : function(data) {
+										$(data).each(function(index, item){
+											$('#answerCommentList' + index).remove();
+											$('#answerCommentAllList' + index).append('<tr>');
+											$('#answerCommentAllList' + index).append('<td>' + item.questionCommentContent +'</td>');
+											$('#answerCommentAllList' + index).append('<td>' + item.memberName + '</td>');
+											$('#answerCommentAllList' + index).append('</tr>');
+											$('#changeRowPerPage').remove();
+											
+											console.log($(data).length + "<--- AnswerCommentList");
+											
+										});
+										console.log("변경성공");
+									}
+								});
+							});
+						} 
+					});
+				});
+				$.each(data['answerList'], function(index, item){
+					$('#writeAnswerCommentBtn'+ index).click(function() {
+						$('#writeAnswerCommentBtn' + index).remove();
+						console.log("writeAnswerCommentBtn click");
+						$('#answerComment'+ index).append('<input type="text" id="answerCommentContent'+ index +'"></input><button type="button" id="answerWriteBtn' + index + '">작성</button>');
+						$('#answerWriteBtn' + index).click(function() {
+							console.log("answerWriteBtn click");
+							
+							let answerCommentContent = $('#answerCommentContent' + index).val();
+	
+							$.ajax({
+								url: '/addAnswerComment',
+								type: 'POST',
+								data: {'answerNo' : item.answerNo, 'memberName' : memberName, 'answerCommentContent' : answerCommentContent, 'answerCommentIp' : commentIp},
+								success : function() {
+									$('#answerCommentContent' + index).remove();
+									$('#writeAnswerCommentBtn' + index).remove();
+									$('#answerWriteBtn' + index).remove();
+									$('#answerComment' + index).append('<a id="writeAnswerCommentBtn' + index + '" href="#">댓글 작성</a>');
+									console.log("질문 댓글 작성 성공");
+								}
+							});
+						});
+					});
+					
+				});
+			}
+		});
 		$.ajax({
 			url: '/getQuestionCommentList',
 			type: 'GET',
-			data: {'questionNo' : questionNo, 'rowPerPage' : rowPerPage},
+			data: {'questionNo' : questionNo},
 			success: function(data) {
 				$(data).each(function(index, item){
 					$('#questionCommentList').append('<tr>');
 					$('#questionCommentList').append('<td>' + item.questionCommentContent +'</td>');
 					$('#questionCommentList').append('<td>' + item.memberName + '</td>');
 					$('#questionCommentList').append('</tr>');
-				console.log($(data).length);
 					
-				
+					console.log($(data).length + "<--- QuestionCommentList");
+					
 				});
-				if($(data).length >= 5) {
-					$('#showMore').append('<a id="changeRowPerPage" href="#">show more comment</a>');
-				}
+					if($(data).length >= 5) {
+						$('#showMore').append('<a id="changeRowPerPage" href="#">show more comment</a>');
+					}
 			
+				$('#changeRowPerPage').click(function(){
+					$.ajax({
+						url: '/getQuestionCommentList',
+						type: 'GET',
+						data: {'questionNo' : questionNo, 'showMore' : showMore},
+						success : function(data) {
+							$(data).each(function(index, item){
+								$('#questionCommentList').remove();
+								$('#questionCommentAllList').append('<tr>');
+								$('#questionCommentAllList').append('<td>' + item.questionCommentContent +'</td>');
+								$('#questionCommentAllList').append('<td>' + item.memberName + '</td>');
+								$('#questionCommentAllList').append('</tr>');
+								$('#changeRowPerPage').remove();
+								
+								console.log($(data).length + "<--- QuestionCommentList");
+								
+							});
+							console.log("변경성공");
+						}
+					});
+				});
 			} 
 		});
-		$('#changeRowPerPage').click(function(){
-			$.ajax({
-				url: '/getQuestionCommentTotalRow',
-				type: 'GET',
-				data: {'questionNo' : questionNo},
-				success : function(data) {
-					$('#rowPerPage').val(data);
-					console.log("변경성공");
-				}
-			});
-			let rowPerPage = $('#rowPerPage').val();
-		});
+		
 		$('#upBtn').click(function(){
+			if(memberName == "Guest") {
+				alert("Geust는 투표를 할 수 없습니다.");
+				return;
+			}
+			// 투표를 한 데이터가 있어야 없을 때
 			$.ajax({
-				url: '/plusVote',
+				url:'/voteCheck',
 				type: 'GET',
 				data: {'memberName' : memberName, 'questionNo' : questionNo},
-				success : function(data) {
-					$('#count').remove();
-					$('#voteTotalCount').append('<div id="count">' + data + '</div>');
-	                console.log("좋아요 성공");
+				success: function(data) {
+					console.log(data);
+					if(data != null) {
+						$.ajax({
+							url: '/plusVote',
+							type: 'GET',
+							data: {'memberName' : memberName, 'questionNo' : questionNo},
+							success : function(data) {
+								$('#count').remove();
+								$('#voteTotalCount').append('<div id="count">' + data + '</div>');
+				                console.log("좋아요 성공");
+				                $('#downBtn').attr("disabled", true);
+				                return false;
+							}
+						});
+					} 
+					$.ajax({
+						url: '/deleteVote',
+						type: 'GET',
+						data: {'memberName' : memberName, 'questionNo' : questionNo},
+						success : function(data) {
+							$('#downBtn').attr("disabled", false);
+							$('#count').remove();
+							$('#voteTotalCount').append('<div id="count">' + data + '</div>');
+							console.log("삭제 성공");	
+						    return;
+						}
+					});
 				}
 			});
 		});
+		
 		$('#downBtn').click(function(){
+			if(memberName == "Guest") {
+				alert("Geust는 투표를 할 수 없습니다.");
+				return;
+			}
 			$.ajax({
-				url: '/minusVote',
+				url:'/voteCheck',
 				type: 'GET',
 				data: {'memberName' : memberName, 'questionNo' : questionNo},
-				success : function(data) {
-					$('#count').remove();
-					$('#voteTotalCount').append('<div id="count">' + data + '</div>');
-	                console.log("싫어요 성공");
+				success: function(data) {
+					if(data != null) {
+						$.ajax({
+							url: '/minusVote',
+							type: 'GET',
+							data: {'memberName' : memberName, 'questionNo' : questionNo},
+							success : function(data) {
+								$('#count').remove();
+								$('#voteTotalCount').append('<div id="count">' + data + '</div>');
+								$('#upBtn').attr("disabled", true);
+								console.log("싫어요 성공");
+				                return false;
+							}
+						});
+					} 
+					$.ajax({
+						url: '/deleteVote',
+						type: 'GET',
+						data: {'memberName' : memberName, 'questionNo' : questionNo},
+						success : function(data) {
+							$('#count').remove();
+							$('#voteTotalCount').append('<div id="count">' + data + '</div>');
+							$('#upBtn').attr("disabled", false);
+							console.log("삭제 성공");	
+			            	return;
+						}
+					});
 				}
 			});
 		});
+		
 		$('#writeQuestionCommentBtn').click(function() {
 			$('#writeQuestionCommentBtn').remove();
 			$('#questionComment').append('<input type="text" id="questionCommentContent"></input><button type="button" id="writeBtn">작성</button>');
@@ -101,7 +258,7 @@
 				$.ajax({
 					url: '/addQuestionComment',
 					type: 'POST',
-					data: {'questionNo' : questionNo, 'memberName' : memberName, 'questionCommentContent' : questionCommentContent, 'questionCommentIp' : questionCommentIp},
+					data: {'questionNo' : questionNo, 'memberName' : memberName, 'questionCommentContent' : questionCommentContent, 'questionCommentIp' : commentIp},
 					success : function() {
 						$('#questionCommentContent').remove();
 						$('#writeBtn').remove();
@@ -111,14 +268,33 @@
 				});
 			});
 		});
+	
 		
 		$('#addAnswerBtn').click(function(){
+			console.log("addAnswerBtn click");
+			let addAnswerContent = $('#addAnswerContent').val();
+			console.log($('#addAnswerContent').val());
 			$.ajax({
 				url: '/addAnswer',
 				type: 'POST',
-				data: {'questionNo' : questionNo, 'memberName' : memberName, 'answerContent' : answerContent},
+				data: {'memberName' : memberName, 'questionNo' : questionNo, 'answerContent' : addAnswerContent, 'answerIp' : commentIp},
 				success : function() {
-					console.log("답변생성성공");
+					$.ajax({
+						url: '/getAnswerList',
+						type: 'GET',
+						data: {'questionNo' : questionNo},
+						success : function(data) {
+							console.log(data['answerList']);
+							console.log(data['lastPage']);
+							$.each(data['answerList'], function(index, item){
+								$('#answerList').remove();
+								$('#addedAnswerList').append('<div>'+ item.answerContent + '</div>');
+								$('#addedAnswerList').append('<div>'+ item.memberName + '</div>');
+								$('#addedAnswerList').append('<hr>');
+							});	
+							
+						}
+					});
 				}
 			});
 		});
@@ -131,11 +307,11 @@
 	<h1 th:text="상세보기"></h1>
 		
 		
-		<button type="button" id="upBtn">좋아요</button>
+		<button type="button" id="upBtn">▲</button>
 		<div id="voteTotalCount">
 			<div id="count"></div>
 		</div>
-		<button type="button" id="downBtn">싫어요</button>
+		<button type="button" id="downBtn">▼</button>
 		
 		<a th:href="@{/modifyQuestion(questionNo=${question.questionNo})}">수정</a>
 		<table border="1">
@@ -161,6 +337,9 @@
 		<div id="questionCommentList">
 			
 		</div>
+		<div id="questionCommentAllList">
+			
+		</div>
 		<div id="showMore">
 			
 		</div>
@@ -174,29 +353,22 @@
 		<!-- restcontroller 완성해야함 -->
 		
 		<!-- 답변 리스트 -->
-		<hr>
-		<div th:each="al: ${answerList}">
-			
-		<div th:text="${al.answerContent}"></div>
-		
-		<div th:text="${al.memberName}"></div>
+		<div id="answerList">
 		<hr>
 		</div>
-		
+		<div id="addedAnswerList">
+		<hr>
+		</div>
 		<!-- 답변 작성 -->
-		<form th:action="@{/addAnswer}" method="post">
-			<textarea rows="5" cols="100" id="addAnswerContent" placeholder="Enter your answer this area"></textarea>
-			<br>
-			<button id="addAnswerBtn">답변작성</button>
-		</form>
+		<textarea rows="5" cols="100" id="addAnswerContent" placeholder="Enter your answer this area"></textarea>
+		<br>
+		<button id="addAnswerBtn">답변작성</button>
+	
 		
 		<input type="hidden" id="rowPerPage">
 		<input type="hidden" id="questionNo" th:value="${question.questionNo}">
 		<input type="hidden" id="memberName" th:value="${memberName}">
-		<input type="hidden" id="questionCommentIp" th:value="${ip}">
+		<input type="hidden" id="commentIp" th:value="${ip}">
 		
 </body>
-<script>
-	
-</script>
 </html>

@@ -9,7 +9,7 @@ import com.devinforest.vo.Answer;
 
 @Mapper
 public interface AnswerMapper {
-	public List<Answer> selectAnswerList(Map<String, Object>map);
+	public List<Answer> selectAnswerList(Map<String, Object> map);
 	public int insertAnswer(Answer answer);
 	public int deleteAnswer(Answer answer);
 	public int updateAnswer(Answer answer);

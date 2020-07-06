@@ -4,8 +4,8 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.VoteMapper">
 	
-	<!-- 좋아요누른 회원 검사 -->
-	<select id="voteCheck" resultType="com.devinforest.vo.Vote" parameterType="com.devinforest.vo.Vote" >
+	<!-- 좋아요 누른 회원 검사 -->
+	<select id="voteCheck" resultType="String" parameterType="com.devinforest.vo.Vote" >
 		SELECT
 			member_name memberName
 		FROM
@@ -54,7 +54,7 @@
 		SET
 			vote_point=1
 		WHERE
-			memberName=#{memberName}
+			memberName=#{memberName},questionNo=#{questionNo}
 	</update>
 	<update id="updateMinusVote" parameterType="com.devinforest.vo.Vote">
 		UPDATE
@@ -62,7 +62,7 @@
 		SET
 			vote_point=0
 		WHERE
-			memberName=#{memberName}
+			memberName=#{memberName},questionNo=#{questionNo}
 	</update>
 	<select id="voteTotalCount" resultType="int" parameterType="com.devinforest.vo.Vote">
 		SELECT

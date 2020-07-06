@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.devinforest.mapper.AnswerMapper;
 import com.devinforest.vo.Answer;
-import com.devinforest.vo.Question;
 
 @Service
 @Transactional
@@ -34,6 +33,7 @@ public class AnswerService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("beginRow", beginRow);
 		map.put("rowPerPage", rowPerPage);
+		map.put("questionNo", answer.getQuestionNo());
 		
 		System.out.println(beginRow + " <--- beginRow");
 		System.out.println(rowPerPage + " <--- rowPerPage");
@@ -41,18 +41,15 @@ public class AnswerService {
 		
 		List<Answer> answerList = answerMapper.selectAnswerList(map);
 		
+		System.out.println(answer + "<---- AnswerService answer");
+		System.out.println(answerList + " <---- AnswerService answerList");
+		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("answerList", answerList);
 		
 		return returnMap;
 		
-	}
-	
-	/* ---------- 답변  생성 ---------- */
-	public int addAnswer(Answer answer) {
-		
-		return answerMapper.insertAnswer(answer);
 	}
 	
 	/* ---------- 답변  수정 ---------- */

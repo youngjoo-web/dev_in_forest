@@ -1,16 +1,12 @@
 
 package com.devinforest.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.devinforest.service.AnswerService;
-import com.devinforest.vo.Answer;
 
 @Controller
 public class AnswerController {
@@ -18,12 +14,7 @@ public class AnswerController {
 	@Autowired
 	private AnswerService answerService;
 
-	/* ---------- 답변 작성하기 ---------- */
-	@PostMapping("/addAnswer")
-	public String addAnswer() {
-		return "redirect:/getQuestionOne?questionNo=";
-	}
-
+	
 	/* ---------- 답변 수정하기 ---------- */
 	// 답변 수정 폼으로 이동
 	@GetMapping("/modifyAnswer")

@@ -11,6 +11,6 @@ public interface VoteMapper {
 	public int updatePlustVote(Vote vote);
 	public int updateMinustVote(Vote vote);
 	public int voteTotalCount(Vote vote);
-	public Vote voteCheck(Vote vote);
+	public String voteCheck(Vote vote);
 	public int deleteVote(Vote vote);
 }

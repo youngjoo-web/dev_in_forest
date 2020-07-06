@@ -1,6 +1,5 @@
 package com.devinforest.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -89,7 +88,7 @@ public class QuestionController {
 		return "question/getQuestionList";
 	}
 	
-	/* ---------- 질문 상세보기 + 답변리스트 ---------- */
+	/* ---------- 질문 상세보기 ---------- */
 	@GetMapping("/getQuestionOne")
 	public String getQuestionOne(Model model, HttpSession session, Question question, Answer answer,
 			@RequestParam(value="currentPage", defaultValue="1") int currentPage) {
@@ -106,10 +105,7 @@ public class QuestionController {
 		System.out.println(memberName + " <--- QuestionController memberName");
 
 		question.setMemberName(memberName);
-		
-		//답변 리스트
-		Map<String, Object> answerList = answerService.getAnswerList(currentPage, answer);
-			
+					
 		Map<String, Object> map = questionService.getQuestionOne(question);
 		
 		// 질문
@@ -117,11 +113,7 @@ public class QuestionController {
 		model.addAttribute("memberName", memberName);
 		model.addAttribute("question", map.get("questionOne"));
 		model.addAttribute("viewsCount", map.get("viewsCount"));
-		
-		// 답변
-		model.addAttribute("answerList", answerList.get("answerList"));
-		model.addAttribute("lastPage", answerList.get("lastPage"));
-		model.addAttribute("currentPage", currentPage);
+
 		
 		return "question/getQuestionOne";
 	}
