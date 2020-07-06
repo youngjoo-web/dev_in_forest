@@ -3,19 +3,16 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport"
-			content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
-		<title>신고 조회</title>
+		<title th:text="${#strings.abbreviate(report.reportNo,16)}"></title>
 		
 		<!-- Custom fonts for this template-->
 		<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
 			rel="stylesheet" type="text/css">
-		<link
-			href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-			rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 		
 		<!-- Custom styles for this template-->
 		<link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
@@ -24,6 +21,14 @@
 		<link th:href="@{/css/addAdmin.css}" rel="stylesheet">
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		
+		<style>
+			th{
+				text-align: center;
+				color:white;
+				background: #148b61;
+			}
+		</style>
 	</head>
 	<body id="page-top">
 		<!-- Page Wrapper -->
@@ -115,90 +120,52 @@
 	
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
+					
 						<div>
-							<h3 class="text-gray-800 mb-2 font-weight-bold">신고 내역</h3>
+							<h3 class="text-gray-800 mb-2 font-weight-bold">신고내역 상세보기</h3>
 						</div>
-						<br>
-						<!-- 테이블 -->
-						<div class="card shadow mb-4">
-							<div class="card-header py-3">
-							  <div class="row">
-									<div class="col-sm-6" style="position:relative;">
-										<div class="text-left" style="position:absolute; bottom: 0px;">
-											<h5 class="m-0 font-weight-bold" style=" color:#148b61;" th:text="'Report : '+${reportTotalCount}+개"></h5>
-										</div>
-									</div>
-									<div class="col-sm-6 text-right">
-								  		<a class="btn searchBtn" th:href="@{/getReportList(rowPerPage='', searchWord='', reportKind='')}">전부 초기화</a>
-									</div>
+						<hr>
+						<div class="card" style="padding:20px;">
+							<div>
+								<table class="table">
+									<tr>
+										<th>번호</th>
+										<td th:text="${report.reportNo}"></td>
+										<th>제목</th>
+										<td th:text="${report.reportTitle}"></td>
+										<th>신고분류</th>
+										<td th:text="${report.reportKind}"></td>
+									</tr>
+									<tr>
+										<th>사용자명</th>
+										<td th:text="${report.memberName}"></td>
+										<th>신고일자</th>
+										<td th:text="${report.reportDate}"></td>
+										<th>조치여부</th>
+										<td th:text="${report.reportState}"></td>
+									</tr>
+								</table>
+							</div>
+							<hr>
+							<div class="card">
+								<div style="padding:15px; height:300px; word-break:break-all; overflow: scroll;" th:text="${report.reportContent}">
+									
 								</div>
 							</div>
-							<div class="card-body">
-								<div class="table">
-									<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-										<div class="row">
-											<div class="col-sm-12 col-md-4">
-												<form method="GET" th:action="@{/getReportList}">
-													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="제목 검색">
-													<input type="hidden" name="reportKind" th:value="${reportKind}">
-													<button class="btn searchBtn" type="submit">검색</button>
-													<button id="resetBtn" class="btn searchBtn" type="button">초기화</button>
-												</form>
-											</div>
-											<div class="col-sm-12 col-md-4">
-												<div class="text-right">
-													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind=질문)}">질문</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind=답변)}">답변</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind=댓글)}">댓글</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind='')}">초기화</a>
-												</div>
-											</div>
-											<div class="col-sm-12 col-md-4">
-												<div class="text-right">
-													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=1, searchWord=${searchWord}, reportKind=${reportKind})}">1개씩</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=5, searchWord=${searchWord}, reportKind=${reportKind})}">5개씩</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=10, searchWord=${searchWord}, reportKind=${reportKind})}">10개씩</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=15, searchWord=${searchWord}, reportKind=${reportKind})}">15개씩</a>
-												</div>
-											</div>
-										</div>
-									</div>
-									<table style="margin-top: 10px;" class="table table-bordered text-center">
-										<thead>
-											<tr>
-												<th>번호</th>
-												<th>제목</th>
-												<th>작성자</th>
-												<th>작성일</th>
-												<th>분류</th>
-												<th>조치 여부</th>
-											</tr>
-											<tr th:each="Report : ${reportList}">
-												<td th:text="${Report.reportNo}"></td>
-												<td><a th:href="@{/getReportOne(reportNo=${Report.reportNo})}" th:text="${Report.reportTitle}"></a></td>
-												<td th:text="${Report.memberName}"></td>
-												<td th:text="${Report.reportContent}"></td>
-												<td th:text="${Report.reportKind}"></td>
-												<td th:text="${Report.reportState}"></td>
-											</tr>
-										</tbody>
-									</table>
+							<hr>
+							<div class="row" style="padding: 0px 10px;">
+								<div class="col-sm-10 text-left">
+									<a class="btn pageBtn" th:href="@{/getReportList}">목록</a>
 								</div>
-								<div>
-									<a class="btn btn-sm pageBtn" th:href="@{/getReportList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord}, reportKind=${reportKind})}">처음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage == 1}" th:href="@{/getReportList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord}, reportKind=${reportKind})}">이전</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage > 1}" th:href="@{/getReportList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord}, reportKind=${reportKind})}">이전</a>
-									<span th:text="'-'+${currentPage}+'-'"></span>
-									<a class="btn btn-sm pageBtn" th:if="${reportTotalCount == 0}" th:href="@{/getReportList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord}, reportKind=${reportKind})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage < lastPage}" th:href="@{/getReportList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord}, reportKind=${reportKind})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage == lastPage}" th:href="@{/getReportList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord}, reportKind=${reportKind})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${reportTotalCount == 0}"th:href="@{/getReportList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord}, reportKind=${reportKind})}">마지막</a>
-									<a class="btn btn-sm pageBtn" th:if="${reportTotalCount != 0}"th:href="@{/getReportList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord}, reportKind=${reportKind})}">마지막</a>
+								<div class="col-sm-2 text-right">
+									<button class="btn pageBtn" id="blackBtn" type="button">블랙</button>
+									<form id="blackForm" method="get" th:action="@{javascript:openWindowPop('/black', 'popup');}"></form>
 								</div>
 							</div>
 						</div>
+						
 					</div>
-					<!-- /.container-fluid -->
+						<!-- /.container-fluid -->
 				</div>
 				<!-- End of Main Content -->
 		
@@ -252,9 +219,22 @@
 		<script th:src="@{/js/sb-admin-2.min.js}"></script>
 	</body>
 	<script>
-		// 검색창 초기화
-		$('#resetBtn').click(function(){
-			$('#search').val("");
-		});
+	
+	$('#blackBtn').click(function(){
+		let result = confirm('정말 해당 사용자를 블랙하시겠습니까?');
+		
+		if(!result) {
+			console.log('취소');
+			return;
+		} else {
+			console.log('확인');
+			$('#blackForm').submit();
+		}
+	});
+	
+	function openWindowPop(url, name){
+	    let options = 'top=100, left=700, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no';
+	    window.open(url, name, options);
+	}
 	</script>
 </html>

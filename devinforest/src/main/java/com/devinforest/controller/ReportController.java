@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.service.ReportService;
+import com.devinforest.vo.Report;
 
 @Controller
 public class ReportController {
@@ -34,5 +35,19 @@ public class ReportController {
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("reportKind", reportKind);
 		return "report/getReportList";
+	}
+	
+	@GetMapping("/getReportOne")
+	public String getReportOne(Model model, 
+								@RequestParam(value = "reportNo") int reportNo) {
+		Report report = reportService.getReportOne(reportNo);
+		model.addAttribute("report", report);
+		
+		return "report/getReportOne";
+	}
+	
+	@GetMapping("/black")
+	public String popup() {
+		return "popup/black";
 	}
 }

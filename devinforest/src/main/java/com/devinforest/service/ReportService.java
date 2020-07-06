@@ -60,4 +60,8 @@ public class ReportService {
 		
 		return outputMap;
 	}
+	
+	public Report getReportOne(int reportNo) {
+		return reportMapper.selectReportOne(reportNo);
+	}
 }

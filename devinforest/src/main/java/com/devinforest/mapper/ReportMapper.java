@@ -9,6 +9,7 @@ import com.devinforest.vo.Report;
 
 @Mapper
 public interface ReportMapper {
-	List<Report> selectReportList(Map<String, Object> inputMap);
-	int ReportTotalCount(Map<String, Object> totalCountMap);
+	public List<Report> selectReportList(Map<String, Object> inputMap);
+	public int ReportTotalCount(Map<String, Object> totalCountMap);
+	public Report selectReportOne(int reportNo);
 }
