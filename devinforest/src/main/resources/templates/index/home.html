@@ -29,7 +29,7 @@
     <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/adminHome}">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/home}">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-tree"></i>
         </div>
@@ -41,9 +41,9 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" th:href="@{/adminHome}">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>홈</span></a>
+        <a class="nav-link" th:href="@{/home}">
+          <i class="fas fa-fw fa-tachometer-alt"></i> 
+          <span>회원 홈</span></a>
       </li>
 
       <!-- Divider -->
@@ -51,52 +51,41 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-		회원관리
+		회원
       </div>
 
       <!-- Nav Item - 일반회원 관리 -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
-          <span>일반회원 관리</span>
+          <span>일반회원</span>
         </a>
         <div id="collapse1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">일반회원 관리</h6>
-            <a class="collapse-item" href="#">일반회원 조회</a>
-            <a class="collapse-item" href="#">탈퇴회원 조회</a>
-            <a class="collapse-item" href="#">블랙회원 조회</a>
+            <h6 class="collapse-header">일반회원</h6>
+            <a class="collapse-item" th:href="@{/getMemberInfo(memberEmail=${session.loginMember.memberEmail})}">회원정보</a>
+            <a class="collapse-item" href="/getMemberList">회원리스트</a>
+            <a class="collapse-item" href="#">기업정보리스트</a>
+             <a class="collapse-item" href="#">면접제의 리스트</a>
+             <a class="collapse-item" href="#">문의&신고</a>
           </div>
         </div>
       </li>
 
-      <!-- Nav Item - 기업회원 관리 -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-wrench"></i>
-          	<span>기업회원 관리</span>
-        </a>
-        <div id="collapse2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">기업회원 관리</h6>
-            <a class="collapse-item" href="#">기업회원 조회</a>
-          </div>
-        </div>
-      </li>
-
+      
       <!-- Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        QnA조회
+        	해시태그	
       </div>
       
       <!-- Nav Item - Charts -->
       <li class="nav-item">
         <a class="nav-link" href="#">
           <i class="fas fa-fw fa-folder"></i>
-          <span>QnA조회</span>
+          <span>해시태그</span>
         </a>
       </li>
       
@@ -105,85 +94,26 @@
       
       <!-- Heading -->
       <div class="sidebar-heading">
-       	 공지 및 문의
+       	Q&A
       </div>
       
       <!-- Nav Item - 공지 관리 -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
-          <span>공지 & FAQ관리</span>
+          <span>Q&A</span>
         </a>
         <div id="collapse3" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">공지 관리</h6>
-            <a class="collapse-item" href="#">공지사항 관리 </a>
-            <a class="collapse-item" href="#">FAQ 관리</a>
+            <h6 class="collapse-header">Q&A</h6>
+            <a class="collapse-item" href="#">질문하기 </a>
+            <a class="collapse-item" href="#">답변하기</a>
+             <a class="collapse-item" href="#">질문목록</a>
+              <a class="collapse-item" href="#">답변목록</a>
           </div>
         </div>
       </li>
       
-      <!-- Nav Item - 공지 관리 -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse4" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>문의 & 신고관리</span>
-        </a>
-        <div id="collapse4" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">문의 관리</h6>
-            <a class="collapse-item" href="#">문의 관리 </a>
-            <a class="collapse-item" href="#">신고 관리</a>
-          </div>
-        </div>
-      </li>
-      
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-      
-      <!-- Heading -->
-      <div class="sidebar-heading">
-       	 통계 확인
-      </div>
-      
-      <!-- Nav Item - 통계 -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse5" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>통계</span>
-        </a>
-        <div id="collapse5" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">통계 확인</h6>
-            <a class="collapse-item" href="#">질문 통계 </a>
-            <a class="collapse-item" href="#">답변 통계</a>
-            <a class="collapse-item" href="#">회원가입 통계</a>
-          </div>
-        </div>
-      </li>
-      
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-      
-      <!-- Heading -->
-      <div class="sidebar-heading">
-       	 관리자 설정
-      </div>
-      
-      <!-- Nav Item - 관리자 관리 -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse6" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>관리자 설정</span>
-        </a>
-        <div id="collapse6" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">관리자 설정</h6>
-            <a class="collapse-item" href="#">관리자 조회 </a>
-            <a class="collapse-item" href="#">관리자 등록</a>
-          </div>
-        </div>
-      </li>
       
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
