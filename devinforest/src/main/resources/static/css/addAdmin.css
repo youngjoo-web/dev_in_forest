@@ -24,6 +24,9 @@
 	color : white;
 	font-weight: bold;
 }
+.searchBtn:hover{
+	color : white;
+}
 .selectBtn {
 	height: 40px;
 	border: 2px solid #1cc88a;
@@ -33,6 +36,17 @@
 	padding : 8px;
 }
 .selectBtn:hover{
+	color: #148b61;
+}
+.selectBtn2 {
+	height: 40px;
+	border: 2px solid #148b61;
+	color: #148b61;
+	border-radius: 5px;
+	font-weight: bold;
+	padding : 8px;
+}
+.selectBtn2:hover{
 	color: #148b61;
 }
 .darkColor{

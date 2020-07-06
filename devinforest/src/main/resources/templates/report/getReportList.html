@@ -116,7 +116,7 @@
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
 						<div>
-							<h3 class="text-gray-800 mb-2 font-weight-bold">신고 내역</h3>
+							<h3 class="text-gray-800 mb-2 font-weight-bold">신고 조회</h3>
 						</div>
 						<br>
 						<!-- 테이블 -->
@@ -129,7 +129,7 @@
 										</div>
 									</div>
 									<div class="col-sm-6 text-right">
-								  		<a class="btn searchBtn" th:href="@{/getReportList(rowPerPage='', searchWord='', reportKind='')}">전부 초기화</a>
+								  		<a class="btn searchBtn" th:href="@{/getReportList(rowPerPage='', searchWord='', reportKind='')}">검색 기본값</a>
 									</div>
 								</div>
 							</div>
@@ -137,7 +137,7 @@
 								<div class="table">
 									<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 										<div class="row">
-											<div class="col-sm-12 col-md-4">
+											<div class="col-xl-4">
 												<form method="GET" th:action="@{/getReportList}">
 													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="제목 검색">
 													<input type="hidden" name="reportKind" th:value="${reportKind}">
@@ -145,40 +145,36 @@
 													<button id="resetBtn" class="btn searchBtn" type="button">초기화</button>
 												</form>
 											</div>
-											<div class="col-sm-12 col-md-4">
-												<div class="text-right">
-													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind=질문)}">질문</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind=답변)}">답변</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind=댓글)}">댓글</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind='')}">초기화</a>
-												</div>
+											<div class="col-xl-4">
+													<a class="btn btn-sm selectBtn2" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind='')}">전체내역</a>
+													<a class="btn btn-sm selectBtn2" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind=질문)}">질문신고내역</a>
+													<a class="btn btn-sm selectBtn2" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind=답변)}">답변신고내역</a>
+													<a class="btn btn-sm selectBtn2" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind=댓글)}">댓글신고내역</a>
 											</div>
-											<div class="col-sm-12 col-md-4">
-												<div class="text-right">
+											<div class="col-xl-4 text-right">
 													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=1, searchWord=${searchWord}, reportKind=${reportKind})}">1개씩</a>
 													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=5, searchWord=${searchWord}, reportKind=${reportKind})}">5개씩</a>
 													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=10, searchWord=${searchWord}, reportKind=${reportKind})}">10개씩</a>
 													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=15, searchWord=${searchWord}, reportKind=${reportKind})}">15개씩</a>
-												</div>
 											</div>
 										</div>
 									</div>
 									<table style="margin-top: 10px;" class="table table-bordered text-center">
 										<thead>
 											<tr>
-												<th>번호</th>
-												<th>제목</th>
-												<th>작성자</th>
-												<th>작성일</th>
-												<th>분류</th>
-												<th>조치 여부</th>
+												<th width="10%">번호</th>
+												<th width="10%">신고 분류</th>
+												<th width="40%">제목</th>
+												<th width="10%">신고회원</th>
+												<th width="20%">신고일자</th>
+												<th width="10%">조치 여부</th>
 											</tr>
 											<tr th:each="Report : ${reportList}">
 												<td th:text="${Report.reportNo}"></td>
+												<td th:text="${Report.reportKind}"></td>
 												<td><a th:href="@{/getReportOne(reportNo=${Report.reportNo})}" th:text="${Report.reportTitle}"></a></td>
 												<td th:text="${Report.memberName}"></td>
-												<td th:text="${Report.reportContent}"></td>
-												<td th:text="${Report.reportKind}"></td>
+												<td th:text="${Report.reportDate}"></td>
 												<td th:text="${Report.reportState}"></td>
 											</tr>
 										</tbody>
