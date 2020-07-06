@@ -13,6 +13,15 @@ import com.devinforest.vo.LoginCompany;
 public class CompanyService {
 	@Autowired
 	private CompanyMapper companyMapper;
+	//기업 정보 수정
+	public void modifyCompany(Company company) {
+		companyMapper.updateCompany(company);
+	}
+	//기업정보 상세보기
+	public Company getCompanyInfo(LoginCompany loginCompany) {
+		System.out.println(loginCompany+"----companyService");
+		return companyMapper.selectCompanyInfo(loginCompany);
+	}
 	//기업 로그인
 	public LoginCompany companyLogin(LoginCompany loginCompany) {
 		System.out.println("companyService" + loginCompany);

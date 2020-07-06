@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -89,5 +90,27 @@ public class CompanyController {
 		company.setCompanyEmail(companyEmail);
 		companyService.addCompanyMember(company);
 		return "redirect:/index";
+	}
+	
+	//기업 정보 상세보기
+	@GetMapping("/getCompanyInfo")
+	public String getCompanyInfo(HttpSession session,Model model,LoginCompany loginCompany) {
+		if(session.getAttribute("loginCompany")==null) {
+			return "redirect:/index";
+		}
+		System.out.println();
+		Company company = new Company();
+		company=companyService.getCompanyInfo(loginCompany);
+		System.out.println(company+"<---company");
+		model.addAttribute("company", company);
+		return "company/companyInfo";
+	}
+	//비밀번호 일치하면 수정폼으로 이동
+	@GetMapping("/modifyCompany")
+	public String modifyCompany(HttpSession session) {
+		if(session.getAttribute("loginCompany")==null) {
+			return "redirect:/index";
+		}
+		return "company/companyPwCheck";
 	}
 }

@@ -17,4 +17,10 @@ public interface CompanyMapper {
 	public int checkCompanyEngName(String companyEngName);
 	//기업 로그인
 	public LoginCompany selectLoginCompanyMamber(LoginCompany loginCompany);
+	//기업정보 상세보기
+	public Company selectCompanyInfo(LoginCompany loginCompany);
+	//기업정보 업데이트
+	public void updateCompany(Company company);
+	//기업정보 업데이트 하기 전에 확인
+	public Company checkCompanyPw(LoginCompany loginCompany);
 }

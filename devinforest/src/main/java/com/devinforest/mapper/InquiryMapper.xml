@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devinforest.mapper.InquiryMapper">
+	<!-- 문의사항 목록 -->
+	<select id="selectInquiryList"
+			parameterType="java.util.Map"
+			resultType="com.devinforest.vo.Inquiry">
+		SELECT
+			inquiry_no      inquiryNo,
+			member_name     memberName,
+			inquiry_title   inquiryTitle,
+			inquiry_content inquiryContent,
+			inquiry_date    inquiryDate,
+			inquiry_kind    inquiryKind,
+			inquiry_answer  inquiryAnswer,
+			inquiry_state   inquiryState
+		FROM dev_inquiry
+		WHERE inquiry_title LIKE CONCAT('%',#{searchWord},'%')
+		ORDER BY inquiry_date DESC
+		LIMIT #{beginRow}, #{rowPerPage};
+	</select>
+	<!-- 문의사항 totalCount -->
+	<select id="inquiryTotalCount"
+			parameterType="String"
+			resultType="int">
+		SELECT
+			count(*)
+		FROM dev_inquiry
+		WHERE inquiry_title LIKE CONCAT('%',#{searchWord},'%')
+	</select>
+	<!-- 문의사항 상세보기 -->
+	<select id="selectInquiryOne"
+			parameterType="int"
+			resultType="com.devinforest.vo.Inquiry">
+		SELECT
+			inquiry_no      inquiryNo,
+			member_name     memberName,
+			inquiry_title   inquiryTitle,
+			inquiry_content inquiryContent,
+			inquiry_date    inquiryDate,
+			inquiry_kind    inquiryKind,
+			inquiry_answer  inquiryAnswer,
+			inquiry_state   inquiryState
+		FROM dev_inquiry
+		WHERE inquiry_no = #{inquiryNo}
+	</select>
+</mapper>

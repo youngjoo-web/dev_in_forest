@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.mapper.MemberMapper;
+import com.devinforest.service.CompanyService;
 import com.devinforest.service.MemberService;
+import com.devinforest.vo.LoginCompany;
 import com.devinforest.vo.LoginMember;
 import com.devinforest.vo.Member;
 import com.devinforest.vo.Restoration;
@@ -22,6 +24,8 @@ import com.devinforest.vo.Restoration;
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private CompanyService companyService;
 	
 	//회원 재가입 요청
 	@GetMapping("/requestMemberRestore")
@@ -171,6 +175,7 @@ public class MemberController {
 		}
 		Member member = new Member();
 		member=memberService.getMemberInfo(loginMember);
+		System.out.println(member+"<---member");		
 		model.addAttribute("member",member);
 		return "member/memberInfo";
 	}
@@ -288,9 +293,13 @@ public class MemberController {
 			return "admin/adminHome";
 		}
 		if(returnLoginMember.getAccountKind().equals("C")) {
-			System.out.println(returnLoginMember+"<-------로그인 컨트롤러 액션");	
 			
-			session.setAttribute("loginMember", returnLoginMember);
+			System.out.println(returnLoginMember+"<-------로그인 컨트롤러 액션");	
+			LoginCompany returnLoginCompany = new LoginCompany();
+			returnLoginCompany.setCompanyEmail(returnLoginMember.getMemberEmail());
+			returnLoginCompany = companyService.companyLogin(returnLoginCompany);
+			System.out.println(returnLoginCompany+"<-------로그인 컨트롤러 액션");	
+			session.setAttribute("loginCompany", returnLoginCompany);
 			System.out.println("로그인성공");
 			return "company/companyHome";
 		}
