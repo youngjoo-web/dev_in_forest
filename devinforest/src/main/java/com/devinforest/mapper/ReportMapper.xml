@@ -15,8 +15,8 @@
 			report_date reportDate,
 			report_state reportState
 		FROM dev_report
-		WHERE report_kind = #{reportKind}
-		OR report_title like CONCAT('%',#{searchWord},'%')
+		WHERE report_title like CONCAT('%',#{searchWord},'%')
+		AND report_kind like CONCAT('%',#{reportKind},'%')
 		ORDER BY report_state DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
@@ -26,8 +26,7 @@
 		SELECT 
 			COUNT(*)
 		FROM dev_report
-		WHERE member_name like CONCAT('%',#{searchWord},'%')
-		OR report_title like CONCAT('%',#{searchWord},'%')
+		WHERE report_title like CONCAT('%',#{searchWord},'%')
 		AND report_kind like CONCAT('%',#{reportKind},'%')
 	</select>
 </mapper>

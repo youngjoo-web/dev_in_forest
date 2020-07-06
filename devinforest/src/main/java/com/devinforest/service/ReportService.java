@@ -46,12 +46,17 @@ public class ReportService {
 		inputMap.put("beginRow", beginRow);
 		inputMap.put("rowPerPage", rowPerPage);
 		List<Report> reportList =  reportMapper.selectReportList(inputMap);
+		System.out.println(reportList.size() + " <-- ReportService.getReportList : reportList.size()");
 		
 		// List 출력
 		Map<String, Object> outputMap = new HashMap<>();
 		outputMap.put("reportTotalCount", reportTotalCount);
 		outputMap.put("lastPage", lastPage);
 		outputMap.put("reportList", reportList);
+		
+		System.out.println(totalCountMap);
+		System.out.println(inputMap);
+		System.out.println(outputMap);
 		
 		return outputMap;
 	}

@@ -140,15 +140,17 @@
 											<div class="col-sm-12 col-md-4">
 												<form method="GET" th:action="@{/getReportList}">
 													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="제목 검색">
+													<input type="hidden" name="reportKind" th:value="${reportKind}">
 													<button class="btn searchBtn" type="submit">검색</button>
 													<button id="resetBtn" class="btn searchBtn" type="button">초기화</button>
 												</form>
 											</div>
 											<div class="col-sm-12 col-md-4">
 												<div class="text-right">
-													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind='질문')}">질문</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind='답변')}">답변</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind='댓글')}">댓글</a>
+													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind=질문)}">질문</a>
+													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind=답변)}">답변</a>
+													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind=댓글)}">댓글</a>
+													<a class="btn btn-sm selectBtn" th:href="@{/getReportList(rowPerPage=${rowPerPage}, searchWord=${searchWord}, reportKind='')}">초기화</a>
 												</div>
 											</div>
 											<div class="col-sm-12 col-md-4">
