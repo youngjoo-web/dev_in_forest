@@ -43,4 +43,12 @@
 		FROM dev_report
 		WHERE report_no = #{reportNo}
 	</select>
+	<select id="blackMemberOne"
+			parameterType="String"
+			resultType="String">
+		SELECT
+			member_email memberEmail
+		FROM dev_member
+		WHERE member_name = #{memberName}
+	</select>
 </mapper>

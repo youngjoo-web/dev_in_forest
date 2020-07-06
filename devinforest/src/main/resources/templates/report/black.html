@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,11 +42,22 @@
 	
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
-					
-						
-						
+						<form>
+							<div>
+								신고 Email : <input type="text" name="email" th:value="${email}" readonly="readonly">
+							</div>
+							<div>
+								신고 Name : <input type="text" name="memberName" th:value="${memberName}" readonly="readonly">
+							</div>
+							<div>
+								신고 사유 : <textarea rows="5" cols="20" name="blackListReason"></textarea>
+							</div>
+							<div>
+								<button type="button">블랙</button>
+							</div>
+						</form>
 					</div>
-						<!-- /.container-fluid -->
+					<!-- End of container-fluid -->
 				</div>
 				<!-- End of Main Content -->
 		

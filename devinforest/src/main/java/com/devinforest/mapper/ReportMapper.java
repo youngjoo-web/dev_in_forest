@@ -12,4 +12,5 @@ public interface ReportMapper {
 	public List<Report> selectReportList(Map<String, Object> inputMap);
 	public int ReportTotalCount(Map<String, Object> totalCountMap);
 	public Report selectReportOne(int reportNo);
+	public String blackMemberOne(String memberName);
 }

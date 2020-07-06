@@ -60,8 +60,10 @@ public class ReportService {
 		
 		return outputMap;
 	}
-	
 	public Report getReportOne(int reportNo) {
 		return reportMapper.selectReportOne(reportNo);
+	}
+	public String blackMemberOne(String memberName) {
+		return reportMapper.blackMemberOne(memberName);
 	}
 }

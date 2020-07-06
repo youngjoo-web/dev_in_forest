@@ -47,7 +47,13 @@ public class ReportController {
 	}
 	
 	@GetMapping("/black")
-	public String popup() {
-		return "popup/black";
+	public String black(Model model,
+						@RequestParam(value = "memberName") String memberName) {
+		System.out.println(memberName + " <-- ReportController.black: memberName");
+		
+		String email = reportService.blackMemberOne(memberName);
+		model.addAttribute("email", email);
+		model.addAttribute("memberName", memberName);
+		return "report/black";
 	}
 }
