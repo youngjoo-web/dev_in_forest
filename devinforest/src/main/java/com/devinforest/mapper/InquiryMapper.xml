@@ -14,7 +14,8 @@
 			inquiry_content inquiryContent,
 			inquiry_date    inquiryDate,
 			inquiry_kind    inquiryKind,
-			inquiry_answer  inquiryAnswer
+			inquiry_answer  inquiryAnswer,
+			inquiry_state   inquiryState
 		FROM dev_inquiry
 		WHERE inquiry_title LIKE CONCAT('%',#{searchWord},'%')
 		ORDER BY inquiry_date DESC

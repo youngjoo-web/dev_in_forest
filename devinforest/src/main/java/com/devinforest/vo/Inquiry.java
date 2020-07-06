@@ -8,6 +8,7 @@ public class Inquiry {
 	private String inquiryDate;
 	private String inquiryKind;
 	private String inquiryAnswer;
+	private String inquiryState;
 	
 	public int getInquiryNo() {
 		return inquiryNo;
@@ -51,11 +52,17 @@ public class Inquiry {
 	public void setInquiryAnswer(String inquiryAnswer) {
 		this.inquiryAnswer = inquiryAnswer;
 	}
+	public String getInquiryState() {
+		return inquiryState;
+	}
+	public void setInquiryState(String inquiryState) {
+		this.inquiryState = inquiryState;
+	}
 	
 	@Override
 	public String toString() {
-		return "Inquiry \n[inquiryNo=" + inquiryNo + ",\n memberName=" + memberName + ",\n inquiryTitle=" + inquiryTitle
-				+ ",\n inquiryContent=" + inquiryContent + ",\n inquiryDate=" + inquiryDate + ",\n inquiryKind=" + inquiryKind
-				+ ",\n inquiryAnswer=" + inquiryAnswer + "]";
+		return "Inquiry [inquiryNo=" + inquiryNo + ", memberName=" + memberName + ", inquiryTitle=" + inquiryTitle
+				+ ", inquiryContent=" + inquiryContent + ", inquiryDate=" + inquiryDate + ", inquiryKind=" + inquiryKind
+				+ ", inquiryAnswer=" + inquiryAnswer + ", inquiryState=" + inquiryState + "]";
 	}
 }
