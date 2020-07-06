@@ -153,8 +153,9 @@
 											<tr>
 												<th width="10%">번호</th>
 												<th width="50%">제목</th>
-												<th width="20%">문의 회원</th>
-												<th width="20%">답변 여부</th>
+												<th width="15%">문의 회원</th>
+												<th width="15%">문의일자</th>
+												<th width="10%">답변 여부</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -164,6 +165,7 @@
 													<a th:href="@{/getInquiryOne(inquiryNo=${inquiry.inquiryNo})}" th:text="${inquiry.inquiryTitle}"></a>
 												</td>
 												<td th:text="${inquiry.memberName}"></td>
+												<td th:text="${inquiry.inquiryDate}"></td>
 												<td th:text="${inquiry.inquiryState}"></td>
 											</tr>
 										</tbody>
