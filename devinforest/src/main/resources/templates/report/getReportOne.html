@@ -7,7 +7,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
-		<title th:text="${#strings.abbreviate(report.reportNo,16)}"></title>
+		<title th:text="${#strings.abbreviate(report.reportTitle,16)}"></title>
 		
 		<!-- Custom fonts for this template-->
 		<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
@@ -121,7 +121,7 @@
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
 						<div>
-							<h3 class="text-gray-800 mb-2 font-weight-bold">신고내역 상세보기</h3>
+							<h3 class="text-gray-800 mb-2 font-weight-bold">신고 조회</h3>
 						</div>
 						<hr>
 						<div class="card" style="padding:20px;">
@@ -129,26 +129,22 @@
 							<div>
 								<table class="table">
 									<tr>
-										<th>번호</th>
-										<td th:text="${report.reportNo}"></td>
-										<th>제목</th>
-										<td th:text="${report.reportTitle}"></td>
-										<th>신고분류</th>
-										<td th:text="${report.reportKind}"></td>
+										<th width="10%">제목</th>
+										<td class="darkColor" colspan="5" th:text="${report.reportTitle}"></td>
 									</tr>
 									<tr>
 										<th>사용자명</th>
-										<td th:text="${report.memberName}"></td>
-										<th>신고일자</th>
-										<td th:text="${report.reportDate}"></td>
-										<th>조치여부</th>
-										<td th:text="${report.reportState}"></td>
+										<td class="darkColor" width="45%" th:text="${report.memberName}"></td>
+										<th width="10%">신고분류</th>
+										<td class="darkColor text-center" width="10%"th:text="${report.reportKind}"></td>
+										<th width="10%">신고일자</th>
+										<td class="darkColor text-center" th:text="${report.reportDate}"></td>
 									</tr>
 								</table>
 							</div>
 							<hr>
 							<div class="card">
-								<div style="padding:15px; height:300px; word-break:break-all; overflow: scroll;" th:text="${report.reportContent}">
+								<div class="darkColor" style="padding:15px; height:300px; word-break:break-all; overflow: scroll;" th:text="${report.reportContent}">
 									
 								</div>
 							</div>
