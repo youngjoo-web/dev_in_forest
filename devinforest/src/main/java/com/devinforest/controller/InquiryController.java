@@ -1,5 +1,6 @@
 package com.devinforest.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.service.InquiryService;
@@ -38,9 +40,22 @@ public class InquiryController {
 	public String getInquiryOne(HttpSession session, Model model, Inquiry inquiry) {
 		int inquiryNo = inquiry.getInquiryNo();
 		System.out.println(inquiryNo+" <- InquiryController.getInquiryOne: inquiryNo");
-		inquiry = inquiryService.getInquiryOne(inquiryNo);
-		System.out.println(inquiry);
-		model.addAttribute("inquiry", inquiry);
+		Map<String, Object> map = new HashMap<>();
+		map = inquiryService.getInquiryOne(inquiryNo);
+		String inquiryAnswer = (String)map.get("inquiryAnswer");
+		if(inquiryAnswer != null) {
+			System.out.println(inquiryAnswer);
+			model.addAttribute("inquiryAnswer", inquiryAnswer);
+		}
+		model.addAttribute("inquiry", map.get("inquiry"));
+		model.addAttribute("checkPoint", map.get("checkPoint"));
 		return "inquiry/getInquiryOne";
+	}
+	// 문의사항 답변작성
+	@PostMapping("/addInquiryAnswer")
+	public String addInquiryAnswer(HttpSession session, Inquiry inquiry) {
+		System.out.println(inquiry);
+		inquiryService.addInquiryAnswer(inquiry);
+		return "redirect:/getInquiryOne?inquiryNo="+inquiry.getInquiryNo();
 	}
 }

@@ -18,7 +18,7 @@
 			inquiry_state   inquiryState
 		FROM dev_inquiry
 		WHERE inquiry_title LIKE CONCAT('%',#{searchWord},'%')
-		ORDER BY inquiry_date DESC
+		ORDER BY inquiry_state, inquiry_date DESC
 		LIMIT #{beginRow}, #{rowPerPage};
 	</select>
 	<!-- 문의사항 totalCount -->
@@ -45,5 +45,24 @@
 			inquiry_state   inquiryState
 		FROM dev_inquiry
 		WHERE inquiry_no = #{inquiryNo}
+	</select>
+	<!-- 문의사항 답변 작성 -->
+	<update id="updateInquiry"
+			parameterType="com.devinforest.vo.Inquiry">
+		UPDATE 
+			dev_inquiry
+		SET 
+			inquiry_answer = #{inquiryAnswer},
+			inquiry_state='Y'
+		WHERE inquiry_no = #{inquiryNo}
+	</update>
+	<!-- 문의사항 답변 작성 -->
+	<select id="selectInquiryAnswer"
+			parameterType="int"
+			resultType="String">
+		SELECT
+			inquiry_answer
+		FROM dev_inquiry
+		WHERE inquiry_no = #{inquiryNo} 
 	</select>
 </mapper>

@@ -130,19 +130,19 @@
 								<table class="table">
 									<tr>
 										<th width="10%">제목</th>
-										<td colspan="3" th:text="${FAQ.noticeTitle}"></td>
+										<td class="darkColor" colspan="3" th:text="${FAQ.noticeTitle}"></td>
 									</tr>
 									<tr>
 										<th>작성자</th>
-										<td width="50%" th:text="${FAQ.adminName}"></td>
+										<td class="darkColor" width="50%" th:text="${FAQ.adminName}"></td>
 										<th width="10%">작성일</th>
-										<td th:text="${FAQ.noticeDate}"></td>
+										<td class="darkColor" th:text="${FAQ.noticeDate}"></td>
 									</tr>
 								</table>
 							</div>
 							<hr>
 							<div class="card">
-								<div style="padding:15px; height:300px; word-break:break-all; overflow: scroll;" th:text="${FAQ.noticeContent}">
+								<div class="darkColor" style="padding:15px; height:300px; word-break:break-all; overflow: scroll;" th:text="${FAQ.noticeContent}">
 									
 								</div>
 							</div>

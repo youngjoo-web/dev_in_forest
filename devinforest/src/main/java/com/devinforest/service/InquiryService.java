@@ -36,7 +36,23 @@ public class InquiryService {
 		return outputMap; 
 	}
 	// 문의사항 상세보기
-	public Inquiry getInquiryOne(int inquiryNo) {
-		return inquiryMapper.selectInquiryOne(inquiryNo);
+	public Map<String, Object> getInquiryOne(int inquiryNo) {
+		String inquiryAnswer = inquiryMapper.selectInquiryAnswer(inquiryNo);
+		int checkPoint = 0;
+		System.out.println(inquiryAnswer+" <- 해당 문의사항 답변");
+		if(inquiryAnswer!=null) {
+			System.out.println(inquiryNo+"번 문의사항 답변있음");
+			checkPoint = 1;
+		}
+		System.out.println(checkPoint+" <- InquiryService.getInquiryOne: checkPoint");
+		Map<String, Object> map = new HashMap<>();
+		map.put("inquiryAnswer", inquiryAnswer);
+		map.put("checkPoint", checkPoint);
+		map.put("inquiry", inquiryMapper.selectInquiryOne(inquiryNo));
+		return map;
+	}
+	// 문의사항 답변 작성
+	public void addInquiryAnswer(Inquiry inquiry) {
+		inquiryMapper.updateInquiry(inquiry);
 	}
 }

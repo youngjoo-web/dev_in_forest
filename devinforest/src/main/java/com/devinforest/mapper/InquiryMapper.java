@@ -15,4 +15,8 @@ public interface InquiryMapper {
 	public int inquiryTotalCount(String searchWord);
 	// 문의사항 상세보기
 	public Inquiry selectInquiryOne(int inquiryNo);
+	// 문의사항 답변 작성
+	public void updateInquiry(Inquiry inquiry);
+	// 문의사항 답변유무 확인
+	public String selectInquiryAnswer(int inquiryNo);
 }
