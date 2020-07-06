@@ -2,6 +2,7 @@
   --input-padding-x: 1.5rem;
   --input-padding-y: .75rem;
 }
+<!-- 임의로 만든 스타일들 -->
 .searchText{
 	padding: 10px;
 	width:250px;
@@ -39,6 +40,7 @@
 .pageBtn:hover{
 	color: white;
 }
+<!-- 임의로 만든 스타일들 끝 -->
 body {
   background: #007bff;
   background: linear-gradient(to right, #0062E6, #33AEFF);

@@ -39,6 +39,7 @@ public class InquiryController {
 		int inquiryNo = inquiry.getInquiryNo();
 		System.out.println(inquiryNo+" <- InquiryController.getInquiryOne: inquiryNo");
 		inquiry = inquiryService.getInquiryOne(inquiryNo);
+		System.out.println(inquiry);
 		model.addAttribute("inquiry", inquiry);
 		return "inquiry/getInquiryOne";
 	}
