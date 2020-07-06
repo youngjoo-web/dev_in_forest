@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devinforest.mapper.ReportMapper">
+	<select id="selectReportList"
+			parameterType="java.util.Map"
+			resultType="com.devinforest.vo.Report">
+		SELECT
+			report_no reportNo,
+			member_name memberName,
+			report_kind reportKind,
+			report_title reportTitle,
+			report_content reportContent,
+			report_date reportDate,
+			report_state reportState
+		FROM dev_report
+		WHERE report_kind = #{reportKind}
+		OR report_title like CONCAT('%',#{searchWord},'%')
+		ORDER BY report_state DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<select id="ReportTotalCount"
+			parameterType="java.util.Map"
+			resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM dev_report
+		WHERE member_name like CONCAT('%',#{searchWord},'%')
+		OR report_title like CONCAT('%',#{searchWord},'%')
+		AND report_kind like CONCAT('%',#{reportKind},'%')
+	</select>
+</mapper>
