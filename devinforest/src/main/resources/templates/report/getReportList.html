@@ -122,14 +122,9 @@
 						<!-- 테이블 -->
 						<div class="card shadow mb-4">
 							<div class="card-header py-3">
-							  <div class="row">
-									<div class="col-sm-6" style="position:relative;">
-										<div class="text-left" style="position:absolute; bottom: 0px;">
-											<h5 class="m-0 font-weight-bold" style=" color:#148b61;" th:text="'Report : '+${reportTotalCount}+개"></h5>
-										</div>
-									</div>
-									<div class="col-sm-6 text-right">
-								  		<a class="btn searchBtn" th:href="@{/getReportList(rowPerPage='', searchWord='', reportKind='')}">검색 기본값</a>
+								<div>
+									<div class="text-left">
+										<h5 class="m-0 font-weight-bold" style=" color:#148b61;" th:text="'Report : '+${reportTotalCount}+개"></h5>
 									</div>
 								</div>
 							</div>
@@ -142,7 +137,7 @@
 													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="제목 검색">
 													<input type="hidden" name="reportKind" th:value="${reportKind}">
 													<button class="btn searchBtn" type="submit">검색</button>
-													<button id="resetBtn" class="btn searchBtn" type="button">초기화</button>
+													<a class="btn searchBtn" th:href="@{/getReportList(rowPerPage='', searchWord='', reportKind='')}">초기화</a>
 												</form>
 											</div>
 											<div class="col-xl-4">
@@ -247,10 +242,4 @@
 		<!-- Custom scripts for all pages-->
 		<script th:src="@{/js/sb-admin-2.min.js}"></script>
 	</body>
-	<script>
-		// 검색창 초기화
-		$('#resetBtn').click(function(){
-			$('#search').val("");
-		});
-	</script>
 </html>

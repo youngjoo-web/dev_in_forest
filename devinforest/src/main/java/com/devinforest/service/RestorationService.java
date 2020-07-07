@@ -20,12 +20,13 @@ public class RestorationService {
 	// 재가입요청 목록 
 	public Map<String, Object> getRestorationList(int currentPage, int rowPerPage, String searchWord){
 		int beginRow =(currentPage-1)*rowPerPage;
-		int restorationTotalCount = restorationMapper.restorationTotalCount(searchWord);
+		int restorationTotalCount = restorationMapper.restorationTotalCount(searchWord); // 전체 게시글 개수
 		System.out.println(restorationTotalCount+" <- RestorationService.getRestorationList: restorationTotalCount");
 		int lastPage = restorationTotalCount/rowPerPage;
 		if(restorationTotalCount % rowPerPage != 0) {
 			lastPage+=1;
 		}
+		int inquiryStateTotalCount = restorationMapper.selectInquiryStateTotalCount(); // 복구요청 개수
 		Map<String, Object> inputMap = new HashMap<>();
 		inputMap.put("beginRow", beginRow);
 		inputMap.put("rowPerPage", rowPerPage);
@@ -35,6 +36,7 @@ public class RestorationService {
 		System.out.println(restorationList+" <- RestorationService.getRestorationList: restorationList");
 		Map<String, Object> outputMap = new HashMap<>();
 		outputMap.put("restorationTotalCount", restorationTotalCount);
+		outputMap.put("inquiryStateTotalCount", inquiryStateTotalCount);
 		outputMap.put("lastPage", lastPage);
 		outputMap.put("restorationList", restorationList);
 		return outputMap;

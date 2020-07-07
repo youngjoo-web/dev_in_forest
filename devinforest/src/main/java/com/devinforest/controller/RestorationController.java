@@ -32,6 +32,7 @@ public class RestorationController {
 		model.addAttribute("rowPerPage", rowPerPage);
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("restorationTotalCount", map.get("restorationTotalCount"));
+		model.addAttribute("inquiryStateTotalCount", map.get("inquiryStateTotalCount"));
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("restorationList", map.get("restorationList"));
 		return "restoration/getRestorationList";
