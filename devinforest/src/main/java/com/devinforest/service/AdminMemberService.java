@@ -10,11 +10,34 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.devinforest.mapper.AdminMemberMapper;
 import com.devinforest.vo.BlackList;
+import com.devinforest.vo.Member;
 
 @Service
 @Transactional
 public class AdminMemberService {
 	@Autowired private AdminMemberMapper adminMemberMapper;
+	// 탈퇴회원 목록
+	public Map<String, Object> getRemoveMemberList(int currentPage, int rowPerPage, String searchWord){
+		int beginRow =(currentPage-1)*rowPerPage;
+		int removeMemberTotalCount = adminMemberMapper.selectRemoveMemberTotalCount(searchWord);
+		System.out.println(removeMemberTotalCount+" <- AdminMemberService.getRemoveMemberList: removeMemberTotalCount");
+		int lastPage = removeMemberTotalCount/rowPerPage;
+		if(removeMemberTotalCount % rowPerPage != 0) {
+			lastPage+=1;
+		}
+		Map<String, Object> inputMap = new HashMap<>();
+		inputMap.put("beginRow", beginRow);
+		inputMap.put("rowPerPage", rowPerPage);
+		inputMap.put("searchWord", searchWord);
+		List<Member> removeMemberList = adminMemberMapper.selectRemoveMemberList(inputMap);
+		System.out.println(lastPage+" <- AdminMemberService.getRemoveMemberList: lastPage");
+		System.out.println(removeMemberList+" <- AdminMemberService.getRemoveMemberList: removeMemberList");
+		Map<String, Object> outputMap = new HashMap<>();
+		outputMap.put("removeMemberTotalCount", removeMemberTotalCount);
+		outputMap.put("lastPage", lastPage);
+		outputMap.put("removeMemberList", removeMemberList);
+		return outputMap;
+	}
 	
 	// 블랙 팝업창
 	public String blackMemberOne(String memberName) {

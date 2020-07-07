@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<meta charset="UTF-8">
+		<title>탈퇴회원 조회</title>
+	</head>
+	<body>
+		<div>
+			<h1>탈퇴회원 조회</h1>
+		</div>
+		<div>
+			<form method="GET" th:action="@{/getRemoveMemberList}">
+				<input id="search" type="text" name="searchWord" th:value="${searchWord}" placeholder="제목 검색">
+				<button type="submit">검색</button>
+				<a class="btn searchBtn" th:href="@{/getRemoveMemberList(rowPerPage='', searchWord='', reportKind='')}">초기화</a>
+			</form>
+		</div>
+		<div>
+			<span th:text="'탈퇴 회원 : '+${removeMemberTotalCount}+명"></span>
+		</div>
+		<div>
+			<a th:href="@{/getRemoveMemberList(rowPerPage=1, searchWord=${searchWord})}">1개씩</a>
+			<a th:href="@{/getRemoveMemberList(rowPerPage=5, searchWord=${searchWord})}">5개씩</a>
+			<a th:href="@{/getRemoveMemberList(rowPerPage=10, searchWord=${searchWord})}">10개씩</a>
+			<a th:href="@{/getRemoveMemberList(rowPerPage=15, searchWord=${searchWord})}">15개씩</a>
+		</div>
+		<div>
+			<table border="1">
+				<tr>
+					<th>아이디</th>
+					<th>닉네임</th>
+					<th>내공</th>
+					<th>가입일</th>
+					<th>활동상태</th>
+				</tr>
+				<tr th:each="removeMember : ${removeMemberList}">
+					<td th:text="${removeMember.memberEmail}"></td>
+					<td th:text="${removeMember.memberName}"></td>
+					<td th:text="${removeMember.memberReputation}"></td>
+					<td th:text="${removeMember.memberDate}"></td>
+					<td th:text="${removeMember.memberState}"></td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<a th:href="@{/getRemoveMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">처음</a>
+			<a th:if="${currentPage == 1}" th:href="@{/getRemoveMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
+			<a th:if="${currentPage > 1}" th:href="@{/getRemoveMemberList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
+			<span th:text="'-'+${currentPage}+'-'"></span>
+			<a th:if="${removeMemberTotalCount == 0}" th:href="@{/getRemoveMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+			<a th:if="${currentPage < lastPage}" th:href="@{/getRemoveMemberList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+			<a th:if="${currentPage == lastPage}" th:href="@{/getRemoveMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+			<a th:if="${removeMemberTotalCount == 0}"th:href="@{/getRemoveMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+			<a th:if="${removeMemberTotalCount != 0}"th:href="@{/getRemoveMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+		</div>
+	</body>
+</html> 

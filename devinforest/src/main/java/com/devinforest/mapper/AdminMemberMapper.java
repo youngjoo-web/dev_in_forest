@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.devinforest.vo.BlackList;
+import com.devinforest.vo.Member;
 
 @Mapper
 public interface AdminMemberMapper {
@@ -23,4 +24,8 @@ public interface AdminMemberMapper {
 	public List<BlackList> selectBlackMemberList(Map<String, Object> inputMap);
 	// 블랙회원 총 수 출력
 	public int blackTotalCount(String searchWord);
+	// 탈퇴회원 목록
+	public List<Member> selectRemoveMemberList(Map<String, Object> map);
+	// 탈퇴회원 totalCount
+	public int selectRemoveMemberTotalCount(String searchWord);
 }

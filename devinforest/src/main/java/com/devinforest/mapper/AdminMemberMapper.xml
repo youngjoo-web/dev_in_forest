@@ -3,6 +3,40 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.AdminMemberMapper">
+	<!-- 탈퇴회원 목록 -->
+	<select id="selectRemoveMemberList"
+			parameterType="java.util.Map"
+			resultType="com.devinforest.vo.Member">
+		SELECT
+			member_email      memberEmail,
+			member_name       memberName,
+			account_kind      accountKind,
+			member_reputation memberReputation,
+			member_location   memberLocation,
+			member_phone      memberPhone,
+			member_link       memberLink,
+			member_gender     memberGender,
+			member_about      memberAbout,
+			member_birth      memberBirth,
+			member_date       memberDate,
+			member_state      memberState
+		FROM dev_member
+		WHERE member_email LIKE CONCAT('%',#{searchWord},'%') 
+		AND member_state = 'N'
+		ORDER BY member_email
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<!-- 탈퇴회원 totalCount -->
+	<select id="selectRemoveMemberTotalCount"
+			parameterType="String"
+			resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM dev_member
+		WHERE member_email LIKE CONCAT('%',#{searchWord},'%')
+		AND member_state = 'N'
+	</select>
+
 	<!-- 블랙 팝업창에 출력할 데이터 출력 -->
 	<select id="blackMemberOne"
 			parameterType="String"

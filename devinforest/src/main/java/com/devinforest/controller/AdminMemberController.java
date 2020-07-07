@@ -2,6 +2,8 @@ package com.devinforest.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,23 @@ import com.devinforest.vo.BlackList;
 @Controller
 public class AdminMemberController {
 	@Autowired private AdminMemberService adminMemberService;
+	// 탈퇴 회원 목록
+	@GetMapping("/getRemoveMemberList")
+	public String getRemoveMemberList(HttpSession session, Model model,
+									@RequestParam(defaultValue = "1") int currentPage,
+									@RequestParam(defaultValue = "10") int rowPerPage,
+									@RequestParam(defaultValue = "") String searchWord) {
+		System.out.println(currentPage+" <- RestorationController.getRestorationList: currentPage");
+		System.out.println(searchWord+" <- RestorationController.getRestorationList: searchWord");
+		Map<String, Object> map = adminMemberService.getRemoveMemberList(currentPage, rowPerPage, searchWord);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("rowPerPage", rowPerPage);
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("removeMemberTotalCount", map.get("removeMemberTotalCount"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("removeMemberList", map.get("removeMemberList"));
+		return "adminMember/getRemoveMemberList";
+	}
 	
 	// 회원 블랙 팝업창
 	@GetMapping("/blackMember")
