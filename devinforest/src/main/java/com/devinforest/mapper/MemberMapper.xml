@@ -72,7 +72,7 @@
 		member_reputation='1',
 		member_phone=NULL,
 		member_link=NULL,
-		member_gender=null,
+		member_gender=NULL,
 		member_about=NULL,
 		member_birth=NULL,
 		member_date=NOW()

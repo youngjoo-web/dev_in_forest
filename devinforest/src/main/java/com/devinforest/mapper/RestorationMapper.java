@@ -19,5 +19,4 @@ public interface RestorationMapper {
 	public String selectInquiryKind(int restorationNo);
 	// 재가입 실행 - 요청상태 변경
 	public void updateInquiryKind(int restorationNo);
-	// 재가입 실행 - member테이블 회원상태 변경
 }

@@ -52,7 +52,8 @@ public class RestorationController {
 	public String restorationExecution(HttpSession session, Restoration restoration){
 		int restorationNo = restoration.getRestorationNo();
 		System.out.println(restorationNo+" <- RestorationController.getRestorationOne: restorationNo");
-		restorationService.restorationExecution(restorationNo);
+		String memberEmail = restoration.getRestorationTitle();
+		restorationService.restorationExecution(restorationNo, memberEmail);
 		return "redirect:/getRestorationOne?restorationNo="+restorationNo; 
 	}
 }

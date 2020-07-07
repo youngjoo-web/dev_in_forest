@@ -24,4 +24,13 @@
 		INSERT INTO dev_blacklist (member_email, member_name, blacklist_reason, blacklist_date)
 		VALUES (#{memberEmail}, #{memberName}, #{blackListReason}, now())
 	</insert>
+	<!-- 재가입 실행(재가입 요청 창에서) - 회원상태변경 -->
+	<update id="updateMemberState"
+			parameterType="String">
+		UPDATE
+			dev_member
+		SET
+			member_state = 'Y'
+		WHERE member_Email = #{memberEmail}
+	</update>
 </mapper>

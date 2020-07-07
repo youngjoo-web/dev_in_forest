@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.devinforest.mapper.AdminMemberMapper;
 import com.devinforest.mapper.RestorationMapper;
 import com.devinforest.vo.Restoration;
 
@@ -15,6 +16,7 @@ import com.devinforest.vo.Restoration;
 @Transactional
 public class RestorationService {
 	@Autowired private RestorationMapper restorationMapper;
+	@Autowired private AdminMemberMapper adminMemberMapper;
 	// 재가입요청 목록 
 	public Map<String, Object> getRestorationList(int currentPage, int rowPerPage, String searchWord){
 		int beginRow =(currentPage-1)*rowPerPage;
@@ -53,8 +55,8 @@ public class RestorationService {
 		return map;
 	}
 	// 재가입 실행
-	public void restorationExecution(int restorationNo) {
-		restorationMapper.updateInquiryKind(restorationNo); // 재가입 요청 - restoration 요청상태 변경
-		
+	public void restorationExecution(int restorationNo, String memberEmail) {
+		restorationMapper.updateInquiryKind(restorationNo); // 재가입 실행 - restoration 요청상태 수정
+		adminMemberMapper.updateMemberState(memberEmail); // 재가입  실행 - member 테이블 member_state 수정
 	}
 }
