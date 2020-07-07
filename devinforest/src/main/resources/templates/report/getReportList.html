@@ -124,7 +124,7 @@
 							<div class="card-header py-3">
 								<div>
 									<div class="text-left">
-										<h5 class="m-0 font-weight-bold" style=" color:#148b61;" th:text="'Report : '+${reportTotalCount}+개"></h5>
+										<h5 class="m-0 font-weight-bold" style=" color:#148b61;" th:text="'신고내역 : '+${reportTotalCount}+개"></h5>
 									</div>
 								</div>
 							</div>
@@ -137,7 +137,7 @@
 													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="제목 검색">
 													<input type="hidden" name="reportKind" th:value="${reportKind}">
 													<button class="btn searchBtn" type="submit">검색</button>
-													<a class="btn searchBtn" th:href="@{/getReportList(rowPerPage='', searchWord='', reportKind='')}">초기화</a>
+													<a class="btn searchBtn" th:href="@{/getReportList(rowPerPage='', searchWord='')}">초기화</a>
 												</form>
 											</div>
 											<div class="col-xl-4">
@@ -157,20 +157,20 @@
 									<table style="margin-top: 10px;" class="table table-bordered text-center">
 										<thead>
 											<tr>
-												<th width="10%">번호</th>
-												<th width="10%">신고 분류</th>
-												<th width="40%">제목</th>
-												<th width="10%">신고회원</th>
-												<th width="20%">신고일자</th>
-												<th width="10%">조치 여부</th>
+												<th class="darkColor" width="10%">번호</th>
+												<th class="darkColor" width="10%">신고 분류</th>
+												<th class="darkColor" width="40%">제목</th>
+												<th class="darkColor" width="10%">신고회원</th>
+												<th class="darkColor" width="20%">신고일자</th>
+												<th class="darkColor" width="10%">조치 여부</th>
 											</tr>
 											<tr th:each="Report : ${reportList}">
-												<td th:text="${Report.reportNo}"></td>
-												<td th:text="${Report.reportKind}"></td>
+												<td class="darkColor" th:text="${Report.reportNo}"></td>
+												<td class="darkColor" th:text="${Report.reportKind}"></td>
 												<td><a th:href="@{/getReportOne(reportNo=${Report.reportNo})}" th:text="${Report.reportTitle}"></a></td>
-												<td th:text="${Report.memberName}"></td>
-												<td th:text="${Report.reportDate}"></td>
-												<td th:text="${Report.reportState}"></td>
+												<td class="darkColor" th:text="${Report.memberName}"></td>
+												<td class="darkColor" th:text="${Report.reportDate}"></td>
+												<td class="darkColor" th:text="${Report.reportState}"></td>
 											</tr>
 										</tbody>
 									</table>

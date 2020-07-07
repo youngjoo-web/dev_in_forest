@@ -141,7 +141,7 @@
 												<form method="GET" th:action="@{/getNoticeList}">
 													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="제목 검색">
 													<button class="btn searchBtn" type="submit">검색</button>
-													<a class="btn searchBtn" th:href="@{/getNoticeList(rowPerPage='', searchWord='', reportKind='')}">초기화</a>
+													<a class="btn searchBtn" th:href="@{/getNoticeList(rowPerPage='', searchWord='')}">초기화</a>
 												</form>
 											</div>
 											<div class="col-sm-12 col-md-6">
@@ -157,16 +157,16 @@
 									<table style="margin-top: 10px;" class="table table-bordered text-center">
 										<thead>
 											<tr>
-												<th width="10%">번호</th>
-												<th width="50%">제목</th>
-												<th width="15%">작성자</th>
-												<th width="25%">작성일자</th>
+												<th class="darkColor" width="10%">번호</th>
+												<th class="darkColor" width="50%">제목</th>
+												<th class="darkColor" width="15%">작성자</th>
+												<th class="darkColor" width="25%">작성일자</th>
 											</tr>
 											<tr th:each="notice : ${noticeList}">
-												<td th:text="${notice.noticeNo}"></td>
+												<td class="darkColor" th:text="${notice.noticeNo}"></td>
 												<td><a th:href="@{/getNoticeOne(noticeNo=${notice.noticeNo})}" th:text="${notice.noticeTitle}"></a></td>
-												<td th:text="${notice.adminName}"></td>
-												<td th:text="${notice.noticeDate}"></td>
+												<td class="darkColor" th:text="${notice.adminName}"></td>
+												<td class="darkColor" th:text="${notice.noticeDate}"></td>
 											</tr>
 										</tbody>
 									</table>

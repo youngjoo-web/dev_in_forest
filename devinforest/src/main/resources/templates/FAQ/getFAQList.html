@@ -142,7 +142,7 @@
 												<form method="GET" th:action="@{/getFAQList}">
 													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="제목 검색">
 													<button class="btn searchBtn" type="submit">검색</button>
-													<a class="btn searchBtn" th:href="@{/getFAQList(rowPerPage='', searchWord='', reportKind='')}">초기화</a>
+													<a class="btn searchBtn" th:href="@{/getFAQList(rowPerPage='', searchWord='')}">초기화</a>
 												</form>
 											</div>
 											<div class="col-sm-12 col-md-6">
@@ -158,14 +158,14 @@
 									<table style="margin-top: 10px;" class="table table-bordered text-center">
 										<thead>
 											<tr>
-												<th width="15%">번호</th>
-												<th width="60%">제목</th>
-												<th width="25%">작성일</th>
+												<th class="darkColor" width="15%">번호</th>
+												<th class="darkColor" width="60%">제목</th>
+												<th class="darkColor" width="25%">작성일</th>
 											</tr>
 											<tr th:each="FAQ : ${FAQList}">
-												<td th:text="${FAQ.noticeNo}"></td>
+												<td class="darkColor" th:text="${FAQ.noticeNo}"></td>
 												<td><a th:href="@{/getFAQOne(noticeNo=${FAQ.noticeNo})}" th:text="${FAQ.noticeTitle}"></a></td>
-												<td th:text="${FAQ.noticeDate}"></td>
+												<td class="darkColor" th:text="${FAQ.noticeDate}"></td>
 											</tr>
 										</tbody>
 									</table>

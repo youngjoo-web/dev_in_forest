@@ -139,7 +139,7 @@
 												<form method="GET" th:action="@{/getRestorationList}">
 													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="제목 검색">
 													<button class="btn searchBtn" type="submit">검색</button>
-													<a class="btn searchBtn" th:href="@{/getRestorationList(rowPerPage='', searchWord='', reportKind='')}">초기화</a>
+													<a class="btn searchBtn" th:href="@{/getRestorationList(rowPerPage='', searchWord='')}">초기화</a>
 												</form>
 											</div>
 											<div class="col-sm-12 col-md-6">
@@ -174,15 +174,15 @@
 									</table>
 								</div>
 								<div>
-									<a class="btn pageBtn" th:href="@{/getRestorationList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">처음</a>
-									<a class="btn pageBtn" th:if="${currentPage == 1}" th:href="@{/getRestorationList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
-									<a class="btn pageBtn" th:if="${currentPage > 1}" th:href="@{/getRestorationList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
+									<a class="btn btn-sm pageBtn" th:href="@{/getRestorationList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">처음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage == 1}" th:href="@{/getRestorationList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage > 1}" th:href="@{/getRestorationList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
 									<span th:text="'-'+${currentPage}+'-'"></span>
-									<a class="btn pageBtn" th:if="${restorationTotalCount == 0}" th:href="@{/getRestorationList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn pageBtn" th:if="${currentPage < lastPage}" th:href="@{/getRestorationList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn pageBtn" th:if="${currentPage == lastPage}" th:href="@{/getRestorationList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn pageBtn" th:if="${restorationTotalCount == 0}"th:href="@{/getRestorationList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
-									<a class="btn pageBtn" th:if="${restorationTotalCount != 0}"th:href="@{/getRestorationList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+									<a class="btn btn-sm pageBtn" th:if="${restorationTotalCount == 0}" th:href="@{/getRestorationList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage < lastPage}" th:href="@{/getRestorationList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage == lastPage}" th:href="@{/getRestorationList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${restorationTotalCount == 0}"th:href="@{/getRestorationList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+									<a class="btn btn-sm pageBtn" th:if="${restorationTotalCount != 0}"th:href="@{/getRestorationList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
 								</div>
 							</div>
 						</div>
