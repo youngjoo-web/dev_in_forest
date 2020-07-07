@@ -69,6 +69,7 @@
 	<select id="selectAnswerCommentList" resultType="com.devinforest.vo.AnswerComment" parameterType="java.util.Map">
 		SELECT 
 			answer_comment_no answerCommentNo,
+			answer_no answerNo,
 			member_name memberName,
 			answer_comment_content answerCommentContent
 		FROM dev_answer_comment

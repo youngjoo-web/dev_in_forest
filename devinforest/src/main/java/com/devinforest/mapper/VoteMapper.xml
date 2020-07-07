@@ -5,9 +5,10 @@
 <mapper namespace="com.devinforest.mapper.VoteMapper">
 	
 	<!-- 좋아요 누른 회원 검사 -->
-	<select id="voteCheck" resultType="String" parameterType="com.devinforest.vo.Vote" >
+	<select id="voteCheck" resultType="com.devinforest.vo.Vote" parameterType="com.devinforest.vo.Vote" >
 		SELECT
-			member_name memberName
+			member_name memberName,
+			vote_point votePoint
 		FROM
 			dev_vote
 		WHERE

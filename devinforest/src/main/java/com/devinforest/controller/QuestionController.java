@@ -32,14 +32,11 @@ public class QuestionController {
 		@RequestParam(value="currentPage", defaultValue="1") int currentPage,
 		@RequestParam(value="searchWord", defaultValue="") String searchWord) {
 		
-		// 비로그인 시 "Guest"처리 
 		String memberName = "Guest";
 		
-		// 로그인 시 memberId값
 		if(session.getAttribute("loginMember") != null) {
-			memberName=((LoginMember)session.getAttribute("loginMember")).getMemberName();
+			memberName = ((LoginMember)session.getAttribute("loginMember")).getMemberName();
 		}
-		System.out.println(memberName + " <--- memberName");
 		
 		Map<String, Object> questionList = questionService.getQuestionList(currentPage, searchWord);
 		
