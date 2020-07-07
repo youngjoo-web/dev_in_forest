@@ -75,6 +75,6 @@ public class AdminMemberController {
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("rowPerPage", rowPerPage);
-		return "black/getBlackMemberList";
+		return "adminMember/getBlackMemberList";
 	}
 }
