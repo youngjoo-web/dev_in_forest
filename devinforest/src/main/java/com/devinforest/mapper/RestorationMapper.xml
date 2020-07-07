@@ -58,4 +58,12 @@
 			inquiry_kind = '복구완료'
 		WHERE restoration_no = #{restorationNo}
 	</update>
+	<!-- 재가입 복구요청 개수(관리자 홈에서 확인) -->
+	<select id="selectInquiryStateTotalCount"
+			resultType="int">
+		SELECT
+			COUNT(*) 
+		FROM dev_restoration
+		WHERE inquiry_kind = '복구요청'
+	</select>
 </mapper>

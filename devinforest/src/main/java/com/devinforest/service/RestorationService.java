@@ -69,4 +69,8 @@ public class RestorationService {
 		System.out.println("입력된 아이디로 가입된 회원 없음");
 		return checkNum;
 	}
+	// 재가입 복구요청 개수(관리자 홈에서 확인)
+	public int inquiryStateTotalCount() {
+		return restorationMapper.selectInquiryStateTotalCount();
+	}
 }

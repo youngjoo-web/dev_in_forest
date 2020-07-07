@@ -12,14 +12,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.service.AdminService;
+import com.devinforest.service.RestorationService;
 import com.devinforest.vo.Admin;
 
 @Controller
 public class AdminController {
 	@Autowired private AdminService adminService;
+	@Autowired private RestorationService restorationService;
 	// 관리자 홈
 	@GetMapping("/adminHome")
-	public String adminHome(HttpSession session) {
+	public String adminHome(HttpSession session, Model model) {
+		model.addAttribute("restorationCount", restorationService.inquiryStateTotalCount());
 		return "admin/adminHome";
 	}
 	// 관리자 목록 출력

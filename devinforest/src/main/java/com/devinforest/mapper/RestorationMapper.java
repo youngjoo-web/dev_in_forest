@@ -19,4 +19,6 @@ public interface RestorationMapper {
 	public String selectInquiryKind(int restorationNo);
 	// 재가입 실행 - 요청상태 변경
 	public void updateInquiryKind(int restorationNo);
+	// 재가입 복구요청 개수(관리자 홈에서 확인)
+	public int selectInquiryStateTotalCount();
 }
