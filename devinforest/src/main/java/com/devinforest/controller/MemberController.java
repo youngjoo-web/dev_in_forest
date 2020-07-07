@@ -40,7 +40,7 @@ public class MemberController {
 		if(session.getAttribute("loginMember")!=null) {
 			return "redirect:/index";
 		}
-		memberService.addrequestRestoreMember(restoration);
+		memberService.addRequestRestoreMember(restoration);
 		System.out.println(restoration+"<---post controller restoration");
 		return "index/index";
 	}

@@ -25,7 +25,7 @@ public class MemberService {
 	@Autowired
 	   private JavaMailSender javaMailSender;
 	//회원 재가입요청
-	public int addrequestRestoreMember(Restoration restoration) {
+	public int addRequestRestoreMember(Restoration restoration) {
 		return memberMapper.insertRequestRestore(restoration);
 	}
 	// 회원목록
