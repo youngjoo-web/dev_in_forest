@@ -17,6 +17,7 @@ import com.devinforest.vo.Report;
 public class ReportService {
 	@Autowired private ReportMapper reportMapper;
 	
+	// 신고 List 출력
 	public Map<String, Object> getReportList(String searchWord, int currentPage, int rowPerPage, String reportKind) {
 		System.out.println(searchWord + " <--ReportService.getReportList: searchWord");
 		System.out.println(currentPage + " <--ReportService.getReportList: currentPage");
@@ -61,20 +62,8 @@ public class ReportService {
 		
 		return outputMap;
 	}
+	// 신고내역 상세보기
 	public Report getReportOne(int reportNo) {
 		return reportMapper.selectReportOne(reportNo);
-	}
-	public String blackMemberOne(String memberName) {
-		return reportMapper.blackMemberOne(memberName);
-	}
-	public void removeMember(BlackList blackList) {
-		int count = reportMapper.deleteMemberByName(blackList.getMemberName());
-		System.out.println(count);
-		
-		if(count == 1) {
-			reportMapper.insertBlackList(blackList);
-		} else {
-			System.out.println("블랙에 실패하였습니다.");
-		}
 	}
 }

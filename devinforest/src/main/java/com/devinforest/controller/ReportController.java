@@ -17,6 +17,7 @@ import com.devinforest.vo.Report;
 public class ReportController {
 	@Autowired private ReportService reportService;
 	
+	// 신고 List 출력
 	@GetMapping("/getReportList")
 	public String getReportList(Model model,
 								@RequestParam(defaultValue = "") String searchWord,
@@ -38,6 +39,7 @@ public class ReportController {
 		model.addAttribute("reportKind", reportKind);
 		return "report/getReportList";
 	}
+	// 신고내역 상세보기
 	@GetMapping("/getReportOne")
 	public String getReportOne(Model model, 
 								@RequestParam(value = "reportNo") int reportNo) {
@@ -52,25 +54,5 @@ public class ReportController {
 		}
 		
 		return "report/getReportOne";
-	}
-	@GetMapping("/black")
-	public String black(Model model,
-						@RequestParam(value = "memberName") String memberName) {
-		System.out.println(memberName + " <-- ReportController.black: memberName");
-		
-		String email = reportService.blackMemberOne(memberName);
-		model.addAttribute("memberEmail", email);
-		model.addAttribute("memberName", memberName);
-		return "report/black";
-	}
-	@PostMapping("/black")
-	public String black(BlackList blackList) {
-		System.out.println(blackList + " <-- ReportController.black: blackList");
-		reportService.removeMember(blackList);
-		return "redirect:/done";
-	}
-	@GetMapping("/done")
-	public String done() {
-		return "report/done";
 	}
 }

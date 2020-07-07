@@ -16,10 +16,4 @@ public interface ReportMapper {
 	public int ReportTotalCount(Map<String, Object> totalCountMap);
 	// 상세보기 출력
 	public Report selectReportOne(int reportNo);
-	// 블랙 팝업창에 출력할 데이터 출력
-	public String blackMemberOne(String memberName);
-	// 멤버 삭제
-	public int deleteMemberByName(String memberName);
-	// 블랙리스트 추가
-	public void insertBlackList(BlackList blackList);
 }
