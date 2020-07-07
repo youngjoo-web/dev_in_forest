@@ -33,4 +33,13 @@
 			member_state = 'Y'
 		WHERE member_Email = #{memberEmail}
 	</update>
+	<!-- 재가입 실행 시 이메일 있는지 확인 -->
+	<select id="selectMemberEmail"
+			parameterType="String"
+			resultType="String">
+		SELECT
+			member_email memberEmail
+		FROM dev_member
+		WHERE member_email = #{memberEmail}
+	</select>
 </mapper>

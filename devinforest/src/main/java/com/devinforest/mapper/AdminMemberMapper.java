@@ -12,6 +12,8 @@ public interface AdminMemberMapper {
 	public int deleteMemberByName(String memberName);
 	// 블랙리스트 추가
 	public void insertBlackList(BlackList blackList);
+	// 재가입 실행 시 이메일 있는지 확인
+	public String selectMemberEmail(String memberEmail);
 	// 재가입 실행(재가입 요청 창에서) - 회원상태변경
 	public void updateMemberState(String memberEmail);
 }

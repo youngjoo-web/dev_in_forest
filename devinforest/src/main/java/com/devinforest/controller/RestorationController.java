@@ -38,13 +38,18 @@ public class RestorationController {
 	}
 	// 재가입요청 상세보기
 	@GetMapping("/getRestorationOne")
-	public String getRestorationOne(HttpSession session, Model model, Restoration restoration){
+	public String getRestorationOne(HttpSession session, Model model, Restoration restoration,
+									@RequestParam(defaultValue = "") String memberEmail){
 		int restorationNo = restoration.getRestorationNo();
 		System.out.println(restorationNo+" <- RestorationController.getRestorationOne: restorationNo");
 		Map<String, Object> map = new HashMap<>();
 		map = restorationService.getRestorationOne(restorationNo);
 		model.addAttribute("checkPoint", map.get("checkPoint"));
 		model.addAttribute("restoration", map.get("restoration"));
+		if(memberEmail.equals("not")) {
+			String msg = "존재하지 않는 회원입니다.";
+			model.addAttribute("msg", msg);
+		}
 		return "restoration/getRestorationOne";
 	}
 	// 재가입 실행
@@ -53,7 +58,11 @@ public class RestorationController {
 		int restorationNo = restoration.getRestorationNo();
 		System.out.println(restorationNo+" <- RestorationController.getRestorationOne: restorationNo");
 		String memberEmail = restoration.getRestorationTitle();
-		restorationService.restorationExecution(restorationNo, memberEmail);
+		System.out.println(memberEmail+" <- RestorationController.getRestorationOne: memberEmail");
+		int checkNum = restorationService.restorationExecution(restorationNo, memberEmail);
+		if(checkNum==1) {
+			return "redirect:/getRestorationOne?restorationNo="+restorationNo+"&memberEmail=not";
+		}
 		return "redirect:/getRestorationOne?restorationNo="+restorationNo; 
 	}
 }

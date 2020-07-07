@@ -55,8 +55,18 @@ public class RestorationService {
 		return map;
 	}
 	// 재가입 실행
-	public void restorationExecution(int restorationNo, String memberEmail) {
+	public int restorationExecution(int restorationNo, String memberEmail) {
+		String memberEmailCheck = adminMemberMapper.selectMemberEmail(memberEmail);
+		System.out.println(memberEmailCheck+" <- RestorationService.restorationExecution: memberEmailCheck");
+		int checkNum = 0;
+		if(memberEmailCheck==null) {
+			System.out.println("입력된 아이디로 가입된 회원 없음");
+			checkNum = 1;
+			return checkNum;
+		}
 		restorationMapper.updateInquiryKind(restorationNo); // 재가입 실행 - restoration 요청상태 수정
 		adminMemberMapper.updateMemberState(memberEmail); // 재가입  실행 - member 테이블 member_state 수정
+		System.out.println("입력된 아이디로 가입된 회원 없음");
+		return checkNum;
 	}
 }

@@ -25,7 +25,12 @@
 				<span th:text="${restoration.restorationContent}"></span>
 			</div>
 		</div>
-		<button th:if="${checkPoint!=1}" id="restorationExecutionBtn" type="button">재가입실행</button>
+		<div>
+			<button th:if="${checkPoint!=1}" id="restorationExecutionBtn" type="button">재가입실행</button>
+		</div>
+		<div>
+			<span th:text="${msg}"></span>
+		</div>
 		<form id="restorationExecutionForm" method="post" th:action="@{/restorationExecution}">
 			<input type="hidden" name="restorationNo" th:value="${restoration.restorationNo}">
 			<input type="hidden" name="restorationTitle" th:value="${restoration.restorationTitle}">

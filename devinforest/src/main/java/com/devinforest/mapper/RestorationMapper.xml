@@ -15,7 +15,7 @@
 			inquiry_kind inquiryKind
 		FROM dev_restoration
 		WHERE restoration_title LIKE CONCAT('%',#{searchWord},'%')
-		ORDER BY inquiry_kind DESC, restoration_date
+		ORDER BY inquiry_kind, restoration_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	<!-- 재가입요청 totalCount -->
