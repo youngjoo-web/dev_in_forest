@@ -31,12 +31,16 @@ public class AdminMemberService {
 		inputMap.put("searchWord", searchWord);
 		List<Member> removeMemberList = adminMemberMapper.selectRemoveMemberList(inputMap);
 		System.out.println(lastPage+" <- AdminMemberService.getRemoveMemberList: lastPage");
-		System.out.println(removeMemberList+" <- AdminMemberService.getRemoveMemberList: removeMemberList");
+		//System.out.println(removeMemberList+" <- AdminMemberService.getRemoveMemberList: removeMemberList");
 		Map<String, Object> outputMap = new HashMap<>();
 		outputMap.put("removeMemberTotalCount", removeMemberTotalCount);
 		outputMap.put("lastPage", lastPage);
 		outputMap.put("removeMemberList", removeMemberList);
 		return outputMap;
+	}
+	// 회원 복구
+	public void recoveryMember(String memberEmail) {
+		adminMemberMapper.updateMemberState(memberEmail);
 	}
 	
 	// 블랙 팝업창

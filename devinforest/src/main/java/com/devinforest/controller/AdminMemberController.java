@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.service.AdminMemberService;
 import com.devinforest.vo.BlackList;
+import com.devinforest.vo.Member;
 
 @Controller
 public class AdminMemberController {
@@ -33,6 +34,14 @@ public class AdminMemberController {
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("removeMemberList", map.get("removeMemberList"));
 		return "adminMember/getRemoveMemberList";
+	}
+	// 탈퇴 회원 복구
+	@PostMapping("/recoveryMember")
+	public String recoveryMember(HttpSession session, Member member) {
+		String memberEmail = member.getMemberEmail();
+		System.out.println(memberEmail+" <- AdminMemberController.recoveryMember: memberEmail");
+		adminMemberService.recoveryMember(memberEmail);
+		return "redirect:/getRemoveMemberList";
 	}
 	
 	// 회원 블랙 팝업창
@@ -75,6 +84,6 @@ public class AdminMemberController {
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("rowPerPage", rowPerPage);
-		return "adminMember/getBlackMemberList";
+		return "black/getBlackMemberList";
 	}
 }

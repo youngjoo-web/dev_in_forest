@@ -136,7 +136,10 @@
 												</form>
 											</div>
 											<div class="col-md-2">
-												<button id="" class="btn selectBtn2"type="button">회원 복구</button>
+												<button id="recoveryMemberBtn" class="btn selectBtn2"type="button">회원 복구</button>
+												<form id="recoveryMemberForm" method="post" th:action="@{/recoveryMember}">
+													<input id="memberEmail" type="hidden" name="memberEmail" value="">
+												</form>
 											</div>
 											<div class="col-md-6 text-right">
 												<a class="btn btn-sm selectBtn" th:href="@{/getRemoveMemberList(rowPerPage=1, searchWord=${searchWord})}">1개씩</a>
@@ -160,7 +163,7 @@
 										<tbody>
 											<tr th:each="removeMember : ${removeMemberList}">
 												<td>
-													<input th:id="${removeMember.memberName}" type="checkbox">
+													<input class="check" type="radio" name="check" th:value="${removeMember.memberEmail}">
 												</td>
 												<td class="darkColor" th:text="${removeMember.memberEmail}"></td>
 												<td class="darkColor" th:text="${removeMember.memberName}"></td>
@@ -239,4 +242,26 @@
 		<!-- Custom scripts for all pages-->
 		<script th:src="@{/js/sb-admin-2.min.js}"></script>
 	</body>
+	<script>
+		$('#recoveryMemberBtn').click(function(){
+			console.log('복구버튼 클릭');
+			let checkEmail = null;
+			$('.check:checked').each(function(){
+				checkEmail = $(this).val();
+			});
+			console.log(checkEmail+' <- 선택한 회원 아이디');
+			if(checkEmail==null){
+				alert('선택한 회원이 없습니다.');
+				return;
+			}
+			$('#memberEmail').val(checkEmail)
+			let result = confirm('[ '+checkEmail+' ]'+' 회원을 복구시키겠습니까?');
+			if(!result){
+				console.log("취소");
+				return;
+			}
+			console.log("확인");
+			$('#recoveryMemberForm').submit();
+		});
+	</script>
 </html>
