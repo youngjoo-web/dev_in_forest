@@ -169,11 +169,11 @@
 									<a class="btn btn-sm pageBtn" th:if="${currentPage == 1}" th:href="@{/getBlackMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
 									<a class="btn btn-sm pageBtn" th:if="${currentPage > 1}" th:href="@{/getBlackMemberList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
 									<span th:text="'-'+${currentPage}+'-'"></span>
-									<a class="btn btn-sm pageBtn" th:if="${adminTotalCount == 0}" th:href="@{/getBlackMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${blackTotalCount == 0}" th:href="@{/getBlackMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
 									<a class="btn btn-sm pageBtn" th:if="${currentPage < lastPage}" th:href="@{/getBlackMemberList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
 									<a class="btn btn-sm pageBtn" th:if="${currentPage == lastPage}" th:href="@{/getBlackMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${adminTotalCount == 0}"th:href="@{/getBlackMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
-									<a class="btn btn-sm pageBtn" th:if="${adminTotalCount != 0}"th:href="@{/getBlackMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+									<a class="btn btn-sm pageBtn" th:if="${blackTotalCount == 0}"th:href="@{/getBlackMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+									<a class="btn btn-sm pageBtn" th:if="${blackTotalCount != 0}"th:href="@{/getBlackMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
 								</div>
 							</div>
 						</div>
