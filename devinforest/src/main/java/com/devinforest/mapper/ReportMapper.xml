@@ -3,6 +3,7 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.ReportMapper">
+	<!-- 신고 List 출력 -->
 	<select id="selectReportList"
 			parameterType="java.util.Map"
 			resultType="com.devinforest.vo.Report">
@@ -20,6 +21,7 @@
 		ORDER BY report_state DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
+	<!-- 페이징에 필요한  ReportTotalCount 출력 -->
 	<select id="ReportTotalCount"
 			parameterType="java.util.Map"
 			resultType="int">
@@ -29,6 +31,7 @@
 		WHERE report_title like CONCAT('%',#{searchWord},'%')
 		AND report_kind like CONCAT('%',#{reportKind},'%')
 	</select>
+	<!-- 상세보기 출력 -->
 	<select id="selectReportOne"
 			parameterType="int"
 			resultType="com.devinforest.vo.Report">
@@ -43,6 +46,7 @@
 		FROM dev_report
 		WHERE report_no = #{reportNo}
 	</select>
+	<!-- 블랙 팝업창에 출력할 데이터 출력 -->
 	<select id="blackMemberOne"
 			parameterType="String"
 			resultType="String">
@@ -51,4 +55,16 @@
 		FROM dev_member
 		WHERE member_name = #{memberName}
 	</select>
+	<!-- 멤버 삭제 -->
+	<delete id="deleteMemberByName"
+			parameterType="String">
+		DELETE FROM dev_member
+		WHERE member_name = #{memberName}
+	</delete>
+	<!-- 블랙리스트 추가 -->
+	<insert id="insertBlackList"
+			parameterType="com.devinforest.vo.BlackList">
+		INSERT INTO dev_blacklist (member_email, member_name, blacklist_reason, blacklist_date)
+		VALUES (#{memberEmail}, #{memberName}, #{blackListReason}, now())
+	</insert>
 </mapper>

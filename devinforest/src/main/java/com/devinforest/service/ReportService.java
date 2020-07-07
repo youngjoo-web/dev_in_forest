@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devinforest.mapper.ReportMapper;
+import com.devinforest.vo.BlackList;
 import com.devinforest.vo.Report;
 
 @Service
@@ -65,5 +66,15 @@ public class ReportService {
 	}
 	public String blackMemberOne(String memberName) {
 		return reportMapper.blackMemberOne(memberName);
+	}
+	public void removeMember(BlackList blackList) {
+		int count = reportMapper.deleteMemberByName(blackList.getMemberName());
+		System.out.println(count);
+		
+		if(count == 1) {
+			reportMapper.insertBlackList(blackList);
+		} else {
+			System.out.println("블랙에 실패하였습니다.");
+		}
 	}
 }

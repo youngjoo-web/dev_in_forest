@@ -7,7 +7,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
-		<title>Black</title>
+		<title>Done</title>
 		
 		<!-- Custom fonts for this template-->
 		<link href="/vendor/fontawesome-free/css/all.min.css"
@@ -42,21 +42,7 @@
 	
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
-						<form id="form" method="post" th:action="@{/black}">
-							<div>
-								신고 Email : <input id="memberEmail" type="text" name="memberEmail" th:value="${memberEmail}" readonly="readonly">
-							</div>
-							<div>
-								신고 Name : <input id="memberName" type="text" name="memberName" th:value="${memberName}" readonly="readonly">
-							</div>
-							<div>
-								신고 사유 : <textarea id="blackListReason" rows="5" cols="20" name="blackListReason"></textarea>
-							</div>
-							<div>
-								<button id="btn" type="button">블랙</button>
-								<span id="msg"></span>
-							</div>
-						</form>
+						<h3>블랙 완료</h3>
 					</div>
 					<!-- End of container-fluid -->
 				</div>
@@ -77,22 +63,5 @@
 	
 		<!-- Custom scripts for all pages-->
 		<script src="/js/sb-admin-2.min.js"></script>
-		
-		<!-- Javascript Code -->
-		<script>
-			$('#btn').click(function(){
-				let memberEmail = $('#memberEmail').val();
-				let memberName = $('#memberName').val();
-				let blackListReason = $('#blackListReason').val();
-				// alert(memberEmail + " " + memberName + " " + blackListReason);
-				
-				if(blackListReason == "") {
-					$('#msg').text('블랙사유는 반드시 입력해주세요.');
-					return;
-				}
-				
-				$('#form').submit();
-			})
-		</script>
 	</body>
 </html>
