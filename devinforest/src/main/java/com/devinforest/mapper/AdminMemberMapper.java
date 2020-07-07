@@ -1,5 +1,8 @@
 package com.devinforest.mapper;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.devinforest.vo.BlackList;
@@ -16,4 +19,8 @@ public interface AdminMemberMapper {
 	public String selectMemberEmail(String memberEmail);
 	// 재가입 실행(재가입 요청 창에서) - 회원상태변경
 	public void updateMemberState(String memberEmail);
+	// 블랙 회원 List 출력
+	public List<BlackList> selectBlackMemberList(Map<String, Object> inputMap);
+	// 블랙회원 총 수 출력
+	public int blackTotalCount(String searchWord);
 }

@@ -42,4 +42,27 @@
 		FROM dev_member
 		WHERE member_email = #{memberEmail}
 	</select>
+	<!-- 블랙회원 리스트 출력 -->
+	<select id="selectBlackMemberList"
+			parameterType="java.util.Map"
+			resultType="com.devinforest.vo.BlackList">
+		SELECT
+			member_email memberEmail, 
+			member_name memberName, 
+			blacklist_reason blackListReason, 
+			blacklist_date blackListDate
+		FROM dev_blacklist
+		WHERE member_email LIKE CONCAT('%',#{searchWord},'%')
+		ORDER BY blacklist_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<!-- 블랙 totalCount -->
+	<select id="blackTotalCount"
+			parameterType="String"
+			resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM dev_blacklist
+		WHERE member_email LIKE CONCAT('%',#{searchWord},'%')
+	</select>
 </mapper>

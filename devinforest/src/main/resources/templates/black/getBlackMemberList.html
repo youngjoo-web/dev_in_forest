@@ -3,16 +3,19 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
-		<title th:text="${#strings.abbreviate(report.reportTitle,16)}"></title>
+		<title>블랙회원 조회</title>
 		
 		<!-- Custom fonts for this template-->
 		<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
 			rel="stylesheet" type="text/css">
-		<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+		<link
+			href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+			rel="stylesheet">
 		
 		<!-- Custom styles for this template-->
 		<link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
@@ -21,14 +24,6 @@
 		<link th:href="@{/css/addAdmin.css}" rel="stylesheet">
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		
-		<style>
-			th{
-				text-align: center;
-				color:white;
-				background: #148b61;
-			}
-		</style>
 	</head>
 	<body id="page-top">
 		<!-- Page Wrapper -->
@@ -121,47 +116,70 @@
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
 						<div>
-							<h3 class="text-gray-800 mb-2 font-weight-bold">신고 조회</h3>
+							<h3 class="text-gray-800 mb-2 font-weight-bold">블랙회원 조회</h3>
 						</div>
-						<hr>
-						<div class="card" style="padding:20px;">
-							<input id="memberName" type="hidden" th:value="${report.memberName}">
-							<div>
-								<table class="table">
-									<tr>
-										<th width="10%">제목</th>
-										<td class="darkColor" colspan="5" th:text="${report.reportTitle}"></td>
-									</tr>
-									<tr>
-										<th>사용자명</th>
-										<td class="darkColor" width="45%" th:text="${report.memberName}"></td>
-										<th width="10%">신고분류</th>
-										<td class="darkColor text-center" width="10%"th:text="${report.reportKind}"></td>
-										<th width="10%">신고일자</th>
-										<td class="darkColor text-center" th:text="${report.reportDate}"></td>
-									</tr>
-								</table>
+						<br>
+						<!-- 테이블 예시 -->
+						<div class="card shadow mb-4">
+							<div class="card-header py-3">
+							  <h6 class="m-0 font-weight-bold" style="color:#148b61;" th:text="${blackTotalCount} + '명의 블랙회원'"></h6>
 							</div>
-							<hr>
-							<div class="card">
-								<div class="darkColor" style="padding:15px; height:300px; word-break:break-all; overflow: scroll;" th:text="${report.reportContent}">
-									
+							<div class="card-body">
+								<div class="table">
+									<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+										<div class="row">
+											<div class="col-sm-12 col-md-6">
+												<form method="GET" th:action="@{/getBlackMemberList}">
+													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="이메일 검색">
+													<button class="btn searchBtn" type="submit">검색</button>
+													<a class="btn searchBtn" th:href="@{/getBlackMemberList(currentPage='', rowPerPage='', searchWord='')}">초기화</a>
+												</form>
+											</div>
+											<div class="col-sm-12 col-md-6">
+												<div class="text-right">
+													<a class="btn btn-sm selectBtn" th:href="@{/getBlackMemberList(rowPerPage=1, searchWord=${searchWord})}">1개씩</a>
+													<a class="btn btn-sm selectBtn" th:href="@{/getBlackMemberList(rowPerPage=5, searchWord=${searchWord})}">5개씩</a>
+													<a class="btn btn-sm selectBtn" th:href="@{/getBlackMemberList(rowPerPage=10, searchWord=${searchWord})}">10개씩</a>
+													<a class="btn btn-sm selectBtn" th:href="@{/getBlackMemberList(rowPerPage=15, searchWord=${searchWord})}">15개씩</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<table style="margin-top: 10px;" class="table table-bordered">
+										<thead>
+											<tr>
+												<th>이메일</th>
+												<th>닉네임</th>
+												<th>블랙사유</th>
+												<th>블랙일자</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="blackMember : ${blackMemberList}">
+												<td th:text="${blackMember.memberEmail}"></td>
+												<td th:text="${blackMember.memberName}"></td>
+												<td th:text="${blackMember.blackListReason}"></td>
+												<td th:text="${blackMember.blackListDate}"></td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
-							</div>
-							<hr>
-							<div class="row" style="padding: 0px 10px;">
-								<div class="col-sm-10 text-left">
-									<a class="btn pageBtn" th:href="@{/getReportList}">목록</a>
-								</div>
-								<div class="col-sm-2 text-right">
-									<button class="btn pageBtn" id="blackBtn" type="button">블랙</button>
-									<form id="blackForm" method="get" th:action="@{javascript:openWindowPop('popup');}"></form>
+								<div>
+									<a class="btn btn-sm pageBtn" th:href="@{/getBlackMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">처음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage == 1}" th:href="@{/getBlackMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage > 1}" th:href="@{/getBlackMemberList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
+									<span th:text="'-'+${currentPage}+'-'"></span>
+									<a class="btn btn-sm pageBtn" th:if="${adminTotalCount == 0}" th:href="@{/getBlackMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage < lastPage}" th:href="@{/getBlackMemberList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage == lastPage}" th:href="@{/getBlackMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${adminTotalCount == 0}"th:href="@{/getBlackMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+									<a class="btn btn-sm pageBtn" th:if="${adminTotalCount != 0}"th:href="@{/getBlackMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
 								</div>
 							</div>
 						</div>
 						
 					</div>
-						<!-- /.container-fluid -->
+					<!-- /.container-fluid -->
 				</div>
 				<!-- End of Main Content -->
 		
@@ -215,25 +233,9 @@
 		<script th:src="@{/js/sb-admin-2.min.js}"></script>
 	</body>
 	<script>
-	
-	$('#blackBtn').click(function(){
-		let result = confirm('정말 해당 사용자를 블랙하시겠습니까?');
-		
-		if(!result) {
-			console.log('취소');
-			return;
-		} else {
-			console.log('확인');
-			$('#blackForm').submit();
-		}
-	});
-	
-	function openWindowPop(name){
-		let memberName = $('#memberName').val()
-		console.log($('#memberName').val());
-		let url = '/blackMember?memberName='+memberName;
-	    let options = 'top=100, left=700, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no';
-	    window.open(url, name, options);
-	}
+		// 검색창 초기화
+		$('#resetBtn').click(function(){
+			$('#search').val("");
+		});
 	</script>
 </html>
