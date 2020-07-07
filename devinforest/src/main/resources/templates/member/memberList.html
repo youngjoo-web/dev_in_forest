@@ -17,7 +17,30 @@
 
   <!-- Custom styles for this template-->
   <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+<!--  addAdmin template -->
+<link th:href="@{/css/addAdmin.css}" rel="stylesheet">
 
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<style>
+.none {
+	border: 0px;
+}
+
+.adminEmailArea {
+	border: 1px solid black;
+	padding: 1px;
+}
+
+.width1 {
+	width: 80px;
+}
+
+.width2 {
+	width: 110px;
+}
+</style>
 </head>
 
 <body id="page-top">
@@ -65,7 +88,7 @@
             <h6 class="collapse-header">일반회원</h6>
             <a class="collapse-item" th:href="@{/getMemberInfo(memberEmail=${session.loginMember.memberEmail})}">회원정보</a>
             <a class="collapse-item" href="/getMemberList">회원리스트</a>
-            <a class="collapse-item" href="#">기업정보리스트</a>
+            <a class="collapse-item" href="#">채용 리스트</a>
              <a class="collapse-item" href="#">면접제의 리스트</a>
              <a class="collapse-item" href="#">문의&신고</a>
           </div>
@@ -113,7 +136,28 @@
           </div>
         </div>
       </li>
-      
+      <!-- 구분 줄 -->
+			<hr class="sidebar-divider">
+
+			<!-- 기업확인 - 사이드바 제목 -->
+			<div class="sidebar-heading">기업</div>
+
+			<!-- 기업 -->
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapse5" aria-expanded="true"
+				aria-controls="collapsePages"> <i
+					class="fas fa-fw fa-chart-area"></i> <span>기업</span>
+			</a>
+				<div id="collapse5" class="collapse" aria-labelledby="headingPages"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">기업</h6>
+						 <a class="collapse-item" th:href="@{/getCompanyList}">기업정보리스트</a>
+						<a class="collapse-item" href="#">기업의 면접제의 리스트 </a> 
+						 <a class="collapse-item" href="#">기업의 채용리스트</a>
+					</div>
+				</div></li>
+			<!-- 기업 끝 -->
       
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -208,6 +252,12 @@
 							</div>
 							<div class="card-body">
 								<div class="table-responsive">
+									<form method="get" th:action="@{/getMemberList}">
+													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="닉네임검색">
+													<button class="btn searchBtn" type="submit">검색</button>
+													<button id="resetBtn" class="btn searchBtn" type="button">초기화</button>
+												</form>
+												<br>
 									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 										<thead>
 											<tr>
@@ -228,9 +278,20 @@
 								th:href="@{/getMemberInfo(memberEmail=${member.memberEmail})}"
 								th:text="${member.memberReputation}"></a></td>
 						</tr>
-											</tr>
+	
 										</tbody>
 									</table>
+								</div>
+								<div>
+									<a class="btn btn-sm pageBtn" th:href="@{/getMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">처음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage == 1}" th:href="@{/getMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage > 1}" th:href="@{/getMemberList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
+									<span th:text="'-'+${currentPage}+'-'"></span>
+									<a class="btn btn-sm pageBtn" th:if="${memberTotalCount == 0}" th:href="@{/getMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage < lastPage}" th:href="@{/getMemberList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage == lastPage}" th:href="@{/getMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${memberTotalCount == 0}"th:href="@{/getMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+									<a class="btn btn-sm pageBtn" th:if="${memberTotalCount != 0}"th:href="@{/getMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
 								</div>
 							</div>
 						</div>

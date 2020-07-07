@@ -102,7 +102,24 @@ public class MemberController {
 			model.addAttribute("memberList", map.get("memberList"));
 			return "member/memberList";
 		}
-	
+		//기업용 회원목록
+        @GetMapping("/getMemberListForCompany")
+        public String getMemberListForCompany(HttpSession session, Model model,
+                 @RequestParam(defaultValue = "1") int currentPage,
+                 @RequestParam(defaultValue = "5") int rowPerPage,
+                 @RequestParam(defaultValue = "") String searchWord) {
+           if(session.getAttribute("loginCompany")==null) {
+              return "redirect:/index";
+           }
+           Map<String, Object> map = memberService.getMemberList(currentPage, rowPerPage, searchWord);
+           model.addAttribute("currentPage", currentPage);
+           model.addAttribute("rowPerPage", rowPerPage);
+           model.addAttribute("searchWord", searchWord);
+           model.addAttribute("memberTotalCount", map.get("memberTotalCount"));
+           model.addAttribute("lastPage", map.get("lastPage"));
+           model.addAttribute("memberList", map.get("memberList"));
+           return "company/memberListForCompany";
+        }
 	//회원탈퇴
 	@GetMapping("/removeMember")
 	public String removeMember(HttpSession session,Model model,LoginMember loginMember) {

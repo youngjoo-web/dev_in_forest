@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devinforest.mapper.RecruitMapper">
+
+	<!-- 일반회원 채용공고 리스트 -->
+	<select id="selectRecruitList" parameterType="java.util.Map"
+			resultType="com.devinforest.vo.Recruit">
+		SELECT
+			recruit_no AS recruitNo,
+			recruit_title AS recruitTitle,
+			company_kor_name AS companyKorName,
+			company_eng_name AS companyEngName,
+			company_reputation AS companyReputation,
+			recruit_date AS recruitDate
+		FROM dev_recruit
+		WHERE recruit_title LIKE CONCAT('%',#{searchWord},'%')
+		ORDER BY recruit_date DESC
+	</select>
+	<!-- 기업회원 채용공고 리스트
+	<select id="selectRecruitListByCompany" parameterType="java.util.Map"
+			resultType="com.devinforest.vo.Recruit">
+		SELECT
+			recruit_no AS recruitNo,
+			recruit_title AS recruitTitle,
+			company_kor_name AS companyKorName,
+			company_eng_name AS companyEngName,
+			company_requtation AS companyReputation,
+			recruit_date AS recruitDate
+		FROM dev_recruit
+		WHERE recruit_title LIKE CONCAT('%',#{searchWord},'%')
+		ORDER BY recruit_date DESC
+	</select> -->
+	<!-- 채용공고 totalcount -->
+	<select id="recruitTotalCount" parameterType="String" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM dev_recruit
+		WHERE recruit_title LIKE CONCAT('%',#{searchWord},'%')
+	
+	</select>
+</mapper>
