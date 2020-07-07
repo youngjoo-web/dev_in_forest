@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devinforest.mapper.RestorationMapper">
+	<!-- 재가입요청 목록 -->
+	<select id="selectRestorationList"
+			parameterType="java.util.Map"
+			resultType="com.devinforest.vo.Restoration">
+		SELECT
+			restoration_no restorationNo,
+			restoration_title restorationTitle,
+			restoration_content restorationContent,
+			restoration_date restorationDate,
+			inquiry_kind inquiryKind
+		FROM dev_restoration
+		WHERE restoration_title LIKE CONCAT('%',#{searchWord},'%')
+		ORDER BY restoration_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<!-- 재가입요청 totalCount -->
+	<select id="restorationTotalCount"
+			parameterType="String"
+			resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM dev_restoration
+		WHERE restoration_title LIKE CONCAT('%',#{searchWord},'%')
+	</select>
+</mapper>
