@@ -37,4 +37,24 @@ public class RestorationService {
 		outputMap.put("restorationList", restorationList);
 		return outputMap;
 	}
+	// 재가입요청 상세보기
+	public Map<String,Object> getRestorationOne(int restorationNo){
+		Restoration restoration = restorationMapper.selectRestorationOne(restorationNo);
+		String inquiryKind = restoration.getInquiryKind();
+		System.out.println(inquiryKind);
+		int checkPoint = 0;
+		if(!inquiryKind.equals("복구요청")) {
+			 checkPoint = 1;
+		}
+		System.out.println(checkPoint+" <- RestorationService.getRestorationOne: checkPoint");
+		Map<String, Object> map = new HashMap<>();
+		map.put("checkPoint", checkPoint);
+		map.put("restoration", restoration);
+		return map;
+	}
+	// 재가입 실행
+	public void restorationExecution(int restorationNo) {
+		restorationMapper.updateInquiryKind(restorationNo); // 재가입 요청 - restoration 요청상태 변경
+		
+	}
 }

@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<meta charset="UTF-8">
+		<title th:text="${restoration.restorationTitle}"></title>
+	</head>
+	<body>
+		<div>
+			<h1>재가입요청 상세보기</h1>
+		</div>
+		<div>
+			요청일자 : 
+				<span th:text="${restoration.restorationDate}"></span>
+			</div>
+			<div>
+				복구상태 :
+				<span th:text="${restoration.inquiryKind}"></span>
+			</div>
+			<div>
+				제목 :
+				<span th:text="${restoration.restorationTitle}"></span>
+			</div>
+			<div>
+				내용 :
+				<span th:text="${restoration.restorationContent}"></span>
+			</div>
+		</div>
+		<button th:if="${checkPoint!=1}" id="restorationExecutionBtn" type="button">재가입실행</button>
+		<form id="restorationExecutionForm" method="post" th:action="@{/restorationExecution}">
+			<input type="hidden" name="restorationNo" th:value="${restoration.restorationNo}">
+			<input type="hidden" name="restorationTitle" th:value="${restoration.restorationTitle}">
+		</form>
+	</body>
+	<script>
+		$('#restorationExecutionBtn').click(function(){
+			let result = confirm("해당 회원을 재가입 시키시겠습니까?");
+			if(!result){
+				console.log("취소");
+				return;
+			}
+			console.log("확인");
+			$('#restorationExecutionForm').submit();
+		});
+	</script>
+</html> 

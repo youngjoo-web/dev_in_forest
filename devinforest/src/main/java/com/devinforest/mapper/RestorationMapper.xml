@@ -27,4 +27,35 @@
 		FROM dev_restoration
 		WHERE restoration_title LIKE CONCAT('%',#{searchWord},'%')
 	</select>
+	<!-- 재가입요청 상세보기 -->
+	<select id="selectRestorationOne"
+			parameterType="int"
+			resultType="com.devinforest.vo.Restoration">
+		SELECT
+			restoration_no restorationNo,
+			restoration_title restorationTitle,
+			restoration_content restorationContent,
+			restoration_date restorationDate,
+			inquiry_kind inquiryKind
+		FROM dev_restoration
+		WHERE restoration_no = #{restorationNo}
+	</select>
+	<!-- 요청상태 확인 -->
+	<select id="selectInquiryKind"
+			parameterType="int"
+			resultType="String">
+		SELECT
+			inquiry_kind inquiryKind
+		FROM dev_restoration
+		WHERE restoration_no = #{restorationNo}
+	</select>
+	<!-- 재가입 실행 - 요청상태 변경 -->
+	<update id="updateInquiryKind"
+			parameterType="int">
+		UPDATE
+			dev_restoration
+		SET
+			inquiry_kind = '복구완료'
+		WHERE restoration_no = #{restorationNo}
+	</update>
 </mapper>

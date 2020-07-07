@@ -36,7 +36,7 @@
 				<tr th:each="restoration : ${restorationList}">
 					<td th:text="${restoration.restorationNo}"></td>
 					<td>
-						<a th:href="@{/getRestorationOne}" th:text="${restoration.restorationTitle}"></a>
+						<a th:href="@{/getRestorationOne(restorationNo=${restoration.restorationNo})}" th:text="${restoration.restorationTitle}"></a>
 					</td>
 					<td th:text="${restoration.restorationDate}"></td>
 					<td th:text="${restoration.inquiryKind}"></td>
