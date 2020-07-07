@@ -312,11 +312,12 @@
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
-										<form method="get" th:action="@{/getCompanyList}">
-													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="이름 검색">
-													<button class="btn searchBtn" type="submit">검색</button>
-													<button id="resetBtn" class="btn searchBtn" type="button">초기화</button>
-												</form>
+								<form method="get" th:action="@{/getCompanyList}">
+									<input id="search" class="searchText" type="text"
+										name="searchWord" th:value="${searchWord}" placeholder="이름 검색">
+									<button class="btn searchBtn" type="submit">검색</button>
+									<button id="resetBtn" class="btn searchBtn" type="button">초기화</button>
+								</form>
 								<table class="table table-bordered" id="dataTable" width="100%"
 									cellspacing="0">
 									<thead>
@@ -336,22 +337,30 @@
 											<td th:text="${company.companyAddress}"></td>
 											<td th:text="${company.companyPhone}"></td>
 										</tr>
-										
+
 
 									</tbody>
 								</table>
 							</div>
 							<div>
-									<a class="btn btn-sm pageBtn" th:href="@{/getCompanyList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">처음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage == 1}" th:href="@{/getCompanyList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage > 1}" th:href="@{/getCompanyList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
-									<span th:text="'-'+${currentPage}+'-'"></span>
-									<a class="btn btn-sm pageBtn" th:if="${companyTotalCount == 0}" th:href="@{/getCompanyList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage < lastPage}" th:href="@{/getCompanyList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage == lastPage}" th:href="@{/getCompanyList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${companyTotalCount == 0}"th:href="@{/getCompanyList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
-									<a class="btn btn-sm pageBtn" th:if="${companyTotalCount != 0}"th:href="@{/getCompanyList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
-								</div>
+								<a class="btn btn-sm pageBtn"
+									th:href="@{/getCompanyList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">처음</a>
+								<a class="btn btn-sm pageBtn" th:if="${currentPage == 1}"
+									th:href="@{/getCompanyList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
+								<a class="btn btn-sm pageBtn" th:if="${currentPage > 1}"
+									th:href="@{/getCompanyList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
+								<span th:text="'-'+${currentPage}+'-'"></span> <a
+									class="btn btn-sm pageBtn" th:if="${companyTotalCount == 0}"
+									th:href="@{/getCompanyList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+								<a class="btn btn-sm pageBtn" th:if="${currentPage < lastPage}"
+									th:href="@{/getCompanyList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+								<a class="btn btn-sm pageBtn" th:if="${currentPage == lastPage}"
+									th:href="@{/getCompanyList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+								<a class="btn btn-sm pageBtn" th:if="${companyTotalCount == 0}"
+									th:href="@{/getCompanyList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+								<a class="btn btn-sm pageBtn" th:if="${companyTotalCount != 0}"
+									th:href="@{/getCompanyList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+							</div>
 						</div>
 					</div>
 

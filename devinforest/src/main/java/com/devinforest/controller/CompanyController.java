@@ -41,7 +41,7 @@ public class CompanyController {
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("companyList", map.get("companyList"));
 		
-		return "company/companyList";
+		return "member/companyList";
 	}
 	
 	//기업 회원가입 폼

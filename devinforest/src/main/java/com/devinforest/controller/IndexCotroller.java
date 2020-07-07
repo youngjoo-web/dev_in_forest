@@ -21,4 +21,12 @@ public class IndexCotroller {
 		}
 		return "index/home";
 	}
+	@GetMapping("/companyHome")
+	public String companyHome(HttpSession session) {
+		if(session.getAttribute("loginCompany")==null) {
+			return "member/memberLogin";
+		}
+		
+		return "company/companyHome";
+	}
 }
