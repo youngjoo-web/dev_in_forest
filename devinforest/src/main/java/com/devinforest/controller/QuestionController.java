@@ -40,6 +40,7 @@ public class QuestionController {
 		
 		Map<String, Object> questionList = questionService.getQuestionList(currentPage, searchWord);
 		
+		System.out.println(memberName+"<--memberName");
 		
 		model.addAttribute("memberName", memberName);
 		model.addAttribute("questionList", questionList.get("questionList"));

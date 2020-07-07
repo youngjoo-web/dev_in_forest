@@ -19,7 +19,8 @@
 		
 		<!--  addAdmin template -->
 		<link th:href="@{/css/addAdmin.css}" rel="stylesheet">
-		
+		<!-- fontawesome -->
+		<script src="https://kit.fontawesome.com/yourcode.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		
 		<script>
@@ -50,9 +51,11 @@
 						data: {'memberName' : memberName, 'questionNo' : questionNo},
 						success: function(data) {
 							if(data['memberName'] != null && data['votePoint'] == 1) {
+								$('.fa-chevron-up').css('color', 'green');
 								$('#downBtn').attr("disabled", true);
 								return false;
 							} else if(data['memberName'] != null && data['votePoint'] == 0) {
+								$('.fa-chevron-down').css('color', '#a40000');
 								$('#upBtn').attr("disabled", true);
 								return false;
 							}
@@ -79,7 +82,7 @@
 						$('#answerList').append('<div id="answerCommentAllList' + item.answerNo + '">');
 						$('#answerList').append('<div id="answerCommentShowMore' + item.answerNo + '"></div>');
 						$('#answerList').append('</div>');
-						$('#answerList').append('<div id="answerComment'+item.answerNo +'"><a id="writeAnswerCommentBtn' + item.answerNo + '" href="#">댓글 작성</a></div>');					
+						$('#answerList').append('<div id="answerComment'+item.answerNo +'"><a class="btn btn-outline-success btn-sm" id="writeAnswerCommentBtn' + item.answerNo + '" href="#">댓글 작성</a></div>');					
 						$('#answerList').append('<hr>');
 					});
 					
@@ -130,7 +133,7 @@
 						$('#writeAnswerCommentBtn'+ item.answerNo).click(function() {
 							$('#writeAnswerCommentBtn' + item.answerNo).remove();
 							console.log("writeAnswerCommentBtn click");
-							$('#answerComment'+ item.answerNo).append('<input type="text" id="answerCommentContent'+ item.answerNo +'"></input><button type="button" id="answerWriteBtn' + item.answerNo + '">작성</button>');
+							$('#answerComment'+ item.answerNo).append('<input class="form" type="text" id="answerCommentContent'+ item.answerNo +'"></input><button class="btn btn-outline-success btn-sm" type="button" id="answerWriteBtn' + item.answerNo + '">작성</button>');
 							$('#answerWriteBtn' + item.answerNo).click(function() {
 								console.log("answerWriteBtn click");
 								
@@ -220,12 +223,15 @@
 									$('#count').remove();
 									$('#voteTotalCount').append('<div id="count">' + data + '</div>');
 					                console.log("좋아요 성공");
+					                $('.fa-chevron-up').css('color', 'green');
 					                $('#downBtn').attr("disabled", true);
 					                return false;
 								}
 							});
 						} else {
 							if (confirm("추천을 취소하시겠습니까?") == true){    //확인
+								$('.fa-chevron-up').css('color', '#858796');
+								
 							}else{   //취소
 							    return;
 							}
@@ -235,8 +241,9 @@
 								data: {'memberName' : memberName, 'questionNo' : questionNo},
 								success : function(data) {
 									$('#count').remove();
-									$('#downBtn').attr("disabled", false);
 									$('#voteTotalCount').append('<div id="count">' + data + '</div>');
+									
+									$('#downBtn').attr("disabled", false);
 									console.log("삭제 성공");	
 								
 								}
@@ -266,6 +273,7 @@
 								success : function(data) {
 									$('#count').remove();
 									$('#voteTotalCount').append('<div id="count">' + data + '</div>');
+									$('.fa-chevron-down').css('color', '#a40000');
 									$('#upBtn').attr("disabled", true);
 									console.log("싫어요 성공");
 					                return false;
@@ -273,7 +281,7 @@
 							});
 						} else {
 							if (confirm("비추천을 취소하시겠습니까?") == true){    //확인
-	
+								$('.fa-chevron-down').css('color', '#858796');
 							}else{   //취소
 							    return;
 							}
@@ -284,6 +292,7 @@
 								success : function(data) {
 									$('#count').remove();
 									$('#voteTotalCount').append('<div id="count">' + data + '</div>');
+									
 									$('#upBtn').attr("disabled", false);
 									console.log("삭제 성공");	
 					            	
@@ -356,10 +365,119 @@
 		<!-- Page Wrapper -->
 		<div id="wrapper">
 		
-			<!-- 사이드 바 -->
-			<div>
-				<div th:include="/include/adminSide::adminSideBar"></div>
-			</div>
+		<!-- 사이드바 -->
+		<ul
+			class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion"
+			id="accordionSidebar">
+
+			<!-- Sidebar - Brand -->
+			<a
+				class="sidebar-brand d-flex align-items-center justify-content-center"
+				th:href="@{/home}">
+				<div class="sidebar-brand-icon rotate-n-15">
+					<i class="fas fa-tree"></i>
+				</div>
+				<div class="sidebar-brand-text mx-3">Dev In Forest</div>
+			</a>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider my-0">
+
+			<!-- Nav Item - Dashboard -->
+			<li class="nav-item active"><a class="nav-link"
+				th:href="@{/home}"> <i class="fas fa-fw fa-tachometer-alt"></i>
+					<span>회원 홈</span></a></li>
+
+			<!-- Divider -->
+			<hr th:if="${memberName} != 'Guest'" class="sidebar-divider">
+
+			<!-- Heading -->
+			<div th:if="${memberName} != 'Guest'" class="sidebar-heading">회원</div>
+
+			<!-- Nav Item - 일반회원 관리 -->
+			<li th:if="${memberName} != 'Guest'" class="nav-item">
+				<a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapse1" aria-expanded="true"
+				aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i> <span>일반회원</span>
+				</a>
+				<div id="collapse1" class="collapse" aria-labelledby="headingTwo"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">일반회원</h6>
+						<a class="collapse-item" th:href="@{/getMemberInfo(memberEmail=${session.loginMember.memberEmail})}">회원정보</a>
+						<a class="collapse-item" th:href="@{/getMemberList}">회원리스트</a> <a
+							class="collapse-item" href="#">채용 리스트</a> <a
+							class="collapse-item" href="#">면접제의 리스트</a> <a
+							class="collapse-item" href="#">문의&신고</a>
+					</div>
+				</div>
+			</li>
+
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<!-- Heading -->
+			<div class="sidebar-heading">해시태그</div>
+
+			<!-- Nav Item - Charts -->
+			<li class="nav-item"><a class="nav-link" href="#"> <i
+					class="fas fa-fw fa-folder"></i> <span>해시태그</span>
+			</a></li>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<!-- Heading -->
+			<div class="sidebar-heading">Q&A</div>
+
+			<!-- Nav Item - 공지 관리 -->
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapse3" aria-expanded="true"
+				aria-controls="collapsePages"> <i class="fas fa-fw fa-folder"></i>
+					<span>Q&A</span>
+			</a>
+				<div id="collapse3" class="collapse" aria-labelledby="headingPages"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">Q&A</h6>
+						<a class="collapse-item" href="#">질문하기 </a> <a
+							class="collapse-item" href="#">답변하기</a> <a class="collapse-item"
+							href="#">질문목록</a> <a class="collapse-item" href="#">답변목록</a>
+					</div>
+				</div></li>
+				<!-- 구분 줄 -->
+				<hr class="sidebar-divider">
+	
+				<!-- 기업확인 - 사이드바 제목 -->
+				<div class="sidebar-heading">기업</div>
+	
+				<!-- 기업 -->
+				<li class="nav-item"><a class="nav-link collapsed" href="#"
+					data-toggle="collapse" data-target="#collapse5" aria-expanded="true"
+					aria-controls="collapsePages"> <i
+						class="fas fa-fw fa-chart-area"></i> <span>기업</span>
+				</a>
+					<div id="collapse5" class="collapse" aria-labelledby="headingPages"
+						data-parent="#accordionSidebar">
+						<div class="bg-white py-2 collapse-inner rounded">
+							<h6 class="collapse-header">기업</h6>
+							<a class="collapse-item" th:href="@{/getCompanyList}">기업정보리스트</a>
+							<a class="collapse-item" href="#">기업의 면접제의 리스트 </a> <a
+								class="collapse-item" href="#">기업의 채용리스트</a>
+						</div>
+					</div></li>
+				<!-- 기업 끝 -->
+	
+				<!-- Divider -->
+				<hr class="sidebar-divider d-none d-md-block">
+	
+				<!-- Sidebar Toggler (Sidebar) -->
+				<div class="text-center d-none d-md-inline">
+					<button class="rounded-circle border-0" id="sidebarToggle"></button>
+				</div>
+	
+			</ul>
 			<!-- 사이드바 끝 -->
 			
 			<!-- Content Wrapper -->
@@ -428,18 +546,22 @@
 									<img class="img-profile rounded-circle" th:src="@{/img/img.png}">
 								</a>
 								<!-- Dropdown - User Information -->
-								<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+								<div th:if="${memberName} != 'Guest'" class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
 									<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
 									<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 										로그아웃
+									</a>
+								</div>
+								<div th:unless="${memberName} != 'Guest'" class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+									<a class="dropdown-item" href="#" th:href="@{/memberLogin}" th:text="로그인">
+									<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 									</a>
 								</div>
 							</li>
 							<!-- 닉네임 나오는 곳 - 상단 바 끝-->
 						</ul>
 					</nav>
-					<!-- 상단 바 끝 -->
-	
+					<!-- 상단 바 끝 -->	
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
 						
@@ -447,10 +569,10 @@
 						<h1 th:text="상세보기"></h1>
 		
 		
-						<button type="button" id="upBtn">▲</button>
+						<button class="btn" type="button" id="upBtn"><i class='fas fa-chevron-up' style='font-size:24px'></i></button>
 						<div id="voteTotalCount">
 						</div>
-						<button type="button" id="downBtn">▼</button>
+						<button class="btn" type="button" id="downBtn"><i class='fas fa-chevron-down' style='font-size:24px'></i></button>
 						<br>
 						<a th:href="@{/modifyQuestion(questionNo=${question.questionNo})}">수정</a>
 						<table border="1">
@@ -496,13 +618,13 @@
 						<hr>
 						</div>
 						<div id="addedAnswerList">
-						<hr>
+						
 						</div>
 						<!-- 답변 작성 -->
-						<textarea rows="5" cols="100" id="addAnswerContent" placeholder="Enter your answer this area"></textarea>
+						<textarea th:if="${memberName} != 'Guest'" rows="5" cols="100" class="form-control" id="addAnswerContent" placeholder="Enter your answer"></textarea>
 						<br>
-						<button id="addAnswerBtn">답변작성</button>
-					
+						<button th:if="${memberName} != 'Guest'" class="btn btn-outline-success" id="addAnswerBtn">답변작성</button>
+						<div th:if="${memberName} == 'Guest'">답글을 작성하려면 <a th:href="@{/memberLogin}" th:text="로그인"></a>을 하세요.</div>
 						
 						<input type="hidden" id="rowPerPage">
 						<input type="hidden" id="questionNo" th:value="${question.questionNo}">
