@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.service.RecruitService;
+import com.devinforest.vo.Recruit;
 
 @Controller
 public class RecruitController {
@@ -37,10 +38,13 @@ public class RecruitController {
 		return "member/getRecruitList";
 	}
 	@GetMapping("/getRecruitInfo")
-	public String getRecruitInfo(HttpSession session) {
+	public String getRecruitInfo(HttpSession session, Model model, int recruitNo) {
 		if(session.getAttribute("loginMember")==null) {
 			return "redirect:/index";
 		}
+		Recruit recruit = recruitService.getRecruitInfo(recruitNo);
+		model.addAttribute("recruit", recruit);
 		return "member/getRecruitInfo";
 	}
+	
 }

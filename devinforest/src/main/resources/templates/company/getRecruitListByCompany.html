@@ -8,7 +8,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>기업홈</title>
+<title>기업용 회원목록</title>
 
 <!-- Custom fonts for this template-->
 <link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
@@ -69,8 +69,8 @@
 
 			<!-- 관리자 홈 -->
 			<li class="nav-item active"><a class="nav-link"
-				th:href="@{/companyHome}"> <i class="fas fa-fw fa-tachometer-alt"></i>
-					<span>기업 홈</span>
+				th:href="@{/companyHome}"> <i
+					class="fas fa-fw fa-tachometer-alt"></i> <span>기업 홈</span>
 			</a></li>
 			<!-- 관리자 홈 끝 -->
 
@@ -89,8 +89,10 @@
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">기업회원</h6>
-						<a class="collapse-item" th:href="@{/getCompanyInfo(companyEmail=${session.loginCompany.companyEmail})}">기업정보</a> 
-						<a class="collapse-item" th:href="@{/getMemberListForCompany}">일반 회원목록</a> 
+						<a class="collapse-item"
+							th:href="@{/getCompanyInfo(companyEmail=${session.loginCompany.companyEmail})}">기업정보</a>
+						<a class="collapse-item" href="/getMemberListForCompany">일반
+							회원목록</a>
 					</div>
 				</div></li>
 
@@ -109,14 +111,14 @@
 				<div id="collapse3" class="collapse" aria-labelledby="headingPages"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header"> Q&A</h6>
+						<h6 class="collapse-header">Q&A</h6>
 						<a class="collapse-item" href="#">질문목록 </a> <a
 							class="collapse-item" href="#">답변목록</a>
 					</div>
 				</div></li>
 			<!-- 공지&FAQ 관리 끝 -->
 			<hr class="sidebar-divider">
-		<div class="sidebar-heading">채용공고</div>
+			<div class="sidebar-heading">채용공고</div>
 			<!-- 문의&신고 관리 -->
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapse4" aria-expanded="true"
@@ -127,7 +129,7 @@
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">채용공고</h6>
-						<a class="collapse-item" href="#">채용공고 리스트 </a> 
+						<a class="collapse-item" href="#">채용공고 리스트 </a>
 					</div>
 				</div></li>
 			<!-- 문의&신고 관리 끝 -->
@@ -148,12 +150,12 @@
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">면접제의</h6>
-						<a class="collapse-item" href="#">면접제의 리스트 </a> 
+						<a class="collapse-item" href="#">면접제의 리스트 </a>
 					</div>
 				</div></li>
 			<!-- 통계 끝 -->
 
-			
+
 			<!-- 마지막 구분 줄 -->
 			<hr class="sidebar-divider d-none d-md-block">
 
@@ -164,7 +166,8 @@
 
 		</ul>
 		<!-- 사이드바 끝 -->
-    <!-- Content Wrapper -->
+
+<!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
       <!-- Main Content -->
@@ -232,146 +235,117 @@
 
         </nav>
         <!-- End of Topbar -->
+		<!-- 내용 넣는 곳 -->
+		<div class="container-fluid pt-4 px-5 content">
 
-      <!-- Begin Page Content -->
-        <div class="container-fluid pt-4 px-5 content"> 
-          <!-- Content Row 1 -->
-          <div class="row mt-3">
-          
-			<!-- 회원관리 -->
-            <div class="col-xl-4 col-md-6 mb-4 px-3">
-              <div class="card shadow border-0 p-5"> 
-              	<!-- card Header -->
-              	<h4 class="text-dark font-weight-bold mb-4">기업</h4>
-              	<!-- card Content -->
-              	<div class="row text-left mb-1">
-              		<h5 class="text-dark font-weight-bold mx-3 my-2">기업회원</h5>
-              		<div class="col-xl-12 mb-3">
-              			<div class="card border-0 bg-light text-center">
-              				<h5 class="text-dark font-weight-bold mx-1 my-5"><a class="nav-link text-info" th:href="@{/getCompanyInfo(companyEmail=${session.loginCompany.companyEmail})}">기업정보보기</a></h5>
-              			</div>
-              		</div>
-              		<div class="col-xl-12 mb-3">
-              			<div class="card border-0 bg-light text-center">
-              				<h5 class="text-dark font-weight-bold mx-1 my-5"><a class="nav-link text-info" th:href="@{/getMemberListForCompany}">회원리스트</a></h5>
-              			</div>
-              		</div>
-              		
-              	</div><!-- row end -->
-              	
-              	<!-- content end -->
-              </div><!-- card end -->
-            </div><!-- col end -->
+			<!-- 테이블 제목 예시 -->
+			<div class="row">
+				<div class="col">
+					<h1 class="h3 mb-2 text-gray-800">채용공고목록</h1>
+				</div>
+				<div class="col">
+				<div align="right">
+				<a class="collapse-item" th:href="@{/addRecruit(companyEmail=${session.loginCompany.companyEmail})}">채용공고추가</a>
+					
+				</div>
+					
+				</div>
+				
 			
-			<!-- 기업 -->
-            <div class="col-xl-4 col-md-6 mb-4 px-3">
-              <div class="card shadow border-0 p-5"> 
-              	<!-- card Header -->
-              	<h4 class="text-dark font-weight-bold mb-4">채용공고&면접제의</h4>
-              	<!-- card Content -->
-              	<div class="row text-left mb-1">
-              		<h5 class="text-dark font-weight-bold mx-3 my-2">채용공고&면접제의</h5>
-              		<div class="col-xl-12 mb-3">
-              			<div class="card border-0 bg-light text-center">
-              				<h5 class="text-dark font-weight-bold mx-1 my-5"><a class="nav-link text-info" th:href="@{/}">채용공고리스트</a></h5>
-              			</div>
-              		</div>
-              		<div class="col-xl-12 mb-3">
-              			<div class="card border-0 bg-light text-center">
-              				<h5 class="text-dark font-weight-bold mx-1 my-5"><a class="nav-link text-info" th:href="@{/}">면접제의 리스트</a></h5>
-              			</div>
-              		</div>
-              		
-              	</div><!-- row end -->
-              	
-              	<!-- content end -->
-              </div><!-- card end -->
-            </div><!-- col end -->
-            
-            <!-- QNA -->
-            <div class="col-xl-4 col-md-6 mb-4 px-3">
-              <div class="card shadow border-0 p-5"> 
-              	<!-- card Header -->
-              	<h4 class="text-dark font-weight-bold mb-4">Q&A</h4>
-              	<!-- card Content -->
-              	<div class="row text-left mb-1">              	    
-              		<h5 class="text-dark font-weight-bold mx-3 my-2">Q&A</h5>
-              		<div class="col-xl-12 mb-3">
-              			<div class="card border-0 bg-light text-center">
-              				<h5 class="text-dark font-weight-bold mx-1 my-5"><a class="nav-link text-info" href="#">질문리스트</a></h5>
-              			</div>
-              		</div>
-              		<div class="col-xl-12 mb-3">
-              			<div class="card border-0 bg-light text-center">
-              				<h5 class="text-dark font-weight-bold mx-1 my-5"><a class="nav-link text-info" href="#">답변리스트</a></h5>
-              			</div>
-              		</div>
-              
-              	
-              	<!-- content end -->
-              </div><!-- card end -->
-            </div><!-- col end -->
-            
-            
-            
 			</div>
-        </div>
-        <!-- /.container-fluid -->
-      </div>
-      <!-- End of Main Content -->
+			
 
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2020</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
+			<!-- 테이블 예시 -->
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary"></h6>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						
+						<table class="table table-bordered" id="dataTable" width="100%"
+									cellspacing="0">
+									<thead>
+										<tr>
+											<th>제목</th>
+											<th>회사한국이름</th>
+											<th>회사영어이름</th>
+											<th>명성도제한</th>
+											<th>업로드날짜</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="recruit :${recruitList}">
+											<td><a th:href="@{/}"  th:text="${recruit.recruitTitle}"></a></td>
+											<td><a th:href="@{/}" th:text="${recruit.companyKorName}"></a></td>
+											<td><a th:href="@{/}" th:text="${recruit.companyEngName}"></a></td>
+											<td><a th:href="@{/}"  th:text="${recruit.companyReputation}"></a></td>
+											<td><a th:href="@{/}" th:text="${recruit.recruitDate}"></a></td>
+										</tr>
 
-    </div>
-    <!-- End of Content Wrapper -->
+									</tbody>
+								</table>
+						
+					</div>
+					
+				</div>
+			</div>
 
-  </div>
-  <!-- End of Page Wrapper -->
+		</div>
+		<!-- /.container-fluid -->
+	</div>
+	<!-- End of Main Content -->
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
+	<!-- 하단 저작권 -->
+	<footer class="sticky-footer bg-white">
+		<div class="container my-auto">
+			<div class="copyright text-center my-auto">
+				<span>Copyright &copy; Your Website 2020</span>
+			</div>
+		</div>
+	</footer>
+	<!-- 하단 저작권 끝 -->
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">로그아웃</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">정말 로그아웃 하시겠습니까?</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-          <a class="btn btn-primary" th:href="@{/logout}">로그아웃</a>
-        </div>
-      </div>
-    </div>
-  </div>
+	</div>
+	<!-- End of Content Wrapper -->
 
-  <!-- Bootstrap core JavaScript-->
-  <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-  <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	</div>
+	<!-- End of Page Wrapper -->
 
-  <!-- Core plugin JavaScript-->
-  <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+	<!-- Logout Modal-->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">로그아웃</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">정말 로그아웃 하시겠습니까?</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">취소</button>
+					<a class="btn btn-primary" th:href="@{/logout}">로그아웃</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
-  <!-- Custom scripts for all pages-->
-  <script th:src="@{/js/sb-admin-2.min.js}"></script>
+	<!-- Bootstrap core JavaScript-->
+	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
+	<!-- Core plugin JavaScript-->
+	<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
 
-
+	<!-- Custom scripts for all pages-->
+	<script th:src="@{/js/sb-admin-2.min.js}"></script>
 </body>
-
 </html>

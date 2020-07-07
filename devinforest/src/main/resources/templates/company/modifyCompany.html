@@ -184,7 +184,7 @@
 									cellspacing="0">
 									<tr>
 										<td>기업이메일</td>
-										<td th:text="${company.companyEmail}">
+										<td>
 											<input type="hidden" name="companyEmail" th:value="${company.companyEmail}">
 										</td>
 									</tr>
@@ -269,7 +269,7 @@
 								
 							</div>
 							<br>
-							<form method="get" th:action="@{/modifyCompany}">
+							<form method="get" th:action="@{/companyInfo}">
 								<input type="hidden" name="companyEmail"
 									th:value="${session.loginCompany.companyEmail}">
 								<button type="submit">돌아가기</button>

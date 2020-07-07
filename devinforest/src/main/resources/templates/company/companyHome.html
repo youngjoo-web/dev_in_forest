@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+   content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>기업홈</title>
+
+<!-- Custom fonts for this template-->
+<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
+   rel="stylesheet" type="text/css">
+<link
+   href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+   rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+
+<!--  addAdmin template -->
+<link th:href="@{/css/addAdmin.css}" rel="stylesheet">
+
+<script
+   src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<style>
+.none {
+   border: 0px;
+}
+
+.adminEmailArea {
+   border: 1px solid black;
+   padding: 1px;
+}
+
+.width1 {
+   width: 80px;
+}
+
+.width2 {
+   width: 110px;
+}
+</style>
+</head>
+<body id="page-top">
+   <!-- Page Wrapper -->
+   <div id="wrapper">
+
+      <!-- 사이드바 -->
+      <ul
+         class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion"
+         id="accordionSidebar">
+
+         <!-- dev in forest : 사이드바 최상단 문구-->
+         <a
+            class="sidebar-brand d-flex align-items-center justify-content-center"
+            th:href="@{/companyHome}">
+            <div class="sidebar-brand-icon rotate-n-15">
+               <i class="fas fa-tree"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">Dev In Forest</div>
+         </a>
+
+         <!-- 구분 줄 -->
+         <hr class="sidebar-divider my-0">
+
+         <!-- 관리자 홈 -->
+         <li class="nav-item active"><a class="nav-link"
+            th:href="@{/companyHome}"> <i class="fas fa-fw fa-tachometer-alt"></i>
+               <span>기업 홈</span>
+         </a></li>
+         <!-- 관리자 홈 끝 -->
+
+         <!-- 구분 줄 -->
+         <hr class="sidebar-divider">
+
+         <!-- 회원관리 -사이드바 제목 -->
+         <div class="sidebar-heading">기업</div>
+
+         <!-- 회원관리 - 일반회원 관리 -->
+         <li class="nav-item"><a class="nav-link collapsed" href="#"
+            data-toggle="collapse" data-target="#collapse1" aria-expanded="true"
+            aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i> <span>기업회원</span>
+         </a>
+            <div id="collapse1" class="collapse" aria-labelledby="headingTwo"
+               data-parent="#accordionSidebar">
+               <div class="bg-white py-2 collapse-inner rounded">
+                  <h6 class="collapse-header">기업회원</h6>
+                  <a class="collapse-item" th:href="@{/getCompanyInfo(companyEmail=${session.loginCompany.companyEmail})}">기업정보</a> 
+                  <a class="collapse-item" th:href="@{/getMemberListForCompany}">일반 회원목록</a> 
+               </div>
+            </div></li>
+
+         <!-- 구분 줄 -->
+         <hr class="sidebar-divider">
+
+         <!-- 공지 및 문의 - 사이드바 제목 -->
+         <div class="sidebar-heading">Q&A</div>
+
+         <!-- 공지&FAQ 관리 -->
+         <li class="nav-item"><a class="nav-link collapsed" href="#"
+            data-toggle="collapse" data-target="#collapse3" aria-expanded="true"
+            aria-controls="collapsePages"> <i class="fas fa-fw fa-folder"></i>
+               <span>Q&A</span>
+         </a>
+            <div id="collapse3" class="collapse" aria-labelledby="headingPages"
+               data-parent="#accordionSidebar">
+               <div class="bg-white py-2 collapse-inner rounded">
+                  <h6 class="collapse-header"> Q&A</h6>
+                  <a class="collapse-item" href="#">질문목록 </a> <a
+                     class="collapse-item" href="#">답변목록</a>
+               </div>
+            </div></li>
+         <!-- 공지&FAQ 관리 끝 -->
+         <hr class="sidebar-divider">
+      <div class="sidebar-heading">채용공고</div>
+         <!-- 문의&신고 관리 -->
+         <li class="nav-item"><a class="nav-link collapsed" href="#"
+            data-toggle="collapse" data-target="#collapse4" aria-expanded="true"
+            aria-controls="collapsePages"> <i class="fas fa-fw fa-folder"></i>
+               <span>채용공고</span>
+         </a>
+            <div id="collapse4" class="collapse" aria-labelledby="headingPages"
+               data-parent="#accordionSidebar">
+               <div class="bg-white py-2 collapse-inner rounded">
+                  <h6 class="collapse-header">채용공고</h6>
+                  <a class="collapse-item" href="#">채용공고 리스트 </a> 
+               </div>
+            </div></li>
+         <!-- 문의&신고 관리 끝 -->
+
+         <!-- 구분 줄 -->
+         <hr class="sidebar-divider">
+
+         <!-- 통계 확인 - 사이드바 제목 -->
+         <div class="sidebar-heading">면접제의</div>
+
+         <!-- 통계 -->
+         <li class="nav-item"><a class="nav-link collapsed" href="#"
+            data-toggle="collapse" data-target="#collapse5" aria-expanded="true"
+            aria-controls="collapsePages"> <i
+               class="fas fa-fw fa-chart-area"></i> <span>면접제의</span>
+         </a>
+            <div id="collapse5" class="collapse" aria-labelledby="headingPages"
+               data-parent="#accordionSidebar">
+               <div class="bg-white py-2 collapse-inner rounded">
+                  <h6 class="collapse-header">면접제의</h6>
+                  <a class="collapse-item" href="#">면접제의 리스트 </a> 
+               </div>
+            </div></li>
+         <!-- 통계 끝 -->
+
+         
+         <!-- 마지막 구분 줄 -->
+         <hr class="sidebar-divider d-none d-md-block">
+
+         <!-- < 버튼 -->
+         <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+         </div>
+
+      </ul>
+      <!-- 사이드바 끝 -->
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+          <!-- Topbar Search -->
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-success" type="button">
+                  <i class="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+
+            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+            <li class="nav-item dropdown no-arrow d-sm-none">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                <form class="form-inline mr-auto w-100 navbar-search">
+                  <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </li>
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${session.loginCompany.companyKorName}"></span>
+                <img class="img-profile rounded-circle" th:src="@{/img/img.png}">
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                      로그아웃
+                </a>
+              </div>
+            </li>
+
+          </ul>
+
+        </nav>
+        <!-- End of Topbar -->
+
+      <!-- Begin Page Content -->
+        <div class="container-fluid pt-4 px-5 content"> 
+          <!-- Content Row 1 -->
+          <div class="row mt-3">
+          
+         <!-- 회원관리 -->
+            <div class="col-xl-4 col-md-6 mb-4 px-3">
+              <div class="card shadow border-0 p-5"> 
+                 <!-- card Header -->
+                 <h4 class="text-dark font-weight-bold mb-4">기업</h4>
+                 <!-- card Content -->
+                 <div class="row text-left mb-1">
+                    <h5 class="text-dark font-weight-bold mx-3 my-2">기업회원</h5>
+                    <div class="col-xl-12 mb-3">
+                       <div class="card border-0 bg-light text-center">
+                          <h5 class="text-dark font-weight-bold mx-1 my-5"><a class="nav-link text-info" th:href="@{/getCompanyInfo(companyEmail=${session.loginCompany.companyEmail})}">기업정보보기</a></h5>
+                       </div>
+                    </div>
+                    <div class="col-xl-12 mb-3">
+                       <div class="card border-0 bg-light text-center">
+                          <h5 class="text-dark font-weight-bold mx-1 my-5"><a class="nav-link text-info" th:href="@{/getMemberListForCompany}">회원리스트</a></h5>
+                       </div>
+                    </div>
+                    
+                 </div><!-- row end -->
+                 
+                 <!-- content end -->
+              </div><!-- card end -->
+            </div><!-- col end -->
+         
+         <!-- 기업 -->
+            <div class="col-xl-4 col-md-6 mb-4 px-3">
+              <div class="card shadow border-0 p-5"> 
+                 <!-- card Header -->
+                 <h4 class="text-dark font-weight-bold mb-4">채용공고&면접제의</h4>
+                 <!-- card Content -->
+                 <div class="row text-left mb-1">
+                    <h5 class="text-dark font-weight-bold mx-3 my-2">채용공고&면접제의</h5>
+                    <div class="col-xl-12 mb-3">
+                       <div class="card border-0 bg-light text-center">
+                          <h5 class="text-dark font-weight-bold mx-1 my-5"><a class="nav-link text-info" th:href="@{/getRecruitListByCompany(searchWord=${session.loginCompany.companyKorName})}">채용공고리스트</a></h5>
+                       </div>
+                    </div>
+                    <div class="col-xl-12 mb-3">
+                       <div class="card border-0 bg-light text-center">
+                          <h5 class="text-dark font-weight-bold mx-1 my-5"><a class="nav-link text-info" th:href="@{/}">면접제의 리스트</a></h5>
+                       </div>
+                    </div>
+                    
+                 </div><!-- row end -->
+                 
+                 <!-- content end -->
+              </div><!-- card end -->
+            </div><!-- col end -->
+            
+            <!-- QNA -->
+            <div class="col-xl-4 col-md-6 mb-4 px-3">
+              <div class="card shadow border-0 p-5"> 
+                 <!-- card Header -->
+                 <h4 class="text-dark font-weight-bold mb-4">Q&A</h4>
+                 <!-- card Content -->
+                 <div class="row text-left mb-1">                     
+                    <h5 class="text-dark font-weight-bold mx-3 my-2">Q&A</h5>
+                    <div class="col-xl-12 mb-3">
+                       <div class="card border-0 bg-light text-center">
+                          <h5 class="text-dark font-weight-bold mx-1 my-5"><a class="nav-link text-info" href="#">질문리스트</a></h5>
+                       </div>
+                    </div>
+                    <div class="col-xl-12 mb-3">
+                       <div class="card border-0 bg-light text-center">
+                          <h5 class="text-dark font-weight-bold mx-1 my-5"><a class="nav-link text-info" href="#">답변리스트</a></h5>
+                       </div>
+                    </div>
+              
+                 
+                 <!-- content end -->
+              </div><!-- card end -->
+            </div><!-- col end -->
+            
+            
+            
+         </div>
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Your Website 2020</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">로그아웃</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">정말 로그아웃 하시겠습니까?</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+          <a class="btn btn-primary" th:href="@{/logout}">로그아웃</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+  <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+
+
+</body>
+
+</html>

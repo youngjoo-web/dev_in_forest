@@ -3,7 +3,12 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.RecruitMapper">
-
+	<!-- 채용공고추가 -->
+	<insert id="insertRecruit" parameterType="com.devinforest.vo.Recruit">
+		insert into dev_recruit
+		(company_kor_name, company_eng_name, company_license, company_sales, company_type, company_ceo, company_link, company_foundation, company_phone, company_address, company_about,recruit_title,recruit_content,company_reputation, recruit_date)
+		VALUES(#{companyKorName},#{companyEngName},#{companyLicense},#{companySales},#{companyType},#{companyCeo},#{companyLink},#{companyFoundation},#{companyPhone},#{companyAddress},#{companyAbout},#{recruitTitle},#{recruitContent},#{companyReputation},NOW())
+	</insert>
 	<!-- 일반회원 채용공고 리스트 -->
 	<select id="selectRecruitList" parameterType="java.util.Map"
 			resultType="com.devinforest.vo.Recruit">
@@ -17,8 +22,9 @@
 		FROM dev_recruit
 		WHERE recruit_title LIKE CONCAT('%',#{searchWord},'%')
 		ORDER BY recruit_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
-	<!-- 기업회원 채용공고 리스트
+	<!-- 기업회원 채용공고 리스트 -->
 	<select id="selectRecruitListByCompany" parameterType="java.util.Map"
 			resultType="com.devinforest.vo.Recruit">
 		SELECT
@@ -26,18 +32,48 @@
 			recruit_title AS recruitTitle,
 			company_kor_name AS companyKorName,
 			company_eng_name AS companyEngName,
-			company_requtation AS companyReputation,
+			company_reputation AS companyReputation,
 			recruit_date AS recruitDate
 		FROM dev_recruit
-		WHERE recruit_title LIKE CONCAT('%',#{searchWord},'%')
+		WHERE company_kor_name LIKE #{searchWord}
 		ORDER BY recruit_date DESC
-	</select> -->
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<!-- 채용공고 상세보기 -->
+	<select id="selectRecruitInfo" parameterType="int" resultType="com.devinforest.vo.Recruit">
+		SELECT
+        	recruit_no AS recruitNo,
+        	recruit_title AS recruitTitle,
+         	company_kor_name AS companyKorName,
+         	company_eng_name AS companyEngName,
+         	company_reputation AS companyReputation,
+         	company_license AS companyLicense,
+         	company_sales AS companySales, 
+         	company_type AS companyType,
+         	company_link AS companyLink,
+         	company_ceo AS companyCeo,
+         	company_foundation AS companyFoundation,
+         	company_phone AS companyPhone,
+         	company_address AS companyAddress,
+          	company_about AS companyAbout,
+          	recruit_content AS recruitContent,
+         	recruit_date AS recruitDate
+      FROM dev_recruit
+      WHERE recruit_no = #{recruitNo}
+	</select>
 	<!-- 채용공고 totalcount -->
 	<select id="recruitTotalCount" parameterType="String" resultType="int">
 		SELECT
 			COUNT(*)
 		FROM dev_recruit
 		WHERE recruit_title LIKE CONCAT('%',#{searchWord},'%')
+	
+	</select>
+	<select id="recruitTotalCountByCompany" parameterType="String" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM dev_recruit
+		WHERE recruit_title LIKE #{searchWord}
 	
 	</select>
 </mapper>

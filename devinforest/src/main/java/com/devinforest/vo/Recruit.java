@@ -7,17 +7,16 @@ public class Recruit {
 	private String companyLicense;
 	private int companyReputation;
 	private int companySales;
-	private String comapanyType;
+	private String companyType;
 	private String companyCeo;
 	private String companyLink;
-	private String companyFoundaion;
+	private String companyFoundation;
 	private String companyPhone;
 	private String companyAddress;
 	private String companyAbout;
 	private String recruitTitle;
 	private String recruitContent;
 	private String recruitDate;
-	
 	public int getRecruitNo() {
 		return recruitNo;
 	}
@@ -54,11 +53,11 @@ public class Recruit {
 	public void setCompanySales(int companySales) {
 		this.companySales = companySales;
 	}
-	public String getComapanyType() {
-		return comapanyType;
+	public String getCompanyType() {
+		return companyType;
 	}
-	public void setComapanyType(String comapanyType) {
-		this.comapanyType = comapanyType;
+	public void setCompanyType(String companyType) {
+		this.companyType = companyType;
 	}
 	public String getCompanyCeo() {
 		return companyCeo;
@@ -72,11 +71,11 @@ public class Recruit {
 	public void setCompanyLink(String companyLink) {
 		this.companyLink = companyLink;
 	}
-	public String getCompanyFoundaion() {
-		return companyFoundaion;
+	public String getCompanyFoundation() {
+		return companyFoundation;
 	}
-	public void setCompanyFoundaion(String companyFoundaion) {
-		this.companyFoundaion = companyFoundaion;
+	public void setCompanyFoundation(String companyFoundation) {
+		this.companyFoundation = companyFoundation;
 	}
 	public String getCompanyPhone() {
 		return companyPhone;
@@ -118,12 +117,14 @@ public class Recruit {
 	public String toString() {
 		return "Recruit [recruitNo=" + recruitNo + ", companyKorName=" + companyKorName + ", companyEngName="
 				+ companyEngName + ", companyLicense=" + companyLicense + ", companyReputation=" + companyReputation
-				+ ", companySales=" + companySales + ", comapanyType=" + comapanyType + ", companyCeo=" + companyCeo
-				+ ", companyLink=" + companyLink + ", companyFoundaion=" + companyFoundaion + ", companyPhone="
+				+ ", companySales=" + companySales + ", companyType=" + companyType + ", companyCeo=" + companyCeo
+				+ ", companyLink=" + companyLink + ", companyFoundation=" + companyFoundation + ", companyPhone="
 				+ companyPhone + ", companyAddress=" + companyAddress + ", companyAbout=" + companyAbout
 				+ ", recruitTitle=" + recruitTitle + ", recruitContent=" + recruitContent + ", recruitDate="
 				+ recruitDate + "]";
 	}
+	
+	
 	
 	
 }

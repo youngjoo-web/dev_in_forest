@@ -12,17 +12,41 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.service.CompanyService;
+import com.devinforest.service.RecruitService;
 import com.devinforest.vo.Admin;
 import com.devinforest.vo.Company;
 import com.devinforest.vo.LoginCompany;
 import com.devinforest.vo.LoginMember;
 import com.devinforest.vo.Member;
+import com.devinforest.vo.Recruit;
 
 @Controller
 public class CompanyController {
 	@Autowired	
 	private CompanyService companyService;
+	@Autowired
+	private RecruitService recruitService;
 	
+	//채용공고 추가
+	@GetMapping("/addRecruit")
+	public String addRecruit(HttpSession session, Model model, String companyEmail) {
+		if(session.getAttribute("loginCompany")==null) {
+			return "redirect:/index";
+		}
+		System.out.println(companyEmail+"<-----addRecruit");
+		LoginCompany loginCompany= new LoginCompany();
+		loginCompany.setCompanyEmail(companyEmail);
+		Company company = companyService.getCompanyInfo(loginCompany);
+		System.out.println(company+"<---addRecruit Class");
+		model.addAttribute("company", company);
+		return "company/addRecruit";
+	}
+	@PostMapping("/addRecruit")
+	public String addRecruit(HttpSession session, Model model, Recruit recruit) {
+		System.out.println(recruit+"<---addRecruit(Post)");
+		recruitService.addRecruit(recruit);
+		return "company/companyHome";
+	}
 	//기업 목록
 	@GetMapping("/getCompanyList")
 	public String getCompanyList(HttpSession session, Model model,
@@ -64,7 +88,25 @@ public class CompanyController {
 		companyService.addCompanyMember(company);
 		return "redirect:/index";
 	}
-	
+	//기업 채용공고 보기
+	@GetMapping("/getRecruitListByCompany")
+	public String getRecruitListByCompany(HttpSession session,Model model,
+			   @RequestParam(defaultValue = "1") int currentPage,
+			   @RequestParam(defaultValue = "5") int rowPerPage,String searchWord) {
+		if(session.getAttribute("loginCompany")==null) {
+			return "redirect:/index";
+		}
+		
+		
+		Map<String, Object> map = recruitService.getRecruitListByCompany(currentPage, rowPerPage, searchWord);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("rowPerPage", rowPerPage);
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("recruitTotalCount", map.get("recruitTotalCount"));
+		model.addAttribute("recruitList", map.get("recruitList"));
+		return "company/getRecruitListByCompany";
+	}
 	//기업 정보 상세보기
 	@GetMapping("/getCompanyInfo")
 	public String getCompanyInfo(HttpSession session,Model model,LoginCompany loginCompany) {
@@ -96,6 +138,7 @@ public class CompanyController {
 		if(session.getAttribute("loginCompany")==null) {
 			return "redirect:/index";
 		}
+		System.out.println(company+"<----modifyCompany");
 		companyService.modifyCompany(company);
 		model.addAttribute("company", company);
 		return "company/companyInfo";

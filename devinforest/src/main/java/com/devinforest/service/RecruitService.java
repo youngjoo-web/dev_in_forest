@@ -16,6 +16,11 @@ import com.devinforest.vo.Recruit;
 public class RecruitService {
 	@Autowired
 	private RecruitMapper recruitMapper;
+	//채용공고 추가
+	public void addRecruit(Recruit recruit) {
+		recruitMapper.insertRecruit(recruit);
+		return;
+	}
 	//채용공고 리스트 출력
 	public Map<String, Object> getRecruitList(int currentPage, int rowPerPage, String searchWord){
 	int beginRow=(currentPage-1)*rowPerPage;
@@ -34,5 +39,27 @@ public class RecruitService {
 	outputMap.put("lastPage", lastPage);
 	outputMap.put("recruitList", recruitList);
 	return outputMap;
+	}
+	//기업용 채용공고 리스트 출력
+	public  Map<String, Object> getRecruitListByCompany(int currentPage, int rowPerPage, String searchWord){
+		int beginRow=(currentPage-1)*rowPerPage;
+		int recruitTotalCount = recruitMapper.recruitTotalCountByCompany(searchWord);
+		int lastPage = recruitTotalCount/rowPerPage;
+		if(recruitTotalCount % rowPerPage != 0) {
+			lastPage+=1;
+		}
+		Map<String, Object> inputMap = new HashMap<>();
+		inputMap.put("beginRow", beginRow);
+		inputMap.put("rowPerPage", rowPerPage);
+		inputMap.put("searchWord", searchWord);
+		List<Recruit> recruitList = recruitMapper.selectRecruitListByCompany(inputMap);
+		Map<String, Object> outputMap = new HashMap<>();
+		outputMap.put("recruitTotalCount", recruitTotalCount);
+		outputMap.put("lastPage", lastPage);
+		outputMap.put("recruitList", recruitList);
+		return outputMap;
+	}
+	public Recruit getRecruitInfo(int recruitNo) {
+		return recruitMapper.selectRecruitInfo(recruitNo);
 	}
 }
