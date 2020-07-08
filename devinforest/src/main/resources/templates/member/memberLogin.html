@@ -62,8 +62,8 @@
               	<!-- card Header -->
               	<h4 class="text-dark font-weight-bold mb-4" align="center">Dev In Forest</h4>
               	<!-- card Content -->
-              	<div class="row text-center mb-2">
-              		<div class="col-xl-12 mb-3">
+              	<div class="row text-center ">
+              		<div class="col-xl-12 ">
               				<br>
 						<form method="post" th:action="@{/memberLogin}">
 						 <div class="form-group">
@@ -73,24 +73,31 @@
 								 <div class="form-group">
 									<input class="form-control" type="password" name="memberPassword" value="" placeholder="비밀번호">
 								</div>
-							<br>
+							
+							<div class="row">
+							<div class="col"><a class=" text-info" th:href="@{/findMemberEmail}">이메일찾기</a></div>
+							<div class="col"><a class=" text-info" th:href="@{/findMemberPw}">비밀번호찾기</a></div>
+							<div class="col"><a class=" text-info" th:href="@{/requestMemberRestore}">재가입요청</a></div>
+						</div>
+						<br>
 						<button type="submit" class="btn btn-success btn-block">로그인</button>
+						
 						</form>
+						<br>
+						
+						
+						
               		</div>  
-              		<div class="col-xl-12 mb-3">
-              			<div class="card border-0 bg-light text-center">
-              				<h5 class="text-dark font-weight-bold mx-0 my-3"><a class="nav-link text-info" th:href="@{/requestMemberRestore}">재가입요청</a></h5>
-              			</div>
-              		</div>
+              		
               		<div class="col-xl-6 mb-1">
               			<div class="card border-0 bg-light text-center">
-              				<h5 class="text-dark font-weight-bold mx-0 my-3"><a class="nav-link text-info" th:href="@{/findMemberEmail}">이메일찾기</a></h5>
+              				<h5 class="text-dark font-weight-bold mx-0 my-3"><a class="nav-link text-info" th:href="@{/addMember}">회원가입</a></h5>
               			</div>
               		</div>  
               		
               		<div class="col-xl-6 mb-1">
               			<div class="card border-0 bg-light text-center">
-              				<h5 class="text-dark font-weight-bold mx-0 my-3"><a class="nav-link text-info" th:href="@{/findMemberPw}">비밀번호찾기</a></h5>
+              				<h5 class="text-dark font-weight-bold mx-0 my-3"><a class="nav-link text-info" th:href="@{/addCompanyMember}">기업회원가입</a></h5>
               			</div>
               		</div>  
               	</div><!-- row end -->  

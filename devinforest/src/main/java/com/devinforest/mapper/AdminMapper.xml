@@ -18,21 +18,21 @@
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	<!-- 관리자 추가 -->
-	<insert id="insertAdmin" 
-			parameterType="com.devinforest.vo.Admin">
-		INSERT INTO 
-			dev_admin(
-				admin_email, 
-				admin_password, 
-				admin_name, 
-				admin_date
-			)
-			VALUES(
-				#{adminEmail},
-				PASSWORD(#{adminPw}),
-				#{adminName},
-				NOW()
-			)
+	<insert id="insertAdmin"
+	parameterType="com.devinforest.vo.Admin">
+	INSERT INTO
+	dev_admin(
+	admin_email,
+	admin_password,
+	admin_name,
+	admin_date
+	)
+	VALUES(
+	#{adminEmail},
+	PASSWORD(#{adminPw}),
+	#{adminName},
+	NOW()
+	)
 	</insert>
 	<!-- 관리자 totalCount -->
 	<select id="adminTotalCount"

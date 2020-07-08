@@ -1,5 +1,6 @@
 package com.devinforest.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -11,13 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.devinforest.mapper.MemberMapper;
 import com.devinforest.service.CompanyService;
 import com.devinforest.service.MemberService;
+import com.devinforest.service.SuggestService;
 import com.devinforest.vo.LoginAdmin;
 import com.devinforest.vo.LoginCompany;
 import com.devinforest.vo.LoginMember;
 import com.devinforest.vo.Member;
 import com.devinforest.vo.Restoration;
+import com.devinforest.vo.Suggest;
 
 @Controller
 public class MemberController {
@@ -25,6 +29,8 @@ public class MemberController {
 	private MemberService memberService;
 	@Autowired
 	private CompanyService companyService;
+	@Autowired
+	private SuggestService suggestService;
 	
 	//회원 재가입 요청
 	@GetMapping("/requestMemberRestore")
@@ -191,6 +197,9 @@ public class MemberController {
 		System.out.println(member+"<---member");		
 		model.addAttribute("member",member);
 		if(session.getAttribute("loginMember")!=null) {
+			List<Suggest> suggestList = suggestService.getSuggestList(member.getMemberName());
+			System.out.println(suggestList+"<---memberInfo");
+			model.addAttribute("suggestList", suggestList);
 			return "member/memberInfo";
 		}
 		if(session.getAttribute("loginCompany")!=null) {
@@ -243,27 +252,28 @@ public class MemberController {
 		if(session.getAttribute("loginMember")!=null) {
 			return "redirect:/index";
 		}
-		System.out.println("loginMember1-->"+loginMember);
-		
 		LoginMember returnLoginMember = memberService.memberLogin(loginMember);
-		System.out.println("returnloginMember2-->"+returnLoginMember);
+		
+		System.out.println("loginMember-->"+loginMember);
+		System.out.println("returnloginMember-->"+returnLoginMember);
 		if(returnLoginMember == null) {
 			System.out.println("로그인실패");
 			//회원로그인 실패시 관리자 서비스 로그인 시도 
 			return "member/memberLogin";
 		}
 		returnLoginMember.setMemberPassword("");//비밀번호 지워주기!!
-		System.out.println("returnloginMember(비밀번호지움)-->"+returnLoginMember);
 		//로그인 회원 종류 구별
 		//일반회원
 		if(returnLoginMember.getAccountKind().equals("M")) {
 			
 			Member member = memberService.getMemberInfo(returnLoginMember);
 			returnLoginMember.setMemberReputation(member.getMemberReputation());
-			System.out.println(returnLoginMember+" <-------로그인 컨트롤러 액션(일반)");	
+			System.out.println(returnLoginMember+"<-------로그인 컨트롤러 액션");	
 			session.setAttribute("loginMember", returnLoginMember);
 			System.out.println("로그인성공");
-			return "redirect:/home";
+			return "index/home";
+			
+			
 		}
 		if(returnLoginMember.getAccountKind().equals("A")) {
 			System.out.println(returnLoginMember+" <- 로그인 컨트롤러 액션(관리자)");

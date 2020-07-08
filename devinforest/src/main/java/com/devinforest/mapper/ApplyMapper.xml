@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devinforest.mapper.ApplyMapper">
+	<select id="selectApply" parameterType="java.util.Map"
+		resultType="com.devinforest.vo.Apply">
+		SELECT
+			recruit_no AS recruitNo,
+			member_email AS memberEmail,
+			company_email AS companyEmail,
+			apply_date AS applyDate
+		FROM
+			dev_apply
+		WHERE
+			recruit_no = #{recruitNo}
+		ORDER BY apply_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<select id="applyTotalCount" parameterType="int"
+		resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			dev_apply
+		WHERE
+			recruit_no = #{recruitNo}
+
+	</select>
+	<insert id="insertApply"
+		parameterType="com.devinforest.vo.Apply">
+		INSERT
+		INTO dev_apply
+			(recruit_no,
+			member_email,
+			company_email,
+			apply_date)
+		VALUES
+			(#{recruitNo},
+			#{memberEmail},
+			#{companyEmail},
+			NOW());
+
+	</insert>
+
+</mapper>
