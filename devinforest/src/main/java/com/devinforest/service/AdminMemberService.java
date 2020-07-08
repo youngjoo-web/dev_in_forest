@@ -65,6 +65,11 @@ public class AdminMemberService {
 		outputMap.put("companyList", companyList);
 		return outputMap;
 	}
+	// 기업회원 상세보기
+	public Company getCompanyInfo(String companyEmail) {
+		return adminMemberMapper.selectCompanyInfo(companyEmail);
+	}
+	
 	
 	// 블랙 팝업창
 	public String blackMemberOne(String memberName) {

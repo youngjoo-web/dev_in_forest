@@ -55,7 +55,7 @@ public class NoticeController {
 	@PostMapping("/addNotice")
 	public String addNotice(HttpSession session, Notice notice, IPUtil ipUtil) {
 		System.out.println(notice+" <- NoticeController.addNotice: notice(주입 전)");
-		String adminName = "최동빠이"; // 로그인 세션 적용시 세션에 들어있는 닉네임 값 가져와서 주입 시켜야함.
+		String adminName = "관리자1호"; // 로그인 세션 적용시 세션에 들어있는 닉네임 값 가져와서 주입 시켜야함.
 		notice.setAdminName(adminName);
 		String noticeIp = ipUtil.getIPAddress();
 		notice.setNoticeIp(noticeIp); // IP주입

@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.service.AdminMemberService;
 import com.devinforest.vo.BlackList;
+import com.devinforest.vo.Company;
 import com.devinforest.vo.Member;
 
 @Controller
 public class AdminMemberController {
 	@Autowired private AdminMemberService adminMemberService;
-	// 탈퇴 회원 목록
+	// 탈퇴회원 목록
 	@GetMapping("/admin/getRemoveMemberList")
 	public String getRemoveMemberList(HttpSession session, Model model,
 									@RequestParam(defaultValue = "1") int currentPage,
@@ -35,7 +36,7 @@ public class AdminMemberController {
 		model.addAttribute("removeMemberList", map.get("removeMemberList"));
 		return "adminMember/getRemoveMemberList";
 	}
-	// 탈퇴 회원 복구
+	// 탈퇴회원 복구
 	@PostMapping("/admin/recoveryMember")
 	public String recoveryMember(HttpSession session, Member member) {
 		String memberEmail = member.getMemberEmail();
@@ -43,7 +44,7 @@ public class AdminMemberController {
 		adminMemberService.recoveryMember(memberEmail);
 		return "redirect:/admin/getRemoveMemberList";
 	}
-	// 기업 회원 목록
+	// 기업회원 목록
 	@GetMapping("/admin/getCompanyList")
 	public String getCompanyList(HttpSession session, Model model,
 								@RequestParam(defaultValue = "1") int currentPage,
@@ -60,6 +61,17 @@ public class AdminMemberController {
 		model.addAttribute("companyList", map.get("companyList"));
 		return "adminMember/getCompanyList";
 	}
+	// 기업회원 상세보기
+		@GetMapping("/admin/getCompanyInfo")
+		public String getCompanyInfo(HttpSession session, Model model, Company company) {
+			String companyEmail = company.getCompanyEmail();
+			System.out.println(companyEmail+" <- AdminMemberController.getCompanyInfo: companyEmail");
+			company = adminMemberService.getCompanyInfo(companyEmail);
+			System.out.println(company+" <- AdminMemberController.getCompanyInfo: company");
+			model.addAttribute("company", company);
+			return "adminMember/getCompanyInfo";
+		}
+	
 	
 	// 회원 블랙 팝업창
 	@GetMapping("/blackMember")
