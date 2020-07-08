@@ -103,4 +103,33 @@ public class AdminMemberController {
 		model.addAttribute("rowPerPage", rowPerPage);
 		return "adminMember/getBlackMemberList";
 	}
+	// 일반 회원 List 출력
+	@GetMapping("/admin/getMemberListForAdmin")
+	public String getMemberListForAdmin(Model model,
+									@RequestParam(defaultValue = "") String searchWord,
+									@RequestParam(defaultValue = "1") int currentPage,
+									@RequestParam(defaultValue = "5") int rowPerPage) {
+		System.out.println(searchWord + " <-- AdminMemberController.getAdminMemberList: searchWord");
+		
+		Map<String, Object> map = adminMemberService.getMemberListForAdmin(searchWord, currentPage, rowPerPage);
+		System.out.println(map.get("lastPage")+" <- AdminMemberController.getAdminMemberList: lastPage");
+		System.out.println(map.get("memberTotalCount") + " <-- AdminMemberController.getAdminMemberList: map.get(\"memberTotalCount\")");
+		model.addAttribute("memberList", map.get("memberList"));
+		model.addAttribute("memberTotalCount", map.get("memberTotalCount"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("rowPerPage", rowPerPage);
+		return "adminMember/getMemberListForAdmin";
+	}
+	// 일반 회원 상세보기
+	@GetMapping("/admin/getMemberInfoForAdmin")
+	public String getMemberInfoForAdmin(Model model,
+										@RequestParam(value = "memberEmail") String memberEmail) {
+		
+		Member member = adminMemberService.getMemberInfoForAdmin(memberEmail);
+		model.addAttribute("member", member);
+		
+		return "adminMember/getMemberInfoForAdmin";
+	}
 }

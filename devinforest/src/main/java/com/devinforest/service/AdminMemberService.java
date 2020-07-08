@@ -104,4 +104,30 @@ public class AdminMemberService {
 		outPutMap.put("lastPage", lastPage);
 		return outPutMap;
 	}
+	// 일반 회원 출력
+	public Map<String, Object> getMemberListForAdmin(String searchWord, int currentPage, int rowPerPage) {
+		int beginRow = (currentPage-1) * rowPerPage;
+		int memberTotalCount = adminMemberMapper.memberTotalCountForAdmin(searchWord);
+		int lastPage = memberTotalCount / rowPerPage;
+		if(memberTotalCount % rowPerPage != 0) {
+			lastPage+=1;
+		}
+		Map<String, Object> inPutMap = new HashMap<>();
+		inPutMap.put("searchWord", searchWord);
+		inPutMap.put("beginRow", beginRow);
+		inPutMap.put("rowPerPage", rowPerPage);
+		
+		List<Member> memberList = adminMemberMapper.selectMemberListForAdmin(inPutMap);
+		
+		Map<String, Object> outPutMap = new HashMap<>();
+		outPutMap.put("memberList", memberList);
+		outPutMap.put("memberTotalCount", memberTotalCount);
+		outPutMap.put("lastPage", lastPage);
+		return outPutMap;
+	}
+	// 일반 회원 상세보기
+	public Member getMemberInfoForAdmin(String memberEmail) {
+		Member member = adminMemberMapper.selectMemberInfoForAdmin(memberEmail);
+		return member;
+	}
 }

@@ -33,4 +33,10 @@ public interface AdminMemberMapper {
 	public List<Company> selectCompanyList(Map<String, Object> map);
 	// 기업회원 totalCount
 	public int selectCompanyTotalCount(String searchWord);
+	// 일반 회원 List 출력
+	public List<Member> selectMemberListForAdmin(Map<String, Object> inputMap);
+	// 일반 회원 총 수 출력
+	public int memberTotalCountForAdmin(String searchWord);
+	// 일반 회원 상세보기 출력
+	public Member selectMemberInfoForAdmin(String memberEmail);
 }
