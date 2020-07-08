@@ -41,6 +41,7 @@ public class AdminService {
 	// 관리자 추가
 	public void addAdmin(Admin admin) {
 		adminMapper.insertAdmin(admin);
+		return;
 	}
 	// 관리자 이메일 중복체크
 	public int checkAdminEmail(String adminEmail) {

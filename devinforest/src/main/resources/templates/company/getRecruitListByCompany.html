@@ -262,7 +262,13 @@
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
-						
+						<form method="get" th:action="@{/getRecruitList}">
+									<input id="search" class="searchText" type="text"
+										name="searchWord" th:value="${searchWord}" placeholder="제목검색">
+									<button class="btn searchBtn" type="submit">검색</button>
+									<button id="resetBtn" class="btn searchBtn" type="button">초기화</button>
+								</form>
+								<br>
 						<table class="table table-bordered" id="dataTable" width="100%"
 									cellspacing="0">
 									<thead>
@@ -276,11 +282,11 @@
 									</thead>
 									<tbody>
 										<tr th:each="recruit :${recruitList}">
-											<td><a th:href="@{/}"  th:text="${recruit.recruitTitle}"></a></td>
-											<td><a th:href="@{/}" th:text="${recruit.companyKorName}"></a></td>
-											<td><a th:href="@{/}" th:text="${recruit.companyEngName}"></a></td>
-											<td><a th:href="@{/}"  th:text="${recruit.companyReputation}"></a></td>
-											<td><a th:href="@{/}" th:text="${recruit.recruitDate}"></a></td>
+											<td><a th:href="@{/getRecruitInfo(recruitNo=${recruit.recruitNo})}"  th:text="${recruit.recruitTitle}"></a></td>
+											<td><a th:href="@{/getRecruitInfo(recruitNo=${recruit.recruitNo})}" th:text="${recruit.companyKorName}"></a></td>
+											<td><a th:href="@{/getRecruitInfo(recruitNo=${recruit.recruitNo})}" th:text="${recruit.companyEngName}"></a></td>
+											<td><a th:href="@{/getRecruitInfo(recruitNo=${recruit.recruitNo})}"  th:text="${recruit.companyReputation}"></a></td>
+											<td><a th:href="@{/getRecruitInfo(recruitNo=${recruit.recruitNo})}" th:text="${recruit.recruitDate}"></a></td>
 										</tr>
 
 									</tbody>
