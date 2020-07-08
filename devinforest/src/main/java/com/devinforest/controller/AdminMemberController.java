@@ -19,13 +19,13 @@ import com.devinforest.vo.Member;
 public class AdminMemberController {
 	@Autowired private AdminMemberService adminMemberService;
 	// 탈퇴 회원 목록
-	@GetMapping("/getRemoveMemberList")
+	@GetMapping("/admin/getRemoveMemberList")
 	public String getRemoveMemberList(HttpSession session, Model model,
 									@RequestParam(defaultValue = "1") int currentPage,
 									@RequestParam(defaultValue = "10") int rowPerPage,
 									@RequestParam(defaultValue = "") String searchWord) {
-		System.out.println(currentPage+" <- RestorationController.getRestorationList: currentPage");
-		System.out.println(searchWord+" <- RestorationController.getRestorationList: searchWord");
+		System.out.println(currentPage+" <- AdminMemberController.getRemoveMemberList: currentPage");
+		System.out.println(searchWord+" <- AdminMemberController.getRemoveMemberList: searchWord");
 		Map<String, Object> map = adminMemberService.getRemoveMemberList(currentPage, rowPerPage, searchWord);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("rowPerPage", rowPerPage);
@@ -36,12 +36,29 @@ public class AdminMemberController {
 		return "adminMember/getRemoveMemberList";
 	}
 	// 탈퇴 회원 복구
-	@PostMapping("/recoveryMember")
+	@PostMapping("/admin/recoveryMember")
 	public String recoveryMember(HttpSession session, Member member) {
 		String memberEmail = member.getMemberEmail();
 		System.out.println(memberEmail+" <- AdminMemberController.recoveryMember: memberEmail");
 		adminMemberService.recoveryMember(memberEmail);
-		return "redirect:/getRemoveMemberList";
+		return "redirect:/admin/getRemoveMemberList";
+	}
+	// 기업 회원 목록
+	@GetMapping("/admin/getCompanyList")
+	public String getCompanyList(HttpSession session, Model model,
+								@RequestParam(defaultValue = "1") int currentPage,
+								@RequestParam(defaultValue = "10") int rowPerPage,
+								@RequestParam(defaultValue = "") String searchWord) {
+		System.out.println(currentPage+" <- AdminMemberController.getCompanyList: currentPage");
+		System.out.println(searchWord+" <- AdminMemberController.getCompanyList: searchWord");
+		Map<String, Object> map = adminMemberService.getCompanyList(currentPage, rowPerPage, searchWord);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("rowPerPage", rowPerPage);
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("companyTotalCount", map.get("companyTotalCount"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("companyList", map.get("companyList"));
+		return "adminMember/getCompanyList";
 	}
 	
 	// 회원 블랙 팝업창
@@ -67,8 +84,8 @@ public class AdminMemberController {
 	public String done() {
 		return "report/done";
 	}
-	// blackMemberList 출력
-	@GetMapping("/getBlackMemberList")
+	// 블랙 회원 목록
+	@GetMapping("/admin/getBlackMemberList")
 	public String getBlackMemberList(Model model,
 							@RequestParam(defaultValue = "") String searchWord,
 							@RequestParam(defaultValue = "1") int currentPage,

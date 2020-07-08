@@ -114,17 +114,17 @@
            			<h5 class="text-dark font-weight-bold mx-3 my-2">일반회원 관리</h5>
               		<div class="col-xl-12  mb-2">
               			<div class="card border-0 bg-light text-center hov-p">
-              				<h5 class="text-dark font-weight-bold mx-1 my-4"><a class="nav-link text-info" href="#">일반회원조회</a></h5>
+              				<h5 class="text-dark font-weight-bold mx-1 my-4"><a class="nav-link text-info" href="@{/admin/getMemberList}">일반회원조회</a></h5>
               			</div>
               		</div>
               		<div class="col-xl-12 mb-2">
               			<div class="card border-0 bg-light text-center">
-              				<h5 class="text-dark font-weight-bold mx-1 my-4"><a class="nav-link text-info" th:href="@{/getRemoveMemberList}">탈퇴회원조회</a></h5>
+              				<h5 class="text-dark font-weight-bold mx-1 my-4"><a class="nav-link text-info" th:href="@{/admin/getRemoveMemberList}">탈퇴회원조회</a></h5>
               			</div>
               		</div> 
               		<div class="col-xl-12 mb-2">
               			<div class="card border-0 bg-light text-center">
-              				<h5 class="text-dark font-weight-bold mx-1 my-4"><a class="nav-link text-info"th:href="@{/getBlackMemberList}">블랙회원조회</a></h5>
+              				<h5 class="text-dark font-weight-bold mx-1 my-4"><a class="nav-link text-info"th:href="@{/admin/getBlackMemberList}">블랙회원조회</a></h5>
               			</div>
               		</div> 
               	</div><!-- row end -->
@@ -133,7 +133,7 @@
               		<h5 class="text-dark font-weight-bold mx-3 my-2">기업회원 관리</h5>
               		<div class="col-xl-12 mb-2">
               			<div class="card border-0 bg-light text-center hov-g">
-              				<h5 class="text-dark font-weight-bold mx-1 my-4"><a class="nav-link text-info" href="#">기업회원조회</a></h5>
+              				<h5 class="text-dark font-weight-bold mx-1 my-4"><a class="nav-link text-info" th:href="@{/admin/getCompanyList}">기업회원조회</a></h5>
               			</div>
               		</div>  
               	</div><!-- row end -->

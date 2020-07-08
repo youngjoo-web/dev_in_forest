@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.devinforest.mapper.AdminMemberMapper;
 import com.devinforest.vo.BlackList;
+import com.devinforest.vo.Company;
 import com.devinforest.vo.Member;
 
 @Service
@@ -42,6 +43,28 @@ public class AdminMemberService {
 	public void recoveryMember(String memberEmail) {
 		adminMemberMapper.updateMemberState(memberEmail);
 	}
+	// 기업회원 목록
+	public Map<String, Object> getCompanyList(int currentPage, int rowPerPage, String searchWord){
+		int beginRow =(currentPage-1)*rowPerPage;
+		int companyTotalCount = adminMemberMapper.selectCompanyTotalCount(searchWord);
+		System.out.println(companyTotalCount+" <- AdminMemberService.getCompanyList: companyTotalCount");
+		int lastPage = companyTotalCount/rowPerPage;
+		if(companyTotalCount % rowPerPage != 0) {
+			lastPage+=1;
+		}
+		Map<String, Object> inputMap = new HashMap<>();
+		inputMap.put("beginRow", beginRow);
+		inputMap.put("rowPerPage", rowPerPage);
+		inputMap.put("searchWord", searchWord);
+		List<Company> companyList = adminMemberMapper.selectCompanyList(inputMap);
+		System.out.println(lastPage+" <- AdminMemberService.getCompanyList: lastPage");
+		//System.out.println(companyList+" <- AdminMemberService.getCompanyList: companyList");
+		Map<String, Object> outputMap = new HashMap<>();
+		outputMap.put("companyTotalCount", companyTotalCount);
+		outputMap.put("lastPage", lastPage);
+		outputMap.put("companyList", companyList);
+		return outputMap;
+	}
 	
 	// 블랙 팝업창
 	public String blackMemberOne(String memberName) {
@@ -60,7 +83,7 @@ public class AdminMemberService {
 			System.out.println("블랙에 실패하였습니다.");
 		}
 	}
-	// blackMemberList 출력
+	// 블랙회원 목록
 	public Map<String, Object> getBlackMemberList(String searchWord, int currentPage, int rowPerPage) {
 		int beginRow = (currentPage-1) * rowPerPage;
 		int blackTotalCount = adminMemberMapper.blackTotalCount(searchWord);

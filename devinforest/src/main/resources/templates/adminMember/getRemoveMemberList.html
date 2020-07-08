@@ -129,10 +129,10 @@
 									<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 										<div class="row">
 											<div class="col-md-4 text-left">
-												<form method="GET" th:action="@{/getRemoveMemberList}">
+												<form method="GET" th:action="@{/admin/getRemoveMemberList}">
 													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="이메일 검색">
 													<button class="btn searchBtn" type="submit">검색</button>
-													<a class="btn searchBtn" th:href="@{/getAdminList(rowPerPage='', searchWord='')}">초기화</a>
+													<a class="btn searchBtn" th:href="@{/admin/getRemoveMemberList(rowPerPage='', searchWord='')}">초기화</a>
 												</form>
 											</div>
 											<div class="col-md-2">
@@ -142,10 +142,10 @@
 												</form>
 											</div>
 											<div class="col-md-6 text-right">
-												<a class="btn btn-sm selectBtn" th:href="@{/getRemoveMemberList(rowPerPage=1, searchWord=${searchWord})}">1개씩</a>
-												<a class="btn btn-sm selectBtn" th:href="@{/getRemoveMemberList(rowPerPage=5, searchWord=${searchWord})}">5개씩</a>
-												<a class="btn btn-sm selectBtn" th:href="@{/getRemoveMemberList(rowPerPage=10, searchWord=${searchWord})}">10개씩</a>
-												<a class="btn btn-sm selectBtn" th:href="@{/getRemoveMemberList(rowPerPage=15, searchWord=${searchWord})}">15개씩</a>
+												<a class="btn btn-sm selectBtn" th:href="@{/admin/getRemoveMemberList(rowPerPage=1, searchWord=${searchWord})}">1개씩</a>
+												<a class="btn btn-sm selectBtn" th:href="@{/admin/getRemoveMemberList(rowPerPage=5, searchWord=${searchWord})}">5개씩</a>
+												<a class="btn btn-sm selectBtn" th:href="@{/admin/getRemoveMemberList(rowPerPage=10, searchWord=${searchWord})}">10개씩</a>
+												<a class="btn btn-sm selectBtn" th:href="@{/admin/getRemoveMemberList(rowPerPage=15, searchWord=${searchWord})}">15개씩</a>
 											</div>
 										</div>
 									</div>
@@ -175,15 +175,15 @@
 									</table>
 								</div>
 								<div>
-									<a class="btn btn-sm pageBtn" th:href="@{/getRemoveMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">처음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage == 1}" th:href="@{/getRemoveMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage > 1}" th:href="@{/getRemoveMemberList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
+									<a class="btn btn-sm pageBtn" th:href="@{/admin/getRemoveMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">처음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage == 1}" th:href="@{/admin/getRemoveMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage > 1}" th:href="@{/admin/getRemoveMemberList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
 									<span th:text="'-'+${currentPage}+'-'"></span>
-									<a class="btn btn-sm pageBtn" th:if="${removeMemberTotalCount == 0}" th:href="@{/getRemoveMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage < lastPage}" th:href="@{/getRemoveMemberList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage == lastPage}" th:href="@{/getRemoveMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${removeMemberTotalCount == 0}"th:href="@{/getRemoveMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
-									<a class="btn btn-sm pageBtn" th:if="${removeMemberTotalCount != 0}"th:href="@{/getRemoveMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+									<a class="btn btn-sm pageBtn" th:if="${removeMemberTotalCount == 0}" th:href="@{/admin/getRemoveMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage < lastPage}" th:href="@{/admin/getRemoveMemberList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage == lastPage}" th:href="@{/admin/getRemoveMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${removeMemberTotalCount == 0}"th:href="@{/admin/getRemoveMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+									<a class="btn btn-sm pageBtn" th:if="${removeMemberTotalCount != 0}"th:href="@{/admin/getRemoveMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
 								</div>
 							</div>
 						</div>

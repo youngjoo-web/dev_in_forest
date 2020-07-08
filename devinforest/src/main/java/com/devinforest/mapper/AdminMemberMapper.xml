@@ -36,7 +36,55 @@
 		WHERE member_email LIKE CONCAT('%',#{searchWord},'%')
 		AND member_state = 'N'
 	</select>
-
+	<!-- 재가입 실행 시 이메일 있는지 확인 -->
+	<select id="selectMemberEmail"
+			parameterType="String"
+			resultType="String">
+		SELECT
+			member_email memberEmail
+		FROM dev_member
+		WHERE member_email = #{memberEmail}
+	</select>
+	<!-- 회원복구 or 재가입 실행 - 회원상태변경 -->
+	<update id="updateMemberState"
+			parameterType="String">
+		UPDATE
+			dev_member
+		SET
+			member_state = 'Y'
+		WHERE member_Email = #{memberEmail}
+	</update>
+	<!-- 기업회원 목록 -->
+	<select id="selectCompanyList" parameterType="java.util.Map" resultType="com.devinforest.vo.Company" >
+		SELECT
+			company_email      companyEmail,
+			company_kor_name   companyKorName,
+			company_eng_name   companyEngName, 
+			company_type       companyType, 
+			company_address    companyAddress, 
+			company_phone      companyPhone, 
+			company_license    companyLicense,
+			company_link       companyLink, 
+			company_ceo        companyCEO , 
+			company_sales      companySales,
+			company_employees  companyEmployees,
+			company_about      companyAbout,
+			company_foundation companyFoundation,
+			company_date       companyDate
+		FROM dev_company
+		WHERE company_kor_name LIKE CONCAT('%',#{searchWord},'%')
+		ORDER BY company_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<!-- 기업회원 totalCount -->
+	<select id="selectCompanyTotalCount"
+			parameterType="String"
+			resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM dev_company
+		WHERE company_kor_name LIKE CONCAT('%',#{searchWord},'%')
+	</select>
 	<!-- 블랙 팝업창에 출력할 데이터 출력 -->
 	<select id="blackMemberOne"
 			parameterType="String"
@@ -58,24 +106,6 @@
 		INSERT INTO dev_blacklist (member_email, member_name, blacklist_reason, blacklist_date)
 		VALUES (#{memberEmail}, #{memberName}, #{blackListReason}, now())
 	</insert>
-	<!-- 회원복구 or 재가입 실행 - 회원상태변경 -->
-	<update id="updateMemberState"
-			parameterType="String">
-		UPDATE
-			dev_member
-		SET
-			member_state = 'Y'
-		WHERE member_Email = #{memberEmail}
-	</update>
-	<!-- 재가입 실행 시 이메일 있는지 확인 -->
-	<select id="selectMemberEmail"
-			parameterType="String"
-			resultType="String">
-		SELECT
-			member_email memberEmail
-		FROM dev_member
-		WHERE member_email = #{memberEmail}
-	</select>
 	<!-- 블랙회원 리스트 출력 -->
 	<select id="selectBlackMemberList"
 			parameterType="java.util.Map"

@@ -129,18 +129,18 @@
 									<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 										<div class="row">
 											<div class="col-sm-12 col-md-6 text-left">
-												<form method="GET" th:action="@{/getBlackMemberList}">
+												<form method="GET" th:action="@{/admin/getBlackMemberList}">
 													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="이메일 검색">
 													<button class="btn searchBtn" type="submit">검색</button>
-													<a class="btn searchBtn" th:href="@{/getBlackMemberList(currentPage='', rowPerPage='', searchWord='')}">초기화</a>
+													<a class="btn searchBtn" th:href="@{/admin/getBlackMemberList(currentPage='', rowPerPage='', searchWord='')}">초기화</a>
 												</form>
 											</div>
 											<div class="col-sm-12 col-md-6">
 												<div class="text-right">
-													<a class="btn btn-sm selectBtn" th:href="@{/getBlackMemberList(rowPerPage=1, searchWord=${searchWord})}">1개씩</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/getBlackMemberList(rowPerPage=5, searchWord=${searchWord})}">5개씩</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/getBlackMemberList(rowPerPage=10, searchWord=${searchWord})}">10개씩</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/getBlackMemberList(rowPerPage=15, searchWord=${searchWord})}">15개씩</a>
+													<a class="btn btn-sm selectBtn" th:href="@{/admin/getBlackMemberList(rowPerPage=1, searchWord=${searchWord})}">1개씩</a>
+													<a class="btn btn-sm selectBtn" th:href="@{/admin/getBlackMemberList(rowPerPage=5, searchWord=${searchWord})}">5개씩</a>
+													<a class="btn btn-sm selectBtn" th:href="@{/admin/getBlackMemberList(rowPerPage=10, searchWord=${searchWord})}">10개씩</a>
+													<a class="btn btn-sm selectBtn" th:href="@{/admin/getBlackMemberList(rowPerPage=15, searchWord=${searchWord})}">15개씩</a>
 												</div>
 											</div>
 										</div>
@@ -165,15 +165,15 @@
 									</table>
 								</div>
 								<div>
-									<a class="btn btn-sm pageBtn" th:href="@{/getBlackMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">처음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage == 1}" th:href="@{/getBlackMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage > 1}" th:href="@{/getBlackMemberList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
+									<a class="btn btn-sm pageBtn" th:href="@{/admin/getBlackMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">처음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage == 1}" th:href="@{/admin/getBlackMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage > 1}" th:href="@{/admin/getBlackMemberList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
 									<span th:text="'-'+${currentPage}+'-'"></span>
-									<a class="btn btn-sm pageBtn" th:if="${blackTotalCount == 0}" th:href="@{/getBlackMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage < lastPage}" th:href="@{/getBlackMemberList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage == lastPage}" th:href="@{/getBlackMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${blackTotalCount == 0}"th:href="@{/getBlackMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
-									<a class="btn btn-sm pageBtn" th:if="${blackTotalCount != 0}"th:href="@{/getBlackMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+									<a class="btn btn-sm pageBtn" th:if="${blackTotalCount == 0}" th:href="@{/admin/getBlackMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage < lastPage}" th:href="@{/admin/getBlackMemberList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage == lastPage}" th:href="@{/admin/getBlackMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${blackTotalCount == 0}"th:href="@{/admin/getBlackMemberList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+									<a class="btn btn-sm pageBtn" th:if="${blackTotalCount != 0}"th:href="@{/admin/getBlackMemberList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
 								</div>
 							</div>
 						</div>

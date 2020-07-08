@@ -41,9 +41,9 @@
 			data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h6 class="collapse-header">일반회원 관리</h6>
-				<a class="collapse-item" href="#">일반회원 조회</a>
-				<a class="collapse-item" th:href="@{/getRemoveMemberList}">탈퇴회원 조회</a>
-				<a class="collapse-item" th:href="@{/getBlackMemberList}">블랙회원 조회</a>
+				<a class="collapse-item" th:href="@{/admin/getMemberList}">일반회원 조회</a>
+				<a class="collapse-item" th:href="@{/admin/getRemoveMemberList}">탈퇴회원 조회</a>
+				<a class="collapse-item" th:href="@{/admin/getBlackMemberList}">블랙회원 조회</a>
 			</div>
 		</div>
 	</li>
@@ -57,7 +57,7 @@
 		<div id="collapse2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h6 class="collapse-header">기업회원 관리</h6>
-				<a class="collapse-item" href="#">기업회원 조회</a>
+				<a class="collapse-item" th:href="@{/admin/getCompanyList}">기업회원 조회</a>
 			</div>
 		</div>
 	</li>
