@@ -22,6 +22,10 @@ public class AdminController {
 	// 관리자 홈
 	@GetMapping("/adminHome")
 	public String adminHome(HttpSession session, Model model) {
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
+		
 		model.addAttribute("restorationCount", restorationService.inquiryStateTotalCount());
 		return "admin/adminHome";
 	}

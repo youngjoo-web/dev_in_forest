@@ -1,6 +1,5 @@
 package com.devinforest.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -12,9 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.devinforest.mapper.MemberMapper;
 import com.devinforest.service.CompanyService;
 import com.devinforest.service.MemberService;
+import com.devinforest.vo.LoginAdmin;
 import com.devinforest.vo.LoginCompany;
 import com.devinforest.vo.LoginMember;
 import com.devinforest.vo.Member;
@@ -244,38 +243,42 @@ public class MemberController {
 		if(session.getAttribute("loginMember")!=null) {
 			return "redirect:/index";
 		}
-		LoginMember returnLoginMember = memberService.memberLogin(loginMember);
+		System.out.println("loginMember1-->"+loginMember);
 		
-		System.out.println("loginMember-->"+loginMember);
-		System.out.println("returnloginMember-->"+returnLoginMember);
+		LoginMember returnLoginMember = memberService.memberLogin(loginMember);
+		System.out.println("returnloginMember2-->"+returnLoginMember);
 		if(returnLoginMember == null) {
 			System.out.println("로그인실패");
 			//회원로그인 실패시 관리자 서비스 로그인 시도 
 			return "member/memberLogin";
 		}
 		returnLoginMember.setMemberPassword("");//비밀번호 지워주기!!
+		System.out.println("returnloginMember(비밀번호지움)-->"+returnLoginMember);
 		//로그인 회원 종류 구별
 		//일반회원
 		if(returnLoginMember.getAccountKind().equals("M")) {
 			
 			Member member = memberService.getMemberInfo(returnLoginMember);
 			returnLoginMember.setMemberReputation(member.getMemberReputation());
-			System.out.println(returnLoginMember+"<-------로그인 컨트롤러 액션");	
+			System.out.println(returnLoginMember+" <-------로그인 컨트롤러 액션(일반)");	
 			session.setAttribute("loginMember", returnLoginMember);
 			System.out.println("로그인성공");
-			return "index/home";
-			
-			
+			return "redirect:/home";
 		}
 		if(returnLoginMember.getAccountKind().equals("A")) {
-			System.out.println(returnLoginMember+"<-------로그인 컨트롤러 액션");	
-			session.setAttribute("loginMember", returnLoginMember);
+			System.out.println(returnLoginMember+" <- 로그인 컨트롤러 액션(관리자)");
+			LoginAdmin loginAdmin = new LoginAdmin();
+			loginAdmin.setAdminEmail(returnLoginMember.getMemberEmail());
+			loginAdmin.setAdminName(returnLoginMember.getMemberName());
+			loginAdmin.setAccountKind(returnLoginMember.getAccountKind());
+			System.out.println(loginAdmin+" <- 관리자 주입 확인");
+			session.setAttribute("loginAdmin", loginAdmin);
 			System.out.println("로그인성공");
-			return "admin/adminHome";
+			return "redirect:/adminHome";
 		}
 		if(returnLoginMember.getAccountKind().equals("C")) {
 			
-			System.out.println(returnLoginMember+"<-------로그인 컨트롤러 액션");	
+			System.out.println(returnLoginMember+"<-------로그인 컨트롤러 액션(기업)");	
 			LoginCompany returnLoginCompany = new LoginCompany();
 			returnLoginCompany.setCompanyEmail(returnLoginMember.getMemberEmail());
 			returnLoginCompany = companyService.companyLogin(returnLoginCompany);
