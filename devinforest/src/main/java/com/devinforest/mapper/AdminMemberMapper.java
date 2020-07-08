@@ -36,9 +36,9 @@ public interface AdminMemberMapper {
 	// 기업회원 상세보기
 	public Company selectCompanyInfo(String companyEmail);
 	// 일반회원 목록
-	public List<Member> selectMemberListForAdmin(Map<String, Object> inputMap);
+	public List<Member> selectMemberList(Map<String, Object> inputMap);
 	// 일반회원 totalCount
-	public int memberTotalCountForAdmin(String searchWord);
+	public int memberTotalCount(String searchWord);
 	// 일반회원 상세보기
-	public Member selectMemberInfoForAdmin(String memberEmail);
+	public Member selectMemberInfo(String memberEmail);
 }

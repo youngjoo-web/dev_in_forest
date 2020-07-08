@@ -115,33 +115,31 @@ public class AdminMemberController {
 		model.addAttribute("rowPerPage", rowPerPage);
 		return "adminMember/getBlackMemberList";
 	}
-	// 일반 회원 List 출력
-	@GetMapping("/admin/getMemberListForAdmin")
-	public String getMemberListForAdmin(Model model,
-									@RequestParam(defaultValue = "") String searchWord,
-									@RequestParam(defaultValue = "1") int currentPage,
-									@RequestParam(defaultValue = "5") int rowPerPage) {
-		System.out.println(searchWord + " <-- AdminMemberController.getAdminMemberList: searchWord");
+	// 일반회원 목록
+	@GetMapping("/admin/getMemberList")
+	public String getMemberList(Model model,
+								@RequestParam(defaultValue = "") String searchWord,
+								@RequestParam(defaultValue = "1") int currentPage,
+								@RequestParam(defaultValue = "5") int rowPerPage) {
+		System.out.println(searchWord + " <-- AdminMemberController.getMemberList: searchWord");
 		
-		Map<String, Object> map = adminMemberService.getMemberListForAdmin(searchWord, currentPage, rowPerPage);
-		System.out.println(map.get("lastPage")+" <- AdminMemberController.getAdminMemberList: lastPage");
-		System.out.println(map.get("memberTotalCount") + " <-- AdminMemberController.getAdminMemberList: map.get(\"memberTotalCount\")");
+		Map<String, Object> map = adminMemberService.getMemberList(searchWord, currentPage, rowPerPage);
 		model.addAttribute("memberList", map.get("memberList"));
 		model.addAttribute("memberTotalCount", map.get("memberTotalCount"));
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("rowPerPage", rowPerPage);
-		return "adminMember/getMemberListForAdmin";
+		return "adminMember/getMemberList";
 	}
 	// 일반 회원 상세보기
-	@GetMapping("/admin/getMemberInfoForAdmin")
-	public String getMemberInfoForAdmin(Model model,
-										@RequestParam(value = "memberEmail") String memberEmail) {
+	@GetMapping("/admin/getMemberInfo")
+	public String getMemberInfo(Model model,
+								@RequestParam(value = "memberEmail") String memberEmail) {
 		
-		Member member = adminMemberService.getMemberInfoForAdmin(memberEmail);
+		Member member = adminMemberService.getMemberInfo(memberEmail);
 		model.addAttribute("member", member);
 		
-		return "adminMember/getMemberInfoForAdmin";
+		return "adminMember/getMemberInfo";
 	}
 }

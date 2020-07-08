@@ -153,7 +153,7 @@
 		WHERE member_email LIKE CONCAT('%',#{searchWord},'%')
 	</select>
 	<!-- 일반회원 리스트 출력 -->
-	<select id="selectMemberListForAdmin"
+	<select id="selectMemberList"
 			parameterType="java.util.Map"
 			resultType="com.devinforest.vo.Member">
 		SELECT
@@ -176,7 +176,7 @@
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	<!-- 일반회원 totalCount -->
-	<select id="memberTotalCountForAdmin"
+	<select id="memberTotalCount"
 			parameterType="String"
 			resultType="int">
 		SELECT 
@@ -185,7 +185,7 @@
 		WHERE member_email LIKE CONCAT('%',#{searchWord},'%')
 	</select>
 	<!-- 일반회원 상세보기 출력 -->
-	<select id="selectMemberInfoForAdmin"
+	<select id="selectMemberInfo"
 			parameterType="String"
 			resultType="com.devinforest.vo.Member">
 		SELECT

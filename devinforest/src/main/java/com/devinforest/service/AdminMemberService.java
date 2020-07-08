@@ -109,10 +109,10 @@ public class AdminMemberService {
 		outPutMap.put("lastPage", lastPage);
 		return outPutMap;
 	}
-	// 일반 회원 출력
-	public Map<String, Object> getMemberListForAdmin(String searchWord, int currentPage, int rowPerPage) {
+	// 일반회원 목록
+	public Map<String, Object> getMemberList(String searchWord, int currentPage, int rowPerPage) {
 		int beginRow = (currentPage-1) * rowPerPage;
-		int memberTotalCount = adminMemberMapper.memberTotalCountForAdmin(searchWord);
+		int memberTotalCount = adminMemberMapper.memberTotalCount(searchWord);
 		int lastPage = memberTotalCount / rowPerPage;
 		if(memberTotalCount % rowPerPage != 0) {
 			lastPage+=1;
@@ -122,7 +122,7 @@ public class AdminMemberService {
 		inPutMap.put("beginRow", beginRow);
 		inPutMap.put("rowPerPage", rowPerPage);
 		
-		List<Member> memberList = adminMemberMapper.selectMemberListForAdmin(inPutMap);
+		List<Member> memberList = adminMemberMapper.selectMemberList(inPutMap);
 		
 		Map<String, Object> outPutMap = new HashMap<>();
 		outPutMap.put("memberList", memberList);
@@ -130,9 +130,9 @@ public class AdminMemberService {
 		outPutMap.put("lastPage", lastPage);
 		return outPutMap;
 	}
-	// 일반 회원 상세보기
-	public Member getMemberInfoForAdmin(String memberEmail) {
-		Member member = adminMemberMapper.selectMemberInfoForAdmin(memberEmail);
+	// 일반회원 상세보기
+	public Member getMemberInfo(String memberEmail) {
+		Member member = adminMemberMapper.selectMemberInfo(memberEmail);
 		return member;
 	}
 }
