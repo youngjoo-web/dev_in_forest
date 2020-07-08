@@ -103,9 +103,8 @@
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Q&A</h6>
-						<a class="collapse-item" href="#">질문하기 </a> <a
-							class="collapse-item" href="#">답변하기</a> <a class="collapse-item"
-							href="#">질문목록</a> <a class="collapse-item" href="#">답변목록</a>
+						<a class="collapse-item" th:href="@{/getQuestionList}">질문리스트</a>
+						<a class="collapse-item" th:href="@{/addQuestion(memberName=${session.loginMember.memberName})}">질문하기</a>
 					</div>
 				</div></li>
 				<!-- 구분 줄 -->
@@ -229,7 +228,7 @@
 					<div class="container-fluid pt-4 px-5 content">
 						
 						<!-- 여기에 본문 넣으면댐 -->
-						<h1 th:text="질문목록"></h1>
+						<h1 th:text="질문리스트"></h1>
 					<!--  
 	<form method="get" th:action="@{/getQuestionList}">
 		<input type="text" name="searchWord" id="searchWord">
@@ -238,9 +237,9 @@
 	-->
 					<div style="text-align: right"
 						th:if="${memberName}!='Guest'">
-						<a th:href="@{/addQuestion(memberName=${memberName})}">글작성</a>
+						<a class="btn btn-outline-success" th:href="@{/addQuestion(memberName=${memberName})}">질문하기</a>
 					</div>
-
+					<br>
 					<table class="table">
 						<tr>
 							<th>question_no</th>

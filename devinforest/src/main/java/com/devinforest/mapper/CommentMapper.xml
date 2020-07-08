@@ -30,7 +30,7 @@
 			question_comment_content questionCommentContent
 		FROM dev_question_comment
 		WHERE question_no = #{questionNo}
-		ORDER BY question_comment_date ASC
+		ORDER BY question_comment_date DESC
 		LIMIT 0, #{rowPerPage}
 	</select>
 	<!-- 질문 댓글 총 개수 -->
@@ -74,7 +74,7 @@
 			answer_comment_content answerCommentContent
 		FROM dev_answer_comment
 		WHERE answer_no = #{answerNo}
-		ORDER BY answer_comment_date ASC
+		ORDER BY answer_comment_date DESC
 		LIMIT 0, #{rowPerPage}
 	</select>
 	<!-- 답변 댓글 총 개수 -->

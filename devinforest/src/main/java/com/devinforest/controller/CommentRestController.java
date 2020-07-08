@@ -45,7 +45,6 @@ public class CommentRestController {
 		
 		List<QuestionComment> questionCommentList = commentMapper.selectQuestionCommentList(map);
 		
-		
 		return questionCommentList;
 	}
 	

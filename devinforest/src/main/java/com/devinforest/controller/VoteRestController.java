@@ -18,7 +18,7 @@ public class VoteRestController {
 	private VoteMapper voteMapper;
 	
 	// Plus 버튼 눌렀을 때 생성
-	@GetMapping("/devinforest/plusVote")
+	@GetMapping("/plusVote")
 	public int plusVote(Vote vote, HttpSession session) {
 		System.out.println("plusvote 시작");
 		int voteTotalCount = 0;

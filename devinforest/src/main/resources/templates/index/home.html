@@ -104,9 +104,8 @@
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Q&A</h6>
-						<a class="collapse-item" href="#">질문하기 </a> <a
-							class="collapse-item" href="#">답변하기</a> <a class="collapse-item"
-							href="#">질문목록</a> <a class="collapse-item" href="#">답변목록</a>
+						<a class="collapse-item" th:href="@{/getQuestionList}">질문리스트</a>
+						<a class="collapse-item" th:href="@{/addQuestion(memberName=${session.loginMember.memberName})}">질문하기</a>  
 					</div>
 				</div></li>
 			<!-- 구분 줄 -->
@@ -299,41 +298,31 @@
 						<div class="col-xl-4 col-md-6 mb-4 px-3">
 							<div class="card shadow border-0 p-5">
 								<!-- card Header -->
-								<h4 class="text-dark font-weight-bold mb-3">Q&A</h4>
+								<h4 class="text-dark font-weight-bold mb-4">Q&A</h4>
 								<!-- card Content -->
 								<div class="row text-left mb-1">
-									<h5 class="text-dark font-weight-bold mx-3 my-2"></h5>
-									<div class="col-xl-12 mb-2">
-										<div class="card border-0 bg-light text-center">
-											<h5 class="text-dark font-weight-bold mx-1 my-4">
-												<a class="nav-link text-info" href="#">질문하기</a>
-											</h5>
-										</div>
-									</div>
-									<div class="col-xl-12 mb-2">
-										<div class="card border-0 bg-light text-center">
-											<h5 class="text-dark font-weight-bold mx-1 my-4">
-												<a class="nav-link text-info" href="#">답변하기</a>
-											</h5>
-										</div>
-									</div>
-									<div class="col-xl-12 mb-2">
+									<h5 class="text-dark font-weight-bold mx-3 my-2">&nbsp;</h5>
+									<div class="col-xl-12 mb-3">
 										<div class="card border-0 bg-light text-center">
 											<h5 class="text-dark font-weight-bold mx-1 my-5">
-												<a class="nav-link text-info" href="#">질문리스트</a>
+												<a class="nav-link text-info" th:href="@{/getQuestionList}">질문리스트</a>
+											</h5>
+										</div>
+									</div>
+									<div class="col-xl-12 mb-3">
+										<div class="card border-0 bg-light text-center">
+											<h5 class="text-dark font-weight-bold mx-1 my-5">
+												<a class="nav-link text-info" th:href="@{/addQuestion(memberName=${session.loginMember.memberName})}">질문하기</a>
 											</h5>
 										</div>
 									</div>
 
-
-									<!-- content end -->
 								</div>
-								<!-- card end -->
+								<!-- row end -->
+
+								<!-- content end -->
 							</div>
-							<!-- col end -->
-
-
-
+							<!-- card end -->
 						</div>
 					</div>
 					<!-- /.container-fluid -->

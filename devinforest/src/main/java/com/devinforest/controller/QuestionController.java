@@ -125,7 +125,9 @@ public class QuestionController {
 		}
 		String getIp = IPUtil.getIPAddress();
 		System.out.println(getIp + "<-- addQuestion ip");
-	 
+		
+		System.out.println(loginMember.getMemberName() + " <--- addQuestion memberName");
+		
 		model.addAttribute("memberName", loginMember.getMemberName());
 		model.addAttribute("ip", getIp);
 		System.out.println(loginMember.getMemberName()+"<--memberName");
@@ -136,6 +138,7 @@ public class QuestionController {
 	// 질문 작성 실행
 	@PostMapping("/addQuestion")
 	public String addQuestion(Question question) {
+		System.out.println(question + " <--- addQuestion question");
 		questionService.addQuestion(question);
 		return "redirect:/getQuestionList";
 	}
