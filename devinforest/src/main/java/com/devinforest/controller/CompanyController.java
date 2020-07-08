@@ -154,6 +154,7 @@ public class CompanyController {
 		System.out.println(loginCompany+"<---companyPwCheck");
 		Company company = new Company();
 		company=companyService.getCompanyInfo(loginCompany);
+		company.setCompanyPw(loginCompany.getCompanyPw());
 		System.out.println(company+"<---company");
 		model.addAttribute("company", company);
 		int pwCheckNo = companyService.checkCompanyPw(loginCompany);

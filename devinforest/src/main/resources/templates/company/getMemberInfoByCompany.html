@@ -8,7 +8,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>기업정보 수정</title>
+<title>기업용 회원목록</title>
 
 <!-- Custom fonts for this template-->
 <link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
@@ -69,8 +69,8 @@
 
 			<!-- 관리자 홈 -->
 			<li class="nav-item active"><a class="nav-link"
-				th:href="@{/companyHome}"> <i class="fas fa-fw fa-tachometer-alt"></i>
-					<span>기업 홈</span>
+				th:href="@{/companyHome}"> <i
+					class="fas fa-fw fa-tachometer-alt"></i> <span>기업 홈</span>
 			</a></li>
 			<!-- 관리자 홈 끝 -->
 
@@ -89,8 +89,10 @@
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">기업회원</h6>
-						<a class="collapse-item" th:href="@{/getCompanyInfo(companyEmail=${session.loginCompany.companyEmail})}">기업정보</a> 
-						<a class="collapse-item" th:href="@{/getMemberListForCompany}">일반 회원목록</a> 
+						<a class="collapse-item"
+							th:href="@{/getCompanyInfo(companyEmail=${session.loginCompany.companyEmail})}">기업정보</a>
+						<a class="collapse-item" href="/getMemberListForCompany">일반
+							회원목록</a>
 					</div>
 				</div></li>
 
@@ -109,14 +111,14 @@
 				<div id="collapse3" class="collapse" aria-labelledby="headingPages"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header"> Q&A</h6>
+						<h6 class="collapse-header">Q&A</h6>
 						<a class="collapse-item" href="#">질문목록 </a> <a
 							class="collapse-item" href="#">답변목록</a>
 					</div>
 				</div></li>
 			<!-- 공지&FAQ 관리 끝 -->
 			<hr class="sidebar-divider">
-		<div class="sidebar-heading">채용공고</div>
+			<div class="sidebar-heading">채용공고</div>
 			<!-- 문의&신고 관리 -->
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapse4" aria-expanded="true"
@@ -127,7 +129,7 @@
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">채용공고</h6>
-						<a class="collapse-item" href="#">채용공고 리스트 </a> 
+						<a class="collapse-item" href="#">채용공고 리스트 </a>
 					</div>
 				</div></li>
 			<!-- 문의&신고 관리 끝 -->
@@ -148,12 +150,12 @@
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">면접제의</h6>
-						<a class="collapse-item" href="#">면접제의 리스트 </a> 
+						<a class="collapse-item" href="#">면접제의 리스트 </a>
 					</div>
 				</div></li>
 			<!-- 통계 끝 -->
 
-			
+
 			<!-- 마지막 구분 줄 -->
 			<hr class="sidebar-divider d-none d-md-block">
 
@@ -165,145 +167,159 @@
 		</ul>
 		<!-- 사이드바 끝 -->
 
+<!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
 
-				<!-- 내용 넣는 곳 -->
-				<div class="container-fluid pt-4 px-5 content">
+      <!-- Main Content -->
+      <div id="content">
 
-					<!-- 테이블 제목 예시 -->
-					<h1 class="h3 mb-2 text-gray-800">기업회원</h1>
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-					<!-- 테이블 예시 -->
-					<div class="card shadow mb-4">
-						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">기업회원정보보기</h6>
-						</div>
-						<div class="card-body">
-							<div class="table-responsive">
-							<form method="post" th:action="@{/modifyCompany}">
-								<table class="table table-bordered" id="dataTable" width="100%"
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+          <!-- Topbar Search -->
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-success" type="button">
+                  <i class="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+
+            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+            <li class="nav-item dropdown no-arrow d-sm-none">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                <form class="form-inline mr-auto w-100 navbar-search">
+                  <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </li>
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${session.loginCompany.companyKorName}"></span>
+                <img class="img-profile rounded-circle" th:src="@{/img/img.png}">
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                   	로그아웃
+                </a>
+              </div>
+            </li>
+
+          </ul>
+
+        </nav>
+        <!-- End of Topbar -->
+		<!-- 내용 넣는 곳 -->
+		<div class="container-fluid pt-4 px-5 content">
+
+			<!-- 테이블 제목 예시 -->
+			<h1 class="h3 mb-2 text-gray-800">회원목록</h1>
+
+			<!-- 테이블 예시 -->
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary"></h6>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<form method="get" th:action="@{/getMemberList}">
+							<input id="search" class="searchText" type="text"
+								name="searchWord" th:value="${searchWord}" placeholder="닉네임검색">
+							<button class="btn searchBtn" type="submit">검색</button>
+							<button id="resetBtn" class="btn searchBtn" type="button">초기화</button>
+						</form>
+						<br>
+						<table class="table table-bordered" id="dataTable" width="100%"
 									cellspacing="0">
 									<tr>
-										<td>기업이메일</td>
-										<td>
-											<input type="text" name="companyEmail" th:value="${company.companyEmail}" readonly>
-										</td>
+										<td>이메일</td>
+										<td th:text="${member.memberEmail}"></td>
 									</tr>
 									<tr>
-										<td>비밀번호</td>
-										<td>
-											<input type="text" name="companyPw" th:value="${company.companyPw}">
-										</td>
+										<td>이름</td>
+										<td th:text="${member.memberName}"></td>
 									</tr>
 									<tr>
-										<td>한글사명</td>
-										<td>
-											<input type="text" name="companyKorName" th:value="${company.companyKorName}">
-										</td>
-									</tr>
-
-									<tr>
-										<td>영문사명</td>
-										<td>
-											<input type="text" name="companyEngName" th:value="${company.companyEngName}">
-										</td>
+										<td>내공</td>
+										<td th:text="${member.memberReputation}"></td>
 									</tr>
 									<tr>
-										<td>산업분야</td>
-										<td>
-											<input type="text" name="companyType" th:value="${company.companyType}">
-										</td>
+										<td>사용자 지역</td>
+										<td th:text="${member.memberLocation}"></td>
 									</tr>
 									<tr>
-										<td>회사주소</td>
-										<td>
-											<input type="text" name="companyAddress" th:value="${company.companyAddress}">
-										</td>
+										<td>사용자 폰번호</td>
+										<td th:text="${member.memberPhone}"></td>
 									</tr>
 									<tr>
-										<td>대표번호</td>
-										<td>
-											<input type="text" name="companyPhone" th:value="${company.companyPhone}">
-										</td>
+										<td>사용자 링크</td>
+										<td th:text="${member.memberLink}"></td>
 									</tr>
 									<tr>
-										<td>사업자등록번호</td>
-										<td>
-											<input type="text" name="companyLicense" th:value="${company.companyLicense}">
-										</td>
+										<td>사용자 성별</td>
+										<td th:text="${member.memberGender}"></td>
 									</tr>
 									<tr>
-										<td>회사홈페이지</td>
-										<td>
-											<input type="text" name="companyLink" th:value="${company.companyLink}">
-										</td>
+										<td>생년월일</td>
+										<td th:text="${member.memberBirth}"></td>
 									</tr>
 									<tr>
-										<td>대표자명</td>
-										<td>
-											<input type="text" name="companyCEO" th:value="${company.companyCEO}">
-										</td>
+										<td>생성날짜</td>
+										<td th:text="${member.memberDate}"></td>
 									</tr>
 									<tr>
-										<td>매출액</td>
-										<td>
-											<input type="text" name="companySales" th:value="${company.companySales}">
-										</td>
+										<td>사용자 정보</td>
+										<td th:text="${member.memberAbout}"></td>
 									</tr>
-									<tr>
-										<td>사원수</td>
-										<td>
-											<input type="text" name="companyEmployees" th:value="${company.companyEmployees}">
-										</td>
-									</tr>
-									<tr>
-										<td>회사소개</td>
-										<td>
-											<input type="text" name="companyAbout" th:value="${company.companyAbout}">
-										</td>
-									</tr>
-									<tr>
-										<td>설립일</td>
-										<td>
-											<input type="date" name="companyFoundation" th:value="${company.companyFoundation}">
-										</td>
-									</tr>
-									
 								</table>
-								<button type="submit" th:text="정보수정"></button>
-							</form>
-								
-								
-							</div>
-							<br>
-							<form method="get" th:action="@{/companyInfo}">
-								<input type="hidden" name="companyEmail"
-									th:value="${session.loginCompany.companyEmail}">
-								<button type="submit">돌아가기</button>
-							</form>
-							<br>
-							
-						</div>
 					</div>
 					
-
 				</div>
-				<!-- /.container-fluid -->
-				
 			</div>
-			<!-- End of Main Content -->
-
-			<!-- 하단 저작권 -->
-			<footer class="sticky-footer bg-white">
-				<div class="container my-auto">
-					<div class="copyright text-center my-auto">
-						<span>Copyright &copy; Your Website 2020</span>
-					</div>
-				</div>
-			</footer>
-			<!-- 하단 저작권 끝 -->
 
 		</div>
-		<!-- End of Content Wrapper -->
+		<!-- /.container-fluid -->
+	</div>
+	<!-- End of Main Content -->
+
+	<!-- 하단 저작권 -->
+	<footer class="sticky-footer bg-white">
+		<div class="container my-auto">
+			<div class="copyright text-center my-auto">
+				<span>Copyright &copy; Your Website 2020</span>
+			</div>
+		</div>
+	</footer>
+	<!-- 하단 저작권 끝 -->
+
+	</div>
+	<!-- End of Content Wrapper -->
 
 	</div>
 	<!-- End of Page Wrapper -->

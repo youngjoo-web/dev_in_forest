@@ -187,57 +187,21 @@ public class MemberController {
 	//회원정보 상세보기
 	@GetMapping("/getMemberInfo")
 	public String getMemberInfo(HttpSession session, Model model, LoginMember loginMember) {
-		if(session.getAttribute("loginMember")==null) {
-			return "redirect:/index";
-		}
 		Member member = new Member();
 		member=memberService.getMemberInfo(loginMember);
 		System.out.println(member+"<---member");		
 		model.addAttribute("member",member);
-		return "member/memberInfo";
-	}
-	//이메일 중복체크
-	/*@PostMapping("/checkMemberEmail")
-	public String checkMemberEmail(HttpSession session, Model model, LoginMember loginMember) {
-		String confirmMemberEmail = memberService.CheckMemberEmail(loginMember);
-		if(confirmMemberEmail != null) {//일치하는데이터가 있음
-			model.addAttribute("EmailMsg", "사용중인 이메일입니다.");
-			loginMember.setMemberEmail("");
-		}else {//일치하는데이터가 없음
-			model.addAttribute("EmailMsg", "사용가능한 이메일입니다..");
+		if(session.getAttribute("loginMember")!=null) {
+			return "member/memberInfo";
 		}
-		model.addAttribute("NameMsg", "");
-		model.addAttribute("loginMember", loginMember);
-		return "member/addMember";
-	}
-	//닉네임 중복체크
-	@PostMapping("/checkMemberName")
-	public String checkMemberName(HttpSession session, Model model, LoginMember loginMember) {
-		String confirmMemberName = memberService.CheckMemberName(loginMember);
-		if(confirmMemberName != null) {//일치하는데이터가 있음
-			model.addAttribute("NameMsg", "사용중인 닉네임입니다.");
-			loginMember.setMemberName("");
-		}else {//일치하는데이터가 없음
-			model.addAttribute("NameMsg", "사용가능한 닉네임입니다..");
+		if(session.getAttribute("loginCompany")!=null) {
+			return "company/getMemberInfoByCompany";
 		}
-		model.addAttribute("EmailMsg", "");
-		model.addAttribute("loginMember", loginMember);
-		return "member/addMember";
+		
+		
+		return "redirect:/index";
 	}
-	//수정닉네임 중복체크
-		@PostMapping("/checkModifyMemberName")
-		public String checkModifyMemberName(HttpSession session, Model model, LoginMember loginMember) {
-			String confirmMemberName = memberService.CheckMemberName(loginMember);
-			if(confirmMemberName != null) {//일치하는데이터가 있음
-				model.addAttribute("NameMsg", "사용중인 닉네임입니다.");
-				loginMember.setMemberName("");
-			}else {//일치하는데이터가 없음
-				model.addAttribute("NameMsg", "사용가능한 닉네임입니다..");
-			}
-			
-			model.addAttribute("loginMember", loginMember);
-			return "member/modifyMember";
-		}*/
+	
 	//회원가입 폼으로 이동
 	@GetMapping("/addMember")
 	public String addMember(HttpSession session, Model model) {
