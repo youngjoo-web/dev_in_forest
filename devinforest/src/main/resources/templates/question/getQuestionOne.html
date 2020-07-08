@@ -39,14 +39,14 @@
 			
 			// 질문 총 투표 수 가져오기
 			$.ajax({
-				url: '/voteTotalCount',
+				url: '/devinforest/voteTotalCount',
 				type: 'GET',
 				data: {'questionNo' : questionNo},
 				success : function(data) {
 					$('#count').remove();
 					$('#voteTotalCount').append('<div id="count">'+ data +'</div>');
 					$.ajax({
-						url: '/voteCheck',
+						url: '/devinforest/voteCheck',
 						type: 'GET',
 						data: {'memberName' : memberName, 'questionNo' : questionNo},
 						success: function(data) {
@@ -67,7 +67,7 @@
 			
 			// 답변 리스트, 댓글 리스트 가져오기
 			$.ajax({
-				url: '/getAnswerList',
+				url: '/devinforest/getAnswerList',
 				type: 'GET',
 				data: {'questionNo' : questionNo},
 				success : function(data) {
@@ -88,7 +88,7 @@
 					
 					$.each(data['answerList'], function(index, item){
 						$.ajax({
-							url: '/getAnswerCommentList',
+							url: '/devinforest/getAnswerCommentList',
 							type: 'GET',
 							data: {'answerNo' : item.answerNo},
 							success: function(data) {
@@ -107,7 +107,7 @@
 							
 								$('#answerCommentChangeRowPerPage' + item.answerNo).click(function(){
 									$.ajax({
-										url: '/getAnswerCommentList',
+										url: '/devinforest/getAnswerCommentList',
 										type: 'GET',
 										data: {'answerNo' : item.answerNo, 'showMore' : showMore},
 										success : function(data) {
@@ -140,7 +140,7 @@
 								let answerCommentContent = $('#answerCommentContent' + item.answerNo).val();
 		
 								$.ajax({
-									url: '/addAnswerComment',
+									url: '/devinforest/addAnswerComment',
 									type: 'POST',
 									data: {'answerNo' : item.answerNo, 'memberName' : memberName, 'answerCommentContent' : answerCommentContent, 'answerCommentIp' : commentIp},
 									success : function() {
@@ -160,7 +160,7 @@
 			
 			// 질문 댓글 가져오기
 			$.ajax({
-				url: '/getQuestionCommentList',
+				url: '/devinforest/getQuestionCommentList',
 				type: 'GET',
 				data: {'questionNo' : questionNo},
 				success: function(data) {
@@ -179,7 +179,7 @@
 				
 					$('#questionCommentChangeRowPerPage').click(function(){
 						$.ajax({
-							url: '/getQuestionCommentList',
+							url: '/devinforest/getQuestionCommentList',
 							type: 'GET',
 							data: {'questionNo' : questionNo, 'showMore' : showMore},
 							success : function(data) {
@@ -209,14 +209,14 @@
 				}
 				
 				$.ajax({
-					url:'/voteCheck',
+					url:'/devinforest/voteCheck',
 					type: 'GET',
 					data: {'memberName' : memberName, 'questionNo' : questionNo},
 					success: function(data) {
 						console.log(data);
 						if(data['memberName'] == null) {
 							$.ajax({
-								url: '/plusVote',
+								url: '/devinforest/plusVote',
 								type: 'GET',
 								data: {'memberName' : memberName, 'questionNo' : questionNo},
 								success : function(data) {
@@ -236,7 +236,7 @@
 							    return;
 							}
 							$.ajax({
-								url: '/deleteVote',
+								url: '/devinforest/deleteVote',
 								type: 'GET',
 								data: {'memberName' : memberName, 'questionNo' : questionNo},
 								success : function(data) {
@@ -261,13 +261,13 @@
 					return;
 				}
 				$.ajax({
-					url:'/voteCheck',
+					url:'/devinforest/voteCheck',
 					type: 'GET',
 					data: {'memberName' : memberName, 'questionNo' : questionNo},
 					success: function(data) {
 						if(data['memberName'] == null) {
 							$.ajax({
-								url: '/minusVote',
+								url: '/devinforest/minusVote',
 								type: 'GET',
 								data: {'memberName' : memberName, 'questionNo' : questionNo},
 								success : function(data) {
@@ -286,7 +286,7 @@
 							    return;
 							}
 							$.ajax({
-								url: '/deleteVote',
+								url: '/devinforest/deleteVote',
 								type: 'GET',
 								data: {'memberName' : memberName, 'questionNo' : questionNo},
 								success : function(data) {
@@ -315,7 +315,7 @@
 					let questionCommentContent = $('#questionCommentContent').val();
 	
 					$.ajax({
-						url: '/addQuestionComment',
+						url: '/devinforest/addQuestionComment',
 						type: 'POST',
 						data: {'questionNo' : questionNo, 'memberName' : memberName, 'questionCommentContent' : questionCommentContent, 'questionCommentIp' : commentIp},
 						success : function() {
@@ -334,12 +334,12 @@
 				let addAnswerContent = $('#addAnswerContent').val();
 				console.log($('#addAnswerContent').val());
 				$.ajax({
-					url: '/addAnswer',
+					url: '/devinforest/addAnswer',
 					type: 'POST',
 					data: {'memberName' : memberName, 'questionNo' : questionNo, 'answerContent' : addAnswerContent, 'answerIp' : commentIp},
 					success : function() {
 						$.ajax({
-							url: '/getAnswerList',
+							url: '/devinforest/getAnswerList',
 							type: 'GET',
 							data: {'questionNo' : questionNo},
 							success : function(data) {
