@@ -1,5 +1,7 @@
 package com.devinforest.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,9 +12,14 @@ import com.devinforest.service.AdminService;
 @RestController
 public class AdminRestController {
 	@Autowired private AdminService adminService;
-	
+	// 아이디 중복체크
 	@PostMapping("/checkAdminEmail")
-	public String checkAdminEmail(@RequestParam(value = "adminEmail2") String checkAdminEmail) {
+	public String checkAdminEmail(HttpSession session, 
+								@RequestParam(value = "adminEmail2") String checkAdminEmail) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		System.out.println(checkAdminEmail + " <- AdminRestController.checkAdminEmail: checkAdminEmail");
 		
 		String email = "@devinforest.com";
@@ -32,9 +39,14 @@ public class AdminRestController {
 		
 		return emailMsg;
 	}
-	
+	// 닉네임 중복체크
 	@PostMapping("/checkAdminName")
-	public String checkAdminName(@RequestParam(value = "adminName2") String adminName) {
+	public String checkAdminName(HttpSession session, 
+								@RequestParam(value = "adminName2") String adminName) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		System.out.println(adminName + " <- AdminRestController.checkAdminName: adminName");
 
 		int checkNum = adminService.checkAdminName(adminName);

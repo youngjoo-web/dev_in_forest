@@ -24,6 +24,10 @@ public class InquiryController {
 								@RequestParam(defaultValue = "1") int currentPage,
 								@RequestParam(defaultValue = "10") int rowPerPage,
 								@RequestParam(defaultValue = "") String searchWord) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		System.out.println(currentPage+" <- InquiryController.getInquiryList: currentPage");
 		
 		Map<String, Object> map = inquiryService.getInquiryList(currentPage, rowPerPage, searchWord);
@@ -38,6 +42,10 @@ public class InquiryController {
 	// 문의사항 상세보기
 	@GetMapping("/getInquiryOne")
 	public String getInquiryOne(HttpSession session, Model model, Inquiry inquiry) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		int inquiryNo = inquiry.getInquiryNo();
 		System.out.println(inquiryNo+" <- InquiryController.getInquiryOne: inquiryNo");
 		Map<String, Object> map = new HashMap<>();
@@ -54,6 +62,10 @@ public class InquiryController {
 	// 문의사항 답변작성
 	@PostMapping("/addInquiryAnswer")
 	public String addInquiryAnswer(HttpSession session, Inquiry inquiry) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		System.out.println(inquiry);
 		inquiryService.addInquiryAnswer(inquiry);
 		return "redirect:/getInquiryOne?inquiryNo="+inquiry.getInquiryNo();

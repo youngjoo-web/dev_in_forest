@@ -25,6 +25,10 @@ public class NoticeController {
 								@RequestParam(defaultValue = "1") int currentPage,
 								@RequestParam(defaultValue = "10") int rowPerPage,
 								@RequestParam(defaultValue = "") String searchWord) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		System.out.println(currentPage+" <- NoticeController.getNoticeList: currentPage");
 		System.out.println(searchWord+" <- NoticeController.getNoticeList: searchWord");
 		Map<String, Object> map = noticeService.getNoticeList(currentPage, rowPerPage, searchWord);
@@ -40,6 +44,10 @@ public class NoticeController {
 	// 공지사항 상세보기
 	@GetMapping("/getNoticeOne")
 	public String getNoticeOne(HttpSession session, Model model, Notice notice){
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		int noticeNo = notice.getNoticeNo();
 		System.out.println(noticeNo+" <- NoticeController.getNoticeOne: noticeNo");
 		notice = noticeService.getNoticeOne(noticeNo);
@@ -50,10 +58,18 @@ public class NoticeController {
 	// 공지사항 추가
 	@GetMapping("/addNotice")
 	public String addNotice(HttpSession session) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		return "notice/addNotice";
 	}
 	@PostMapping("/addNotice")
 	public String addNotice(HttpSession session, Notice notice, IPUtil ipUtil) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		System.out.println(notice+" <- NoticeController.addNotice: notice(주입 전)");
 		String adminName = "관리자1호"; // 로그인 세션 적용시 세션에 들어있는 닉네임 값 가져와서 주입 시켜야함.
 		notice.setAdminName(adminName);
@@ -67,6 +83,10 @@ public class NoticeController {
 	@PostMapping("/removeNotice")
 	public String removeNotice(HttpSession session,
 								@RequestParam(value = "noticeNo") int noticeNo) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		System.out.println(noticeNo+" <- NoticeController.removeNotice: noticeNo");
 		noticeService.removeNotice(noticeNo);
 		return "redirect:/getNoticeList";
@@ -74,6 +94,10 @@ public class NoticeController {
 	// 공지사항 수정
 	@PostMapping("/modifyNoticeForm")
 	public String modifyNotice(HttpSession session, Model model, Notice notice){
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		System.out.println(notice+" <- notice test");
 		int noticeNo = notice.getNoticeNo();
 		System.out.println(noticeNo+" <- NoticeController.modifyNotice: noticeNo");
@@ -84,6 +108,10 @@ public class NoticeController {
 	}
 	@PostMapping("/modifyNotice")
 	public String modifyNotice(HttpSession session, Notice notice){
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		System.out.println(notice+" <- NoticeController.modifyNotice: notice(수정 후)");
 		int noticeNo = notice.getNoticeNo();
 		noticeService.modifyNotice(notice);

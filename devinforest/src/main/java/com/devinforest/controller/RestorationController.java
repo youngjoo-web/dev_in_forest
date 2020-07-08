@@ -25,6 +25,10 @@ public class RestorationController {
 											@RequestParam(defaultValue = "1") int currentPage,
 											@RequestParam(defaultValue = "10") int rowPerPage,
 											@RequestParam(defaultValue = "") String searchWord) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		System.out.println(currentPage+" <- RestorationController.getRestorationList: currentPage");
 		System.out.println(searchWord+" <- RestorationController.getRestorationList: searchWord");
 		Map<String, Object> map = restorationService.getRestorationList(currentPage, rowPerPage, searchWord);
@@ -41,6 +45,10 @@ public class RestorationController {
 	@GetMapping("/getRestorationOne")
 	public String getRestorationOne(HttpSession session, Model model, Restoration restoration,
 									@RequestParam(defaultValue = "") String memberEmail){
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		int restorationNo = restoration.getRestorationNo();
 		System.out.println(restorationNo+" <- RestorationController.getRestorationOne: restorationNo");
 		Map<String, Object> map = new HashMap<>();
@@ -56,6 +64,10 @@ public class RestorationController {
 	// 재가입 실행
 	@PostMapping("/restorationExecution")
 	public String restorationExecution(HttpSession session, Restoration restoration){
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		int restorationNo = restoration.getRestorationNo();
 		System.out.println(restorationNo+" <- RestorationController.getRestorationOne: restorationNo");
 		String memberEmail = restoration.getRestorationTitle();

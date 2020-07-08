@@ -22,10 +22,12 @@ public class AdminController {
 	// 관리자 홈
 	@GetMapping("/adminHome")
 	public String adminHome(HttpSession session, Model model) {
+		/*
+		// 로그인 세션확인
 		if(session.getAttribute("loginAdmin")==null) {
 			return "redirect:/index";
 		}
-		
+		*/
 		model.addAttribute("restorationCount", restorationService.inquiryStateTotalCount());
 		return "admin/adminHome";
 	}
@@ -36,25 +38,37 @@ public class AdminController {
 							   @RequestParam(defaultValue = "1") int currentPage,
 							   @RequestParam(defaultValue = "5") int rowPerPage,
 							   @RequestParam(defaultValue = "") String searchWord) {
-			System.out.println(currentPage+" <- AdminController.getAdminList: currentPage");
-			System.out.println(searchWord+" <- AdminController.getAdminList: searchWord");
-			Map<String, Object> map = adminService.getAdminList(currentPage, rowPerPage, searchWord);
-			model.addAttribute("currentPage", currentPage);
-			model.addAttribute("rowPerPage", rowPerPage);
-			model.addAttribute("searchWord", searchWord);
-			model.addAttribute("adminTotalCount", map.get("adminTotalCount"));
-			model.addAttribute("lastPage", map.get("lastPage"));
-			model.addAttribute("adminList", map.get("adminList"));
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
+		System.out.println(currentPage+" <- AdminController.getAdminList: currentPage");
+		System.out.println(searchWord+" <- AdminController.getAdminList: searchWord");
+		Map<String, Object> map = adminService.getAdminList(currentPage, rowPerPage, searchWord);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("rowPerPage", rowPerPage);
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("adminTotalCount", map.get("adminTotalCount"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("adminList", map.get("adminList"));
 		return "admin/getAdminList";
 	}
 	
 	// 관리자 추가
 	@GetMapping("/addAdmin")
 	public String addAdmin(HttpSession session) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		return "admin/addAdmin";
 	}
 	@PostMapping("/addAdmin")
 	public String addAdmin(HttpSession session, Admin admin) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		System.out.println(admin+" <- AdminController.addAdmin: admin");
 		String email = "@devinforest.com";
 		String adminEmail = admin.getAdminEmail()+email;

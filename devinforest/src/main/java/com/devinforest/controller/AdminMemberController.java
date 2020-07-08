@@ -25,6 +25,10 @@ public class AdminMemberController {
 									@RequestParam(defaultValue = "1") int currentPage,
 									@RequestParam(defaultValue = "10") int rowPerPage,
 									@RequestParam(defaultValue = "") String searchWord) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		System.out.println(currentPage+" <- AdminMemberController.getRemoveMemberList: currentPage");
 		System.out.println(searchWord+" <- AdminMemberController.getRemoveMemberList: searchWord");
 		Map<String, Object> map = adminMemberService.getRemoveMemberList(currentPage, rowPerPage, searchWord);
@@ -39,6 +43,10 @@ public class AdminMemberController {
 	// 탈퇴회원 복구
 	@PostMapping("/admin/recoveryMember")
 	public String recoveryMember(HttpSession session, Member member) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		String memberEmail = member.getMemberEmail();
 		System.out.println(memberEmail+" <- AdminMemberController.recoveryMember: memberEmail");
 		adminMemberService.recoveryMember(memberEmail);
@@ -50,6 +58,10 @@ public class AdminMemberController {
 								@RequestParam(defaultValue = "1") int currentPage,
 								@RequestParam(defaultValue = "10") int rowPerPage,
 								@RequestParam(defaultValue = "") String searchWord) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		System.out.println(currentPage+" <- AdminMemberController.getCompanyList: currentPage");
 		System.out.println(searchWord+" <- AdminMemberController.getCompanyList: searchWord");
 		Map<String, Object> map = adminMemberService.getCompanyList(currentPage, rowPerPage, searchWord);
@@ -64,6 +76,10 @@ public class AdminMemberController {
 	// 기업회원 상세보기
 		@GetMapping("/admin/getCompanyInfo")
 		public String getCompanyInfo(HttpSession session, Model model, Company company) {
+			// 로그인 세션확인
+			if(session.getAttribute("loginAdmin")==null) {
+				return "redirect:/index";
+			}
 			String companyEmail = company.getCompanyEmail();
 			System.out.println(companyEmail+" <- AdminMemberController.getCompanyInfo: companyEmail");
 			company = adminMemberService.getCompanyInfo(companyEmail);
@@ -75,8 +91,12 @@ public class AdminMemberController {
 	
 	// 회원 블랙 팝업창
 	@GetMapping("/blackMember")
-	public String blackMember(Model model,
+	public String blackMember(HttpSession session, Model model,
 						@RequestParam(value = "memberName") String memberName) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		System.out.println(memberName + " <-- ReportController.black: memberName");
 		
 		String email = adminMemberService.blackMemberOne(memberName);
@@ -86,22 +106,34 @@ public class AdminMemberController {
 	}
 	// 회원 블랙 실행
 	@PostMapping("/blackMember")
-	public String blackMember(BlackList blackList) {
+	public String blackMember(HttpSession session, BlackList blackList) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		System.out.println(blackList + " <-- ReportController.black: blackList");
 		adminMemberService.removeMember(blackList);
 		return "redirect:/done";
 	}
 	// 블랙 완료 창
 	@GetMapping("/done")
-	public String done() {
+	public String done(HttpSession session) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		return "report/done";
 	}
 	// 블랙 회원 목록
 	@GetMapping("/admin/getBlackMemberList")
-	public String getBlackMemberList(Model model,
-							@RequestParam(defaultValue = "") String searchWord,
-							@RequestParam(defaultValue = "1") int currentPage,
-							@RequestParam(defaultValue = "5") int rowPerPage) {
+	public String getBlackMemberList(HttpSession session, Model model,
+									@RequestParam(defaultValue = "") String searchWord,
+									@RequestParam(defaultValue = "1") int currentPage,
+									@RequestParam(defaultValue = "5") int rowPerPage) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		System.out.println(searchWord + " <-- FAQController.getFAQList: searchWord");
 		
 		Map<String, Object> map = adminMemberService.getBlackMemberList(searchWord, currentPage, rowPerPage);
@@ -117,10 +149,14 @@ public class AdminMemberController {
 	}
 	// 일반회원 목록
 	@GetMapping("/admin/getMemberList")
-	public String getMemberList(Model model,
+	public String getMemberList(HttpSession session, Model model,
 								@RequestParam(defaultValue = "") String searchWord,
 								@RequestParam(defaultValue = "1") int currentPage,
 								@RequestParam(defaultValue = "5") int rowPerPage) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		System.out.println(searchWord + " <-- AdminMemberController.getMemberList: searchWord");
 		
 		Map<String, Object> map = adminMemberService.getMemberList(searchWord, currentPage, rowPerPage);
@@ -134,9 +170,12 @@ public class AdminMemberController {
 	}
 	// 일반 회원 상세보기
 	@GetMapping("/admin/getMemberInfo")
-	public String getMemberInfo(Model model,
+	public String getMemberInfo(HttpSession session, Model model,
 								@RequestParam(value = "memberEmail") String memberEmail) {
-		
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
 		Member member = adminMemberService.getMemberInfo(memberEmail);
 		model.addAttribute("member", member);
 		
