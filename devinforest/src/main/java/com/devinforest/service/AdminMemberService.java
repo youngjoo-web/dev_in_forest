@@ -12,6 +12,7 @@ import com.devinforest.mapper.AdminMemberMapper;
 import com.devinforest.mapper.AnswerMapper;
 import com.devinforest.mapper.CommentMapper;
 import com.devinforest.mapper.QuestionMapper;
+import com.devinforest.mapper.ReportMapper;
 import com.devinforest.vo.Answer;
 import com.devinforest.vo.AnswerComment;
 import com.devinforest.vo.BlackList;
@@ -27,6 +28,7 @@ public class AdminMemberService {
 	@Autowired private QuestionMapper questionMapper;
 	@Autowired private AnswerMapper answerMapper;
 	@Autowired private CommentMapper commentMapper;
+	@Autowired private ReportMapper reportMapper;
 	// 탈퇴회원 목록
 	public Map<String, Object> getRemoveMemberList(int currentPage, int rowPerPage, String searchWord){
 		int beginRow =(currentPage-1)*rowPerPage;
@@ -98,38 +100,44 @@ public class AdminMemberService {
 		System.out.println(answerCommentNo+" <- AdminMemberService.blackMember: answerCommentNo(답변 댓글번호)");
 		if(questionCommentNo==0 && answerNo==0 && answerCommentNo==0) {
 			System.out.println("게시글 신고");
-			// 게시글 삭제
-			
 			// 게시글 백업테이블 추가
+			
+			// 게시글 삭제
 			
 		}
 		if(questionCommentNo!=0) {
 			System.out.println("게시글 댓글 신고");
-			// 게시글의 댓글 삭제
 			// 댓글 백업테이블 추가
+			
+			// 게시글의 댓글 삭제
+			
 		}
 		if(answerNo!=0 && answerCommentNo==0) {
 			System.out.println("게시글 답변 신고");
-			// 게시글 답변 삭제
 			// 답변 백업 테이블 추가
+			
+			// 게시글 답변 삭제
+			
 		}else if(answerCommentNo!=0) {
 			System.out.println("게시글 답변의 댓글 신고");
-			// 게시글 답변의 댓글 삭제
 			
 			// 답변의 댓글 백업테이블 추가
+			System.out.println(answerComment+" << 주입 전");
+			AnswerComment answerCommentBack = commentMapper.selectAnswerCommentOne(answerComment);
+			System.out.println(answerCommentBack+" << 주입 후");
+			int backResult = commentMapper.insertAnswerCommentBack(answerCommentBack);
+			if(backResult == 1) {
+				System.out.println("게시글 답변의 댓글 백업 성공");
+				commentMapper.deleteAnswerComment(answerComment);
+				System.out.println("게시글 답변의 댓글 삭제 성공");
+				reportMapper.updateAnswerCommentNoOfReportState(answerCommentNo);
+				System.out.println("조치여부 변경 성공");
+			} else {
+				System.out.println("게시글 답변의 댓글 백업 실패");
+			}
+			// 게시글 답변의 댓글 삭제
+			
 		}
-		// 회원 삭제
-		/*
-		int count = adminMemberMapper.deleteMemberByName(blackList.getMemberName());
-		System.out.println(count);
-		
-		if(count == 1) {
-			// 블랙회원에 추가
-			adminMemberMapper.insertBlackList(blackList);
-		} else {
-			System.out.println("블랙 실패  -> count=0 확인바람");
-		}
-		*/
 	}
 	// 블랙회원 목록
 	public Map<String, Object> getBlackMemberList(String searchWord, int currentPage, int rowPerPage) {

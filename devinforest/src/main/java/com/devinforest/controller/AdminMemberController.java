@@ -130,9 +130,9 @@ public class AdminMemberController {
 		System.out.println(answer.getAnswerNo()+" <- ReportController.blackMember: answerNo(답변번호)");
 		System.out.println(answerComment.getAnswerCommentNo()+" <- ReportController.blackMember: answerCommentNo(답변 댓글번호)");
 		adminMemberService.blackMember(blackList, question, questionComment, answer, answerComment);
-		 //model.addAttribute("check","check");
 		 
-		return "black/addblackMember";
+		 
+		return "redirect:/done";
 	}
 	// 블랙 완료 창
 	@GetMapping("/done")

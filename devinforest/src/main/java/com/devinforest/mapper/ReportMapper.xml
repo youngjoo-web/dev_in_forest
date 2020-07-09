@@ -23,7 +23,7 @@
 		FROM dev_report
 		WHERE report_title like CONCAT('%',#{searchWord},'%')
 		AND report_kind like CONCAT('%',#{reportKind},'%')
-		ORDER BY report_state DESC
+		ORDER BY report_state, report_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	<!-- 신고내역 TotalCount -->
@@ -56,4 +56,40 @@
 		FROM dev_report
 		WHERE report_no = #{reportNo}
 	</select>
+	<!-- 신고 조치유무 변경- 게시글 답글의 댓글 조치완료 -->
+	<update id="updateAnswerCommentNoOfReportState"
+			parameterType="int">
+		UPDATE
+			dev_report
+		SET
+			report_state = 'Y'
+		WHERE answer_comment_no = #{answerCommentNo}
+	</update>
+	<!-- 신고 조치유무 변경- 게시글 답글 조치완료 -->
+	<update id="updateAnswerNoOfReportState"
+			parameterType="int">
+		UPDATE
+			dev_report
+		SET
+			report_state = 'Y'
+		WHERE answer_no_no = #{answerNo}
+	</update>
+	<!-- 신고 조치유무 변경- 게시글 댓글 조치완료 -->
+	<update id="updateQuestionCommentNoOfReportState"
+			parameterType="int">
+		UPDATE
+			dev_report
+		SET
+			report_state = 'Y'
+		WHERE question_comment_no = #{questionCommentNo}
+	</update>
+	<!-- 신고 조치유무 변경- 게시글  조치완료 -->
+	<update id="updateQuestionNoOfReportState"
+			parameterType="int">
+		UPDATE
+			dev_report
+		SET
+			report_state = 'Y'
+		WHERE question_no = #{questionNo}
+	</update>
 </mapper>

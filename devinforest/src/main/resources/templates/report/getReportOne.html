@@ -173,7 +173,7 @@
 									<a class="btn pageBtn" th:href="@{/getReportList}">목록</a>
 								</div>
 								<div class="col-sm-2 text-right">
-									<button class="btn pageBtn" id="blackBtn" type="button">블랙</button>
+									<button class="btn pageBtn" id="blackBtn" th:if="${report.reportState=='N'}" type="button">블랙</button>
 									<form id="blackForm" method="get" th:action="@{javascript:openWindowPop('popup');}"></form>
 								</div>
 							</div>
