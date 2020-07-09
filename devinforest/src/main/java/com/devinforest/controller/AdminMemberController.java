@@ -12,13 +12,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.service.AdminMemberService;
+import com.devinforest.service.ReportService;
+import com.devinforest.vo.Answer;
+import com.devinforest.vo.AnswerComment;
 import com.devinforest.vo.BlackList;
 import com.devinforest.vo.Company;
 import com.devinforest.vo.Member;
+import com.devinforest.vo.Question;
+import com.devinforest.vo.QuestionComment;
+import com.devinforest.vo.Report;
 
 @Controller
 public class AdminMemberController {
 	@Autowired private AdminMemberService adminMemberService;
+	@Autowired private ReportService reportService;
 	// 탈퇴회원 목록
 	@GetMapping("/admin/getRemoveMemberList")
 	public String getRemoveMemberList(HttpSession session, Model model,
@@ -87,33 +94,44 @@ public class AdminMemberController {
 			model.addAttribute("company", company);
 			return "adminMember/getCompanyInfo";
 		}
-	
-	
+		
 	// 회원 블랙 팝업창
-	@GetMapping("/blackMember")
-	public String blackMember(HttpSession session, Model model,
-						@RequestParam(value = "memberName") String memberName) {
+	@GetMapping("/blackPopup")
+	public String blackMember(HttpSession session, Model model, Report report) {
 		// 로그인 세션확인
 		if(session.getAttribute("loginAdmin")==null) {
 			return "redirect:/index";
 		}
-		System.out.println(memberName + " <-- ReportController.black: memberName");
+		System.out.println(report+" <- ReportController.blackPopup: report(찾기 전)");
+		int reportNo = report.getReportNo();
+		report = reportService.getReportOne(reportNo);
+		System.out.println(report+" <- ReportController.blackPopup: report(찾은 후)");
 		
-		String email = adminMemberService.blackMemberOne(memberName);
-		model.addAttribute("memberEmail", email);
-		model.addAttribute("memberName", memberName);
+		String reportMemberName = report.getReportMemberName();
+		System.out.println(reportMemberName+" <- ReportController.blackPopup: blackMemberName");
+		String reportMemberEmail = adminMemberService.blackMemberOne(reportMemberName);
+		model.addAttribute("memberEmail", reportMemberEmail);
+
+		model.addAttribute("report", report);
 		return "black/addblackMember";
 	}
 	// 회원 블랙 실행
 	@PostMapping("/blackMember")
-	public String blackMember(HttpSession session, Model model, BlackList blackList) {
+	public String blackMember(HttpSession session, Model model, BlackList blackList,
+								Question question, QuestionComment questionComment,
+								Answer answer, AnswerComment answerComment) {
 		// 로그인 세션확인
 		if(session.getAttribute("loginAdmin")==null) {
 			return "redirect:/index";
 		}
-		System.out.println(blackList + " <-- ReportController.black: blackList");
-		adminMemberService.removeMember(blackList);
-		model.addAttribute("check", "check");
+		System.out.println(blackList + " <- ReportController.blackMember: blackList");
+		System.out.println(question.getQuestionNo()+" <- ReportController.blackMember: questionNo(게시글번호)");
+		System.out.println(questionComment.getQuestionCommentNo()+" <- ReportController.blackMember: questionCommentNo(게시글 댓글번호)");
+		System.out.println(answer.getAnswerNo()+" <- ReportController.blackMember: answerNo(답변번호)");
+		System.out.println(answerComment.getAnswerCommentNo()+" <- ReportController.blackMember: answerCommentNo(답변 댓글번호)");
+		adminMemberService.blackMember(blackList, question, questionComment, answer, answerComment);
+		 //model.addAttribute("check","check");
+		 
 		return "black/addblackMember";
 	}
 	// 블랙 완료 창

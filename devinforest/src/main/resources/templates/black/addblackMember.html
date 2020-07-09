@@ -7,7 +7,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
-		<title>Black</title>
+		<title>블랙회원으로 변경중..</title>
 		
 		<!-- Custom fonts for this template-->
 		<link href="/vendor/fontawesome-free/css/all.min.css"
@@ -21,6 +21,22 @@
 		<link href="/css/addAdmin.css" rel="stylesheet">
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<style>
+			th{
+				text-align: center;
+				color:white;
+				background: #148b61;
+			}
+			textarea{
+				width: 100%;
+				height: 250px;
+				padding:10px;
+				border: 1px solid #e3e6f0;
+			}
+			button{
+				width: 100%;
+			}
+		</style>
 	</head>
 	<body id="page-top">
 		<!-- Page Wrapper -->
@@ -42,22 +58,34 @@
 	
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
-						<input id="check" type="text" th:value="${check}">
+						<input id="check" type="hidden" th:value="${check}">
+						<table class="table">
+							<tr>
+								<th>블랙회원 이메일</th>
+								<td class="text-center darkColor" th:text="${memberEmail}"></td>
+							</tr>
+							<tr>
+								<th>블랙회원 닉네임</th>
+								<td class="text-center darkColor" th:text="${report.memberName}"></td>
+							</tr>
+						</table>
 						<form id="form" method="post" th:action="@{/blackMember}">
 							<div>
-								신고 Email : <input id="memberEmail" type="text" name="memberEmail" th:value="${memberEmail}" readonly="readonly">
-							</div>
-							<div>
-								신고 Name : <input id="memberName" type="text" name="memberName" th:value="${memberName}" readonly="readonly">
-							</div>
-							<div>
-								신고 사유 : <textarea id="blackListReason" rows="5" cols="20" name="blackListReason"></textarea>
-							</div>
-							<div>
-								<button id="btn" type="button">블랙</button>
-								<span id="msg"></span>
+								<input id="memberEmail" type="hidden" name="memberEmail" th:value="${memberEmail}">
+								<input id="memberName" type="hidden" name="memberName" th:value="${report.memberName}">
+								<input type="text" name="questionNo" th:value="${report.questionNo}">
+								<input type="text" name="questionCommentNo" th:value="${report.questionCommentNo}">
+								<input type="text" name="answerNo" th:value="${report.answerNo}">
+								<input type="text" name="answerCommentNo" th:value="${report.answerCommentNo}">
+								<textarea id="blackListReason" rows="5" cols="20" name="blackListReason" placeholder="블랙사유를 입력해주세요."></textarea>
 							</div>
 						</form>
+						<div style="margin-top: 10px; padding-bottom: 20px;">
+							<button id="btn" class="btn pageBtn" type="button">블랙회원 전환</button>
+							<div style="margin:20px;"class="text-center">
+								<strong id="msg">&nbsp;</strong>
+							</div>
+						</div>
 					</div>
 					<!-- End of container-fluid -->
 				</div>
@@ -81,23 +109,30 @@
 		
 		<!-- Javascript Code -->
 		<script>
-			if($('#check').val()!=''){
+		
+			/* if($('#check').val()!=''){
 				alert('블랙완료');
 				window.close();
-			}
+			} */
 			$('#btn').click(function(){
 				let memberEmail = $('#memberEmail').val();
 				let memberName = $('#memberName').val();
 				let blackListReason = $('#blackListReason').val();
-				// alert(memberEmail + " " + memberName + " " + blackListReason);
-				
+				$('#msg').text(''); // 메세지 지우기
 				if(blackListReason == "") {
 					$('#msg').text('블랙사유는 반드시 입력해주세요.');
+					$('#blackListReason').focus();
 					return;
+				}				
+				let result = confirm('[ '+memberEmail+' ] 회원을 블랙회원으로 변경하시겠습니까?');
+				if(!result) {
+					console.log('취소');
+					return;
+				} else {
+					console.log('확인');
+					$('#form').submit();
 				}
-				
-				$('#form').submit();
-			})
+			});
 		</script>
 	</body>
 </html>

@@ -9,14 +9,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devinforest.mapper.AdminMemberMapper;
+import com.devinforest.mapper.AnswerMapper;
+import com.devinforest.mapper.CommentMapper;
+import com.devinforest.mapper.QuestionMapper;
+import com.devinforest.vo.Answer;
+import com.devinforest.vo.AnswerComment;
 import com.devinforest.vo.BlackList;
 import com.devinforest.vo.Company;
 import com.devinforest.vo.Member;
+import com.devinforest.vo.Question;
+import com.devinforest.vo.QuestionComment;
 
 @Service
 @Transactional
 public class AdminMemberService {
 	@Autowired private AdminMemberMapper adminMemberMapper;
+	@Autowired private QuestionMapper questionMapper;
+	@Autowired private AnswerMapper answerMapper;
+	@Autowired private CommentMapper commentMapper;
 	// 탈퇴회원 목록
 	public Map<String, Object> getRemoveMemberList(int currentPage, int rowPerPage, String searchWord){
 		int beginRow =(currentPage-1)*rowPerPage;
@@ -70,23 +80,56 @@ public class AdminMemberService {
 		return adminMemberMapper.selectCompanyInfo(companyEmail);
 	}
 	
-	
 	// 블랙 팝업창
 	public String blackMemberOne(String memberName) {
 		return adminMemberMapper.blackMemberOne(memberName);
 	}
 	// 블랙 실행
-	public void removeMember(BlackList blackList) {
-		// 멤버 삭제
+	public void blackMember(BlackList blackList, Question question, QuestionComment questionComment, 
+							Answer answer, AnswerComment answerComment) {
+		int questionNo = question.getQuestionNo();
+		int questionCommentNo = questionComment.getQuestionCommentNo();
+		int answerNo = answer.getAnswerNo();
+		int answerCommentNo = answerComment.getAnswerCommentNo();
+		System.out.println(blackList + " <- AdminMemberService.blackMember: blackList");
+		System.out.println(questionNo+" <- AdminMemberService.blackMember: questionNo(게시글번호)");
+		System.out.println(questionCommentNo+" <- AdminMemberService.blackMember: questionCommentNo(게시글 댓글번호)");
+		System.out.println(answerNo+" <- AdminMemberService.blackMember: answerNo(답변번호)");
+		System.out.println(answerCommentNo+" <- AdminMemberService.blackMember: answerCommentNo(답변 댓글번호)");
+		if(questionCommentNo==0 && answerNo==0 && answerCommentNo==0) {
+			System.out.println("게시글 신고");
+			// 게시글 삭제
+			
+			// 게시글 백업테이블 추가
+			
+		}
+		if(questionCommentNo!=0) {
+			System.out.println("게시글 댓글 신고");
+			// 게시글의 댓글 삭제
+			// 댓글 백업테이블 추가
+		}
+		if(answerNo!=0 && answerCommentNo==0) {
+			System.out.println("게시글 답변 신고");
+			// 게시글 답변 삭제
+			// 답변 백업 테이블 추가
+		}else if(answerCommentNo!=0) {
+			System.out.println("게시글 답변의 댓글 신고");
+			// 게시글 답변의 댓글 삭제
+			
+			// 답변의 댓글 백업테이블 추가
+		}
+		// 회원 삭제
+		/*
 		int count = adminMemberMapper.deleteMemberByName(blackList.getMemberName());
 		System.out.println(count);
 		
 		if(count == 1) {
-			// 블랙 리스트에 추가
+			// 블랙회원에 추가
 			adminMemberMapper.insertBlackList(blackList);
 		} else {
-			System.out.println("블랙에 실패하였습니다.");
+			System.out.println("블랙 실패  -> count=0 확인바람");
 		}
+		*/
 	}
 	// 블랙회원 목록
 	public Map<String, Object> getBlackMemberList(String searchWord, int currentPage, int rowPerPage) {

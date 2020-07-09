@@ -125,7 +125,7 @@
 						</div>
 						<hr>
 						<div class="card" style="padding:20px;">
-							<input id="memberName" type="hidden" th:value="${report.memberName}">
+							<input id="reportNo" type="hidden" th:value="${report.reportNo}">
 							<div>
 								<table class="table">
 									<tr>
@@ -236,7 +236,7 @@
 	<script>
 	
 	$('#blackBtn').click(function(){
-		let result = confirm('정말 해당 사용자를 블랙하시겠습니까?');
+		let result = confirm('블랙회원 변경창으로 이동하시겠습니까?');
 		
 		if(!result) {
 			console.log('취소');
@@ -248,9 +248,9 @@
 	});
 	
 	function openWindowPop(name){
-		let memberName = $('#memberName').val()
-		console.log($('#memberName').val());
-		let url = '/blackMember?memberName='+memberName;
+		let reportNo = $('#reportNo').val()
+		console.log(reportNo);
+		let url = '/blackPopup?reportNo='+reportNo;
 	    let options = 'top=100, left=700, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no';
 	    window.open(url, name, options);
 	}
