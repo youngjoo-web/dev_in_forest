@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devinforest.mapper.StatisticsMapper">
+	<select id="selectSignUpStatisticsByDate"
+			parameterType="int"
+			resultType="com.devinforest.vo.Statistics">
+		SELECT 
+			DAY(member_date) date,
+			COUNT(member_date) count
+		FROM dev_member
+		WHERE MONTH(member_date) = #{month}
+		GROUP BY DAY(member_date);
+	</select>
+</mapper>
