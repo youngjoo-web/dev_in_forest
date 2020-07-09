@@ -42,6 +42,7 @@
 	
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
+						<input id="check" type="text" th:value="${check}">
 						<form id="form" method="post" th:action="@{/blackMember}">
 							<div>
 								신고 Email : <input id="memberEmail" type="text" name="memberEmail" th:value="${memberEmail}" readonly="readonly">
@@ -80,6 +81,10 @@
 		
 		<!-- Javascript Code -->
 		<script>
+			if($('#check').val()!=''){
+				alert('블랙완료');
+				window.close();
+			}
 			$('#btn').click(function(){
 				let memberEmail = $('#memberEmail').val();
 				let memberName = $('#memberName').val();

@@ -129,16 +129,35 @@
 							<div>
 								<table class="table">
 									<tr>
-										<th width="10%">제목</th>
-										<td class="darkColor" colspan="5" th:text="${report.reportTitle}"></td>
+										<th>제목</th>
+										<td class="darkColor" colspan="3" th:text="${report.reportTitle}"></td>
 									</tr>
 									<tr>
-										<th>사용자명</th>
-										<td class="darkColor" width="45%" th:text="${report.memberName}"></td>
 										<th width="10%">신고분류</th>
-										<td class="darkColor text-center" width="10%"th:text="${report.reportKind}"></td>
-										<th width="10%">신고일자</th>
-										<td class="darkColor text-center" th:text="${report.reportDate}"></td>
+										<td class="darkColor" th:text="${report.reportKind}"></td>
+										<th width="13%">신고일자</th>
+										<td class="darkColor" th:text="${report.reportDate}"></td>
+									</tr>
+									<tr>
+										<th>신고회원</th>
+										<td class="darkColor" th:text="${report.memberName}"></td>
+										<th>신고내용 작성회원</th>
+										<td class="darkColor" th:text="${report.reportMemberName}"></td>
+									</tr>
+									<tr>
+										<th>게시글번호</th>
+										<td class="darkColor" th:text="${report.questionNo}"></td>
+										<th>게시글 댓글번호</th>
+										<td class="darkColor" th:if="${report.questionCommentNo==0}">&nbsp;</td>
+										<td class="darkColor" th:if="${report.questionCommentNo!=0}" th:text="${report.questionCommentNo}"></td>
+									</tr>
+									<tr>	
+										<th>답변번호</th>
+										<td class="darkColor" th:if="${report.answerNo==0}">&nbsp;</td>
+										<td class="darkColor" th:if="${report.answerNo!=0}" th:text="${report.answerNo}"></td>
+										<th>답변 댓글번호</th>
+										<td class="darkColor" th:if="${report.answerCommentNo==0}">&nbsp;</td>
+										<td class="darkColor" th:if="${report.answerCommentNo!=0}" th:text="${report.answerCommentNo}"></td>
 									</tr>
 								</table>
 							</div>

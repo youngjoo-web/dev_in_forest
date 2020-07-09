@@ -3,26 +3,31 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.ReportMapper">
-	<!-- 신고 List 출력 -->
+	<!-- 신고내역 목록 -->
 	<select id="selectReportList"
 			parameterType="java.util.Map"
 			resultType="com.devinforest.vo.Report">
 		SELECT
-			report_no reportNo,
-			member_name memberName,
-			report_kind reportKind,
-			report_title reportTitle,
-			report_content reportContent,
-			report_date reportDate,
-			report_state reportState
+			report_no           reportNo,
+			member_name         memberName,
+			report_member_name  reportMemberName,
+			question_no         questionNo,
+			question_comment_no questionCommentNo,
+			answer_no           answerNo,
+			answer_comment_no   answerCommentNo,
+			report_kind         reportKind,
+			report_title        reportTitle,
+			report_content      reportContent,
+			report_date         reportDate,
+			report_state        reportState
 		FROM dev_report
 		WHERE report_title like CONCAT('%',#{searchWord},'%')
 		AND report_kind like CONCAT('%',#{reportKind},'%')
 		ORDER BY report_state DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
-	<!-- 페이징에 필요한  ReportTotalCount 출력 -->
-	<select id="ReportTotalCount"
+	<!-- 신고내역 TotalCount -->
+	<select id="reportTotalCount"
 			parameterType="java.util.Map"
 			resultType="int">
 		SELECT 
@@ -31,18 +36,23 @@
 		WHERE report_title like CONCAT('%',#{searchWord},'%')
 		AND report_kind like CONCAT('%',#{reportKind},'%')
 	</select>
-	<!-- 상세보기 출력 -->
+	<!-- 신고내역 상세보기 -->
 	<select id="selectReportOne"
 			parameterType="int"
 			resultType="com.devinforest.vo.Report">
 		SELECT
-			report_no reportNo,
-			member_name memberName,
-			report_kind reportKind,
-			report_title reportTitle,
-			report_content reportContent,
-			report_date reportDate,
-			report_state reportState
+			report_no           reportNo,
+			member_name         memberName,
+			report_member_name  reportMemberName,
+			question_no         questionNo,
+			question_comment_no questionCommentNo,
+			answer_no           answerNo,
+			answer_comment_no   answerCommentNo,
+			report_kind         reportKind,
+			report_title        reportTitle,
+			report_content      reportContent,
+			report_date         reportDate,
+			report_state        reportState
 		FROM dev_report
 		WHERE report_no = #{reportNo}
 	</select>

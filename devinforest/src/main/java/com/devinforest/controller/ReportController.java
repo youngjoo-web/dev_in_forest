@@ -51,10 +51,10 @@ public class ReportController {
 		if(session.getAttribute("loginAdmin")==null) {
 			return "redirect:/index";
 		}
-		System.out.println(reportNo);
+		System.out.println(reportNo+" <- ReportController.getReportOne: reportNo");
 		
 		Report report = reportService.getReportOne(reportNo);
-		
+		System.out.println(report+" <- ReportController.getReportOne: report");
 		if(report == null) {
 			return "redirect:/getReportList";
 		} else {

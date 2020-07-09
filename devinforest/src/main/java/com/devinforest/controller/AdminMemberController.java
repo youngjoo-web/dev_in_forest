@@ -106,14 +106,15 @@ public class AdminMemberController {
 	}
 	// 회원 블랙 실행
 	@PostMapping("/blackMember")
-	public String blackMember(HttpSession session, BlackList blackList) {
+	public String blackMember(HttpSession session, Model model, BlackList blackList) {
 		// 로그인 세션확인
 		if(session.getAttribute("loginAdmin")==null) {
 			return "redirect:/index";
 		}
 		System.out.println(blackList + " <-- ReportController.black: blackList");
 		adminMemberService.removeMember(blackList);
-		return "redirect:/done";
+		model.addAttribute("check", "check");
+		return "black/addblackMember";
 	}
 	// 블랙 완료 창
 	@GetMapping("/done")

@@ -33,7 +33,7 @@ public class ReportService {
 		totalCountMap.put("reportKind", reportKind);
 		
 		// 총 신고갯수 구하기
-		int reportTotalCount = reportMapper.ReportTotalCount(totalCountMap);
+		int reportTotalCount = reportMapper.reportTotalCount(totalCountMap);
 		System.out.println(reportTotalCount + " <-- ReportService.getReportList: reportTotalCount");
 		int lastPage = reportTotalCount / rowPerPage;
 		if(reportTotalCount % rowPerPage != 0) {

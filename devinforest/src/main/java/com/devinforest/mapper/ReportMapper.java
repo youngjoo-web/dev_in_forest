@@ -10,10 +10,10 @@ import com.devinforest.vo.Report;
 
 @Mapper
 public interface ReportMapper {
-	// 신고 List 출력
+	// 신고내역 목록
 	public List<Report> selectReportList(Map<String, Object> inputMap);
-	// 페이징에 필요한  ReportTotalCount 출력
-	public int ReportTotalCount(Map<String, Object> totalCountMap);
-	// 상세보기 출력
+	// 신고내역 TotalCount
+	public int reportTotalCount(Map<String, Object> totalCountMap);
+	// 신고내역 상세보기
 	public Report selectReportOne(int reportNo);
 }
