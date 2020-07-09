@@ -15,4 +15,6 @@ public interface ApplyMapper {
 	public int insertApply(Apply apply);
 	//지원리스트 토탈카운트
 	public int applyTotalCount(int recruitNo);
+	//지원공고 중복확인
+	public int checkApply(Apply apply);
 }

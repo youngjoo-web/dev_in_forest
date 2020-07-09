@@ -261,7 +261,7 @@
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
-								
+
 								<br>
 								<table class="table table-bordered" id="dataTable" width="100%"
 									cellspacing="0">
@@ -274,12 +274,16 @@
 										<td>내용</td>
 										<td th:text="${recruit.recruitContent}"></td>
 									</tr>
-									</table>
-									<table class="table table-bordered" id="dataTable" width="100%"
+								</table>
+								<table class="table table-bordered" id="dataTable" width="100%"
 									cellspacing="0">
 									<tr>
-										<td>한글이름</td><td>영어이름</td><td>매출</td><td>회사종류</td><td>대표자명</td>
-										
+										<td>한글이름</td>
+										<td>영어이름</td>
+										<td>매출</td>
+										<td>회사종류</td>
+										<td>대표자명</td>
+
 									</tr>
 									<tr>
 										<td th:text="${recruit.companyKorName}"></td>
@@ -288,29 +292,41 @@
 										<td th:text="${recruit.companyType}"></td>
 										<td th:text="${recruit.companyCeo}"></td>
 									</tr>
-									</table>
-									<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0"
-									>
+								</table>
+								<table class="table table-bordered" id="dataTable" width="100%"
+									cellspacing="0">
 									<tr>
-										<td>회사링크</td><td>설립일</td><td>연락처</td><td>주소</td><td>회사정보</td><td>채용공고날짜</td>
-										
+										<td>회사링크</td>
+										<td>설립일</td>
+										<td>연락처</td>
+										<td>주소</td>
+										<td>회사정보</td>
+										<td>채용공고날짜</td>
+
 									</tr>
 
 									<tr>
-										<td th:text="${recruit.companyLink}"></td><td th:text="${recruit.companyFoundation}"></td><td th:text="${recruit.companyPhone}"></td>
-										<td th:text="${recruit.companyAddress}"></td><td th:text="${recruit.companyAbout}"></td><td th:text="${recruit.recruitDate}"></td>
-									</tr>  	
+										<td th:text="${recruit.companyLink}"></td>
+										<td th:text="${recruit.companyFoundation}"></td>
+										<td th:text="${recruit.companyPhone}"></td>
+										<td th:text="${recruit.companyAddress}"></td>
+										<td th:text="${recruit.companyAbout}"></td>
+										<td th:text="${recruit.recruitDate}"></td>
+									</tr>
 								</table>
 							</div>
-							<form method="post" th:action="@{/addApply}">
-									<input type="hidden" name="recruitNo" th:value="${recruit.recruitNo}" >
-									<input type="hidden" name="memberEmail" th:value="${session.loginMember.memberEmail}" >
-									<button type="submit">신청하기</button>
-								</form>
+							<form id="form" method="post" th:action="@{/addApply}">
+								<input id="recruitNo" type="hidden" name="recruitNo"
+									th:value="${recruit.recruitNo}"> 
+								<input id="memberEmail" type="hidden" name="memberEmail"
+									th:value="${session.loginMember.memberEmail}">
+								<button type="submit">신청하기</button>
+							</form>
+							<span th:text="${applyMsg}"></span>
+							
 						</div>
 					</div>
-					
+
 
 				</div>
 				<!-- /.container-fluid -->
@@ -373,5 +389,32 @@
 
 
 </body>
+<script>
+	// 회원가입 유효성 검사
+	$('#signUpBtn').click(function() {
+		let recruitNo = $('#recruitNo').val();
+		let memberEmail = $('#memberEmail').val();
+		$.ajax({
+			url : '/checkApply',
+			type : 'POST',
+			data : {
+				'recruitNo' : recruitNo
+				
+			},
+			success : function(data) {
+				console.log(data);
+				$('#applyMsg').text(data);
+				if (data == "이미 신청한 공고입니다.") {
+					alert("이미 신청한 공고입니다.")
+				}
+				if (data == "신청가능한 공고입니다.") {
+					$('#form').submit();
+					alert("신청이 완료되었습니다.");
+				}
+			}
+		});
+
+	});
+</script>
 
 </html>

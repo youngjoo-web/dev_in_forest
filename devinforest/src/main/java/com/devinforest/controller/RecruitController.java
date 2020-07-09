@@ -66,10 +66,23 @@ public class RecruitController {
 	}
 	@PostMapping("/addApply")
 	public String addApply(HttpSession session, Model model, Apply apply) {
+		if(session.getAttribute("loginMember")==null) {
+			return "redirect:/index";
+		}
 		Recruit recruit = recruitService.getRecruitInfo(apply.getRecruitNo());
+		System.out.println(apply+"<---postapply");
 		
-		applyService.addApply(apply);
+		int checkApplyNo = applyService.checkApply(apply);
 		model.addAttribute("recruit", recruit);
+		String applyMsg=null;
+		if(checkApplyNo==1) {
+			applyMsg="이미 신청한 공고입니다.";
+		}
+		if(checkApplyNo==0) {
+			applyService.addApply(apply);
+			applyMsg="신청되었습니다.";
+		}
+		model.addAttribute("applyMsg", applyMsg);
 		return "member/getRecruitInfo";
 	}
 	

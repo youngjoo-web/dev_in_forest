@@ -40,4 +40,8 @@ public class ApplyService {
 	public int addApply(Apply apply) {
 		return applyMapper.insertApply(apply);
 	}
+	//중복체크
+	public int checkApply(Apply apply) {
+		return applyMapper.checkApply(apply);
+	}
 }
