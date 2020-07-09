@@ -21,7 +21,30 @@
 		<link th:href="@{/css/addAdmin.css}" rel="stylesheet">
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		
+		<script>
+	$(document).ready(function(){
+		$('#addBtn').click(function(){
+			if($('#hashtagName').val().length < 2) {
+				if($('#hashtagContent').val().length < 3) {
+					$('#hashtagContentText').text("내용을 3자 이상 입력하세요");
+				} else{
+					$('#hashtagContentText').empty();
+				}
+				$('#hashtagNameText').text("제목을 2자 이상 입력하세요");
+				$('#hashtagName').focus();
+				return;
+			}
+			if($('#hashtagContent').val().length < 3) {
+				$('#hashtagNameText').empty();
+				$('#hashtagContentText').text("내용을 3자 이상 입력하세요");
+				$('#hashtagContent').focus();
+				return;
+			}
+			console.log("submit");
+			$('#addHashtagForm').submit();
+		});
+	});
+</script>
 	</head>
 	<body id="page-top">
 		<!-- Page Wrapper -->
@@ -228,49 +251,20 @@
 					<div class="container-fluid pt-4 px-5 content">
 						
 						<!-- 여기에 본문 넣으면댐 -->
-						<h1 th:text="질문리스트"></h1>
-					<!--  
-	<form method="get" th:action="@{/getQuestionList}">
-		<input type="text" name="searchWord" id="searchWord">
-		<button type="submit">검색</button>
-	</form>
-	-->
-					<div style="text-align: right"
-						th:if="${memberName}!='Guest'">
-						<a class="btn btn-outline-success" th:href="@{/addQuestion(memberName=${memberName})}">질문하기</a>
-					</div>
-					<br>
-					<table class="table">
-						<tr>
-							<th>question_no</th>
-							<th>member_name</th>
-							<th>question_title</th>
-							<th>question_reputation</th>
-							<th>question_createdate</th>
-							<th>question_updatedate</th>
-							<th>question_ip</th>
-							<th>question_views</th>
-						</tr>
-						<tr th:each="ql : ${questionList}">
-							<td th:text="${ql.questionNo}"></td>
-							<td th:text="${ql.memberName}"></td>
-							<td><a
-								th:href="@{/getQuestionOne(questionNo=${ql.questionNo})}"
-								th:text="${ql.questionTitle}"></a></td>
-							<td th:text="${ql.questionReputation}"></td>
-							<td th:text="${ql.questionCreateDate}"></td>
-							<td th:text="${ql.questionUpdateDate}"></td>
-							<td th:text="${ql.questionIp}"></td>
-							<td th:text="${ql.questionViews}"></td>
-						</tr>
-					</table>
-					<hr>
-					<div th:if="${currentPage} > 1">
-						<a th:href="@{/getQuestionList(currentPage=${currentPage}-1)}">이전</a>
-					</div>
-					<div th:if="${currentPage < lastPage}">
-						<a th:href="@{/getQuestionList(currentPage=${currentPage}+1)}">다음</a>
-					</div>
+						<h1>hashtag 추가</h1>
+						<form method="post" th:action="@{/addHashtag}" id="addHashtagForm">
+							<div>
+								<input type="text" name="hashtagName" id="hashtagName">
+								<div id="hashtagNameText"> </div>
+							</div>
+							<br>
+							<br>
+							<div>
+								<textarea rows="10" cols="20" name="hashtagContent" id="hashtagContent"></textarea>
+								<div id="hashtagContentText"> </div>
+							</div>
+							<button type="button" id="addBtn" th:text="생성"></button>
+						</form>
 						<!-- 여기에 본문 넣으면댐 -->
 						
 					</div>

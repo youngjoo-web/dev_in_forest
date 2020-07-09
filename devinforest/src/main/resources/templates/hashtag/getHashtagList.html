@@ -228,49 +228,43 @@
 					<div class="container-fluid pt-4 px-5 content">
 						
 						<!-- 여기에 본문 넣으면댐 -->
-						<h1 th:text="질문리스트"></h1>
-					<!--  
-	<form method="get" th:action="@{/getQuestionList}">
-		<input type="text" name="searchWord" id="searchWord">
-		<button type="submit">검색</button>
-	</form>
-	-->
-					<div style="text-align: right"
-						th:if="${memberName}!='Guest'">
-						<a class="btn btn-outline-success" th:href="@{/addQuestion(memberName=${memberName})}">질문하기</a>
-					</div>
-					<br>
-					<table class="table">
-						<tr>
-							<th>question_no</th>
-							<th>member_name</th>
-							<th>question_title</th>
-							<th>question_reputation</th>
-							<th>question_createdate</th>
-							<th>question_updatedate</th>
-							<th>question_ip</th>
-							<th>question_views</th>
-						</tr>
-						<tr th:each="ql : ${questionList}">
-							<td th:text="${ql.questionNo}"></td>
-							<td th:text="${ql.memberName}"></td>
-							<td><a
-								th:href="@{/getQuestionOne(questionNo=${ql.questionNo})}"
-								th:text="${ql.questionTitle}"></a></td>
-							<td th:text="${ql.questionReputation}"></td>
-							<td th:text="${ql.questionCreateDate}"></td>
-							<td th:text="${ql.questionUpdateDate}"></td>
-							<td th:text="${ql.questionIp}"></td>
-							<td th:text="${ql.questionViews}"></td>
-						</tr>
-					</table>
-					<hr>
-					<div th:if="${currentPage} > 1">
-						<a th:href="@{/getQuestionList(currentPage=${currentPage}-1)}">이전</a>
-					</div>
-					<div th:if="${currentPage < lastPage}">
-						<a th:href="@{/getQuestionList(currentPage=${currentPage}+1)}">다음</a>
-					</div>
+						<h1>해시태그 리스트</h1>
+						<br>
+						<a th:href="@{/addHashtag}" th:text="태그추가"></a>
+						<br>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>이름</th>
+									<th>내용</th>
+									<th>만든날짜</th>
+								</tr>
+							</thead>
+							<thead>
+							<tbody>
+									<tr th:each="hl : ${hashtagList}">
+										<td th:text="${hl.hashtagName}"></td>
+										<td th:text="${hl.hashtagContent}"></td>
+										<td th:text="${hl.hashtagDate}"></td>
+									</tr>
+							</tbody>
+						</table>
+						<hr>
+						<div th:if="${currentPage} > 1">
+							<a th:href="@{/getHashtagList(currentPage=${currentPage}-1)}">이전</a>
+						</div>
+						<div th:if="${currentPage < lastPage}">
+							<a th:href="@{/getHashtagList(currentPage=${currentPage}+1)}">다음</a>
+						</div>
+						
+						<div th:each="i, index : ${hashtagList}">
+							<!-- 4*4 형식으로 바꾸기 -->
+							<!-- <div th:if="i%4==0"> 
+								<br>
+							</div>-->
+							<div th:text="${i.hashtagName}"></div>
+						</div>
+							
 						<!-- 여기에 본문 넣으면댐 -->
 						
 					</div>

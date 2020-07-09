@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.IPUtil;
-import com.devinforest.service.AnswerService;
 import com.devinforest.service.QuestionService;
 import com.devinforest.vo.Answer;
 import com.devinforest.vo.LoginMember;
@@ -23,8 +22,6 @@ public class QuestionController {
    
 	@Autowired 
 	private QuestionService questionService;
-	@Autowired 
-	private AnswerService answerService;
    
 	/* ---------- 질문 목록 ---------- */
 	@GetMapping("/getQuestionList")
