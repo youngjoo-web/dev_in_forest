@@ -108,7 +108,19 @@ public class AdminMemberService {
 		if(questionCommentNo!=0) {
 			System.out.println("게시글 댓글 신고");
 			// 댓글 백업테이블 추가
-			
+			System.out.println(questionComment+" << 주입 전(답변의 댓글 신고)");
+			QuestionComment questionCommentBack = commentMapper.selectQuestionCommentOne(questionComment);
+			System.out.println(questionCommentBack+" << 주입 후(답변의 댓글 신고)");
+			int backResult = commentMapper.insertQuestionCommentBack(questionCommentBack);
+			if(backResult == 1) {
+				System.out.println("게시글 댓글 백업 성공");
+				commentMapper.deleteQuestionComment(questionComment);
+				System.out.println("게시글 댓글 삭제 성공");
+				reportMapper.updateQuestionCommentNoOfReportState(questionCommentNo);
+				System.out.println("조치여부 변경 성공");
+			} else {
+				System.out.println("게시글 댓글 백업 실패");
+			}
 			// 게시글의 댓글 삭제
 			
 		}
@@ -122,10 +134,10 @@ public class AdminMemberService {
 			System.out.println("게시글 답변의 댓글 신고");
 			
 			// 답변의 댓글 백업테이블 추가
-			System.out.println(answerComment+" << 주입 전");
+			System.out.println(answerComment+" << 주입 전(답변의 댓글 신고)");
 			AnswerComment answerCommentBack = commentMapper.selectAnswerCommentOne(answerComment);
-			System.out.println(answerCommentBack+" << 주입 후");
-			int backResult = commentMapper.insertAnswerCommentBack(answerCommentBack);
+			System.out.println(answerCommentBack+" << 주입 후(답변의 댓글 신고)");
+			int backResult = commentMapper.insertAnswerCommentBack(answerCommentBack); // 백업
 			if(backResult == 1) {
 				System.out.println("게시글 답변의 댓글 백업 성공");
 				commentMapper.deleteAnswerComment(answerComment);

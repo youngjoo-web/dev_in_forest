@@ -42,6 +42,44 @@
 		WHERE 
 			question_no = #{questionNo}
 	</select>
+	<!-- 백업할 게시글의 댓글 가져오기 -->
+	<select id="selectQuestionCommentOne" parameterType="com.devinforest.vo.QuestionComment" resultType="com.devinforest.vo.QuestionComment">
+		SELECT
+			question_comment_no      questionCommentNo,
+			question_no              questionNo,
+			member_name              memberName,
+			question_comment_content questionCommentContent,
+			question_comment_date    questionCommentDate,
+			question_comment_ip      questionCommentIp
+		FROM dev_question_comment
+		WHERE question_comment_no = #{questionCommentNo}
+	</select>
+	<!-- 신고된 게시글의 댓글 백업 -->
+	<insert id="insertQuestionCommentBack" parameterType="com.devinforest.vo.QuestionComment">
+		INSERT INTO
+			dev_question_comment_back(
+				question_comment_no,
+				question_no,
+				member_name,
+				question_comment_content,
+				question_comment_date,
+				question_comment_ip
+			)
+			VALUES(
+				#{questionCommentNo},
+				#{questionNo},
+				#{memberName},
+				#{questionCommentContent},
+				#{questionCommentDate},
+				#{questionCommentIp}
+			)
+	</insert>
+	<!-- 신고된 게시글의 댓글 삭제 -->
+	<delete id="deleteQuestionComment" parameterType="com.devinforest.vo.QuestionComment">
+		DELETE 
+		FROM dev_question_comment
+		WHERE question_comment_no = #{questionCommentNo}
+	</delete>
 	
 	<!-- **************************************************************************************************************** -->
 	<!-- **************************************************************************************************************** -->
