@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.devinforest.vo.Answer;
 import com.devinforest.vo.AnswerComment;
-import com.devinforest.vo.AnswerCommentBack;
+import com.devinforest.vo.Question;
 import com.devinforest.vo.QuestionComment;
 
 @Mapper
@@ -19,6 +19,7 @@ public interface CommentMapper {
 	public QuestionComment selectQuestionCommentOne(QuestionComment questionComment); // 백업할 댓글 가져오기
 	public int insertQuestionCommentBack(QuestionComment questionComment); // 신고된 게시글의 댓글 백업
 	public void deleteQuestionComment(QuestionComment QuestionComment); // 신고된 게시글의 댓글 삭제
+	public void deleteQuestionCommentAll(Question question); // 신고된 게시글을 삭제하기 위해 게시글의 댓글 삭제
 	
 	/************************************************************************************************/
 	
@@ -29,5 +30,5 @@ public interface CommentMapper {
 	public AnswerComment selectAnswerCommentOne(AnswerComment answerComment); // 백업할 답변의 댓글 가져오기 
 	public int insertAnswerCommentBack(AnswerComment answerComment); // 신고된 답변의 댓글 백업
 	public void deleteAnswerComment(AnswerComment answerComment); // 신고된 답변의 댓글 삭제
-	public void deleteAnswerCommentAll(Answer answer); // 신고된 답변삭제 위해 답변의 모든댓글 삭제
+	public void deleteAnswerCommentAll(Answer answer); // 신고된 답변을 삭제하기 위해 답변의 모든댓글 삭제
 }

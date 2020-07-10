@@ -66,6 +66,12 @@
 		WHERE answer_no = #{answerNo}
 	</delete>
 	
+	<!-- 게시글 삭제를 위해 게시글의 모든 답변 삭제 -->
+	<delete id="deleteAnswerAll" parameterType="com.devinforest.vo.Question">
+		DELETE FROM dev_answer
+		WHERE question_no = #{questionNo}
+	</delete>
+	
 	<!-- 답변 삭제 후 백업 -->
 	<insert id="insertAnswerBack" parameterType="com.devinforest.vo.Answer">
 		INSERT INTO 

@@ -101,15 +101,31 @@ public class AdminMemberService {
 		if(questionCommentNo==0 && answerNo==0 && answerCommentNo==0) {
 			System.out.println("게시글 신고");
 			// 게시글 백업테이블 추가
+			System.out.println(question+" << 주입 전(게시글 답변 신고)");
+			Question questionBack = questionMapper.selectQuestionOne(question); // 백업할 게시글 댓글 가져오기
+			System.out.println(questionBack+" << 주입 후(게시글 답변 신고)");
 			
+			int backResult = questionMapper.insertQuestionBack(questionBack); // 게시글  백업
 			// 게시글 삭제
-			
+			if(backResult == 1) {
+				System.out.println("게시글 댓글 백업 성공");
+				commentMapper.deleteQuestionCommentAll(question); // 게시글의 댓글 삭제
+				System.out.println("게시글 댓글 삭제 성공");
+				commentMapper.deleteAnswerCommentAll(answer);; // 게시글 답변의 모든 댓글 삭제
+				System.out.println("게시글 답변의 댓글 삭제 성공");
+				answerMapper.deleteAnswerAll(question);// 게시글 답변 삭제
+				System.out.println("게시글 답변 삭제 성공");
+				reportMapper.updateQuestionNoOfReportState(questionNo); // 신고조치여부 Y로변경
+				System.out.println("조치여부 변경 성공");
+			} else {
+				System.out.println("게시글 댓글 백업 실패");
+			}
 		}
 		if(questionCommentNo!=0) {
 			System.out.println("게시글 댓글 신고");
 			// 댓글 백업테이블 추가
 			System.out.println(questionComment+" << 주입 전(게시글 답변 신고)");
-			QuestionComment questionCommentBack = commentMapper.selectQuestionCommentOne(questionComment);
+			QuestionComment questionCommentBack = commentMapper.selectQuestionCommentOne(questionComment); // 백업할 게시글 댓글 가져오기
 			System.out.println(questionCommentBack+" << 주입 후(게시글 답변 신고)");
 			
 			int backResult = commentMapper.insertQuestionCommentBack(questionCommentBack); // 게시글 댓글 백업
@@ -150,7 +166,7 @@ public class AdminMemberService {
 			
 			// 답변의 댓글 백업테이블 추가
 			System.out.println(answerComment+" << 주입 전(답변의 댓글 신고)");
-			AnswerComment answerCommentBack = commentMapper.selectAnswerCommentOne(answerComment);
+			AnswerComment answerCommentBack = commentMapper.selectAnswerCommentOne(answerComment); // 백업할 답변의 댓글 가져오기
 			System.out.println(answerCommentBack+" << 주입 후(답변의 댓글 신고)");
 			
 			int backResult = commentMapper.insertAnswerCommentBack(answerCommentBack); // 답변의 댓글 백업

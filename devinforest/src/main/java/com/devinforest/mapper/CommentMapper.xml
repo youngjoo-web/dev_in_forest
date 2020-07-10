@@ -82,6 +82,12 @@
 		FROM dev_question_comment
 		WHERE question_comment_no = #{questionCommentNo}
 	</delete>
+	<!-- 신고된 게시글을 삭제하기 위해 게시글의 댓글 삭제 -->
+	<delete id="deleteQuestionCommentAll" parameterType="com.devinforest.vo.Question">
+		DELETE 
+		FROM dev_question_comment
+		WHERE question_no = #{questionNo}
+	</delete>
 	
 	<!-- **************************************************************************************************************** -->
 	<!-- **************************************************************************************************************** -->
@@ -166,7 +172,7 @@
 		FROM dev_answer_comment
 		WHERE answer_comment_no = #{answerCommentNo}
 	</delete>
-	<!-- 신고된 답변삭제 위해 답변의 모든댓글 삭제 -->
+	<!-- 신고된 답변을 삭제하기 위해 답변의 모든댓글 삭제 -->
 	<delete id="deleteAnswerCommentAll" parameterType="com.devinforest.vo.Answer">
 		DELETE 
 		FROM dev_answer_comment
