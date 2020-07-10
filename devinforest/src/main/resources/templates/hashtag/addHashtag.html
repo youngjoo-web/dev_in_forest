@@ -22,25 +22,78 @@
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script>
-	$(document).ready(function(){
-		$('#addBtn').click(function(){
-			if($('#hashtagName').val().length < 2) {
-				if($('#hashtagContent').val().length < 3) {
-					$('#hashtagContentText').text("내용을 3자 이상 입력하세요");
-				} else{
-					$('#hashtagContentText').empty();
+	$(document).ready(function(){		
+		
+		let name=$('#hashtagName').val();
+		let hashtagName2=$('#hashtagName2').val();
+		let hashtagNameText=$('#hashtagNameText').val();
+		
+		$('#addCheckBtn').click(function(){
+			$('#hashtagName').val('');
+			$('#hashtagNameText').val('');
+			
+			
+			
+			console.log("중복체크 시작");
+			console.log(hashtagName);
+			$.ajax({
+				url : '/hashtagCheck',
+				type : 'POST',
+				data : {'hashtagName2' : hashtagName2},
+				success: function(data) {
+					
+					console.log($('#hashtagName2').val().length);
+					$('#hashtagNameText').text(data);
+					if($('#hashtagName2').val().length<1 ||$('#hashtagName2').val().length>10){
+						console.log("제목을 10자 이내로 입력하세요.");
+						$('#hashtagNameText').text("이름을 1~10자 이내로 입력하세요.");
+						$('#hashtagName2').focus();
+						
+					} else if($('#hashtagName2').val().search(/\s/) != -1){
+						console.log("공백 없이 입력하세요.");
+						$('#hashtagNameText').text("이름을 공백 없이 입력하세요.");
+						$('#hashtagName2').focus();
+					} else if(data == "사용할 수 있는 해시태그 입니다."){			
+						console.log(data);
+						$('#hashtagName').val($('#hashtagName2').val());
+						$('#hashtagNameText').text("");
+					} else{
+						console.log(data);
+						$('#hashtagName2').focus();	
+					}
+					
 				}
-				$('#hashtagNameText').text("제목을 2자 이상 입력하세요");
-				$('#hashtagName').focus();
+			});
+		});
+		
+		
+		$('#addBtn').click(function(){
+			
+			
+			if($('#hashtagName').val().length < 1 || $('#hashtagName').val().length > 10) {
+				$('#hashtagNameText').text("제목을 1~10자 이내로 입력하세요");
+				$('#hashtagName2').focus();
+				console.log("제목을 1~10자 이내로 입력하세요 - 커밋 실패");
+				alert("이름을 1~10자 이내로 입력하세요.");
 				return;
 			}
+			if($('#hashtagName2').val().search(/\s/) != -1){
+				$('#hashtagNameText').text("이름을 공백 없이 입력하세요.");
+				$('#hashtagName2').focus();
+				alert("이름을 공백 없이 입력하세요.");
+				return;
+			}
+			
 			if($('#hashtagContent').val().length < 3) {
-				$('#hashtagNameText').empty();
 				$('#hashtagContentText').text("내용을 3자 이상 입력하세요");
 				$('#hashtagContent').focus();
+				console.log("내용을 3자 이상 입력하세요 - 커밋 실패");
+				alert("내용을 3자 이상 입력하세요.");
 				return;
+			} else{
+				$('#hashtagContentText').empty();
 			}
-			console.log("submit");
+			console.log("submit 완료!");
 			$('#addHashtagForm').submit();
 		});
 	});
@@ -254,7 +307,9 @@
 						<h1>hashtag 추가</h1>
 						<form method="post" th:action="@{/addHashtag}" id="addHashtagForm">
 							<div>
-								<input type="text" name="hashtagName" id="hashtagName">
+								<input type="text" name="hashtagName" id="hashtagName" readonly="readonly">
+								<input type="text" name="hashtagName2" id="hashtagName2">
+								<button type="button" id="addCheckBtn">중복확인</button>
 								<div id="hashtagNameText"> </div>
 							</div>
 							<br>

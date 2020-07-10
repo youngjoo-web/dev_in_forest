@@ -24,7 +24,7 @@ public class HashtagService {
 		System.out.println(searchWord + " <-- Service searchWord");
 		
 		
-		int rowPerPage = 2;
+		int rowPerPage = 16;
 		int beginRow = (currentPage -1) * rowPerPage;
 		int hashtagTotalRow = hashtagMapper.hashtagTotalRow(searchWord);
 		System.out.println(hashtagTotalRow + " <-- hashtagTotalRow");
