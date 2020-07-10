@@ -346,6 +346,7 @@
 											<th>회사이름</th>
 											<th>내용</th>
 											<th>면접제의날짜</th>
+											<th>수락/거부</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -355,6 +356,17 @@
 											<td><a th:href="@{/}"
 												th:text="${suggest.suggestContent}"></a></td>
 											<td><a th:href="@{/}" th:text="${suggest.lastUpdate}"></a></td>
+											<td>
+											<form method="post" action="/modifySuggestType">
+												<input type="hidden" name ="recruitNo" th:value="${suggest.recruitNo}">
+												<input type="hidden" name ="memberName" th:value="${member.memberName}">
+												<input type="hidden" name ="suggestType" th:value="${suggest.suggestType}">
+												<button class="btn btn-sm pageBtn" type="submit">
+												<div th:if="${suggest.suggestType}=='Y'">수락</div>
+												<div th:if="${suggest.suggestType}=='N'">거부</div>
+												</button>
+											</form>
+											</td>
 										</tr>
 									</tbody>
 								</table>

@@ -22,4 +22,14 @@ public class SuggestService {
 	public List<Suggest> getSuggestList(String memberName) {
 		return suggestMapper.selectSuggestList(memberName);
 	}
+	//면접제의 리스트에서 거부에서 수락으로 변경
+	public void modifySuggestType(Suggest suggest) {
+		suggestMapper.updateSuggestType(suggest);
+		return;
+	}
+	//면접제의 리스트에서 거부에서 수락으로 변경
+		public void unmodifySuggestType(Suggest suggest) {
+			suggestMapper.unupdateSuggestType(suggest);
+			return;
+		}
 }

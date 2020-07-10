@@ -5,6 +5,7 @@ public class Suggest {
 	private String companyName;
 	private String memberName;
 	private String suggestContent;
+	private String suggestType;
 	private String lastUpdate;
 	public int getRecruitNo() {
 		return recruitNo;
@@ -30,6 +31,12 @@ public class Suggest {
 	public void setSuggestContent(String suggestContent) {
 		this.suggestContent = suggestContent;
 	}
+	public String getSuggestType() {
+		return suggestType;
+	}
+	public void setSuggestType(String suggestType) {
+		this.suggestType = suggestType;
+	}
 	public String getLastUpdate() {
 		return lastUpdate;
 	}
@@ -39,6 +46,10 @@ public class Suggest {
 	@Override
 	public String toString() {
 		return "Suggest [recruitNo=" + recruitNo + ", companyName=" + companyName + ", memberName=" + memberName
-				+ ", suggestContent=" + suggestContent + ", lastUpdate=" + lastUpdate + "]";
+				+ ", suggestContent=" + suggestContent + ", suggestType=" + suggestType + ", lastUpdate=" + lastUpdate
+				+ "]";
 	}
+	
+	
+	
 }

@@ -12,4 +12,10 @@ public interface SuggestMapper {
 	public void insertSuggest(Suggest suggest);
 	//면접제의 리스트 출력
 	public List<Suggest> selectSuggestList(String memberName);
+	//면접제의 거부에서 수락으로 변경
+	public void updateSuggestType(Suggest suggest);
+	//면접제의 수락에서 거부으로 변경
+	public void unupdateSuggestType(Suggest suggest);
+	
+
 }	
