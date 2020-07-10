@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devinforest.mapper.AnswerMapper;
+import com.devinforest.mapper.VoteMapper;
 import com.devinforest.vo.Answer;
 
 @RestController
@@ -18,6 +19,9 @@ public class AnswerRestController {
 
 	@Autowired
 	private AnswerMapper answerMapper;
+	
+	@Autowired
+	private VoteMapper voteMapper;
 	
 	/* ---------- 답변 작성하기 ---------- */
 	@PostMapping("/addAnswer")
