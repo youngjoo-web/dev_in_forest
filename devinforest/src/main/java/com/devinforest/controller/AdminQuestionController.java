@@ -17,6 +17,7 @@ import com.devinforest.vo.LoginAdmin;
 public class AdminQuestionController {
 	@Autowired private AdminQuestionService adminQuestionService;
 	
+	// 질문 List 조회
 	@GetMapping("/admin/getQuestionList")
 	public String getQuestionList(Model model, HttpSession session,
 									@RequestParam(defaultValue="1") int currentPage,
@@ -28,6 +29,7 @@ public class AdminQuestionController {
 		if(session.getAttribute("loginAdmin")==null) {
 			return "redirect:/index";
 		}
+		// 상단에 관리자명 띄우기
 		memberName = ((LoginAdmin)session.getAttribute("loginAdmin")).getAdminName();
 		
 		Map<String, Object> questionList = adminQuestionService.getQuestionList(currentPage, rowPerPage, searchWord);
@@ -35,6 +37,7 @@ public class AdminQuestionController {
 		System.out.println(memberName+"<--memberName");
 		
 		model.addAttribute("memberName", memberName);
+		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("questionList", questionList.get("questionList"));
 		model.addAttribute("questionTotalRow", questionList.get("questionTotalRow"));
 		model.addAttribute("lastPage", questionList.get("lastPage"));
@@ -50,5 +53,42 @@ public class AdminQuestionController {
 		System.out.println(searchWord + " <--- QuestionController searchWord");
 		
 		return "adminQuestion/getQuestionList";
+	}
+	// 답변 List 조회
+	@GetMapping("/admin/getAnswerList")
+	public String getAnswerList(Model model, HttpSession session,
+									@RequestParam(defaultValue="1") int currentPage,
+									@RequestParam(defaultValue = "5") int rowPerPage,
+									@RequestParam(defaultValue="") String searchWord) {
+		String memberName = "";
+		
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
+		// 상단에 관리자명 띄우기
+		memberName = ((LoginAdmin)session.getAttribute("loginAdmin")).getAdminName();
+		
+		Map<String, Object> answerList = adminQuestionService.getAnswerList(currentPage, rowPerPage, searchWord);
+		
+		System.out.println(memberName+"<--memberName");
+		
+		model.addAttribute("memberName", memberName);
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("answerList", answerList.get("answerList"));
+		model.addAttribute("answerTotalRow", answerList.get("answerTotalRow"));
+		model.addAttribute("lastPage", answerList.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		
+		
+		System.out.println("↓QuestionController questionList↓");
+		System.out.println(answerList.get("answerList") + " <-- QuestionController answerList");
+		System.out.println(answerList.get("answerTotalRow") + " <-- QuestionController answerTotalRow");
+		System.out.println(answerList.get("lastPage") + " <-- QuestionController lastPage");
+		System.out.println(memberName + " <--- QuestionController memberName");
+		System.out.println(currentPage + " <--- QuestionController currentPage");
+		System.out.println(searchWord + " <--- QuestionController searchWord");
+		
+		return "adminQuestion/getAnswerList";
 	}
 }
