@@ -35,4 +35,15 @@ public class MemberRestController {
 		}
 		return nameMsg;
 	}
+	@PostMapping("/checkRestoreEmail")
+	public String checkRestoreEmail(@RequestParam(value = "restorationTitle2") String restorationTitle) {
+		int checkNum=memberService.CheckMemberEmail(restorationTitle);
+		String restoreMsg=null;
+		if(checkNum==1) {
+			restoreMsg = "재가입가능한 이메일입니다.";
+		}else {
+			restoreMsg = "재가입할 수 없는 이메일입니다.";
+		}
+		return restoreMsg;
+	}
 }

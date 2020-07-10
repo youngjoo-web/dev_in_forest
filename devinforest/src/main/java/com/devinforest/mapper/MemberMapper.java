@@ -23,6 +23,8 @@ public interface MemberMapper {
 	public int deleteMember(LoginMember loginMember);
 	//회원정보 불러오기
 	public Member selectMemberInfo(LoginMember loginMember);
+	//재가입 이메일 중복확인
+	public int checkRestEmail(String restorationTitle);
 	//이름 중복 확인
 	public int checkMemberName(String memberName);
 	//이메일 중복 확인

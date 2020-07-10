@@ -66,12 +66,21 @@
               	<div class="row text-center mb-2">
               		<div class="col-xl-12 mb-3">
               				<br>
-								<form method="post" action="/requestMemberRestore">
-										<input  class="form-control" type="text" name="restorationTitle" placeholder="재가입 이메일 ">
+								<form id="form" method="post" action="/requestMemberRestore">
+								<input id="restorationTitle" class="form-control" type="hidden" name="restorationTitle" value="">
+								<div class="row">
+												<div class="col-sm-7">
+										<input id="restorationTitle2" class="form-control" type="text" name="restorationTitle2" placeholder="재가입 이메일 ">
+										</div>
+										<div class="col-sm-5">
+													<button id="emailCheckBtn" type="button" class="btn btn-success btn-block ">중복확인</button>			
+												</div>
+												<span id="restoreMsg"></span>
+											</div>			
 										<br>
 										<input class="form-control" type="text" name="restorationContent" placeholder="내용 ex)재가입해주세요 " >
 								<br>
-									<button type="submit" class="btn btn-success btn-block">재가입요청</button>
+									<button id="signUpBtn" type="button" class="btn btn-success btn-block">재가입요청</button>
 					</form>
               		</div>  
 					
@@ -138,5 +147,60 @@
 
 
 </body>
+<script>
+$('#signUpBtn').click(function(){		
+	
+	// 아이디 중복체크 검사
+	if($('#restorationTitle').val() == ''){
+		 alert("아이디를 중복체크 해주세요.");
+		 return;
+	}
+	
+	console.log('유효성 검사 통과');
+	$('#form').submit();
+	
+});
+//아이디 중복체크
+$('#emailCheckBtn').click(function(){
+	
+	let email = $('#restorationTitle2').val();
+	let emailNum = email.search(/[0-9]/);
+	console.log(emailNum+" <- emailNum");
+	let emailEng = email.search(/[a-z]/);
+	console.log(emailEng+" <- emailEng");
+	let emailBigEng = email.search(/[A-Z]/);
+	console.log(emailBigEng+" <- emailBigEng");
+	let emailKor = email.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/);
+	console.log(emailKor+" <- emailKor");
+	let emailSpe = email.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/);
+	console.log(emailSpe+" <- emailSpe");
+	console.log("----------------------");
+	
+	if(email.length < 5 || email.length > 20){
+		 alert("아이디는 5자리 ~ 20자리 이내로 입력해주세요.");
+		 return;
+	}
+	if(email.search(/\s/) != -1){
+ 		alert("아이디는 공백 없이 입력해주세요.");
+	 	return;
+	}
+	
+	
+	
+	let restorationTitle2 = $('#restorationTitle2').val();
+	$.ajax({
+        url:'/checkRestoreEmail'
+        ,type:'POST'
+        ,data:{'restorationTitle2':restorationTitle2}
+        ,success : function(data) {
+    		console.log(data);
+    		$('#restoreMsg').text(data);
+    		if(data == "재가입가능한 이메일입니다.") {
+    			$('#restorationTitle').val(email);
+    		}
+        }
+	});
+});
 
+</script>
 </html>

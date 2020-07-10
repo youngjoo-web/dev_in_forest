@@ -3,6 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.MemberMapper">
+	<select id="checkRestEmail" parameterType="String" resultType="int">
+	SELECT SUM(t.cnt) FROM
+		(SELECT COUNT(*) AS cnt FROM dev_member WHERE member_email=#{memberEmail} AND member_state = 'N') t
+	</select>
 	<!-- 회원 재가입 요청 -->
 	<insert id="insertRequestRestore" parameterType="com.devinforest.vo.Restoration" >
 		Insert into dev_restoration(
