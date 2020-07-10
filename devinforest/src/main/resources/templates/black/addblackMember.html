@@ -71,11 +71,12 @@
 						</table>
 						<form id="form" method="post" th:action="@{/blackMember}">
 							<div>
-								<input id="reportMemberName" type="hidden" name="reportMemberName" th:value="${report.reportMemberName}">
-								<input type="text" name="questionNo" th:value="${report.questionNo}">
-								<input type="text" name="questionCommentNo" th:value="${report.questionCommentNo}">
-								<input type="text" name="answerNo" th:value="${report.answerNo}">
-								<input type="text" name="answerCommentNo" th:value="${report.answerCommentNo}">
+								<input type="hidden" name="memberEmail" th:value="${memberEmail}">
+								<input id="reportMemberName" type="hidden" name="memberName" th:value="${report.reportMemberName}">
+								<input type="hidden" name="questionNo" th:value="${report.questionNo}">
+								<input type="hidden" name="questionCommentNo" th:value="${report.questionCommentNo}">
+								<input type="hidden" name="answerNo" th:value="${report.answerNo}">
+								<input type="hidden" name="answerCommentNo" th:value="${report.answerCommentNo}">
 								<textarea id="blackListReason" rows="5" cols="20" name="blackListReason" placeholder="블랙사유를 입력해주세요."></textarea>
 							</div>
 						</form>

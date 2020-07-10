@@ -31,4 +31,6 @@ public interface CommentMapper {
 	public int insertAnswerCommentBack(AnswerComment answerComment); // 신고된 답변의 댓글 백업
 	public void deleteAnswerComment(AnswerComment answerComment); // 신고된 답변의 댓글 삭제
 	public void deleteAnswerCommentAll(Answer answer); // 신고된 답변을 삭제하기 위해 답변의 모든댓글 삭제
+	public void deleteQuestionAnswerCommentAll(Question question); // 신고된 게시글을 삭제하기 위해 답변의 모든댓글 삭제
+	
 }

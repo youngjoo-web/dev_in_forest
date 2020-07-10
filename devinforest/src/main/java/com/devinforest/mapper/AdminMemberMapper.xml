@@ -118,16 +118,28 @@
 		WHERE member_name = #{memberName}
 	</select>
 	<!-- 멤버 삭제 -->
-	<delete id="deleteMemberByName"
+	<delete id="deleteMember"
 			parameterType="String">
-		DELETE FROM dev_member
-		WHERE member_name = #{memberName}
+		DELETE
+		FROM dev_member
+		WHERE member_name = #{blackMemberName}
 	</delete>
 	<!-- 블랙리스트 추가 -->
-	<insert id="insertBlackList"
+	<insert id="insertBlackMember"
 			parameterType="com.devinforest.vo.BlackList">
-		INSERT INTO dev_blacklist (member_email, member_name, blacklist_reason, blacklist_date)
-		VALUES (#{memberEmail}, #{memberName}, #{blackListReason}, now())
+		INSERT INTO 
+			dev_blacklist (
+				member_email,
+				member_name,
+				blacklist_reason,
+				blacklist_date
+			)
+			VALUES (
+				#{memberEmail},
+				#{memberName},
+				#{blackListReason},
+				NOW()
+			)
 	</insert>
 	<!-- 블랙회원 리스트 출력 -->
 	<select id="selectBlackMemberList"

@@ -71,7 +71,6 @@
 		DELETE FROM dev_answer
 		WHERE question_no = #{questionNo}
 	</delete>
-	
 	<!-- 답변 삭제 후 백업 -->
 	<insert id="insertAnswerBack" parameterType="com.devinforest.vo.Answer">
 		INSERT INTO 

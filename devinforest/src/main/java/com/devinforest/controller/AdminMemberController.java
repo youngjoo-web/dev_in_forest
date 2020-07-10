@@ -130,8 +130,15 @@ public class AdminMemberController {
 		System.out.println(questionComment.getQuestionCommentNo()+" <- ReportController.blackMember: questionCommentNo(게시글 댓글번호)");
 		System.out.println(answer.getAnswerNo()+" <- ReportController.blackMember: answerNo(답변번호)");
 		System.out.println(answerComment.getAnswerCommentNo()+" <- ReportController.blackMember: answerCommentNo(답변 댓글번호)");
+		// 신고내용 작성회원 게시글 삭제 및 백업
 		adminMemberService.blackMember(blackList, question, questionComment, answer, answerComment);
-		 
+		// 신고내용 작성회원 블랙회원으로 변경
+		adminMemberService.addBlackMember(blackList);
+		System.out.println("신고내용 작성회원 블랙회원으로 변경완료");
+		// 신고내용 작성회원 회원 탈퇴
+		adminMemberService.removeMember(blackList);
+		System.out.println("신고내용 작성회원 회원탈퇴 완료");
+		
 		 
 		return "redirect:/done";
 	}

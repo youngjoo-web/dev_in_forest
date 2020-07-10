@@ -88,7 +88,6 @@
 		FROM dev_question_comment
 		WHERE question_no = #{questionNo}
 	</delete>
-	
 	<!-- **************************************************************************************************************** -->
 	<!-- **************************************************************************************************************** -->
 	<!-- **************************************************************************************************************** -->
@@ -177,5 +176,11 @@
 		DELETE 
 		FROM dev_answer_comment
 		WHERE answer_no = #{answerNo}
+	</delete>
+	<!-- 게시글 삭제를 위해 게시글의 모든 답변 삭제 -->
+	<delete id="deleteQuestionAnswerCommentAll" parameterType="com.devinforest.vo.Question">
+		DELETE 
+		FROM dev_answer_comment
+		WHERE question_no = #{questionNo}
 	</delete>
 </mapper>

@@ -14,9 +14,9 @@ public interface AdminMemberMapper {
 	// 블랙 팝업창에 출력할 데이터 출력
 	public String selectReportMemberEmail(String memberName);
 	// 멤버 삭제
-	public int deleteMemberByName(String memberName);
+	public int deleteMember(String blackMemberName);
 	// 블랙리스트 추가
-	public void insertBlackList(BlackList blackList);
+	public void insertBlackMember(BlackList blackList);
 	// 재가입 실행 시 이메일 있는지 확인
 	public String selectMemberEmail(String memberEmail);
 	// 회원복구 or 재가입 실행- 회원상태변경

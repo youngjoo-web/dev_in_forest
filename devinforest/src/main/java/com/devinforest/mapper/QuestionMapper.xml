@@ -124,6 +124,7 @@
 		WHERE question_no = #{questionNo}
 	</delete>
 	
+	
 	<!-- 질문 삭제 전 백업 추가 -->
 	<insert id="insertQuestionBack" parameterType="com.devinforest.vo.Question">
 		INSERT INTO 
