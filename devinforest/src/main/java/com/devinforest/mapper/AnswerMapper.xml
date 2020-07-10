@@ -19,7 +19,7 @@
 	</select>
 	
 	<!-- 답변  총 개수 -->
-	<select id="answerTotalRow" resultType="int" parameterType="com.devinforest.vo.Answer">
+	<select id="answerTotalCount" resultType="int" parameterType="com.devinforest.vo.Question">
 		SELECT
 			COUNT(*)
 		FROM
