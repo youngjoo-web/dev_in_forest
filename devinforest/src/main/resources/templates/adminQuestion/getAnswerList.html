@@ -8,7 +8,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
-		<title>관리자 질문 조회</title>
+		<title>관리자 답변 조회</title>
 		
 		<!-- Custom fonts for this template-->
 		<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
@@ -116,7 +116,7 @@
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
 						<div>
-							<h3 class="text-gray-800 mb-2 font-weight-bold">관리자 질문 조회</h3>
+							<h3 class="text-gray-800 mb-2 font-weight-bold">관리자 답변 조회</h3>
 						</div>
 						<br>
 						<!-- 테이블 -->
@@ -124,7 +124,7 @@
 							<div class="card-header py-3">
 								<div>
 									<div class="text-left">
-										<h5 class="m-0 font-weight-bold" style=" color:#148b61;" th:text="'질문내역 : '+${questionTotalRow}+개"></h5>
+										<h5 class="m-0 font-weight-bold" style=" color:#148b61;" th:text="'답변내역 : '+${answerTotalRow}+개"></h5>
 									</div>
 								</div>
 							</div>
@@ -133,57 +133,55 @@
 									<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 										<div class="row">
 											<div class="col-xl-4">
-												<form method="GET" th:action="@{/admin/getQuestionList}">
-													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="제목 검색">
+												<form method="GET" th:action="@{/admin/getAnswerList}">
+													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="답변번호, 회원, 답변IP 검색">
 													<button class="btn searchBtn" type="submit">검색</button>
-													<a class="btn searchBtn" th:href="@{/admin/getQuestionList(rowPerPage='', searchWord='')}">초기화</a>
+													<a class="btn searchBtn" th:href="@{/admin/getAnswerList(rowPerPage='', searchWord='')}">초기화</a>
 												</form>
 											</div>
 											<div class="col-xl-8 text-right">
-													<a class="btn btn-sm selectBtn" th:href="@{/admin/getQuestionList(rowPerPage=1, searchWord=${searchWord})}">1개씩</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/admin/getQuestionList(rowPerPage=5, searchWord=${searchWord})}">5개씩</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/admin/getQuestionList(rowPerPage=10, searchWord=${searchWord})}">10개씩</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/admin/getQuestionList(rowPerPage=15, searchWord=${searchWord})}">15개씩</a>
+													<a class="btn btn-sm selectBtn" th:href="@{/admin/getAnswerList(rowPerPage=1, searchWord=${searchWord})}">1개씩</a>
+													<a class="btn btn-sm selectBtn" th:href="@{/admin/getAnswerList(rowPerPage=5, searchWord=${searchWord})}">5개씩</a>
+													<a class="btn btn-sm selectBtn" th:href="@{/admin/getAnswerList(rowPerPage=10, searchWord=${searchWord})}">10개씩</a>
+													<a class="btn btn-sm selectBtn" th:href="@{/admin/getAnswerList(rowPerPage=15, searchWord=${searchWord})}">15개씩</a>
 											</div>
 										</div>
 									</div>
 									<table style="margin-top: 10px;" class="table table-bordered text-center">
 										<thead>
 											<tr>
+												<th class="darkColor" width="12%">답변 번호</th>
 												<th class="darkColor" width="12%">질문 번호</th>
 												<th class="darkColor" width="12%">질문자</th>
-												<th class="darkColor" width="12%">질문 제목</th>
-												<th class="darkColor" width="12%">질문 내공</th>
-												<th class="darkColor" width="12%">질문 생성일</th>
-												<th class="darkColor" width="12%">질문 수정일</th>
-												<th class="darkColor" width="12%">질문 작성 IP</th>
-												<th class="darkColor" width="12%">조회수</th>
+												<th class="darkColor" width="12%">상세보기</th>
+												<th class="darkColor" width="12%">답변 생성일</th>
+												<th class="darkColor" width="12%">답변 수정일</th>
+												<th class="darkColor" width="12%">답변 작성 IP</th>
 											</tr>
-											<tr th:each="q : ${questionList}">
-												<td th:text="${q.questionNo}"></td>
-												<td th:text="${q.memberName}"></td>
+											<tr th:each="a : ${answerList}">
+												<td th:text="${a.answerNo}"></td>
+												<td th:text="${a.questionNo}"></td>
+												<td th:text="${a.memberName}"></td>
 												<td><a
-													th:href="@{/getQuestionOne(questionNo=${q.questionNo})}"
-													th:text="${q.questionTitle}"></a></td>
-												<td th:text="${q.questionReputation}"></td>
-												<td th:text="${q.questionCreateDate}"></td>
-												<td th:text="${q.questionUpdateDate}"></td>
-												<td th:text="${q.questionIp}"></td>
-												<td th:text="${q.questionViews}"></td>
+													th:href="@{/getQuestionOne(questionNo=${a.questionNo})}"
+													th:text="@{답변 상세보기}"></a></td>
+												<td th:text="${a.answerCreateDate}"></td>
+												<td th:text="${a.answerUpdateDate}"></td>
+												<td th:text="${a.answerIp}"></td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 								<div>
-									<a class="btn btn-sm pageBtn" th:href="@{/admin/getQuestionList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">처음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage == 1}" th:href="@{/admin/getQuestionList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage > 1}" th:href="@{/admin/getQuestionList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
+									<a class="btn btn-sm pageBtn" th:href="@{/admin/getAnswerList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">처음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage == 1}" th:href="@{/admin/getAnswerList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage > 1}" th:href="@{/admin/getAnswerList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
 									<span th:text="'-'+${currentPage}+'-'"></span>
-									<a class="btn btn-sm pageBtn" th:if="${questionTotalRow == 0}" th:href="@{/admin/getQuestionList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage < lastPage}" th:href="@{/admin/getQuestionList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage == lastPage}" th:href="@{/admin/getQuestionList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${questionTotalRow == 0}"th:href="@{/admin/getQuestionList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
-									<a class="btn btn-sm pageBtn" th:if="${questionTotalRow != 0}"th:href="@{/admin/getQuestionList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+									<a class="btn btn-sm pageBtn" th:if="${answerTotalRow == 0}" th:href="@{/admin/getAnswerList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage < lastPage}" th:href="@{/admin/getAnswerList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${currentPage == lastPage}" th:href="@{/admin/getAnswerList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
+									<a class="btn btn-sm pageBtn" th:if="${answerTotalRow == 0}"th:href="@{/admin/getAnswerList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+									<a class="btn btn-sm pageBtn" th:if="${answerTotalRow != 0}"th:href="@{/admin/getAnswerList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
 								</div>
 							</div>
 						</div>
