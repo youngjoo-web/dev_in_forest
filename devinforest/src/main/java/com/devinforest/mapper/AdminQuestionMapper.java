@@ -17,4 +17,8 @@ public interface AdminQuestionMapper {
 	public List<Question> selectAnswerList(Map<String, Object> inputMap);
 	// 답변 총 갯수 조회
 	public int answerTotalRow(String searchWord);
+	// 질문댓글 List 조회
+	public List<Question> selectQuestionCommentList(Map<String, Object> inputMap);
+	// 질문댓글 총 갯수 조회
+	public int selectQuestionCommentTotalRow(String searchWord);
 }

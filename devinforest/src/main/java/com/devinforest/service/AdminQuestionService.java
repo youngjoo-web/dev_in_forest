@@ -54,7 +54,7 @@ public class AdminQuestionService {
 		
 		int beginRow = (currentPage -1) * rowPerPage;
 		int answerTotalRow = adminQuestionMapper.answerTotalRow(searchWord);
-		System.out.println(answerTotalRow + " <-- questionTotalRow");
+		System.out.println(answerTotalRow + " <-- answerTotalRow");
 		int lastPage = answerTotalRow / rowPerPage;
 		if(answerTotalRow % rowPerPage != 0) {
 			lastPage += 1;
@@ -77,6 +77,38 @@ public class AdminQuestionService {
 		returnMap.put("answerTotalRow", answerTotalRow);
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("answerList", answerList);
+		
+		return returnMap;
+	}
+	// 질문댓글 List 조회
+	public Map<String, Object> getQuestionCommentList(int currentPage, int rowPerPage, String searchWord) {
+		System.out.println(searchWord + " <-- Service searchWord");
+		
+		int beginRow = (currentPage -1) * rowPerPage;
+		int questionCommentTotalRow = adminQuestionMapper.selectQuestionCommentTotalRow(searchWord);
+		System.out.println(questionCommentTotalRow + " <-- questionCommentTotalRow");
+		int lastPage = questionCommentTotalRow / rowPerPage;
+		if(questionCommentTotalRow % rowPerPage != 0) {
+			lastPage += 1;
+		}
+		Map<String, Object> inputMap = new HashMap<String, Object>();
+		inputMap.put("searchWord", searchWord);
+		inputMap.put("beginRow", beginRow);
+		inputMap.put("rowPerPage", rowPerPage);
+		
+		System.out.println(searchWord + " <--- searchWord");
+		System.out.println(beginRow + " <--- beginRow");
+		System.out.println(rowPerPage + " <--- rowPerPage");
+		
+		System.out.println(lastPage + "<--  questionService lastPage");
+		List<Question> questionCommentList = adminQuestionMapper.selectQuestionCommentList(inputMap);
+	
+		System.out.println(questionCommentList);
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("questionCommentTotalRow", questionCommentTotalRow);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("questionCommentList", questionCommentList);
 		
 		return returnMap;
 	}

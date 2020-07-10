@@ -3,7 +3,7 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.AdminQuestionMapper">
-	<!-- 모든 질문 List 조회  -->
+	<!-- 모든 질문 목록  -->
 	<select id="selectQuestionList"
 			parameterType="java.util.Map"
 			resultType="com.devinforest.vo.Question">
@@ -63,5 +63,61 @@
 		WHERE answer_no LIKE CONCAT('%', #{searchWord}, '%')
 		OR member_name LIKE CONCAT('%', #{searchWord}, '%')
 		OR answer_ip LIKE CONCAT('%', #{searchWord}, '%')
+	</select>
+	
+	<!-- 질문 댓글 목록 -->
+	<select id="selectQuestionCommentList"
+			parameterType="java.util.Map"
+			resultType="com.devinforest.vo.QuestionComment">
+		SELECT 
+			question_comment_no questionCommentNo,
+			question_no questionNo,
+			member_name memberName,
+			question_comment_content questionCommentContent,
+			question_comment_date questionCommentDate,
+			question_comment_ip questionCommentIp
+		FROM dev_question_comment
+		WHERE question_comment_no LIKE CONCAT('%', #{searchWord}, '%')
+		OR member_name LIKE CONCAT('%', #{searchWord}, '%')
+		ORDER BY question_comment_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- 질문 댓글 총 개수 -->
+	<select id="selectQuestionCommentTotalRow"
+			parameterType="com.devinforest.vo.QuestionComment"
+			resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM dev_question_comment
+		WHERE question_comment_no LIKE CONCAT('%', #{searchWord}, '%')
+		OR member_name LIKE CONCAT('%', #{searchWord}, '%')
+	</select>
+	
+	<!-- 답변 댓글 목록 -->
+	<select id="selectAnswerCommentList"
+			parameterType="java.util.Map"
+			resultType="com.devinforest.vo.AnswerComment">
+		SELECT 
+			answer_comment_no answerCommentNo,
+			answer_no answerNo,
+			member_name memberName,
+			answer_comment_content answerCommentContent
+		FROM dev_answer_comment
+		WHERE answer_comment_no LIKE CONCAT('%', #{searchWord}, '%')
+		OR member_name LIKE CONCAT('%', #{searchWord}, '%')
+		ORDER BY answer_comment_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- 답변 댓글 총 개수 -->
+	<select id="selectAnswerCommentTotalRow"
+			parameterType="com.devinforest.vo.AnswerComment"
+			resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM dev_answer_comment
+		WHERE answer_comment_no LIKE CONCAT('%', #{searchWord}, '%')
+		OR member_name LIKE CONCAT('%', #{searchWord}, '%')
 	</select>
 </mapper>
