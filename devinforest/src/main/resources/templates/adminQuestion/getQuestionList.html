@@ -97,7 +97,7 @@
 							<!-- 닉네임 나오는 곳 - 상단 바 -->
 							<li class="nav-item dropdown no-arrow">
 								<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<span class="mr-2 d-none d-lg-inline text-gray-600 small">로그인 중인 닉네임</span>
+									<span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${memberName}"></span>
 									<img class="img-profile rounded-circle" th:src="@{/img/img.png}">
 								</a>
 								<!-- Dropdown - User Information -->
@@ -136,7 +136,7 @@
 												<form method="GET" th:action="@{/admin/getQuestionList}">
 													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="제목 검색">
 													<button class="btn searchBtn" type="submit">검색</button>
-													<a class="btn searchBtn" th:href="@{/getReportList(rowPerPage='', searchWord='')}">초기화</a>
+													<a class="btn searchBtn" th:href="@{/admin/getQuestionList(rowPerPage='', searchWord='')}">초기화</a>
 												</form>
 											</div>
 											<div class="col-xl-4">

@@ -78,12 +78,22 @@
 		QnA조회
 	</div>
 	
-	<!-- QnA조회 - Charts -->
+	<!-- QnA조회 - QnA 관리 -->
 	<li class="nav-item">
-		<a class="nav-link" th:href="@{/admin/getQuestionList}">
-			<i class="fas fa-fw fa-folder"></i>
+		<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse2-1" aria-expanded="true" aria-controls="collapseTwoAndOne">
+			<i class="fas fa-fw fa-cog"></i>
 			<span>QnA조회</span>
 		</a>
+		<div id="collapse2-1" class="collapse" aria-labelledby="headingTwo"
+			data-parent="#accordionSidebar">
+			<div class="bg-white py-2 collapse-inner rounded">
+				<h6 class="collapse-header">QnA 관리</h6>
+				<a class="collapse-item" th:href="@{/admin/getQuestionList}">질문 조회</a>
+				<a class="collapse-item" href="#">답변 조회</a>
+				<a class="collapse-item" href="#">질문댓글 조회</a>
+				<a class="collapse-item" href="#">질문댓글 조회</a>
+			</div>
+		</div>
 	</li>
 	<!-- QnA조회 끝-->
 	

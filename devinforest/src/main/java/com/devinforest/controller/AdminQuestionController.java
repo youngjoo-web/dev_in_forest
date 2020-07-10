@@ -45,6 +45,7 @@ public class AdminQuestionController {
 		System.out.println(questionList.get("questionList") + " <-- QuestionController questionList");
 		System.out.println(questionList.get("questionTotalRow") + " <-- QuestionController questionTotalRow");
 		System.out.println(questionList.get("lastPage") + " <-- QuestionController lastPage");
+		System.out.println(memberName + " <--- QuestionController memberName");
 		System.out.println(currentPage + " <--- QuestionController currentPage");
 		System.out.println(searchWord + " <--- QuestionController searchWord");
 		
