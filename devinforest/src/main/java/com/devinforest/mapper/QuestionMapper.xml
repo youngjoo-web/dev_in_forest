@@ -135,6 +135,7 @@
 				question_reputation,
 				question_createdate,
 				question_updatedate,
+				question_content_back_date,
 				question_ip
 			) VALUES(
 				#{questionNo},
@@ -144,6 +145,7 @@
 				#{questionReputation},
 				#{questionCreateDate},
 				#{questionUpdateDate},
+				NOW(),
 				#{questionIp}
 			)
 	</insert>
