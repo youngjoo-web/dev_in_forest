@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devinforest.mapper.AdminQuestionMapper">
+	<!-- 질문 총 개수  -->
+	<select id="questionTotalRow"
+			parameterType="String"
+			resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM dev_question
+		WHERE question_title LIKE CONCAT('%',#{searchWord},'%')
+	</select>
+	
+	<!-- 질문 목록(최근순)  -->
+	<select id="selectQuestionList"
+			parameterType="java.util.Map"
+			resultType="com.devinforest.vo.Question">
+		SELECT 
+			question_no questionNo,
+			member_name memberName,
+			question_title questionTitle,
+			question_content questionContent,
+			question_reputation reputation,
+			question_createdate questionCreateDate,
+			question_updatedate questionUpdateDate,
+			question_ip questionIp,
+			question_views questionViews
+		FROM dev_question
+		WHERE question_title LIKE CONCAT('%', #{searchWord}, '%') 
+		ORDER BY question_createdate DESC
+		LIMIT #{beginRow}, #{rowPerPage} 
+	</select>
+</mapper>
