@@ -11,6 +11,8 @@ import com.devinforest.vo.Recruit;
 public interface RecruitMapper {
 	//통합 채용공고리스트 
 	public List<Recruit> selectRecruitList(Map<String, Object> map);
+	//채용공고리스트(면접제의용)
+	public List<Recruit> recruitListForSuggest(String companyKorName);
 	//기업별 채용공고리스트
 	public List<Recruit> selectRecruitListByCompany(Map<String, Object> map);
 	//기업별 채용공고 갯수

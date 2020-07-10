@@ -40,6 +40,10 @@ public class RecruitService {
 	outputMap.put("recruitList", recruitList);
 	return outputMap;
 	}
+	//공고리스트(면접제의용)
+	public List<Recruit> getRecruitListForSuggest(String companyKorName){
+		return recruitMapper.recruitListForSuggest(companyKorName);
+	}
 	//기업용 채용공고 리스트 출력
 	public  Map<String, Object> getRecruitListByCompany(int currentPage, int rowPerPage, String searchWord){
 		int beginRow=(currentPage-1)*rowPerPage;

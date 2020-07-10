@@ -32,6 +32,19 @@
 	WHERE  
    		member_name = #{memberName}
 	</select>
+	<!-- 기업용 면접제의 리스트 출력 -->
+	<select id="selectSuggestListForCompany" parameterType="String" resultType="com.devinforest.vo.Suggest">
+	SELECT recruit_no AS recruitNo, 
+   			company_name AS companyName,
+   			member_name AS memberName, 
+   			suggest_content AS suggestContent, 
+   			suggest_type AS suggestType,
+   			last_update AS lastUpdate
+   	FROM
+			dev_suggest
+	WHERE
+			company_name = #{companyName}	
+	</select>
 	<!-- 면접제의 리스트 거부를 수락으로 변경 -->
 	<update id="updateSuggestType" parameterType="com.devinforest.vo.Suggest">
 			UPDATE dev_suggest 

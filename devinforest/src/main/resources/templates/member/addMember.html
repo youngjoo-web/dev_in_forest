@@ -250,7 +250,7 @@
 		
 		let memberEmail2 = $('#memberEmail2').val();
 		$.ajax({
-            url:'/devinforest/checkMemberEmail'
+            url:'/checkMemberEmail'
             ,type:'POST'
             ,data:{'memberEmail2':memberEmail2}
             ,success : function(data) {
@@ -258,6 +258,8 @@
         		$('#emailMsg').text(data);
         		if(data == "사용가능한 이메일입니다.") {
         			$('#memberEmail').val(email);
+        		}else{
+        			$('#memberEmail').val("");
         		}
             }
 		});
@@ -289,7 +291,7 @@
 		
 		let memberName2 = $('#memberName2').val();
 		$.ajax({
-            url:'/devinforest/checkMemberName'
+            url:'/checkMemberName'
             ,type:'POST'
             ,data:{'memberName2':memberName2}
             ,success : function(data) {
@@ -297,6 +299,8 @@
         		$('#nameMsg').text(data);
         		if(data == "사용가능한 닉네임입니다.") {
         			$('#memberName').val(name);
+        		}else{
+        			$('#memberName').val("");
         		}
             }
 		});  

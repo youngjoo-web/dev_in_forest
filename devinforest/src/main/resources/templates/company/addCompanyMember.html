@@ -335,6 +335,8 @@
         		$('#emailMsg').text(data);
         		if(data == "사용가능한 이메일입니다.") {
         			$('#companyEmail').val(email);
+        		}else{
+        			$('#companyEmail').val("");
         		}
             }
 		});
@@ -374,6 +376,8 @@
         		$('#kornameMsg').text(data);
         		if(data == "사용가능한 닉네임입니다.") {
         			$('#companyKorName').val(korname);
+        		}else{
+        			$('#companyKorName').val("");
         		}
             }
 		});
@@ -411,6 +415,8 @@
         		$('#engnameMsg').text(data);
         		if(data == "사용가능한 닉네임입니다.") {
         			$('#companyEngName').val(engname);
+        		}else{
+        			$('#companyEngName').val("");
         		}
             }
 		});

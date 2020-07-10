@@ -91,7 +91,7 @@
 						<h6 class="collapse-header">기업회원</h6>
 						<a class="collapse-item"
 							th:href="@{/getCompanyInfo(companyEmail=${session.loginCompany.companyEmail})}">기업정보</a>
-						<a class="collapse-item" href="/getMemberListForCompany">일반
+						<a class="collapse-item" th:href="@{/getMemberListForCompany}">일반
 							회원목록</a>
 					</div>
 				</div></li>
@@ -129,7 +129,9 @@
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">채용공고</h6>
-						<a class="collapse-item" href="#">채용공고 리스트 </a>
+						<a class="collapse-item"
+							th:href="@{/getRecruitListByCompany(searchWord=${session.loginCompany.companyKorName})}">채용공고
+							리스트 </a>
 					</div>
 				</div></li>
 			<!-- 문의&신고 관리 끝 -->
@@ -137,10 +139,10 @@
 			<!-- 구분 줄 -->
 			<hr class="sidebar-divider">
 
-			<!-- 통계 확인 - 사이드바 제목 -->
+			<!-- 면접확인 - 사이드바 제목 -->
 			<div class="sidebar-heading">면접제의</div>
 
-			<!-- 통계 -->
+			<!-- 면접 -->
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapse5" aria-expanded="true"
 				aria-controls="collapsePages"> <i
@@ -150,10 +152,12 @@
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">면접제의</h6>
-						<a class="collapse-item" href="#">면접제의 리스트 </a>
+						<a class="collapse-item" th:href="@{/getMemberListForCompany}">면접제의
+							하기</a> <a class="collapse-item" th:href="@{/suggestList}">면접제의
+							리스트</a>
 					</div>
 				</div></li>
-			<!-- 통계 끝 -->
+			<!-- 면접 끝 -->
 
 
 			<!-- 마지막 구분 줄 -->
@@ -167,95 +171,128 @@
 		</ul>
 		<!-- 사이드바 끝 -->
 
-<!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
 
-      <!-- Main Content -->
-      <div id="content">
+			<!-- Main Content -->
+			<div id="content">
 
-        <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+				<!-- Topbar -->
+				<nav
+					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-          <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
+					<!-- Sidebar Toggle (Topbar) -->
+					<button id="sidebarToggleTop"
+						class="btn btn-link d-md-none rounded-circle mr-3">
+						<i class="fa fa-bars"></i>
+					</button>
 
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-success" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
+					<!-- Topbar Search -->
+					<form
+						class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+						<div class="input-group">
+							<input type="text" class="form-control bg-light border-0 small"
+								placeholder="Search for..." aria-label="Search"
+								aria-describedby="basic-addon2">
+							<div class="input-group-append">
+								<button class="btn btn-success" type="button">
+									<i class="fas fa-search fa-sm"></i>
+								</button>
+							</div>
+						</div>
+					</form>
 
-          <!-- Topbar Navbar -->
-          <ul class="navbar-nav ml-auto">
+					<!-- Topbar Navbar -->
+					<ul class="navbar-nav ml-auto">
 
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </li>
+						<!-- Nav Item - Search Dropdown (Visible Only XS) -->
+						<li class="nav-item dropdown no-arrow d-sm-none"><a
+							class="nav-link dropdown-toggle" href="#" id="searchDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
+						</a> <!-- Dropdown - Messages -->
+							<div
+								class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+								aria-labelledby="searchDropdown">
+								<form class="form-inline mr-auto w-100 navbar-search">
+									<div class="input-group">
+										<input type="text"
+											class="form-control bg-light border-0 small"
+											placeholder="Search for..." aria-label="Search"
+											aria-describedby="basic-addon2">
+										<div class="input-group-append">
+											<button class="btn btn-primary" type="button">
+												<i class="fas fa-search fa-sm"></i>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div></li>
 
-            <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${session.loginCompany.companyKorName}"></span>
-                <img class="img-profile rounded-circle" th:src="@{/img/img.png}">
-              </a>
-              <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                   	로그아웃
-                </a>
-              </div>
-            </li>
+						<!-- Nav Item - User Information -->
+						<li class="nav-item dropdown no-arrow"><a
+							class="nav-link dropdown-toggle" href="#" id="userDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> <span
+								class="mr-2 d-none d-lg-inline text-gray-600 small"
+								th:text="${session.loginCompany.companyKorName}"></span> <img
+								class="img-profile rounded-circle" th:src="@{/img/img.png}">
+						</a> <!-- Dropdown - User Information -->
+							<div
+								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+								aria-labelledby="userDropdown">
+								<a class="dropdown-item" href="#" data-toggle="modal"
+									data-target="#logoutModal"> <i
+									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+									로그아웃
+								</a>
+							</div></li>
 
-          </ul>
+					</ul>
 
-        </nav>
-        <!-- End of Topbar -->
-		<!-- 내용 넣는 곳 -->
-		<div class="container-fluid pt-4 px-5 content">
+				</nav>
+				<!-- End of Topbar -->
+				<!-- 내용 넣는 곳 -->
+				<div class="container-fluid pt-4 px-5 content">
 
-			<!-- 테이블 제목 예시 -->
-			<h1 class="h3 mb-2 text-gray-800">회원목록</h1>
+					<!-- 테이블 제목 예시 -->
+					<h1 class="h3 mb-2 text-gray-800">회원상세보기</h1>
 
-			<!-- 테이블 예시 -->
-			<div class="card shadow mb-4">
-				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold text-primary"></h6>
-				</div>
-				<div class="card-body">
-					<div class="table-responsive">
-						<form method="get" th:action="@{/getMemberList}">
-							<input id="search" class="searchText" type="text"
-								name="searchWord" th:value="${searchWord}" placeholder="닉네임검색">
-							<button class="btn searchBtn" type="submit">검색</button>
-							<button id="resetBtn" class="btn searchBtn" type="button">초기화</button>
-						</form>
-						<br>
-						<table class="table table-bordered" id="dataTable" width="100%"
+					<!-- 테이블 예시 -->
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary"></h6>
+						</div>
+						<div class="card-body">
+							<div class="table-responsive">
+								<div class="row">
+									<div class="col-sm-10"></div>
+									<div class="col-sm-1">
+										<form method="get" th:action="@{/addSuggest}">
+
+											<!-- <input type="hidden" name="memberName"
+												th:value="${member.memberName}">
+											<input type="hidden" name="companyName"
+												th:value="${session.loginCompany.companyName}"> -->
+											<input type="hidden" name="companyName" th:value="${session.loginCompany.companyKorName}">
+											<input type="hidden" name="memberName" th:value="${member.memberName}">
+											<button class="btn btn-sm pageBtn" type="submit">면접제의하기</button>
+										</form>
+
+
+
+									</div>
+									<div class="col-sm-1"></div>
+
+
+
+								</div>
+
+
+
+
+								<br>
+								<table class="table table-bordered" id="dataTable" width="100%"
 									cellspacing="0">
 									<tr>
 										<td>이메일</td>
@@ -298,27 +335,27 @@
 										<td th:text="${member.memberAbout}"></td>
 									</tr>
 								</table>
-					</div>					
+							</div>
+						</div>
+					</div>
+
 				</div>
+				<!-- /.container-fluid -->
 			</div>
+			<!-- End of Main Content -->
+
+			<!-- 하단 저작권 -->
+			<footer class="sticky-footer bg-white">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright &copy; Your Website 2020</span>
+					</div>
+				</div>
+			</footer>
+			<!-- 하단 저작권 끝 -->
 
 		</div>
-		<!-- /.container-fluid -->
-	</div>
-	<!-- End of Main Content -->
-
-	<!-- 하단 저작권 -->
-	<footer class="sticky-footer bg-white">
-		<div class="container my-auto">
-			<div class="copyright text-center my-auto">
-				<span>Copyright &copy; Your Website 2020</span>
-			</div>
-		</div>
-	</footer>
-	<!-- 하단 저작권 끝 -->
-
-	</div>
-	<!-- End of Content Wrapper -->
+		<!-- End of Content Wrapper -->
 
 	</div>
 	<!-- End of Page Wrapper -->

@@ -39,6 +39,16 @@ public class SuggestController {
 		suggestService.addSuggest(suggest);
 		return "company/companyHome";
 	}
+	@GetMapping("/suggestList")
+	public String suggestList(HttpSession session, String companyName, Model model) {
+		if(session.getAttribute("loginCompany")==null) {
+			return "redirect:/index";
+		}
+		System.out.println(companyName+"<---suggestList");
+		List<Suggest>list=suggestService.getSuggestListForCompany(companyName);
+		model.addAttribute("suggestList", list);
+		return "company/suggestList";
+	}
 	
 	@PostMapping("/modifySuggestType")
 	public String modifySuggestType(HttpSession session,Suggest suggest,Model model,String suggestType) {
