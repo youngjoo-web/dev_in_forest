@@ -4,28 +4,29 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.VoteMapper">
 	
-	<!-- 좋아요 누른 회원 검사 -->
+	<!-- 질문 좋아요 누른 회원 검사 -->
 	<select id="voteCheck" resultType="com.devinforest.vo.Vote" parameterType="com.devinforest.vo.Vote" >
 		SELECT
 			member_name memberName,
 			vote_point votePoint
 		FROM
-			dev_vote
+			dev_question_vote
 		WHERE
 			question_no = #{questionNo} AND member_name=#{memberName}
 	</select>
 	
-	<!-- 좋아요, 싫어요 삭제 -->
+	<!-- 질문 투표 삭제 -->
 	<delete id="deleteVote" parameterType="com.devinforest.vo.Vote">
-		DELETE FROM dev_vote
+		DELETE FROM dev_question_vote
 		WHERE
 			question_no = #{questionNo} AND member_name=#{memberName}
 	</delete>
 	
+
 	<!-- 질문 투표 +1 -->
 	<insert id="insertPlusVote" parameterType="com.devinforest.vo.Vote">
 		INSERT INTO
-			dev_vote(
+			dev_question_vote(
 				question_no,
 				member_name,
 				vote_point
@@ -36,9 +37,11 @@
 				1
 			)
 	</insert>
+	
+	<!-- 질문 투표 -1 -->
 	<insert id="insertMinusVote" parameterType="com.devinforest.vo.Vote">
 		INSERT INTO
-			dev_vote(
+			dev_question_vote(
 				question_no,
 				member_name,
 				vote_point
@@ -49,27 +52,70 @@
 				0
 			)
 	</insert>
-	<update id="updatePlusVote" parameterType="com.devinforest.vo.Vote">
-		UPDATE
-			dev_vote
-		SET
-			vote_point=1
-		WHERE
-			memberName=#{memberName},questionNo=#{questionNo}
-	</update>
-	<update id="updateMinusVote" parameterType="com.devinforest.vo.Vote">
-		UPDATE
-			dev_vote
-		SET
-			vote_point=0
-		WHERE
-			memberName=#{memberName},questionNo=#{questionNo}
-	</update>
+	
+	<!-- 질문 투표 총 개수  -->
 	<select id="voteTotalCount" resultType="int" parameterType="com.devinforest.vo.Vote">
 		SELECT
-		(SELECT count(*) FROM dev_vote WHERE vote_point=1 AND question_no=#{questionNo})
-		-
-		(SELECT count(*) FROM dev_vote WHERE vote_point=0 AND question_no=#{questionNo})
-		FROM dual
+			(SELECT COUNT(*) FROM dev_question_vote WHERE vote_point=1 AND question_no=#{questionNo})
+			-
+			(SELECT COUNT(*) FROM dev_question_vote WHERE vote_point=0 AND question_no=#{questionNo})
+		FROM DUAL
+	</select>
+	
+	<!-- 답변 좋아요 누른 회원 검사 -->
+	<select id="answerVoteCheck" resultType="com.devinforest.vo.AnswerVote" parameterType="com.devinforest.vo.Answer">
+		SELECT
+			member_name memberName,
+			vote_point votePoint
+		FROM
+			dev_answer_vote
+		WHERE
+			answer_no = #{answerNo} AND member_name=#{memberName}
+	</select>
+	
+	<!-- 답변 투표 삭제 -->
+	<delete id="deleteAnswerVote" parameterType="com.devinforest.vo.Answer">
+		DELETE FROM dev_answer_vote
+		WHERE
+			answer_no = #{answerNo} AND member_name=#{memberName}
+	</delete>
+	
+	<!-- 답변 투표 +1 -->
+	<insert id="insertPlusAnswerVote" parameterType="com.devinforest.vo.Answer">
+		INSERT INTO
+			dev_answer_vote(
+				answer_no,
+				member_name,
+				vote_point
+			)
+			VALUES(
+				#{answerNo},
+				#{memberName},
+				1
+			)
+	</insert>
+	
+	<!-- 질문 투표 -1 -->
+	<insert id="insertMinusAnswerVote" parameterType="com.devinforest.vo.Answer">
+		INSERT INTO
+			dev_answer_vote(
+				answer_no,
+				member_name,
+				vote_point
+			)
+			VALUES(
+				#{answerNo},
+				#{memberName},
+				0
+			)
+	</insert>
+	
+	<!-- 답변 투표 총 개수  -->
+	<select id="answerVoteTotalCount" resultType="int" parameterType="com.devinforest.vo.Answer">
+		SELECT
+			(SELECT COUNT(*) FROM dev_answer_vote WHERE vote_point=1 AND answer_no=#{answerNo})
+			-
+			(SELECT COUNT(*) FROM dev_answer_vote WHERE vote_point=0 AND answer_no=#{answerNo})
+		FROM DUAL
 	</select>
 </mapper>

@@ -52,11 +52,11 @@
 						data: {'memberName' : memberName, 'questionNo' : questionNo},
 						success: function(data) {
 							if(data['memberName'] != null && data['votePoint'] == 1) {
-								$('.fa-chevron-up').css('color', 'green');
+								$('#fa-chevron-up').css('color', 'green');
 								$('#downBtn').attr("disabled", true);
 								return false;
 							} else if(data['memberName'] != null && data['votePoint'] == 0) {
-								$('.fa-chevron-down').css('color', '#a40000');
+								$('#fa-chevron-down').css('color', '#a40000');
 								$('#upBtn').attr("disabled", true);
 								return false;
 							}
@@ -197,14 +197,14 @@
 									$('#count').remove();
 									$('#voteTotalCount').append('<div id="count">' + data + '</div>');
 					                console.log("좋아요 성공");
-					                $('.fa-chevron-up').css('color', 'green');
+					                $('#fa-chevron-up').css('color', 'green');
 					                $('#downBtn').attr("disabled", true);
 					                return false;
 								}
 							});
 						} else {
 							if (confirm("추천을 취소하시겠습니까?") == true){    //확인
-								$('.fa-chevron-up').css('color', '#858796');
+								$('#fa-chevron-up').css('color', '#858796');
 							}else{   //취소
 							    return;
 							}
@@ -246,7 +246,7 @@
 								success : function(data) {
 									$('#count').remove();
 									$('#voteTotalCount').append('<div id="count">' + data + '</div>');
-									$('.fa-chevron-down').css('color', '#a40000');
+									$('#fa-chevron-down').css('color', '#a40000');
 									$('#upBtn').attr("disabled", true);
 									console.log("싫어요 성공");
 					                return false;
@@ -254,7 +254,7 @@
 							});
 						} else {
 							if (confirm("비추천을 취소하시겠습니까?") == true){    //확인
-								$('.fa-chevron-down').css('color', '#858796');
+								$('#fa-chevron-down').css('color', '#858796');
 							}else{   //취소
 							    return;
 							}
@@ -265,7 +265,6 @@
 								success : function(data) {
 									$('#count').remove();
 									$('#voteTotalCount').append('<div id="count">' + data + '</div>');
-									
 									$('#upBtn').attr("disabled", false);
 									console.log("삭제 성공");	
 					            	
@@ -278,7 +277,20 @@
 			});
 			
 			/* *****************************  답변 관련 AJAX  ****************************** */	
-			
+			/*
+			<div style="display:flex">
+							<div style="flex-direction: row; flex-wrap: nowrap;">
+								<table>
+									<tr><td><button class="btn" type="button" id="upBtn"><i class='fas fa-chevron-up' style='font-size:24px'></i></button></td></tr>
+									<tr><td style="text-align:center; font-size:20px; font-weight:bold;" ><div id="voteTotalCount"></div></td></tr>
+									<tr><td><button class="btn" type="button" id="downBtn"><i class='fas fa-chevron-down' style='font-size:24px'></i></button></td></tr>
+								</table>
+							</div>
+							<div style="flex-direction: row; flex-wrap: nowrap;">
+								<div style="font-size: 18px; margin-left: 20px;" th:text="${question.questionContent}"></div>
+							</div>
+			</div>
+			*/
 			// 답변 리스트, 댓글 리스트 가져오기
 			$.ajax({
 				url: '/getAnswerList',
@@ -288,8 +300,15 @@
 					console.log(data['answerList']);
 					console.log(data['lastPage']);
 					$.each(data['answerList'], function(index, item){
-						$('#answerList').append('<div>'+ item.answerContent + '</div>');
-						$('#answerList').append('<div>'+ item.memberName + '</div>');
+						$('#answerList').append('<div style="display:flex"><div style="flex-direction: row; flex-wrap: nowrap;">');
+						$('#answerList').append('<table>');
+						$('#answerList').append('<tr><td><button class="btn" type="button" id="answerUpBtn' + item.answerNo +'"><i id="fa-chevron-up'+ item.answerNo +'" class="fas fa-chevron-up" style=\'font-size:24px\'></i></button></td></tr>');
+						$('#answerList').append('<tr><td style="text-align:center; font-size:20px; font-weight:bold;" ><div id="answerVoteTotalCount' +item.answerNo +'"></div></td></tr>');
+						$('#answerList').append('<tr><td><button class="btn" type="button" id="answerDownBtn' + item.answerNo +'"><i id="fa-chevron-down'+ item.answerNo +'" class="fas fa-chevron-down" style=\'font-size:24px\'></i></button></td></tr>');
+						$('#answerList').append('</table></div>');
+						$('#answerList').append('<div style="flex-direction: row; flex-wrap: nowrap;">');
+						$('#answerList').append('<div style="font-size: 18px; margin-left: 20px;">' + item.answerContent +'</div></div>');
+						$('#answerList').append('</div>');
 						$('#answerList').append('<div id="answerCommentList'+ item.answerNo +'">');
 						$('#answerList').append('<div id="answerCommentShowMore' + item.answerNo + '"></div>');
 						$('#answerList').append('</div>');
@@ -299,7 +318,129 @@
 						$('#answerList').append('<div id="answerComment'+item.answerNo +'"><a th:if="${memberName} != \'Guest\'" class="btn btn-outline-success btn-sm" id="writeAnswerCommentBtn' + item.answerNo + '" href="#">댓글 작성</a></div>');					
 						$('#answerList').append('<hr>');
 					});
-					
+					$.each(data['answerList'], function(index, item){
+						$.ajax({
+							url:'/answerVoteTotalCount',
+							type: 'GET',
+							data: {'answerNo' : item.answerNo},
+							success: function(data) {
+								$('#answerCount'+ item.answerNo).remove();
+								$('#answerVoteTotalCount'+ item.answerNo).append('<div id="answerCount'+ item.answerNo+'">' + data + '</div>');
+								$.ajax({
+									url: '/answerVoteCheck',
+									type: 'GET',
+									data: {'memberName' : item.memberName, 'answerNo' : item.answerNo},
+									success: function(data) {
+										if(data['memberName'] != null && data['votePoint'] == 1) {
+											$('#fa-chevron-up'+ item.answerNo).css('color', 'green');
+											$('#answerDownBtn'+ item.answerNo).attr("disabled", true);
+											return false;
+										} else if(data['memberName'] != null && data['votePoint'] == 0) {
+											$('#fa-chevron-down'+ item.answerNo).css('color', '#a40000');
+											$('#answerUpBtn'+ item.answerNo).attr("disabled", true);
+											return false;
+										}
+									}
+								});
+							}
+						});
+					});
+					$.each(data['answerList'], function(index, item){
+						$('#answerUpBtn'+item.answerNo).click(function(){
+							if(memberName == "Guest") {
+								alert("Geust는 투표를 할 수 없습니다.");
+								return;
+							}
+							
+							$.ajax({
+								url:'/answerVoteCheck',
+								type: 'GET',
+								data: {'memberName' : item.memberName, 'answerNo' : item.answerNo},
+								success: function(data) {
+									console.log(data);
+									if(data['memberName'] == null) {
+										$.ajax({
+											url: '/plusAnswerVote',
+											type: 'GET',
+											data: {'memberName' : item.memberName, 'answerNo' : item.answerNo},
+											success : function(data) {
+												$('#answerCount'+ item.answerNo).remove();
+												$('#answerVoteTotalCount'+ item.answerNo).append('<div id="answerCount'+ item.answerNo+'">' + data + '</div>');
+								                console.log("좋아요 성공");
+								                $('#fa-chevron-up'+ item.answerNo).css('color', 'green');
+								                $('#answerDownBtn'+ item.answerNo).attr("disabled", true);
+								                return false;
+											}
+										});
+									} else {
+										if (confirm("추천을 취소하시겠습니까?") == true){    //확인
+											$('#fa-chevron-up'+ item.answerNo).css('color', '#858796');
+										}else{   //취소
+										    return;
+										}
+										$.ajax({
+											url: '/deleteAnswerVote',
+											type: 'GET',
+											data: {'memberName' : item.memberName, 'answerNo' : item.AnswerNo},
+											success : function(data) {
+												$('#answerCount'+ item.answerNo).remove();
+												$('#answerVoteTotalCount'+ item.answerNo).append('<div id="answerCount'+ item.answerNo+'">' + data + '</div>');
+												$('#answerDownBtn'+ item.answerNo).attr("disabled", false);
+												console.log("삭제 성공");	
+											
+											}
+										});
+										
+									}
+								}
+							});
+						});
+						$('#answerDownBtn'+ item.answerNo).click(function(){
+							if(memberName == "Guest") {
+								alert("Geust는 투표를 할 수 없습니다.");
+								return;
+							}
+							$.ajax({
+								url:'/answerVoteCheck',
+								type: 'GET',
+								data: {'memberName' : item.memberName, 'answerNo' : item.answerNo},
+								success: function(data) {
+									if(data['memberName'] == null) {
+										$.ajax({
+											url: '/minusAnswerVote',
+											type: 'GET',
+											data: {'memberName' : item.memberName, 'answerNo' : item.answerNo},
+											success : function(data) {
+												$('#answerCount'+ item.answerNo).remove();
+												$('#answerVoteTotalCount'+ item.answerNo).append('<div id="answerCount'+ item.answerNo+'">' + data + '</div>');
+												$('#fa-chevron-down'+ item.answerNo).css('color', '#a40000');
+												$('#answerUpBtn'+ item.answerNo).attr("disabled", true);
+												console.log("싫어요 성공");
+								                return false;
+											}
+										});
+									} else {
+										if (confirm("비추천을 취소하시겠습니까?") == true){    //확인
+											$('#fa-chevron-down'+ item.answerNo).css('color', '#858796');
+										}else{   //취소
+										    return;
+										}
+										$.ajax({
+											url: '/deleteAnswerVote',
+											type: 'GET',
+											data: {'memberName' : item.memberName, 'answerNo' : item.answerNo},
+											success : function(data) {
+												$('#answerCount'+ item.answerNo).remove();
+												$('#answerVoteTotalCount'+ item.answerNo).append('<div id="answerCount'+ item.answerNo+'">' + data + '</div>');
+												$('#answerUpBtn'+ item.answerNo).attr("disabled", false);
+												console.log("삭제 성공");	
+											}
+										});
+									} 
+								}
+							});
+						});
+					});
 					$.each(data['answerList'], function(index, item){
 						$.ajax({
 							url: '/getAnswerCommentList',
@@ -612,38 +753,30 @@
 					<!-- 상단 바 끝 -->	
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
-						
+						<h1 style="color: black; font-weight: bold;" th:text="${question.questionTitle}"></h1>
+						<span th:text="조회수 +' '+ ${viewsCount}"></span>
+						<span th:text="작성일 +' '+ ${#strings.substring(question.questionCreateDate, 0, 16)}"></span>
+						<hr>
 						<!-- 여기에 본문 넣으면댐 -->
-						<h1 th:text="상세보기"></h1>
-		
-		
-						<button class="btn" type="button" id="upBtn"><i class='fas fa-chevron-up' style='font-size:24px'></i></button>
-						<div id="voteTotalCount">
+						<div style="display:flex">
+							<div style="flex-direction: row; flex-wrap: nowrap;">
+								<table>
+									<tr><td><button class="btn" type="button" id="upBtn"><i id="fa-chevron-up" class='fas fa-chevron-up' style='font-size:24px'></i></button></td></tr>
+									<tr><td style="text-align:center; font-size:20px; font-weight:bold;" ><div id="voteTotalCount"></div></td></tr>
+									<tr><td><button class="btn" type="button" id="downBtn"><i id="fa-chevron-down" class='fas fa-chevron-down' style='font-size:24px'></i></button></td></tr>
+								</table>
+							</div>
+							<div style="flex-direction: row; flex-wrap: nowrap;">
+								<div style="font-size: 18px; margin-left: 20px;" th:text="${question.questionContent}"></div>
+							</div>
 						</div>
-						<button class="btn" type="button" id="downBtn"><i class='fas fa-chevron-down' style='font-size:24px'></i></button>
-						<br>
-						<a th:href="@{/modifyQuestion(questionNo=${question.questionNo})}">수정</a>
-						<a href="#">신고</a>
-						<table border="1">
-							<thead>
-								<tr>
-									<th>번호</th>
-									<th>제목</th>
-									<th>내용</th>
-									<th>작성자</th>
-									<th>조회수</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td th:text="${question.questionNo}"></td>
-									<td th:text="${question.questionTitle}"></td>
-									<td th:text="${question.questionContent}"></td>
-									<td th:text="${question.memberName}"></td>
-									<td th:text="${viewsCount}"></td>
-								</tr>
-							</tbody>
-						</table>
+						<div>
+							<span th:if="${memberName} == ${question.memberName}"><a class="btn btn-outline-warning btn-sm" th:href="@{/modifyQuestion(questionNo=${question.questionNo})}">수정</a></span>
+							<span th:if="${memberName} != ${question.memberName}"><a class="btn btn-outline-danger btn-sm" href="#">신고</a></span>
+						</div>
+						
+						<hr>
+					
 						<div id="questionCommentList">
 							
 						</div>
@@ -661,12 +794,8 @@
 						<div id="questionComment">
 							<a th:if="${memberName} != 'Guest'" id="writeQuestionCommentBtn" href="#">댓글 작성</a>
 						</div>
-						
-						
-						
-						<!-- 댓글 rowperpage가 안보임 -->
-						<!-- 답변 리스트 안보임 -->
-						<!-- restcontroller 완성해야함 -->
+						<br>
+						<h2 th:text="답변"></h2>
 						<hr>
 						<!-- 답변 리스트 -->
 						<div id="answerList">
