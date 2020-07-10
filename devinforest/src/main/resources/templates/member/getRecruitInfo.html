@@ -10,7 +10,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>회원의 홈</title>
+<title>채용공고상세보기</title>
 
 <!-- Custom fonts for this template-->
 <link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
@@ -93,8 +93,8 @@
 						<a class="collapse-item"
 							th:href="@{/getMemberInfo(memberEmail=${session.loginMember.memberEmail})}">회원정보</a>
 						<a class="collapse-item" href="/getMemberList">회원리스트</a> <a
-							class="collapse-item" href="#">채용 리스트</a> <a
-							class="collapse-item" href="#">면접제의 리스트</a> <a
+							class="collapse-item" th:href="@{/getRecruitList}">채용 리스트</a> <a
+							class="collapse-item" th:href="@{/getMemberInfo(memberEmail=${session.loginMember.memberEmail})}">면접제의 리스트</a> <a
 							class="collapse-item" href="#">문의&신고</a>
 					</div>
 				</div></li>
@@ -150,7 +150,7 @@
 						<h6 class="collapse-header">기업</h6>
 						<a class="collapse-item" th:href="@{/getCompanyList}">기업정보리스트</a>
 						<a class="collapse-item" href="#">기업의 면접제의 리스트 </a> <a
-							class="collapse-item" href="#">기업의 채용리스트</a>
+							class="collapse-item" th:href="@{/getRecruitList}">기업의 채용리스트</a>
 					</div>
 				</div></li>
 			<!-- 기업 끝 -->
@@ -252,7 +252,7 @@
 				<div class="container-fluid pt-4 px-5 content">
 
 					<!-- 테이블 제목 예시 -->
-					<h1 class="h3 mb-2 text-gray-800">채용공고목록</h1>
+					<h1 class="h3 mb-2 text-gray-800">채용공고상세보기</h1>
 
 					<!-- 테이블 예시 -->
 					<div class="card shadow mb-4">
