@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.devinforest.vo.Answer;
 import com.devinforest.vo.AnswerComment;
 import com.devinforest.vo.AnswerCommentBack;
 import com.devinforest.vo.QuestionComment;
@@ -28,4 +29,5 @@ public interface CommentMapper {
 	public AnswerComment selectAnswerCommentOne(AnswerComment answerComment); // 백업할 답변의 댓글 가져오기 
 	public int insertAnswerCommentBack(AnswerComment answerComment); // 신고된 답변의 댓글 백업
 	public void deleteAnswerComment(AnswerComment answerComment); // 신고된 답변의 댓글 삭제
+	public void deleteAnswerCommentAll(Answer answer); // 신고된 답변삭제 위해 답변의 모든댓글 삭제
 }

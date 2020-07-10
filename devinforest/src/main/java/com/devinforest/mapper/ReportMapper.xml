@@ -72,7 +72,7 @@
 			dev_report
 		SET
 			report_state = 'Y'
-		WHERE answer_no_no = #{answerNo}
+		WHERE answer_no = #{answerNo}
 	</update>
 	<!-- 신고 조치유무 변경- 게시글 댓글 조치완료 -->
 	<update id="updateQuestionCommentNoOfReportState"

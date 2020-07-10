@@ -83,8 +83,8 @@ public class AdminMemberService {
 	}
 	
 	// 블랙 팝업창
-	public String blackMemberOne(String memberName) {
-		return adminMemberMapper.blackMemberOne(memberName);
+	public String getReportMemberEmail(String memberName) {
+		return adminMemberMapper.selectReportMemberEmail(memberName);
 	}
 	// 블랙 실행
 	public void blackMember(BlackList blackList, Question question, QuestionComment questionComment, 
@@ -108,27 +108,42 @@ public class AdminMemberService {
 		if(questionCommentNo!=0) {
 			System.out.println("게시글 댓글 신고");
 			// 댓글 백업테이블 추가
-			System.out.println(questionComment+" << 주입 전(답변의 댓글 신고)");
+			System.out.println(questionComment+" << 주입 전(게시글 답변 신고)");
 			QuestionComment questionCommentBack = commentMapper.selectQuestionCommentOne(questionComment);
-			System.out.println(questionCommentBack+" << 주입 후(답변의 댓글 신고)");
-			int backResult = commentMapper.insertQuestionCommentBack(questionCommentBack);
+			System.out.println(questionCommentBack+" << 주입 후(게시글 답변 신고)");
+			
+			int backResult = commentMapper.insertQuestionCommentBack(questionCommentBack); // 게시글 댓글 백업
 			if(backResult == 1) {
 				System.out.println("게시글 댓글 백업 성공");
-				commentMapper.deleteQuestionComment(questionComment);
+				commentMapper.deleteQuestionComment(questionComment); // 게시글의 댓글 삭제
 				System.out.println("게시글 댓글 삭제 성공");
-				reportMapper.updateQuestionCommentNoOfReportState(questionCommentNo);
+				reportMapper.updateQuestionCommentNoOfReportState(questionCommentNo); // 신고조치여부 Y로변경
 				System.out.println("조치여부 변경 성공");
 			} else {
 				System.out.println("게시글 댓글 백업 실패");
 			}
-			// 게시글의 댓글 삭제
 			
 		}
 		if(answerNo!=0 && answerCommentNo==0) {
 			System.out.println("게시글 답변 신고");
 			// 답변 백업 테이블 추가
+			System.out.println(answer+" << 주입 전(답변의 댓글 신고)");
+			Answer answerBack = answerMapper.selectAnswerOne(answer); // 백업할 게시글 답변 가져오기
+			System.out.println(answerBack+" << 주입 후(답변의 댓글 신고)");
 			
-			// 게시글 답변 삭제
+			int backResult = answerMapper.insertAnswerBack(answerBack); // 게시글 댓글 백업
+			
+			if(backResult == 1) {
+				System.out.println("게시글 댓글 백업 성공");
+				commentMapper.deleteAnswerCommentAll(answer);; // 게시글 답변의 모든 댓글 삭제
+				System.out.println("게시글 답변의 모든 댓글 삭제 성공");
+				answerMapper.deleteAnswer(answer);// 게시글 답변 삭제
+				System.out.println("게시글 댓글 삭제 성공");
+				reportMapper.updateAnswerNoOfReportState(answerNo); // 신고조치여부 Y로변경
+				System.out.println("조치여부 변경 성공");
+			} else {
+				System.out.println("게시글 댓글 백업 실패");
+			}
 			
 		}else if(answerCommentNo!=0) {
 			System.out.println("게시글 답변의 댓글 신고");
@@ -137,19 +152,20 @@ public class AdminMemberService {
 			System.out.println(answerComment+" << 주입 전(답변의 댓글 신고)");
 			AnswerComment answerCommentBack = commentMapper.selectAnswerCommentOne(answerComment);
 			System.out.println(answerCommentBack+" << 주입 후(답변의 댓글 신고)");
-			int backResult = commentMapper.insertAnswerCommentBack(answerCommentBack); // 백업
+			
+			int backResult = commentMapper.insertAnswerCommentBack(answerCommentBack); // 답변의 댓글 백업
 			if(backResult == 1) {
 				System.out.println("게시글 답변의 댓글 백업 성공");
-				commentMapper.deleteAnswerComment(answerComment);
+				commentMapper.deleteAnswerComment(answerComment); // 답변의 댓글 삭제
 				System.out.println("게시글 답변의 댓글 삭제 성공");
-				reportMapper.updateAnswerCommentNoOfReportState(answerCommentNo);
+				reportMapper.updateAnswerCommentNoOfReportState(answerCommentNo); // 신고조치여부 Y로 변경
 				System.out.println("조치여부 변경 성공");
 			} else {
 				System.out.println("게시글 답변의 댓글 백업 실패");
 			}
 			// 게시글 답변의 댓글 삭제
-			
 		}
+		// 회원 블랙 시켜야함.
 	}
 	// 블랙회원 목록
 	public Map<String, Object> getBlackMemberList(String searchWord, int currentPage, int rowPerPage) {

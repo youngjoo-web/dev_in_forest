@@ -109,9 +109,10 @@ public class AdminMemberController {
 		
 		String reportMemberName = report.getReportMemberName();
 		System.out.println(reportMemberName+" <- ReportController.blackPopup: blackMemberName");
-		String reportMemberEmail = adminMemberService.blackMemberOne(reportMemberName);
+		String reportMemberEmail = adminMemberService.getReportMemberEmail(reportMemberName); // 신고당한 회원 이메일
+		System.out.println(reportMemberEmail+" <- ReportController.blackPopup: reportMemberEmail");
 		model.addAttribute("memberEmail", reportMemberEmail);
-
+		
 		model.addAttribute("report", report);
 		return "black/addblackMember";
 	}

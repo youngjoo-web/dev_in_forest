@@ -70,20 +70,39 @@
 	<insert id="insertAnswerBack" parameterType="com.devinforest.vo.Answer">
 		INSERT INTO 
 			dev_answer_back(
-				member_name,
+				answer_no,
 				question_no,
+				member_name,
 				answer_content,
 				answer_createdate,
 				answer_updatedate,
+				answer_back_date,
 				answer_ip
 			)
 			VALUES(
-				#{memberName},
+				#{answerNo},
 				#{questionNo},
+				#{memberName},
 				#{answerContent},
-				NOW(),
+				#{answerCreateDate},
+				#{answerUpdateDate},
 				NOW(),
 				#{answerIp}
 			)
 	</insert>
+	
+	<!-- 백업할 게시글 답변 가져오기 -->
+	<select id="selectAnswerOne" parameterType="com.devinforest.vo.Answer" resultType="com.devinforest.vo.Answer">
+		SELECT
+			answer_no answerNo,
+			question_no questionNo,
+			member_name memberName,
+			answer_content answerContent,
+			answer_createdate answerCreateDate,
+			answer_updatedate answerUpdateDate,
+			answer_ip answerIp
+		FROM dev_answer
+		WHERE answer_no = #{answerNo}
+	</select>
+	
 </mapper>

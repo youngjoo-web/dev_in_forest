@@ -12,7 +12,7 @@ import com.devinforest.vo.Member;
 @Mapper
 public interface AdminMemberMapper {
 	// 블랙 팝업창에 출력할 데이터 출력
-	public String blackMemberOne(String memberName);
+	public String selectReportMemberEmail(String memberName);
 	// 멤버 삭제
 	public int deleteMemberByName(String memberName);
 	// 블랙리스트 추가

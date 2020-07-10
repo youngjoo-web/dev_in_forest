@@ -59,9 +59,9 @@ public class AnswerService {
 	}
 	
 	/* ---------- 답변  삭제 ---------- */
-	public int removeAnswer(Answer answer) {
+	public void removeAnswer(Answer answer) {
 		
-		return answerMapper.deleteAnswer(answer);
+		answerMapper.deleteAnswer(answer);
 	}
 	
 }

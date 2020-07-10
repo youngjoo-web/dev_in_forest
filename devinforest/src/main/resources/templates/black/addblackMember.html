@@ -66,13 +66,12 @@
 							</tr>
 							<tr>
 								<th>블랙회원 닉네임</th>
-								<td class="text-center darkColor" th:text="${report.memberName}"></td>
+								<td class="text-center darkColor" th:text="${report.reportMemberName}"></td>
 							</tr>
 						</table>
 						<form id="form" method="post" th:action="@{/blackMember}">
 							<div>
-								<input id="memberEmail" type="hidden" name="memberEmail" th:value="${memberEmail}">
-								<input id="memberName" type="hidden" name="memberName" th:value="${report.memberName}">
+								<input id="reportMemberName" type="hidden" name="reportMemberName" th:value="${report.reportMemberName}">
 								<input type="text" name="questionNo" th:value="${report.questionNo}">
 								<input type="text" name="questionCommentNo" th:value="${report.questionCommentNo}">
 								<input type="text" name="answerNo" th:value="${report.answerNo}">
@@ -115,8 +114,7 @@
 				window.close();
 			} */
 			$('#btn').click(function(){
-				let memberEmail = $('#memberEmail').val();
-				let memberName = $('#memberName').val();
+				let reportMemberName = $('#reportMemberName').val();
 				let blackListReason = $('#blackListReason').val();
 				$('#msg').text(''); // 메세지 지우기
 				if(blackListReason == "") {
@@ -124,7 +122,7 @@
 					$('#blackListReason').focus();
 					return;
 				}				
-				let result = confirm('[ '+memberEmail+' ] 회원을 블랙회원으로 변경하시겠습니까?');
+				let result = confirm('[ '+reportMemberName+' ] 회원을 블랙회원으로 변경하시겠습니까?');
 				if(!result) {
 					console.log('취소');
 					return;

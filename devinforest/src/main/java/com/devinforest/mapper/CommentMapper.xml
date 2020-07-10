@@ -63,6 +63,7 @@
 				member_name,
 				question_comment_content,
 				question_comment_date,
+				question_comment_back_date,
 				question_comment_ip
 			)
 			VALUES(
@@ -71,6 +72,7 @@
 				#{memberName},
 				#{questionCommentContent},
 				#{questionCommentDate},
+				NOW(),
 				#{questionCommentIp}
 			)
 	</insert>
@@ -145,6 +147,7 @@
 				member_name,
 				answer_comment_content,
 				answer_comment_date,
+				answer_comment_back_date,
 				answer_comment_ip
 			)
 			VALUES(
@@ -153,6 +156,7 @@
 				#{memberName},
 				#{answerCommentContent},
 				#{answerCommentDate},
+				NOW(),
 				#{answerCommentIp}
 			)
 	</insert>
@@ -162,5 +166,10 @@
 		FROM dev_answer_comment
 		WHERE answer_comment_no = #{answerCommentNo}
 	</delete>
-	
+	<!-- 신고된 답변삭제 위해 답변의 모든댓글 삭제 -->
+	<delete id="deleteAnswerCommentAll" parameterType="com.devinforest.vo.Answer">
+		DELETE 
+		FROM dev_answer_comment
+		WHERE answer_no = #{answerNo}
+	</delete>
 </mapper>

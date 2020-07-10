@@ -5,9 +5,10 @@ public class Answer {
 	private int questionNo;
 	private String memberName;
 	private String answerContent;
-	private String answerCreatedate;
-	private String answerUpdatedate;
+	private String answerCreateDate;
+	private String answerUpdateDate;
 	private String answerIp;
+	
 	public int getAnswerNo() {
 		return answerNo;
 	}
@@ -32,17 +33,17 @@ public class Answer {
 	public void setAnswerContent(String answerContent) {
 		this.answerContent = answerContent;
 	}
-	public String getAnswerCreatedate() {
-		return answerCreatedate;
+	public String getAnswerCreateDate() {
+		return answerCreateDate;
 	}
-	public void setAnswerCreatedate(String answerCreatedate) {
-		this.answerCreatedate = answerCreatedate;
+	public void setAnswerCreateDate(String answerCreateDate) {
+		this.answerCreateDate = answerCreateDate;
 	}
-	public String getAnswerUpdatedate() {
-		return answerUpdatedate;
+	public String getAnswerUpdateDate() {
+		return answerUpdateDate;
 	}
-	public void setAnswerUpdatedate(String answerUpdatedate) {
-		this.answerUpdatedate = answerUpdatedate;
+	public void setAnswerUpdateDate(String answerUpdateDate) {
+		this.answerUpdateDate = answerUpdateDate;
 	}
 	public String getAnswerIp() {
 		return answerIp;
@@ -50,13 +51,11 @@ public class Answer {
 	public void setAnswerIp(String answerIp) {
 		this.answerIp = answerIp;
 	}
+	
 	@Override
 	public String toString() {
 		return "Answer [answerNo=" + answerNo + ", questionNo=" + questionNo + ", memberName=" + memberName
-				+ ", answerContent=" + answerContent + ", answerCreatedate=" + answerCreatedate + ", answerUpdatedate="
-				+ answerUpdatedate + ", answerIp=" + answerIp + "]";
+				+ ", answerContent=" + answerContent + ", answerCreateDate=" + answerCreateDate + ", answerUpdateDate="
+				+ answerUpdateDate + ", answerIp=" + answerIp + "]";
 	}
-	
-	
-	
 }

@@ -109,7 +109,7 @@
 	</select>
 	
 	<!-- 블랙 팝업창에 출력할 데이터 출력 -->
-	<select id="blackMemberOne"
+	<select id="selectReportMemberEmail"
 			parameterType="String"
 			resultType="String">
 		SELECT
