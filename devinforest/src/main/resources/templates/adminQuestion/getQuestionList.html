@@ -151,7 +151,7 @@
 										<thead>
 											<tr>
 												<th class="darkColor" width="12%">질문 번호</th>
-												<th class="darkColor" width="12%">질문자</th>
+												<th class="darkColor" width="12%">질문 작성자</th>
 												<th class="darkColor" width="12%">질문 제목</th>
 												<th class="darkColor" width="12%">질문 내공</th>
 												<th class="darkColor" width="12%">질문 생성일</th>
@@ -162,9 +162,7 @@
 											<tr th:each="q : ${questionList}">
 												<td th:text="${q.questionNo}"></td>
 												<td th:text="${q.memberName}"></td>
-												<td><a
-													th:href="@{/getQuestionOne(questionNo=${q.questionNo})}"
-													th:text="${q.questionTitle}"></a></td>
+												<td><a th:href="@{/getQuestionOne(questionNo=${q.questionNo})}" th:text="${q.questionTitle}"></a></td>
 												<td th:text="${q.questionReputation}"></td>
 												<td th:text="${q.questionCreateDate}"></td>
 												<td th:text="${q.questionUpdateDate}"></td>

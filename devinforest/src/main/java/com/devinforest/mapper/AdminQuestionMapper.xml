@@ -102,7 +102,9 @@
 			answer_comment_no answerCommentNo,
 			answer_no answerNo,
 			member_name memberName,
-			answer_comment_content answerCommentContent
+			answer_comment_content answerCommentContent,
+			answer_comment_date answerCommentDate,
+			answer_comment_ip answerCommentIp
 		FROM dev_answer_comment
 		WHERE answer_comment_no LIKE CONCAT('%', #{searchWord}, '%')
 		OR member_name LIKE CONCAT('%', #{searchWord}, '%')

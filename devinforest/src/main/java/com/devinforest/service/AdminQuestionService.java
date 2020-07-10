@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devinforest.mapper.AdminQuestionMapper;
+import com.devinforest.vo.Answer;
+import com.devinforest.vo.AnswerComment;
 import com.devinforest.vo.Question;
+import com.devinforest.vo.QuestionComment;
 
 @Service
 @Transactional
@@ -39,7 +42,7 @@ public class AdminQuestionService {
 		System.out.println(lastPage + "<--  questionService lastPage");
 		List<Question> questionList = adminQuestionMapper.selectQuestionList(inputMap);
 	
-		System.out.println(questionList);
+		System.out.println(questionList + " <--- questionList");
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("questionTotalRow", questionTotalRow);
@@ -69,9 +72,9 @@ public class AdminQuestionService {
 		System.out.println(rowPerPage + " <--- rowPerPage");
 		
 		System.out.println(lastPage + "<--  questionService lastPage");
-		List<Question> answerList = adminQuestionMapper.selectAnswerList(inputMap);
+		List<Answer> answerList = adminQuestionMapper.selectAnswerList(inputMap);
 	
-		System.out.println(answerList);
+		System.out.println(answerList + " <--- answerList");
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("answerTotalRow", answerTotalRow);
@@ -101,14 +104,45 @@ public class AdminQuestionService {
 		System.out.println(rowPerPage + " <--- rowPerPage");
 		
 		System.out.println(lastPage + "<--  questionService lastPage");
-		List<Question> questionCommentList = adminQuestionMapper.selectQuestionCommentList(inputMap);
+		List<QuestionComment> questionCommentList = adminQuestionMapper.selectQuestionCommentList(inputMap);
 	
-		System.out.println(questionCommentList);
+		System.out.println(questionCommentList + " <--- questionCommentList");
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("questionCommentTotalRow", questionCommentTotalRow);
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("questionCommentList", questionCommentList);
+		
+		return returnMap;
+	}
+	// 답변댓글 List 조회
+	public Map<String, Object> getAnswerCommentList(int currentPage, int rowPerPage, String searchWord) {
+		System.out.println(searchWord + " <-- Service searchWord");
+		
+		int beginRow = (currentPage -1) * rowPerPage;
+		int answerCommentTotalRow = adminQuestionMapper.selectAnswerCommentTotalRow(searchWord);
+		System.out.println(answerCommentTotalRow + " <-- answerCommentTotalRow");
+		int lastPage = answerCommentTotalRow / rowPerPage;
+		if(answerCommentTotalRow % rowPerPage != 0) {
+			lastPage += 1;
+		}
+		Map<String, Object> inputMap = new HashMap<String, Object>();
+		inputMap.put("searchWord", searchWord);
+		inputMap.put("beginRow", beginRow);
+		inputMap.put("rowPerPage", rowPerPage);
+		
+		System.out.println(searchWord + " <--- searchWord");
+		System.out.println(beginRow + " <--- beginRow");
+		System.out.println(rowPerPage + " <--- rowPerPage");
+		System.out.println(lastPage + "<--  questionService lastPage");
+		
+		List<AnswerComment> answerCommentList = adminQuestionMapper.selectAnswerCommentList(inputMap);
+		System.out.println(answerCommentList + " <--- answerCommentList");
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("answerCommentTotalRow", answerCommentTotalRow);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("answerCommentList", answerCommentList);
 		
 		return returnMap;
 	}

@@ -128,4 +128,45 @@ public class AdminQuestionController {
 		
 		return "adminQuestion/getQuestionCommentList";
 	}
+	// 답변댓글 List 조회
+	@GetMapping("/admin/getAnswerCommentList")
+	public String getAnswerCommentList(Model model, HttpSession session,
+									@RequestParam(defaultValue="1") int currentPage,
+									@RequestParam(defaultValue = "5") int rowPerPage,
+									@RequestParam(defaultValue="") String searchWord) {
+		String memberName = "";
+		
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
+		// 상단에 관리자명 띄우기
+		memberName = ((LoginAdmin)session.getAttribute("loginAdmin")).getAdminName();
+		
+		Map<String, Object> answerCommentList = adminQuestionService.getAnswerCommentList(currentPage, rowPerPage, searchWord);
+		
+		System.out.println(memberName+"<--memberName");
+		
+		int questionNo = 1;
+		
+		model.addAttribute("memberName", memberName);
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("answerCommentList", answerCommentList.get("answerCommentList"));
+		model.addAttribute("answerCommentTotalRow", answerCommentList.get("answerCommentTotalRow"));
+		model.addAttribute("lastPage", answerCommentList.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("questionNo", questionNo);
+		
+		
+		
+		System.out.println("↓QuestionController answerCommentList↓");
+		System.out.println(answerCommentList.get("answerCommentList") + " <-- QuestionController answerCommentList");
+		System.out.println(answerCommentList.get("answerCommentTotalRow") + " <-- QuestionController answerCommentTotalRow");
+		System.out.println(answerCommentList.get("lastPage") + " <-- QuestionController lastPage");
+		System.out.println(memberName + " <--- QuestionController memberName");
+		System.out.println(currentPage + " <--- QuestionController currentPage");
+		System.out.println(searchWord + " <--- QuestionController searchWord");
+		
+		return "adminQuestion/getAnswerCommentList";
+	}
 }

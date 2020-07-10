@@ -159,9 +159,8 @@
 											<tr th:each="q : ${questionCommentList}">
 												<td th:text="${q.questionCommentNo}"></td>
 												<td th:text="${q.memberName}"></td>
-												<td><a
-													th:href="@{/getQuestionOne(questionNo=${q.questionNo})}"
-													th:text="${q.questionCommentDate}"></a></td>
+												<td th:text="${q.questionCommentContent}"></td>
+												<td th:text="${q.questionCommentDate}"></td>
 												<td th:text="${q.questionCommentIp}"></td>
 											</tr>
 										</tbody>
