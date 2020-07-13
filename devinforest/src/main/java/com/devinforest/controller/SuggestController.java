@@ -24,12 +24,13 @@ public class SuggestController {
 	private MemberService memberService;
 	//면접제의 신청작성하기
 	@GetMapping("/addSuggest")
-	public String addSuggest(HttpSession session) {
-		if(session.getAttribute("loginCompany")==null) {
-			return "redirect:/index";
-		}
-		return "company/addSuggest";
-	}
+	public String addSuggest(HttpSession session, Suggest suggest, Model model) {
+	      if(session.getAttribute("loginCompany")==null) {
+	         return "redirect:/index";
+	      }
+	      model.addAttribute("suggest", suggest);
+	      return "company/addSuggest";
+	   }
 	@PostMapping("/addSuggest")
 	public String addSuggest(HttpSession session,Suggest suggest) {
 		if(session.getAttribute("loginCompany")==null) {

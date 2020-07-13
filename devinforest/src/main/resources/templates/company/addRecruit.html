@@ -149,7 +149,7 @@
                <div class="bg-white py-2 collapse-inner rounded">
                   <h6 class="collapse-header">면접제의</h6>
                    <a class="collapse-item" th:href="@{/getMemberListForCompany}">면접제의 하기</a> 
-                  <a class="collapse-item" href="/addSuggest">면접제의 리스트</a> 
+                  <a class="collapse-item" th:href="@{/suggestList(companyName=${session.loginCompany.companyKorName})}">면접제의 리스트</a> 
                </div>
             </div></li>
          <!-- 면접 끝 -->
@@ -276,7 +276,7 @@
 									</tr>
 									
 								</table>
-								<button type="submit" th:text="채용공고추가"></button>
+								<button class="btn btn-sm pageBtn" type="submit" th:text="채용공고추가"></button>
 							</form>
 								
 								
@@ -285,7 +285,7 @@
 							<form method="get" th:action="@{/companyInfo}">
 								<input type="hidden" name="companyEmail"
 									th:value="${session.loginCompany.companyEmail}">
-								<button type="submit">돌아가기</button>
+								<button  class="btn btn-sm pageBtn" type="submit">돌아가기</button>
 							</form>
 							<br>
 							

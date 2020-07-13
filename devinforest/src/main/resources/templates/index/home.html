@@ -125,7 +125,7 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">기업</h6>
 						<a class="collapse-item" th:href="@{/getCompanyList}">기업정보리스트</a>
-						<a class="collapse-item" href="#">기업의 면접제의 리스트 </a> 
+						<a class="collapse-item" th:href="@{/getMemberInfo(memberEmail=${session.loginMember.memberEmail})}">기업의 면접제의 리스트 </a> 
 						<a class="collapse-item" th:href="@{/getRecruitList}">기업의 채용리스트</a>
 					</div>
 				</div></li>
