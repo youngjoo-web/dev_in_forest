@@ -71,6 +71,7 @@
 						</table>
 						<form id="form" method="post" th:action="@{/blackMember}">
 							<div>
+								<input type="hidden" name="reportNo" th:value="${report.reportNo}">
 								<input type="hidden" name="memberEmail" th:value="${memberEmail}">
 								<input id="reportMemberName" type="hidden" name="memberName" th:value="${report.reportMemberName}">
 								<input type="hidden" name="questionNo" th:value="${report.questionNo}">

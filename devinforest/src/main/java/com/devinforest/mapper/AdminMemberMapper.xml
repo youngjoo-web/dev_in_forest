@@ -217,4 +217,12 @@
 		WHERE member_email = #{memberEmail}
 		AND member_state = 'Y'
 	</select>
+	<!-- 블랙회원 조회 -->
+	<select id="selectBlackMember"
+			parameterType="String"
+			resultType="String">
+		SELECT member_name memberName
+		FROM dev_blacklist
+		WHERE member_name = #{reportMemberName}
+	</select>
 </mapper>

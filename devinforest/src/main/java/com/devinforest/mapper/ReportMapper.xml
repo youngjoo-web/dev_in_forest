@@ -23,7 +23,7 @@
 		FROM dev_report
 		WHERE report_title like CONCAT('%',#{searchWord},'%')
 		AND report_kind like CONCAT('%',#{reportKind},'%')
-		ORDER BY report_state, report_date DESC
+		ORDER BY report_state DESC, report_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	<!-- 신고내역 TotalCount -->
@@ -92,4 +92,41 @@
 			report_state = 'Y'
 		WHERE question_no = #{questionNo}
 	</update>
+	<!-- 신고 조치유무 변경 - 이미 블랙된 회원일 경우 -->
+	<update id="updateReportState"
+			parameterType="int">
+		UPDATE
+			dev_report
+		SET
+			report_state = 'Y'
+		WHERE report_no = #{reportNo}
+	</update>
+	<!-- 게시글 삭제유무 확인 -->
+	<select id="selectQuestionNo" parameterType="int" resultType="String">
+		SELECT
+			member_name
+		FROM dev_question
+		WHERE answer_no = #{questionNo}
+	</select>
+	<!-- 게시글 댓글 삭제유무 확인 -->
+	<select id="selectQuestionCommentNo" parameterType="int" resultType="String">
+		SELECT
+			member_name
+		FROM dev_question_comment
+		WHERE question_comment_no = #{questionCommentNo}
+	</select>
+	<!-- 게시글 답변 삭제유무 확인 -->
+	<select id="selectAnswerNo" parameterType="int" resultType="String">
+		SELECT
+			member_name
+		FROM dev_answer
+		WHERE answer_no = #{answerNo}
+	</select>
+	<!-- 게시글 답변의 댓글 삭제유무 확인 -->
+	<select id="selectAnswerCommentNo" parameterType="int" resultType="String">
+		SELECT
+			member_name
+		FROM dev_answer_comment
+		WHERE answer_comment_no = #{answerCommentNo}
+	</select>
 </mapper>

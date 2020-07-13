@@ -102,15 +102,15 @@ public class AdminMemberController {
 		if(session.getAttribute("loginAdmin")==null) {
 			return "redirect:/index";
 		}
-		System.out.println(report+" <- ReportController.blackPopup: report(찾기 전)");
+		System.out.println(report+" <- AdminMemberController.blackPopup: report(찾기 전)");
 		int reportNo = report.getReportNo();
 		report = reportService.getReportOne(reportNo);
-		System.out.println(report+" <- ReportController.blackPopup: report(찾은 후)");
+		System.out.println(report+" <- AdminMemberController.blackPopup: report(찾은 후)");
 		
 		String reportMemberName = report.getReportMemberName();
-		System.out.println(reportMemberName+" <- ReportController.blackPopup: blackMemberName");
+		System.out.println(reportMemberName+" <- AdminMemberController.blackPopup: blackMemberName");
 		String reportMemberEmail = adminMemberService.getReportMemberEmail(reportMemberName); // 신고당한 회원 이메일
-		System.out.println(reportMemberEmail+" <- ReportController.blackPopup: reportMemberEmail");
+		System.out.println(reportMemberEmail+" <- AdminMemberController.blackPopup: reportMemberEmail");
 		model.addAttribute("memberEmail", reportMemberEmail);
 		
 		model.addAttribute("report", report);
@@ -120,18 +120,19 @@ public class AdminMemberController {
 	@PostMapping("/blackMember")
 	public String blackMember(HttpSession session, Model model, BlackList blackList,
 								Question question, QuestionComment questionComment,
-								Answer answer, AnswerComment answerComment) {
+								Answer answer, AnswerComment answerComment,
+								@RequestParam(value = "reportNo") int reportNo) {
 		// 로그인 세션확인
 		if(session.getAttribute("loginAdmin")==null) {
 			return "redirect:/index";
 		}
-		System.out.println(blackList + " <- ReportController.blackMember: blackList");
-		System.out.println(question.getQuestionNo()+" <- ReportController.blackMember: questionNo(게시글번호)");
-		System.out.println(questionComment.getQuestionCommentNo()+" <- ReportController.blackMember: questionCommentNo(게시글 댓글번호)");
-		System.out.println(answer.getAnswerNo()+" <- ReportController.blackMember: answerNo(답변번호)");
-		System.out.println(answerComment.getAnswerCommentNo()+" <- ReportController.blackMember: answerCommentNo(답변 댓글번호)");
+		System.out.println(blackList + " <- AdminMemberController.blackMember: blackList");
+		System.out.println(question.getQuestionNo()+" <- AdminMemberController.blackMember: questionNo(게시글번호)");
+		System.out.println(questionComment.getQuestionCommentNo()+" <- AdminMemberController.blackMember: questionCommentNo(게시글 댓글번호)");
+		System.out.println(answer.getAnswerNo()+" <- AdminMemberController.blackMember: answerNo(답변번호)");
+		System.out.println(answerComment.getAnswerCommentNo()+" <- AdminMemberController.blackMember: answerCommentNo(답변 댓글번호)");
 		// 신고내용 작성회원 게시글 삭제 및 백업
-		adminMemberService.blackMember(blackList, question, questionComment, answer, answerComment);
+		adminMemberService.blackMember(blackList, question, questionComment, answer, answerComment, reportNo);
 		// 신고내용 작성회원 블랙회원으로 변경
 		adminMemberService.addBlackMember(blackList);
 		System.out.println("신고내용 작성회원 블랙회원으로 변경완료");

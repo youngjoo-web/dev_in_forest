@@ -41,5 +41,6 @@ public interface AdminMemberMapper {
 	public int memberTotalCount(String searchWord);
 	// 일반회원 상세보기
 	public Member selectMemberInfo(String memberEmail);
-	
+	// 블랙회원 조회
+	public String selectBlackMember(String reportMemberName);
 }

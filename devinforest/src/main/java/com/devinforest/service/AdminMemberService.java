@@ -88,7 +88,7 @@ public class AdminMemberService {
 	}
 	// 블랙 실행
 	public void blackMember(BlackList blackList, Question question, QuestionComment questionComment, 
-							Answer answer, AnswerComment answerComment) {
+							Answer answer, AnswerComment answerComment, int reportNo) {
 		int questionNo = question.getQuestionNo();
 		int questionCommentNo = questionComment.getQuestionCommentNo();
 		int answerNo = answer.getAnswerNo();
@@ -114,7 +114,7 @@ public class AdminMemberService {
 				answerMapper.deleteAnswerAll(question);// 게시글 답변 삭제
 				System.out.println("게시글 답변 삭제 성공");
 				questionMapper.deleteQuestion(question);// 게시글 삭제
-				reportMapper.updateQuestionNoOfReportState(questionNo); // 신고조치여부 Y로변경
+				reportMapper.updateReportState(questionNo); // 신고조치여부 Y로변경
 				System.out.println("조치여부 변경 성공");
 			} else {
 				System.out.println("게시글 댓글 백업 실패");
@@ -131,7 +131,7 @@ public class AdminMemberService {
 				System.out.println("게시글 댓글 백업 성공");
 				commentMapper.deleteQuestionComment(questionComment); // 게시글의 댓글 삭제
 				System.out.println("게시글 댓글 삭제 성공");
-				reportMapper.updateQuestionCommentNoOfReportState(questionCommentNo); // 신고조치여부 Y로변경
+				reportMapper.updateReportState(questionCommentNo); // 신고조치여부 Y로변경
 				System.out.println("조치여부 변경 성공");
 			} else {
 				System.out.println("게시글 댓글 백업 실패");
@@ -151,7 +151,7 @@ public class AdminMemberService {
 				System.out.println("게시글 답변의 모든 댓글 삭제 성공");
 				answerMapper.deleteAnswer(answer);// 게시글 답변 삭제
 				System.out.println("게시글 댓글 삭제 성공");
-				reportMapper.updateAnswerNoOfReportState(answerNo); // 신고조치여부 Y로변경
+				reportMapper.updateReportState(answerNo); // 신고조치여부 Y로변경
 				System.out.println("조치여부 변경 성공");
 			} else {
 				System.out.println("게시글 댓글 백업 실패");
@@ -167,7 +167,7 @@ public class AdminMemberService {
 				System.out.println("게시글 답변의 댓글 백업 성공");
 				commentMapper.deleteAnswerComment(answerComment); // 답변의 댓글 삭제
 				System.out.println("게시글 답변의 댓글 삭제 성공");
-				reportMapper.updateAnswerCommentNoOfReportState(answerCommentNo); // 신고조치여부 Y로 변경
+				reportMapper.updateReportState(answerCommentNo); // 신고조치여부 Y로 변경
 				System.out.println("조치여부 변경 성공");
 			} else {
 				System.out.println("게시글 답변의 댓글 백업 실패");
@@ -231,5 +231,9 @@ public class AdminMemberService {
 	public Member getMemberInfo(String memberEmail) {
 		Member member = adminMemberMapper.selectMemberInfo(memberEmail);
 		return member;
+	}
+	// 블랙회원 조회
+	public String getBlackMember(String reportMemberName){
+		return adminMemberMapper.selectBlackMember(reportMemberName);
 	}
 }

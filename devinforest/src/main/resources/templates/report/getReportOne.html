@@ -147,17 +147,21 @@
 									<tr>
 										<th>게시글번호</th>
 										<td class="darkColor" th:text="${report.questionNo}"></td>
+										<input type="hidden" id="reportQuestionNo" th:value="${report.questionNo}">
 										<th>게시글 댓글번호</th>
 										<td class="darkColor" th:if="${report.questionCommentNo==0}">&nbsp;</td>
 										<td class="darkColor" th:if="${report.questionCommentNo!=0}" th:text="${report.questionCommentNo}"></td>
+										<input type="hidden" id="reportQuestionCommentNo" th:value="${report.questionCommentNo}">
 									</tr>
 									<tr>	
 										<th>답변번호</th>
 										<td class="darkColor" th:if="${report.answerNo==0}">&nbsp;</td>
 										<td class="darkColor" th:if="${report.answerNo!=0}" th:text="${report.answerNo}"></td>
+										<input type="hidden" id="reportAnswerNo" th:value="${report.answerNo}">
 										<th>답변 댓글번호</th>
 										<td class="darkColor" th:if="${report.answerCommentNo==0}">&nbsp;</td>
 										<td class="darkColor" th:if="${report.answerCommentNo!=0}" th:text="${report.answerCommentNo}"></td>
+										<input type="hidden" id="reportAnswerCommentNo" th:value="${report.answerCommentNo}">
 									</tr>
 								</table>
 							</div>
@@ -169,11 +173,16 @@
 							</div>
 							<hr>
 							<div class="row" style="padding: 0px 10px;">
-								<div class="col-sm-10 text-left">
+								<div class="col-sm-6 text-left">
 									<a class="btn pageBtn" th:href="@{/getReportList}">목록</a>
 								</div>
-								<div class="col-sm-2 text-right">
+								<div class="col-sm-6 text-right">
+									<span id="blackMemberCheckText"></span>
+									<button class="btn pageBtn" id="modifyReportStateBtn" th:if="${report.reportState=='N'}" type="button">조치완료</button>
 									<button class="btn pageBtn" id="blackBtn" th:if="${report.reportState=='N'}" type="button">블랙</button>
+									<form id="blackMemberCheckForm" method="get" th:action="@{/blackMemberCheck}">
+										<input type="hidden" id="reportMemberName" th:value="${report.reportMemberName}">
+									</form>
 									<form id="blackForm" method="get" th:action="@{javascript:openWindowPop('popup');}"></form>
 								</div>
 							</div>
@@ -234,8 +243,16 @@
 		<script th:src="@{/js/sb-admin-2.min.js}"></script>
 	</body>
 	<script>
-	
+	$('#modifyReportStateBtn').hide(); // 조치완료 버튼 숨기기
+	let reportQuestionNo = $('#reportQuestionNo').val();
+	let reportQuestionCommentNo = $('#reportQuestionCommentNo').val();
+	let reportAnswerNo = $('#reportAnswerNo').val();
+	let reportAnswerCommentNo = $('#reportAnswerCommentNo').val();
+	console.log(reportQuestionNo+' <- 게시글번호 '+reportQuestionCommentNo+' <- 게시글 댓글번호 '+reportAnswerNo+' <- 답변번호 '+reportAnswerCommentNo)+' <-답변 댓글번호';
+
 	$('#blackBtn').click(function(){
+		let reportMemberName = $('#reportMemberName').val();
+		console.log(reportMemberName+" <- reportMemberName");
 		let result = confirm('블랙회원 변경창으로 이동하시겠습니까?');
 		
 		if(!result) {
@@ -243,7 +260,79 @@
 			return;
 		} else {
 			console.log('확인');
-			$('#blackForm').submit();
+			$.ajax({
+				url:'/getRemoveCheck'
+				,type : 'post'
+				,data : {
+					'reportQuestionNo':reportQuestionNo,
+					'reportQuestionCommentNo':reportQuestionCommentNo,
+					'reportAnswerNo':reportAnswerNo,
+					'reportAnswerCommentNo':reportAnswerCommentNo
+					}
+				,success:function(data){
+					console.log(data);
+					if(data == 'xx'){
+						$('#blackMemberCheckText').text('삭제된 신고항목입니다. 조치완료 버튼을 눌러주세요.');
+						$('#modifyReportStateBtn').show(); // 조치완료 버튼 보이기
+						$('#blackBtn').hide(); // 블랙 버튼 숨기기
+						$('#modifyReportStateBtn').click(function(){
+							let reportNo = $('#reportNo').val();
+							let result2 = confirm('조치여부를 변경 하시겠습니까?');
+							if(!result2) {
+								console.log('취소');
+								return;
+							} else {
+								console.log('확인');
+								$.ajax({
+									url : '/modifyReportState'
+									,type : 'post'
+									,data : {'reportNo':reportNo}
+									,success:function(){
+										location.reload();
+									}
+								});
+							}
+						});
+						return;
+					}
+				}
+			});
+			$.ajax({
+				url: '/blackMemberCheck'
+				,type:'post'
+				,data:{'reportMemberName':reportMemberName}
+				,success:function(data){
+					console.log(data);
+					if(data == 'oo'){
+						$('#blackMemberCheckText').text('이미 블랙처리된 회원입니다. 조치완료 버튼을 눌러주세요.');
+						$('#modifyReportStateBtn').show(); // 조치완료 버튼 보이기
+						$('#blackBtn').hide(); // 블랙 버튼 숨기기
+						$('#modifyReportStateBtn').click(function(){
+							let reportNo = $('#reportNo').val();
+							let result2 = confirm('조치여부를 변경 하시겠습니까?');
+							if(!result2) {
+								console.log('취소');
+								return;
+							} else {
+								console.log('확인');
+								$.ajax({
+									url : '/modifyReportState'
+									,type : 'post'
+									,data : {'reportNo':reportNo}
+									,success:function(){
+										location.reload();
+									}
+								});
+							}
+						});
+						return;
+					}
+					if(data == 'xx'){
+						$('#blackForm').submit();
+					} 
+				}
+			});
+			
 		}
 	});
 	

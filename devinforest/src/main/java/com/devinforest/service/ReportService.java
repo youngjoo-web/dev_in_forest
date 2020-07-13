@@ -9,7 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devinforest.mapper.ReportMapper;
+import com.devinforest.vo.Answer;
+import com.devinforest.vo.AnswerComment;
 import com.devinforest.vo.BlackList;
+import com.devinforest.vo.Question;
+import com.devinforest.vo.QuestionComment;
 import com.devinforest.vo.Report;
 
 @Service
@@ -65,5 +69,50 @@ public class ReportService {
 	// 신고내역 상세보기
 	public Report getReportOne(int reportNo) {
 		return reportMapper.selectReportOne(reportNo);
+	}
+	// 신고 조치유무 변경 - 이미 블랙된 회원일 경우
+	public void modifyReportState(int reportNo) {
+		reportMapper.updateReportState(reportNo);
+	}
+	// 신고된 게시글 삭제유무 확인
+	public int getRemoveCheck(int questionNo, int questionCommentNo, int answerNo, int answerCommentNo) {
+		int checkNum = 0;
+		String check = null;
+		if(questionCommentNo==0 && answerNo==0 && answerCommentNo==0) {
+			System.out.println("게시글 신고");
+			check = reportMapper.selectQuestionNo(questionNo); // 게시글 삭제유무 확인
+			System.out.println(check+" <- 게시글 삭제유무 체크");
+			if(check != null) {
+				checkNum = 1;
+				return checkNum;
+			}
+		}
+		if(questionCommentNo!=0) {
+			System.out.println("게시글 댓글 신고");
+			check = reportMapper.selectQuestionCommentNo(questionCommentNo); // 게시글 댓글 삭제유무 확인
+			System.out.println(check+" <- 게시글 댓글 삭제유무 체크");
+			if(check != null) {
+				checkNum = 1;
+				return checkNum;
+			}
+		}
+		if(answerNo!=0 && answerCommentNo==0) {
+			System.out.println("게시글 답변 신고");
+			check = reportMapper.selectAnswerNo(answerNo); // 게시글 답변 삭제유무 확인
+			System.out.println(check+" <- 게시글 답변 삭제유무 체크");
+			if(check != null) {
+				checkNum = 1;
+				return checkNum;
+			}
+		}else if(answerCommentNo!=0) {
+			System.out.println("게시글 답변의 댓글 신고");
+			check = reportMapper.selectAnswerCommentNo(answerCommentNo); // 게시글 답변의 댓글 삭제유무 확인
+			System.out.println(check+" <- 게시글 답변의 댓글 삭제유무 체크");
+			if(check != null) {
+				checkNum = 1;
+				return checkNum;
+			}
+		}
+		return checkNum;
 	}
 }
