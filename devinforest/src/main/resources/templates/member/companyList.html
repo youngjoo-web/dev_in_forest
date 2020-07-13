@@ -283,7 +283,7 @@
 									</thead>
 									<tbody>
 										<tr th:each="company :${companyList}">
-											<td th:text="${company.companyEmail}"></td>
+											<td ><a th:href="@{/getCompanyInfo(companyEmail=${company.companyEmail})}" th:text="${company.companyEmail}"></a></td>
 											<td th:text="${company.companyKorName}"></td>
 											<td th:text="${company.companyEngName}"></td>
 											<td th:text="${company.companyAddress}"></td>

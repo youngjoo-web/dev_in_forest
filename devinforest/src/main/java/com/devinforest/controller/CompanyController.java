@@ -110,15 +110,19 @@ public class CompanyController {
 	//기업 정보 상세보기
 	@GetMapping("/getCompanyInfo")
 	public String getCompanyInfo(HttpSession session,Model model,LoginCompany loginCompany) {
-		if(session.getAttribute("loginCompany")==null) {
-			return "redirect:/index";
-		}
 		System.out.println();
 		Company company = new Company();
 		company=companyService.getCompanyInfo(loginCompany);
 		System.out.println(company+"<---company");
 		model.addAttribute("company", company);
-		return "company/companyInfo";
+		if(session.getAttribute("loginCompany")!=null) {	
+			return "company/companyInfo";
+		}
+		if(session.getAttribute("loginMember")!=null) {
+			return "member/getCompanyInfo";
+		}
+		
+		return "redirect:/index";
 	}
 	
 	
