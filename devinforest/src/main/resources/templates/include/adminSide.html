@@ -97,6 +97,25 @@
 	</li>
 	<!-- QnA조회 끝-->
 	
+	<!-- QnA조회 - 블랙 QnA 관리 -->
+	<li class="nav-item">
+		<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse2-2" aria-expanded="true" aria-controls="collapseTwoAndOne">
+			<i class="fas fa-fw fa-cog"></i>
+			<span>블랙 QnA조회</span>
+		</a>
+		<div id="collapse2-2" class="collapse" aria-labelledby="headingTwo"
+			data-parent="#accordionSidebar">
+			<div class="bg-white py-2 collapse-inner rounded">
+				<h6 class="collapse-header">블랙QnA 관리</h6>
+				<a class="collapse-item" th:href="@{/admin/getBlackQuestionList}">블랙질문 조회</a>
+				<a class="collapse-item" th:href="@{/admin/getBlackAnswerList}">블랙답변 조회</a>
+				<a class="collapse-item" th:href="@{/admin/getBlackQuestionCommentList}">블랙질문댓글 조회</a>
+				<a class="collapse-item" th:href="@{/admin/getBlackAnswerCommentList}">블랙답변댓글 조회</a>
+			</div>
+		</div>
+	</li>
+	<!-- QnA조회 끝-->
+	
 	<!-- 구분 줄 -->
 	<hr class="sidebar-divider">
 	
