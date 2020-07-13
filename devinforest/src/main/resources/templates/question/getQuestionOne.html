@@ -22,21 +22,34 @@
 		<!-- fontawesome -->
 		<script src="https://kit.fontawesome.com/yourcode.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		
+		<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
+		<script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
 		<script>
 		$(document).ready(function(){
 			let memberName = $('#memberName').val();
 			let questionNo = $('#questionNo').val();
 			let commentIp = $('#commentIp').val();
 			let answerContent = $('#addAnswerContent').val();
+			let questionContent = $('#questionContent').val();
 			let showMore = true;
 			
+			
+			console.log(questionContent);
 			console.log(memberName);
 			console.log(questionNo);
 			console.log(commentIp);
 			console.log(answerContent);
 			
-			
+			const Viewer = toastui.Editor;
+			const { codeSyntaxHighlight } = Viewer.plugin;
+			const viewer = new Viewer({
+				  el: document.querySelector('#viewer'),
+				  height: 'auto',
+				  initialValue: questionContent,
+				  plugins: [codeSyntaxHighlight]
+			});
+
 			
 			// 질문 총 투표 수 가져오기
 			$.ajax({
@@ -560,6 +573,10 @@
 	</script>
 	</head>
 	<body id="page-top">
+		<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+		<script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
+	  	<!-- Editor's Plugin -->
+	  	<script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
 		<!-- Page Wrapper -->
 		<div id="wrapper">
 		
@@ -763,7 +780,7 @@
 					<div class="container-fluid pt-4 px-5 content">
 						<div style="display:flex; justify-content: space-between;">
 							<h1 style="color: black; font-weight: bold;" th:text="${question.questionTitle}"></h1>
-							<a class="btn btn-success" th:href="@{/addQuestion}">글작성</a>
+							<a class="btn btn-success" th:href="@{/addQuestion(memberName=${question.memberName})}">글작성</a>
 						</div>
 						<span th:text="조회수 +' '+ ${viewsCount}"></span>
 						<span th:text="작성일 +' '+ ${#strings.substring(question.questionCreateDate, 0, 16)}"></span>
@@ -777,8 +794,9 @@
 									<tr><td><button class="btn" type="button" id="downBtn"><i id="fa-chevron-down" class='fas fa-chevron-down' style='font-size:24px'></i></button></td></tr>
 								</table>
 							</div>
+							<input type="hidden" id="questionContent" th:value="${question.questionContent}">
 							<div style="flex-direction: row; flex-wrap: nowrap;">
-								<div style="font-size: 18px; margin-left: 20px;" th:text="${question.questionContent}"></div>
+								<div id="viewer"></div>
 							</div>
 						</div>
 						<div>
