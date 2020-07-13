@@ -198,6 +198,9 @@ $('#emailCheckBtn').click(function(){
     		if(data == "재가입가능한 이메일입니다.") {
     			$('#restorationTitle').val(email);
     		}
+    		else{
+    			$('#restorationTitle').val('');
+    		}
         }
 	});
 });
