@@ -7,11 +7,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devinforest.service.AdminQuestionService;
 import com.devinforest.service.AdminService;
+import com.devinforest.vo.Question;
 
 @RestController
 public class AdminRestController {
 	@Autowired private AdminService adminService;
+	@Autowired private AdminQuestionService adminQuestionService;
 	// 아이디 중복체크
 	@PostMapping("/checkAdminEmail")
 	public String checkAdminEmail(HttpSession session, 
@@ -61,5 +64,13 @@ public class AdminRestController {
 		System.out.println(nameMsg + " <- AdminRestController.checkAdminName: nameMsg");
 		
 		return nameMsg;
+	}
+	// 질문 내용 상세보기
+	@PostMapping("/admin/getQuestionContent")
+	public Question getQuestionContent(HttpSession session,
+										@RequestParam(value = "questionNo") int questionNo) {
+		Question question = adminQuestionService.getQuestionContent(questionNo);
+		
+		return question;
 	}
 }

@@ -162,7 +162,7 @@
 											<tr th:each="q : ${questionList}">
 												<td th:text="${q.questionNo}"></td>
 												<td th:text="${q.memberName}"></td>
-												<td><a th:href="@{/getQuestionOne(questionNo=${q.questionNo})}" th:text="${q.questionTitle}"></a></td>
+												<td><button th:id="btn+${q.questionNo}" type="button" class="btn" th:text="${q.questionTitle}"></button></td>
 												<td th:text="${q.questionReputation}"></td>
 												<td th:text="${q.questionCreateDate}"></td>
 												<td th:text="${q.questionUpdateDate}"></td>
@@ -170,6 +170,11 @@
 												<td th:text="${q.questionViews}"></td>
 											</tr>
 										</tbody>
+									</table>
+									<div th:each="q : ${questionList}">
+										<input th:id="qnaNo+${q.questionNo}" type="hidden" th:value="${q.questionNo}"></input>
+									</div>
+									<table id="table" class="table">
 									</table>
 								</div>
 								<div>
@@ -228,7 +233,7 @@
 				</div>
 			</div>
 		</div>
-	
+		
 		<!-- Bootstrap core JavaScript-->
 		<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
 		<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
@@ -238,5 +243,30 @@
 	
 		<!-- Custom scripts for all pages-->
 		<script th:src="@{/js/sb-admin-2.min.js}"></script>
+		
+		<script>
+		
+		$('#btn').click(function(){
+			$("#table").empty();
+			
+			$.ajax({
+	            url:'/admin/getQuestionContent'
+	            ,type:'POST'
+	            ,data:{'questionNo':questionNo}
+	            ,success : function(data) {
+	            	console.log(data)
+					let html = 	"<thead  class='card bg-light my-2'>"+
+									"<tr class='bg-gray-200'>"+
+										"<td>"+data.questionTitle+"</td>"+
+									"</tr>"+
+								"</thead><br>"+
+								"<tbody class='card bg-light my-2'>"+
+									"<tr><td>"+data.questionContent+"</td></tr>"
+								"</tbody>";
+					$("#table").append(html);
+				}
+			});
+		});
+		</script>
 	</body>
 </html>

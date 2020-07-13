@@ -146,4 +146,8 @@ public class AdminQuestionService {
 		
 		return returnMap;
 	}
+	// 질문내용 상세보기
+	public Question getQuestionContent(int questionNo) {
+		return adminQuestionMapper.selectQuestionContent(questionNo);
+	}
 }

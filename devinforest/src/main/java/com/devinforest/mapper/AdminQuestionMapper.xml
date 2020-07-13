@@ -122,4 +122,14 @@
 		WHERE answer_comment_no LIKE CONCAT('%', #{searchWord}, '%')
 		OR member_name LIKE CONCAT('%', #{searchWord}, '%')
 	</select>
+	
+	<select id="selectQuestionContent"
+			parameterType="int"
+			resultType="com.devinforest.vo.Question">
+		SELECT
+			question_title questionTitle,
+			question_content questionContent
+		FROM dev_question
+		WHERE question_no = #{questionNo}
+	</select>
 </mapper>

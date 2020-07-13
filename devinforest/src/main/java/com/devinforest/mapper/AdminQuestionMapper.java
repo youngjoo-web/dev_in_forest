@@ -28,4 +28,6 @@ public interface AdminQuestionMapper {
 	public List<AnswerComment> selectAnswerCommentList(Map<String, Object> inputMap);
 	// 답변댓글 총 갯수 조회
 	public int selectAnswerCommentTotalRow(String searchWord);
+	// 질문 내용 상세보기
+	public Question selectQuestionContent(int questionNo);
 }
