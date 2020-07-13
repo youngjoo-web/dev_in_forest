@@ -91,4 +91,11 @@
 		WHERE recruit_title LIKE #{searchWord}
 	
 	</select>
+	<!-- 기업회원탈퇴 -->
+	<delete id="deleteRecruit" parameterType="com.devinforest.vo.Company">
+		DELETE
+		FROM dev_recruit
+		WHERE company_kor_name = #{companyKorName}
+	</delete>
+		
 </mapper>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devinforest.mapper.CompanyMapper;
+import com.devinforest.mapper.RecruitMapper;
 import com.devinforest.vo.Company;
 import com.devinforest.vo.LoginCompany;
 
@@ -17,9 +18,19 @@ import com.devinforest.vo.LoginCompany;
 public class CompanyService {
 	@Autowired
 	private CompanyMapper companyMapper;
+	@Autowired
+	private RecruitMapper recruitMapper;
+	//기업회원탈퇴
+	public void removeCompany(Company company) {
+		companyMapper.deleteCompany(company);
+		recruitMapper.deleteRecruit(company);
+		return;
+	}
+	
 	//기업 정보 수정
 	public void modifyCompany(Company company) {
 		companyMapper.updateCompany(company);
+		return;
 	}
 	//기업정보 상세보기
 	public Company getCompanyInfo(LoginCompany loginCompany) {

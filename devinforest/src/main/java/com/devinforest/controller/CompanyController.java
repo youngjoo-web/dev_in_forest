@@ -179,4 +179,14 @@ public class CompanyController {
 		}
 		return "company/removeCompany";
 	}
+	@PostMapping("/removeCompany")
+	public String removeCompany(HttpSession session, LoginCompany loginCompany) {
+		if(session.getAttribute("loginCompany")==null) {
+			return "redirect:/index";
+		}
+		Company company = companyService.getCompanyInfo(loginCompany);
+		companyService.removeCompany(company);
+		session.invalidate();
+		return "redirect:/index";
+	}
 }

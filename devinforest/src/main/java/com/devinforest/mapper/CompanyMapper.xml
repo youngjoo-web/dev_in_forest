@@ -92,6 +92,12 @@
 		NOW()
 		)
 	</insert>
+	<!-- 회원탈퇴 -->
+	<delete id="deleteCompany" parameterType="com.devinforest.vo.Company">
+		DELETE
+		FROM dev_company
+		WHERE company_email = #{companyEmail}
+	</delete>
 	<!--기업 이메일 중복확인 -->
 	<select id="checkCompanyEmail" parameterType="String" resultType="int">
 		SELECT SUM(t.cnt) FROM

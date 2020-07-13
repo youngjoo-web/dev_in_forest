@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.devinforest.service.MemberService;
+import com.devinforest.service.RecruitService;
 import com.devinforest.service.SuggestService;
 import com.devinforest.vo.LoginMember;
 import com.devinforest.vo.Member;
+import com.devinforest.vo.Recruit;
 import com.devinforest.vo.Suggest;
 
 @Controller
@@ -22,12 +24,16 @@ public class SuggestController {
 	private SuggestService suggestService;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private RecruitService recruitService;
 	//면접제의 신청작성하기
 	@GetMapping("/addSuggest")
 	public String addSuggest(HttpSession session, Suggest suggest, Model model) {
 	      if(session.getAttribute("loginCompany")==null) {
 	         return "redirect:/index";
 	      }
+	      List<Recruit>list = recruitService.getRecruitListForSuggest(suggest.getCompanyName());
+	      model.addAttribute("recruitList", list);
 	      model.addAttribute("suggest", suggest);
 	      return "company/addSuggest";
 	   }

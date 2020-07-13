@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.devinforest.vo.Company;
 import com.devinforest.vo.Recruit;
 
 @Mapper
@@ -23,4 +24,6 @@ public interface RecruitMapper {
 	public Recruit selectRecruitInfo(int recruitNo);
 	//채용공고 추가
 	public void insertRecruit(Recruit recruit);
+	//기업회원탈퇴
+	public int deleteRecruit(Company company);
 }

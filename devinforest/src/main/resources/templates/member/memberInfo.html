@@ -362,8 +362,8 @@
 												<input type="hidden" name ="memberName" th:value="${member.memberName}">
 												<input type="hidden" name ="suggestType" th:value="${suggest.suggestType}">
 												<button class="btn btn-sm pageBtn" type="submit">
-												<div th:if="${suggest.suggestType}=='Y'">수락</div>
-												<div th:if="${suggest.suggestType}=='N'">거부</div>
+												<div th:if="${suggest.suggestType}=='Y'">거부하기</div>
+												<div th:if="${suggest.suggestType}=='N'">수락하기</div>
 												</button>
 											</form>
 											</td>

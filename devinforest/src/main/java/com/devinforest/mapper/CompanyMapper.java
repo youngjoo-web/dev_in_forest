@@ -30,4 +30,6 @@ public interface CompanyMapper {
 	public List<Company> selectCompanyList(Map<String, Object> map);
 	//기업토탈갯수
 	public int selectSearchCompanyCount(String searchWord);
+	//기업회원탈퇴
+	public int deleteCompany(Company company);
 }
