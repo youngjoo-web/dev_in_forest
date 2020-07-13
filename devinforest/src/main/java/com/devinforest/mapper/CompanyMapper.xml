@@ -105,7 +105,9 @@
 		UNION all
 		SELECT COUNT(*) AS cnt FROM dev_admin WHERE admin_email=#{companyEmail}
 		UNION all
-		SELECT COUNT(*) AS cnt FROM dev_company  WHERE company_email=#{companyEmail}) t
+		SELECT COUNT(*) AS cnt FROM dev_company  WHERE company_email=#{companyEmail}
+		UNION all
+		SELECT COUNT(*) AS cnt FROM dev_blacklist  WHERE member_email=#{companyEmail}) t
 		
 	</select>
 	<!--기업 한국이름 중복확인 -->
