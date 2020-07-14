@@ -22,6 +22,7 @@ public class HashtagRestController {
 		int hashtagCheck = hashtagMapper.hashtagCheck(hashtagName);
 		System.out.println(hashtagName + "<--hashtagName");
 		String hashtagNameText = null;
+		System.out.println(hashtagCheck+"<---중복체크 1일시 중복");
 		if(hashtagCheck == 1) {
 			hashtagNameText = "중복된 해시태그입니다.";
 		}

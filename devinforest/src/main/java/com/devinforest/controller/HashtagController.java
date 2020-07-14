@@ -21,6 +21,21 @@ public class HashtagController {
 	@Autowired
 	private HashtagService hashtagService;
 	
+	/* ---------- 해시태그 상세보기 ---------- */
+	@GetMapping("/getHashtagOne")
+	public String getHashtagOne(Model model, HttpSession session, Hashtag hashtag) {
+		String memberName = "Guest";
+		
+		if(session.getAttribute("loginMember") != null) {
+			memberName = ((LoginMember)session.getAttribute("loginMember")).getMemberName();
+		}
+		System.out.println(hashtag.getHashtagNo());
+		Hashtag returnHashtag=hashtagService.getHashtagOne(hashtag.getHashtagNo());
+		model.addAttribute("hashtag", returnHashtag);
+		model.addAttribute("memberName", memberName);
+		return "hashtag/getHashtagOne";
+	}
+	
 	/* ---------- 해시태그 목록 ---------- */
 	@GetMapping("/getHashtagList")
 	public String getHashtagList(Model model, HttpSession session,

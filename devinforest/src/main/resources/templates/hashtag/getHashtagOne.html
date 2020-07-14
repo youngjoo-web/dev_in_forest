@@ -28,13 +28,6 @@
 			width: 80px;
 			}
 		</style>
-		<script>
-			$(document).ready(function() {
-				$('#searchBtn').click(function() {
-					$('#searchForm').submit();
-				});
-			});
-		</script>
 	</head>
 	<body id="page-top">
 		<!-- Page Wrapper -->
@@ -241,29 +234,14 @@
 					<div class="container-fluid pt-4 px-5 content">
 						
 						<!-- 여기에 본문 넣으면댐 -->
-						<h1>해시태그 리스트</h1>
-						<br>
-						<form id="searchForm" method="get" th:action="@{/getHashtagList}">
-							<input type="text" name="searchWord">
-							<button type="submit" id="serachBtn" th:text="검색"></button>
-						</form>
-						<br>
-						<a th:href="@{/addHashtag}" th:text="태그추가"></a>
-							<br>
-								<span th:each="i,index :${hashtagList}">
-									<span th:if="${i.hashtagNo-1}%4==0">
-										<br>
-										<br>
-									</span>
-								<a type="button" th:value="${i.hashtagNo}" class="tagBtn btn btn-outline-primary" th:href="@{/getHashtagOne(hashtagNo=${i.hashtagNo})}"><span th:text="${i.hashtagName}"></span></a>
-								
-							</span>
-						<hr>
-						<div th:if="${currentPage} > 1">
-							<a th:href="@{/getHashtagList(currentPage=${currentPage}-1)}">이전</a>
-						</div>
-						<div th:if="${currentPage < lastPage}">
-							<a th:href="@{/getHashtagList(currentPage=${currentPage}+1)}">다음</a>
+						<h1>해시태그 상세보기</h1>
+						<a th:href="@{/getHashtagList}" th:text="해시태그목록"></a>
+						<div>
+							<div th:text="${hashtag.hashtagName}"></div>
+							<hr>
+							<div th:text="${hashtag.hashtagContent}"></div>
+							<hr>
+							<div th:text="${hashtag.hashtagDate}"></div>
 						</div>
 						
 						<!-- 여기에 본문 넣으면댐 -->

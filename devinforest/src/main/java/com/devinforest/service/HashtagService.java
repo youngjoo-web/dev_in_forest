@@ -52,6 +52,12 @@ public class HashtagService {
 		
 		return returnMap;
 	}
+	
+	/* ---------- 해시태그 상세보기 ---------- */
+	public Hashtag getHashtagOne(int hashtagNo) {
+		return hashtagMapper.selectHashtagOne(hashtagNo);
+	}
+	
 	/* ---------- 해시태그 생성 ---------- */
 	public int addHashtag(Hashtag hashtag) {
 		

@@ -35,13 +35,14 @@
 			
 			
 			console.log("중복체크 시작");
-			console.log(hashtagName);
+			console.log(hashtagName+"<--hashtagName");
+			
 			$.ajax({
 				url : '/hashtagCheck',
 				type : 'POST',
-				data : {'hashtagName2' : hashtagName2},
+				data : {'hashtagName2' : $('#hashtagName2').val()},
 				success: function(data) {
-					
+					console.log($('#hashtagName2').val()+"<--hashtagName2(입력한값)");
 					console.log($('#hashtagName2').val().length);
 					$('#hashtagNameText').text(data);
 					if($('#hashtagName2').val().length<1 ||$('#hashtagName2').val().length>10){
@@ -56,7 +57,8 @@
 					} else if(data == "사용할 수 있는 해시태그 입니다."){			
 						console.log(data);
 						$('#hashtagName').val($('#hashtagName2').val());
-						$('#hashtagNameText').text("");
+						console.log(data);
+						$('#hashtagNameText').text(data);
 					} else{
 						console.log(data);
 						$('#hashtagName2').focus();	
@@ -71,16 +73,16 @@
 			
 			
 			if($('#hashtagName').val().length < 1 || $('#hashtagName').val().length > 10) {
-				$('#hashtagNameText').text("제목을 1~10자 이내로 입력하세요");
+				
 				$('#hashtagName2').focus();
-				console.log("제목을 1~10자 이내로 입력하세요 - 커밋 실패");
-				alert("이름을 1~10자 이내로 입력하세요.");
+				console.log("이름을 중복확인 해주세요.");
+				alert("이름을 중복체크 해주세요.");
 				return;
 			}
 			if($('#hashtagName2').val().search(/\s/) != -1){
-				$('#hashtagNameText').text("이름을 공백 없이 입력하세요.");
+				$('#hashtagNameText').text("이름을 중복확인 해주세요.");
 				$('#hashtagName2').focus();
-				alert("이름을 공백 없이 입력하세요.");
+				alert("이름을 중복체크 해주세요.");
 				return;
 			}
 			

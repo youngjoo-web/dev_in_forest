@@ -13,4 +13,5 @@ public interface HashtagMapper {
 	public int insertHashtag(Hashtag hashtag);
 	public int hashtagTotalRow(String searchWord);
 	public int hashtagCheck(String hashtagName);
+	public Hashtag selectHashtagOne(int hashtagNo);
 }
