@@ -65,12 +65,4 @@ public class AdminRestController {
 		
 		return nameMsg;
 	}
-	// 질문 내용 상세보기
-	@PostMapping("/admin/getQuestionContent")
-	public Question getQuestionContent(HttpSession session,
-										@RequestParam(value = "questionNo") int questionNo) {
-		Question question = adminQuestionService.getQuestionContent(questionNo);
-		
-		return question;
-	}
 }
