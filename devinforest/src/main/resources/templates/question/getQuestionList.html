@@ -21,7 +21,46 @@
 		<link th:href="@{/css/addAdmin.css}" rel="stylesheet">
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		
+		<style>
+			#header-flex-container {
+				display: flex;
+				justify-content: space-between;		
+			}
+			#body-flex-container {
+				margin-bottom: 30px;
+				display: flex;
+				justify-content: space-between;
+			}
+			#left-container {
+				display: flex;
+			}
+			#left-container > div {
+				margin-left: 10px;
+				padding: 5px;
+				border: 1.4px solid #5eba7d;
+				border-radius: 5px;
+				text-align: center;
+			}
+			#reputationBtn {
+				width:45px;
+				height:25px;
+				border: 0;
+				font-size: 13px;
+				background-color: #0077cc;
+			}
+			#center-container {
+				margin-left: 50px;
+			}
+			#center-container > a {
+				font-size: 20px;
+			}
+			#center-container > a:hover{
+				text-decoration: none;
+			}
+			#right-container > div {
+				display: inline-block;
+			}
+	</style>
 	</head>
 	<body id="page-top">
 		<!-- Page Wrapper -->
@@ -225,45 +264,46 @@
 					<!-- 상단 바 끝 -->
 	
 					<!-- 내용 넣는 곳 -->
-					<div class="container-fluid pt-4 px-5 content">
+					<div class="container pt-4 px-5 content">
 						
 						<!-- 여기에 본문 넣으면댐 -->
-						<h1 th:text="질문리스트"></h1>
-					<!--  
-	<form method="get" th:action="@{/getQuestionList}">
-		<input type="text" name="searchWord" id="searchWord">
-		<button type="submit">검색</button>
-	</form>
-	-->
-					<div style="text-align: right"
-						th:if="${memberName}!='Guest'">
-						<a class="btn btn-outline-success" th:href="@{/addQuestion(memberName=${memberName})}">질문하기</a>
-					</div>
+						<div id="header-flex-container">
+							<h1 th:text="질문리스트"></h1>
+							<div th:if="${memberName} != 'Guest'">
+								<a class="btn btn-outline-success" th:href="@{/addQuestion(memberName=${memberName})}">질문하기</a>
+							</div>
+						</div>
+					<hr>
 					<br>
-					<table class="table">
-						<tr>
-							<th>question_no</th>
-							<th>member_name</th>
-							<th>question_title</th>
-							<th>question_reputation</th>
-							<th>question_createdate</th>
-							<th>question_updatedate</th>
-							<th>question_ip</th>
-							<th>question_views</th>
-						</tr>
-						<tr th:each="ql : ${questionList}">
-							<td th:text="${ql.questionNo}"></td>
-							<td th:text="${ql.memberName}"></td>
-							<td><a
-								th:href="@{/getQuestionOne(questionNo=${ql.questionNo})}"
-								th:text="${ql.questionTitle}"></a></td>
-							<td th:text="${ql.questionReputation}"></td>
-							<td th:text="${ql.questionCreateDate}"></td>
-							<td th:text="${ql.questionUpdateDate}"></td>
-							<td th:text="${ql.questionIp}"></td>
-							<td th:text="${ql.questionViews}"></td>
-						</tr>
-					</table>
+					<div th:each="ql : ${questionList}" id="body-flex-container">
+						<div id="left-container">
+							<div>
+								<div th:text="${ql.questionViews}"></div>
+								<div>조회수</div>
+							</div>
+							<div>
+								<div>0</div>
+								<div>투표수</div>
+							</div>
+							<div>
+								<div>0</div>
+								<div>답변수</div>
+							</div>	
+						</div>
+						<div id="center-container">
+							<span th:if="${ql.questionReputation} > 49"><button id="reputationBtn" class="btn btn-primary btn-sm" th:text="'+' + ${ql.questionReputation}" disabled></button></span>
+							<a th:href="@{/getQuestionOne(questionNo=${ql.questionNo})}" 
+							   th:text="${ql.questionTitle}"></a>
+							<div th:text="${#strings.substring(ql.questionCreateDate, 0, 16)} + ' by ' + ${ql.memberName} + ' ('+ ${#strings.substring(ql.questionIp, 0, 7)} +')' "></div>
+						</div>
+						<hr>
+						<div id="right-container">
+							<div id="">
+								테스트
+							</div>
+						</div>
+					</div>
+					
 					<hr>
 					<div th:if="${currentPage} > 1">
 						<a th:href="@{/getQuestionList(currentPage=${currentPage}-1)}">이전</a>
@@ -271,7 +311,7 @@
 					<div th:if="${currentPage < lastPage}">
 						<a th:href="@{/getQuestionList(currentPage=${currentPage}+1)}">다음</a>
 					</div>
-						<!-- 여기에 본문 넣으면댐 -->
+						
 						
 					</div>
 						<!-- /.container-fluid -->
@@ -282,7 +322,7 @@
 				<footer class="sticky-footer bg-white">
 					<div class="container my-auto">
 						<div class="copyright text-center my-auto">
-							<span>Copyright &copy; Your Website 2020</span>
+							<span>Copyright &copy; Dev In Forest 2020</span>
 						</div>
 					</div>
 				</footer>

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devinforest.service.MemberService;
+import com.devinforest.vo.Member;
 
 @RestController
 public class MemberRestController {
@@ -45,5 +46,14 @@ public class MemberRestController {
 			restoreMsg = "재가입할 수 없는 이메일입니다.";
 		}
 		return restoreMsg;
+	}
+	@PostMapping("/modifyMemberReputation")
+	public void modifyMemberReputation(Member member) {
+		int updateResult = memberService.modifyMemberReputation(member);
+		if(updateResult == 1) {
+			System.out.println("내공 갱신 성공");
+		} else {
+			System.out.println("내공 갱신 실패");
+		}
 	}
 }

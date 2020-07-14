@@ -29,7 +29,7 @@
 			member_name memberName,
 			question_title questionTitle,
 			question_content questionContent,
-			question_reputation reputation,
+			question_reputation questionReputation,
 			question_createdate questionCreateDate,
 			question_updatedate questionUpdateDate,
 			question_ip questionIp,
@@ -176,4 +176,13 @@
 			question_ip = #{questionIp}
 		WHERE question_no = #{questionNo}
 	</update>
+	
+	<!-- 질문 투표 총 개수  -->
+	<select id="voteTotalCount" resultType="java.util.List" parameterType="java.util.List">
+		SELECT
+			(SELECT COUNT(*) FROM dev_question_vote WHERE vote_point=1 AND question_no=#{questionNo})
+			-
+			(SELECT COUNT(*) FROM dev_question_vote WHERE vote_point=0 AND question_no=#{questionNo})
+		FROM DUAL
+	</select>
 </mapper>

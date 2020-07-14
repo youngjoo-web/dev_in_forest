@@ -189,4 +189,13 @@
 		and
 		member_password = PASSWORD(#{memberPassword})
 	</select>
+	<!-- 내공 획득 또는 상실  -->
+	<update id="updateMemberReputation"
+		parameterType="com.devinforest.vo.Member">
+		UPDATE dev_member 
+		SET
+			member_reputation = member_reputation + #{memberReputation}
+		WHERE
+			member_name = #{memberName}
+	</update>
 </mapper>

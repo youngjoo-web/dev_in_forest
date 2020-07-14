@@ -119,4 +119,9 @@ public class MemberService {
 	public String findMemberEmail(Member member) {
 		return memberMapper.selectEmailByMember(member);
 	}
+	
+	//내공 획득 또는 상실
+	public int modifyMemberReputation(Member member) {
+		return memberMapper.updateMemberReputation(member);
+	}
 }

@@ -22,4 +22,5 @@ public interface QuestionMapper {
 	public int questionTotalRow(String searchWord); // 질문 총 개수
 	public int deletedQuestionTotalRow(String searchWord); // 삭제된 질문 총 개수
 	public List<Question> selectRomovedQuestion(); // 삭제된 질문 목록
+	public List<Integer> voteTotalCount(List<Integer> questionNo);
 }

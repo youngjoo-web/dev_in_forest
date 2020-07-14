@@ -1,5 +1,6 @@
 package com.devinforest.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -37,6 +38,9 @@ public class QuestionController {
 		
 		Map<String, Object> questionList = questionService.getQuestionList(currentPage, searchWord);
 		
+		
+		
+		
 		System.out.println(memberName+"<--memberName");
 		
 		model.addAttribute("memberName", memberName);
@@ -45,10 +49,10 @@ public class QuestionController {
 		model.addAttribute("currentPage", currentPage);
 		
 		
-		System.out.println("↓QuestionController questionList↓");
-		System.out.println(questionList.get("questionList"));
-		System.out.println(currentPage + " <--- QuestionController currentPage");
-		System.out.println(searchWord + " <--- QuestionController searchWord");
+//		System.out.println("↓QuestionController questionList↓");
+//		System.out.println(questionList.get("questionList"));
+//		System.out.println(currentPage + " <--- QuestionController currentPage");
+//		System.out.println(searchWord + " <--- QuestionController searchWord");
 		
 		return "question/getQuestionList";
 	}

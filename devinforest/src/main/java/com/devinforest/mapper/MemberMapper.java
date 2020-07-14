@@ -37,4 +37,6 @@ public interface MemberMapper {
 	public List<Member> selectMemberList(Map<String, Object> map);
 	//회원 totalCount
 	public int memberTotalCount(String searchWord);
+	//내공 획득 또는 상실
+	public int updateMemberReputation(Member member);
 }

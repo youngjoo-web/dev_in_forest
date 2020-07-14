@@ -44,6 +44,7 @@
 					  plugins: [codeSyntaxHighlight]
 				});
 				
+				
 				$('#addQuestionBtn').click(function(){
 					let memberReputationInit = 0;
 					let memberReputation = $('#memberReputation').val();
@@ -66,6 +67,9 @@
 						$('#reputationWarning').css("color", "red");
 						$('#reputationWarning').text("내공은 0 미만으로 걸 수 없습니다.")
 						$('#memberReputation').focus();
+					} else if((0 < $('#memberReputation').val() && $('#memberReputation').val() < 50) || $('#memberReputation').val() > 999) {
+						$('#reputationWarning').css("color", "red");
+						$('#reputationWarning').text("내공은 최소 50부터  최대 999까지 걸 수 있습니다.");
 					} else {
 						$.ajax({
 							url: '/addQuestion',
@@ -73,6 +77,15 @@
 							async: false,
 							data: {'memberName' : memberName, 'questionTitle' : questionTitle, 'questionContent' : questionContent, 'questionReputation' : memberReputation, 'questionIp' : questionIp},
 							success: function(data){
+								let memberReputation = 10;
+								$.ajax({
+									url: '/modifyMemberReputation',
+									type: 'POST',
+									data: {'memberName' : memberName, 'memberReputation' : memberReputation},
+									success: function() {
+										console.log("내공 갱신 성공");
+									}
+								});
 								location.href='/getQuestionList';
 							}
 						});
