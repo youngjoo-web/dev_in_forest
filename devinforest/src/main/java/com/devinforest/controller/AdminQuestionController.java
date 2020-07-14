@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.service.AdminQuestionService;
-import com.devinforest.vo.LoginAdmin;
 
 @Controller
 public class AdminQuestionController {
