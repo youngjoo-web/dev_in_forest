@@ -32,6 +32,15 @@ public class MemberController {
 	@Autowired
 	private SuggestService suggestService;
 	
+	
+	//회원가입 및 로그인선택페이지
+	@GetMapping("/login")
+	public String login(HttpSession session){
+		if(session.getAttribute("loginMember")!=null || session.getAttribute("loginCompany")!=null || session.getAttribute("loginAdmin")!=null) {
+			return "redirect:/index";
+		}
+		return "index/login";
+	}
 	//회원 재가입 요청
 	@GetMapping("/requestMemberRestore")
 	public String requestMemberRestore(HttpSession session) {
