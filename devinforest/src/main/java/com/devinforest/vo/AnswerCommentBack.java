@@ -6,6 +6,7 @@ public class AnswerCommentBack {
 	private String memberName;
 	private String answerCommentContent;
 	private String answerCommentDate;
+	private String answerCommentBackDate;
 	private String answerCommentIp;
 	
 	public int getAnswerCommentNo() {
@@ -38,16 +39,24 @@ public class AnswerCommentBack {
 	public void setAnswerCommentDate(String answerCommentDate) {
 		this.answerCommentDate = answerCommentDate;
 	}
+	public String getAnswerCommentBackDate() {
+		return answerCommentBackDate;
+	}
+	public void setAnswerCommentBackDate(String answerCommentBackDate) {
+		this.answerCommentBackDate = answerCommentBackDate;
+	}
 	public String getAnswerCommentIp() {
 		return answerCommentIp;
 	}
 	public void setAnswerCommentIp(String answerCommentIp) {
 		this.answerCommentIp = answerCommentIp;
 	}
+	
 	@Override
 	public String toString() {
-		return "Answer [answerCommentNo=" + answerCommentNo + ", answerNo=" + answerNo + ", memberName=" + memberName
-				+ ", answerCommentContent=" + answerCommentContent + ", answerCommentDate=" + answerCommentDate
-				+ ", answerCommentIp=" + answerCommentIp + "]";
+		return "AnswerCommentBack [answerCommentNo=" + answerCommentNo + ", answerNo=" + answerNo + ", memberName="
+				+ memberName + ", answerCommentContent=" + answerCommentContent + ", answerCommentDate="
+				+ answerCommentDate + ", answerCommentBackDate=" + answerCommentBackDate + ", answerCommentIp="
+				+ answerCommentIp + "]";
 	}
 }

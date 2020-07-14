@@ -3,5 +3,112 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.AdminBlackQuestionMapper">
-	
+	<!-- 블랙 질문 목록  -->
+	<select id="selectBlackQuestionList" 
+			parameterType="java.util.Map"
+			resultType="com.devinforest.vo.QuestionBack">
+		SELECT
+			question_no                questionNo,
+			member_name                memberName,
+			question_title             questionTitle,
+			question_content           questionContent,
+			question_reputation        questionReputation,
+			question_createdate        questionCreatedate,
+			question_updatedate        questionUpdatedate,
+			question_content_back_date questionContentBackDate,
+			question_ip                questionIp
+		FROM dev_question_back
+		WHERE member_name LIKE CONCAT('%',#{searchWord},'%')
+		ORDER BY question_content_back_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<!-- 블랙 질문 totalCount -->
+	<select id="blackQuestionTotalCount"
+			parameterType="String"
+			resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM dev_question_back
+		WHERE member_name LIKE CONCAT('%',#{searchWord},'%')
+	</select>
+	<!-- 블랙 답변 목록  -->
+	<select id="selectBlackAnswerList" 
+			parameterType="java.util.Map"
+			resultType="com.devinforest.vo.AnswerBack">
+		SELECT
+			answer_no         answerNo,
+			question_no       questionNo,
+			member_name       memberName,
+			answer_content    answerContent,
+			answer_createdate answerCreatedate,
+			answer_updatedate answerUpdatedate,
+			answer_back_date  answerBackDate,
+			answer_ip         answerIp
+		FROM dev_answer_back
+		WHERE member_name LIKE CONCAT('%',#{searchWord},'%')
+		ORDER BY answer_back_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<!-- 블랙 답변 totalCount -->
+	<select id="blackAnswerTotalCount"
+			parameterType="String"
+			resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM dev_answer_back
+		WHERE member_name LIKE CONCAT('%',#{searchWord},'%')
+	</select>
+	<!-- 블랙 질문댓글 목록  -->
+	<select id="selectBlackQuestionCommentList" 
+			parameterType="java.util.Map"
+			resultType="com.devinforest.vo.QuestionCommentBack">
+		SELECT
+			question_comment_no        questionCommentNo,
+			question_no                questionNo,
+			member_name                memberName,
+			question_comment_content   questionCommentContent,
+			question_comment_date      questionCommentDate,
+			question_comment_back_date questionCommentBackDate,
+			question_comment_ip        questionCommentIp
+		FROM dev_question_comment_back
+		WHERE member_name LIKE CONCAT('%',#{searchWord},'%')
+		ORDER BY question_comment_back_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<!-- 블랙 질문댓글 totalCount -->
+	<select id="blackQuestionCommentTotalCount"
+			parameterType="String"
+			resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM dev_question_comment_back
+		WHERE member_name LIKE CONCAT('%',#{searchWord},'%')
+	</select>
+	<!-- 블랙 답변댓글 목록  -->
+	<select id="selectBlackAnswerCommentList" 
+			parameterType="java.util.Map"
+			resultType="com.devinforest.vo.AnswerCommentBack">
+		SELECT
+			answer_comment_no        answerCommentNo,
+			question_no              questionNo,
+			answer_no                answerNo,
+			member_name              memberName,
+			answer_comment_content   answerCommentContent,
+			answer_comment_date      answerCommentDate,
+			answer_comment_back_date answerCommentBackDate,
+			answer_comment_ip        answerCommentIp
+		FROM dev_answer_comment_back
+		WHERE member_name LIKE CONCAT('%',#{searchWord},'%')
+		ORDER BY answer_comment_back_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<!-- 블랙 답변댓글 totalCount -->
+	<select id="blackAnswerCommentTotalCount"
+			parameterType="String"
+			resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM dev_answer_comment_back
+		WHERE member_name LIKE CONCAT('%',#{searchWord},'%')
+	</select>
 </mapper>

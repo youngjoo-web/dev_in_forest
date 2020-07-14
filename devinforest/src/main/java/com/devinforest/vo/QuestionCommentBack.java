@@ -6,7 +6,9 @@ public class QuestionCommentBack {
 	private String memberName;
 	private String questionCommentContent;
 	private String questionCommentDate;
+	private String questionCommentBackDate;
 	private String questionCommentIp;
+	
 	public int getQuestionCommentNo() {
 		return questionCommentNo;
 	}
@@ -37,18 +39,24 @@ public class QuestionCommentBack {
 	public void setQuestionCommentDate(String questionCommentDate) {
 		this.questionCommentDate = questionCommentDate;
 	}
+	public String getQuestionCommentBackDate() {
+		return questionCommentBackDate;
+	}
+	public void setQuestionCommentBackDate(String questionCommentBackDate) {
+		this.questionCommentBackDate = questionCommentBackDate;
+	}
 	public String getQuestionCommentIp() {
 		return questionCommentIp;
 	}
 	public void setQuestionCommentIp(String questionCommentIp) {
 		this.questionCommentIp = questionCommentIp;
 	}
+	
 	@Override
 	public String toString() {
 		return "QuestionCommentBack [questionCommentNo=" + questionCommentNo + ", questionNo=" + questionNo
 				+ ", memberName=" + memberName + ", questionCommentContent=" + questionCommentContent
-				+ ", questionCommentDate=" + questionCommentDate + ", questionCommentIp=" + questionCommentIp + "]";
+				+ ", questionCommentDate=" + questionCommentDate + ", questionCommentBackDate="
+				+ questionCommentBackDate + ", questionCommentIp=" + questionCommentIp + "]";
 	}
-	
-	
 }

@@ -2,22 +2,23 @@ package com.devinforest.vo;
 
 public class AnswerBack {
 	private int answerNo;
-	private int memberName;
+	private String memberName;
 	private String answerTitle;
 	private String answerContent;
 	private String answerCreatedate;
 	private String answerUpdatedate;
-	private String answerIp;
+	private String answerBackDate;
+	
 	public int getAnswerNo() {
 		return answerNo;
 	}
 	public void setAnswerNo(int answerNo) {
 		this.answerNo = answerNo;
 	}
-	public int getMemberName() {
+	public String getMemberName() {
 		return memberName;
 	}
-	public void setMemberName(int memberName) {
+	public void setMemberName(String memberName) {
 		this.memberName = memberName;
 	}
 	public String getAnswerTitle() {
@@ -44,18 +45,17 @@ public class AnswerBack {
 	public void setAnswerUpdatedate(String answerUpdatedate) {
 		this.answerUpdatedate = answerUpdatedate;
 	}
-	public String getAnswerIp() {
-		return answerIp;
+	public String getAnswerBackDate() {
+		return answerBackDate;
 	}
-	public void setAnswerIp(String answerIp) {
-		this.answerIp = answerIp;
+	public void setAnswerBackDate(String answerBackDate) {
+		this.answerBackDate = answerBackDate;
 	}
+	
 	@Override
 	public String toString() {
 		return "AnswerBack [answerNo=" + answerNo + ", memberName=" + memberName + ", answerTitle=" + answerTitle
 				+ ", answerContent=" + answerContent + ", answerCreatedate=" + answerCreatedate + ", answerUpdatedate="
-				+ answerUpdatedate + ", answerIp=" + answerIp + "]";
+				+ answerUpdatedate + ", answerBackDate=" + answerBackDate + "]";
 	}
-	
-	
 }
