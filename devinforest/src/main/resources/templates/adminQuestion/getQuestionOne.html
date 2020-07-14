@@ -8,7 +8,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
-		<title>관리자 답변 댓글 조회</title>
+		<title>관리자 질문 상세보기</title>
 		
 		<!-- Custom fonts for this template-->
 		<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
@@ -115,72 +115,76 @@
 	
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
+					
 						<div>
-							<h3 class="text-gray-800 mb-2 font-weight-bold">답변 댓글 조회</h3>
+							<h3 class="text-gray-800 mb-2 font-weight-bold">질문 조회</h3>
 						</div>
-						<br>
-						<!-- 테이블 -->
-						<div class="card shadow mb-4">
-							<div class="card-header py-3">
-								<div>
-									<div class="text-left">
-										<h5 class="m-0 font-weight-bold" style=" color:#148b61;" th:text="'답변 댓글 내역 : '+${answerCommentTotalRow}+개"></h5>
-									</div>
-								</div>
+						<hr>
+						<div class="card" style="padding:20px;">
+							<div>
+								<table class="table" th:each="q : ${question}">
+									<tr>
+										<th width="10%">질문 번호</th>
+										<td class="darkColor" th:text="${q.questionNo}"></td>
+										<th width="10%">질문 작성자</th>
+										<td class="darkColor" th:text="${q.memberName}"></td>
+										<th width="10%">질문 내공</th>
+										<td class="darkColor" th:text="${q.questionReputation}"></td>
+									</tr>
+									<tr>
+										<th width="10%">질문 생성일</th>
+										<td class="darkColor" th:text="${q.questionCreateDate}"></td>
+										<th width="10%">질문 수정일</th>
+										<td class="darkColor" th:text="${q.questionUpdateDate}"></td>
+										<th width="10%">질문 작성  IP</th>
+										<td class="darkColor" th:text="${q.questionIp}"></td>
+										<th width="10%">질문 조회수</th>
+										<td class="darkColor" th:text="${q.questionViews}"></td>
+									</tr>
+									<tr>
+										<th width="10%">질문 제목</th>
+										<td class="darkColor" th:text="${q.questionTitle}"></td>
+									</tr>
+									<tr>
+										<th width="10%">질문 내용</th>
+										<td class="darkColor" colspan="3" th:text="${q.questionContent}"></td>
+									</tr>
+								</table>
 							</div>
-							<div class="card-body">
-								<div class="table">
-									<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-										<div class="row">
-											<div class="col-xl-4">
-												<form method="GET" th:action="@{/admin/getAnswerCommentList}">
-													<input id="search" class="searchText" type="text" name="searchWord" th:value="${searchWord}" placeholder="제목 검색">
-													<button class="btn searchBtn" type="submit">검색</button>
-													<a class="btn searchBtn" th:href="@{/admin/getAnswerCommentList(rowPerPage='', searchWord='')}">초기화</a>
-												</form>
-											</div>
-											<div class="col-xl-8 text-right">
-													<a class="btn btn-sm selectBtn" th:href="@{/admin/getAnswerCommentList(rowPerPage=1, searchWord=${searchWord})}">1개씩</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/admin/getAnswerCommentList(rowPerPage=5, searchWord=${searchWord})}">5개씩</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/admin/getAnswerCommentList(rowPerPage=10, searchWord=${searchWord})}">10개씩</a>
-													<a class="btn btn-sm selectBtn" th:href="@{/admin/getAnswerCommentList(rowPerPage=15, searchWord=${searchWord})}">15개씩</a>
-											</div>
-										</div>
-									</div>
-									<table style="margin-top: 10px;" class="table table-bordered text-center">
-										<thead>
-											<tr>
-												<th class="darkColor" width="15%">답변 댓글 번호</th>
-												<th class="darkColor" width="15%">댓글 작성자</th>
-												<th class="darkColor" width="40%">상세보기</th>
-												<th class="darkColor" width="15%">댓글 생성일</th>
-												<th class="darkColor" width="15%">댓글 작성 IP</th>
-											</tr>
-											<tr th:each="a : ${answerCommentList}">
-												<td th:text="${a.answerCommentNo}"></td>
-												<td th:text="${a.memberName}"></td>
-												<td th:text="${a.answerCommentContent}">></td>
-												<td th:text="${a.answerCommentDate}"></td>
-												<td th:text="${a.answerCommentIp}"></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<div>
-									<a class="btn btn-sm pageBtn" th:href="@{/admin/getAnswerCommentList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">처음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage == 1}" th:href="@{/admin/getAnswerCommentList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage > 1}" th:href="@{/admin/getAnswerCommentList(currentPage=${currentPage-1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">이전</a>
-									<span th:text="'-'+${currentPage}+'-'"></span>
-									<a class="btn btn-sm pageBtn" th:if="${answerCommentTotalRow == 0}" th:href="@{/admin/getAnswerCommentList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage < lastPage}" th:href="@{/admin/getAnswerCommentList(currentPage=${currentPage+1},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${currentPage == lastPage}" th:href="@{/admin/getAnswerCommentList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">다음</a>
-									<a class="btn btn-sm pageBtn" th:if="${answerCommentTotalRow == 0}"th:href="@{/admin/getAnswerCommentList(currentPage=1,rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
-									<a class="btn btn-sm pageBtn" th:if="${answerCommentTotalRow != 0}"th:href="@{/admin/getAnswerCommentList(currentPage=${lastPage},rowPerPage=${rowPerPage},searchWord=${searchWord})}">마지막</a>
+							<hr>
+							<div>
+								<table class="table" th:each="a : ${answer}">
+									<tr>
+										<th width="10%">답변 번호</th>
+										<td class="darkColor" th:text="${a.answerNo}"></td>
+										<th width="10%">질문 번호</th>
+										<td class="darkColor" th:text="${a.questionNo}"></td>
+										<th width="10%">답변 작성자</th>
+										<td class="darkColor" th:text="${a.memberName}"></td>
+									</tr>
+									<tr>
+										<th width="10%">답변 생성일</th>
+										<td class="darkColor" th:text="${a.answerCreateDate}"></td>
+										<th width="10%">답변 수정일</th>
+										<td class="darkColor" th:text="${a.answerUpdateDate}"></td>
+										<th width="10%">답변 IP</th>
+										<td class="darkColor" th:text="${a.answerIp}"></td>
+									</tr>
+									<tr>
+										<th width="10%">질문 내용</th>
+										<td class="darkColor" colspan="3" th:text="${a.answerContent}"></td>
+									</tr>
+								</table>
+							</div>
+							<hr>
+							<div class="row" style="padding: 0px 10px;">
+								<div class="col-sm-12 text-left">
+									<a class="btn pageBtn" th:href="@{/admin/getQuestionList}">목록으로</a>
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- /.container-fluid -->
+						<!-- /.container-fluid -->
 				</div>
 				<!-- End of Main Content -->
 		
@@ -222,7 +226,7 @@
 				</div>
 			</div>
 		</div>
-	
+		
 		<!-- Bootstrap core JavaScript-->
 		<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
 		<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>

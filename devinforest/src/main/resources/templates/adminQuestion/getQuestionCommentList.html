@@ -116,7 +116,7 @@
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
 						<div>
-							<h3 class="text-gray-800 mb-2 font-weight-bold">관리자 질문 댓글 조회</h3>
+							<h3 class="text-gray-800 mb-2 font-weight-bold">질문 댓글 조회</h3>
 						</div>
 						<br>
 						<!-- 테이블 -->
@@ -150,11 +150,11 @@
 									<table style="margin-top: 10px;" class="table table-bordered text-center">
 										<thead>
 											<tr>
-												<th class="darkColor" width="20%">질문 댓글 번호</th>
-												<th class="darkColor" width="20%">댓글 작성자</th>
-												<th class="darkColor" width="20%">상세보기</th>
-												<th class="darkColor" width="20%">댓글 생성일</th>
-												<th class="darkColor" width="20%">댓글 작성 IP</th>
+												<th class="darkColor" width="15%">질문 댓글 번호</th>
+												<th class="darkColor" width="15%">댓글 작성자</th>
+												<th class="darkColor" width="40%">상세보기</th>
+												<th class="darkColor" width="15%">댓글 생성일</th>
+												<th class="darkColor" width="15%">댓글 작성 IP</th>
 											</tr>
 											<tr th:each="q : ${questionCommentList}">
 												<td th:text="${q.questionCommentNo}"></td>

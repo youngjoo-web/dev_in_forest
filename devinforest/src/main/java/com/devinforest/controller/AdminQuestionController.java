@@ -1,5 +1,6 @@
 package com.devinforest.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.service.AdminQuestionService;
+import com.devinforest.vo.Answer;
+import com.devinforest.vo.Question;
 
 @Controller
 public class AdminQuestionController {
@@ -138,5 +141,43 @@ public class AdminQuestionController {
 		System.out.println(searchWord + " <--- QuestionController searchWord");
 		
 		return "adminQuestion/getAnswerCommentList";
+	}
+	// 질문 상세보기
+	@GetMapping("/admin/getQuestionOne")
+	public String getQuestionOne(HttpSession session, Model model,
+								@RequestParam(value = "questionNo") int questionNo) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
+		Question question = adminQuestionService.getQuestionOne(questionNo);
+		List<Answer> answer = adminQuestionService.getAnswerOne(questionNo);
+		
+		System.out.println(question + " <-- question");
+		System.out.println(answer + " <-- answer");
+		
+		model.addAttribute("question", question);
+		model.addAttribute("answer", answer);
+		
+		return "/adminQuestion/getQuestionOne";
+	}
+	// 질문 상세보기
+	@GetMapping("/admin/getAnswerOne")
+	public String getAnswerOne(HttpSession session, Model model,
+								@RequestParam(value = "questionNo") int questionNo) {
+		// 로그인 세션확인
+		if(session.getAttribute("loginAdmin")==null) {
+			return "redirect:/index";
+		}
+		Question question = adminQuestionService.getQuestionOne(questionNo);
+		List<Answer> answer = adminQuestionService.getAnswerOne(questionNo);
+		
+		System.out.println(question + " <-- question");
+		System.out.println(answer + " <-- answer");
+		
+		model.addAttribute("question", question);
+		model.addAttribute("answer", answer);
+		
+		return "/adminQuestion/getAnswerOne";
 	}
 }

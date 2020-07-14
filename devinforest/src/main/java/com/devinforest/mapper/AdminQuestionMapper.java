@@ -29,5 +29,11 @@ public interface AdminQuestionMapper {
 	// 답변댓글 총 갯수 조회
 	public int selectAnswerCommentTotalRow(String searchWord);
 	// 질문 내용 상세보기
-	public Question selectQuestionContent(int questionNo);
+	public Question selectQuestionOne(int questionNo);
+	// 상세보기 답변 내용
+	public List<Answer> selectAnswerOne(int questionNo);
+	// 상세보기 질문댓글
+	public List<QuestionComment> selectQuestionCommentOne(int questionNo);
+	// 상세보기 답변댓글
+	public List<AnswerComment> selectAnswerCommentOne(int answerNo);
 }

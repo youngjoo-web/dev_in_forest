@@ -12,7 +12,7 @@
 			member_name memberName,
 			question_title questionTitle,
 			question_content questionContent,
-			question_reputation reputation,
+			question_reputation questionReputation,
 			question_createdate questionCreateDate,
 			question_updatedate questionUpdateDate,
 			question_ip questionIp,
@@ -123,13 +123,67 @@
 		OR member_name LIKE CONCAT('%', #{searchWord}, '%')
 	</select>
 	
-	<select id="selectQuestionContent"
+	<!-- 질문 내용 상세보기 -->
+	<select id="selectQuestionOne"
 			parameterType="int"
 			resultType="com.devinforest.vo.Question">
 		SELECT
+			question_no questionNo,
+			member_name memberName,
 			question_title questionTitle,
-			question_content questionContent
+			question_content questionContent,
+			question_reputation questionReputation,
+			question_createdate questionCreateDate,
+			question_updatedate questionUpdateDate,
+			question_ip questionIp,
+			question_views questionViews
 		FROM dev_question
 		WHERE question_no = #{questionNo}
+	</select>
+	
+	<!-- 상세보기 답변 내용  -->
+	<select id="selectAnswerOne"
+			parameterType="int"
+			resultType="com.devinforest.vo.Answer" >
+		SELECT 
+			answer_no answerNo,
+			question_no questionNo,
+			member_name memberName,
+			answer_content answerContent,
+			answer_createdate answerCreateDate,
+			answer_updatedate answerUpdateDate,
+			answer_ip answerIp
+		FROM dev_answer
+		WHERE question_no = #{questionNo}
+	</select>
+	
+	<!-- 상세보기 질문 댓글 -->
+	<select id="selectQuestionCommentOne"
+			parameterType="int"
+			resultType="com.devinforest.vo.QuestionComment">
+		SELECT 
+			question_comment_no questionCommentNo,
+			question_no questionNo,
+			member_name memberName,
+			question_comment_content questionCommentContent,
+			question_comment_date questionCommentDate,
+			question_comment_ip questionCommentIp
+		FROM dev_question_comment
+		WHERE question_no = #{questionNo}
+	</select>
+	
+	<!-- 상세보기 답변 댓글 -->
+	<select id="selectAnswerCommentOne"
+			parameterType="int"
+			resultType="com.devinforest.vo.AnswerComment">
+		SELECT 
+			answer_comment_no answerCommentNo,
+			answer_no answerNo,
+			member_name memberName,
+			answer_comment_content answerCommentContent,
+			answer_comment_date answerCommentDate,
+			answer_comment_ip answerCommentIp
+		FROM dev_answer_comment
+		WHERE answer_no = #{answerNo}
 	</select>
 </mapper>

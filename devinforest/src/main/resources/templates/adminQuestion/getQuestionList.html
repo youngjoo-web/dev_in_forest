@@ -116,7 +116,7 @@
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
 						<div>
-							<h3 class="text-gray-800 mb-2 font-weight-bold">관리자 질문 조회</h3>
+							<h3 class="text-gray-800 mb-2 font-weight-bold">질문 조회</h3>
 						</div>
 						<br>
 						<!-- 테이블 -->
@@ -162,7 +162,7 @@
 											<tr th:each="q : ${questionList}">
 												<td th:text="${q.questionNo}"></td>
 												<td th:text="${q.memberName}"></td>
-												<td><button th:id="btn+${q.questionNo}" type="button" class="btn" th:text="${q.questionTitle}"></button></td>
+												<td><a th:href="@{/admin/getQuestionOne(questionNo=${q.questionNo})}" th:text="${q.questionTitle}"></a></td>
 												<td th:text="${q.questionReputation}"></td>
 												<td th:text="${q.questionCreateDate}"></td>
 												<td th:text="${q.questionUpdateDate}"></td>

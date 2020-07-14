@@ -147,7 +147,19 @@ public class AdminQuestionService {
 		return returnMap;
 	}
 	// 질문내용 상세보기
-	public Question getQuestionContent(int questionNo) {
-		return adminQuestionMapper.selectQuestionContent(questionNo);
+	public Question getQuestionOne(int questionNo) {
+		return adminQuestionMapper.selectQuestionOne(questionNo);
+	}
+	// 상세보기 답변내용
+	public List<Answer> getAnswerOne(int questionNo) {
+		return adminQuestionMapper.selectAnswerOne(questionNo);
+	}
+	// 상세보기 질문댓글
+	public List<QuestionComment> getQuestionCommentOne(int questionNo) {
+		return adminQuestionMapper.selectQuestionCommentOne(questionNo);
+	}
+	// 상세보기 답변댓글
+	public List<AnswerComment> getAnswerCommentOne(int answerNo) {
+		return adminQuestionMapper.selectAnswerCommentOne(answerNo);
 	}
 }
