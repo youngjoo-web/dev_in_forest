@@ -104,7 +104,7 @@
 							<!-- 닉네임 나오는 곳 - 상단 바 -->
 							<li class="nav-item dropdown no-arrow">
 								<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<span class="mr-2 d-none d-lg-inline text-gray-600 small">로그인 중인 닉네임</span>
+									<span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${session.loginAdmin.adminName}"></span>
 									<img class="img-profile rounded-circle" th:src="@{/img/img.png}">
 								</a>
 								<!-- Dropdown - User Information -->
