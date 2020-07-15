@@ -8,7 +8,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
-		<title>관리자 질문 댓글 조회</title>
+		<title>질문 댓글조회</title>
 		
 		<!-- Custom fonts for this template-->
 		<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
@@ -116,7 +116,7 @@
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
 						<div>
-							<h3 class="text-gray-800 mb-2 font-weight-bold">질문 댓글 조회</h3>
+							<h3 class="text-gray-800 mb-2 font-weight-bold">질문 댓글조회</h3>
 						</div>
 						<br>
 						<!-- 테이블 -->
@@ -150,16 +150,16 @@
 									<table style="margin-top: 10px;" class="table table-bordered text-center">
 										<thead>
 											<tr>
-												<th class="darkColor" width="15%">질문 댓글 번호</th>
+												<th class="darkColor" width="10%">질문 댓글 번호</th>
+												<th class="darkColor" width="">내용</th>
 												<th class="darkColor" width="15%">댓글 작성자</th>
-												<th class="darkColor" width="40%">상세보기</th>
 												<th class="darkColor" width="15%">댓글 생성일</th>
-												<th class="darkColor" width="15%">댓글 작성 IP</th>
+												<th class="darkColor" width="10%">댓글 작성 IP</th>
 											</tr>
 											<tr th:each="q : ${questionCommentList}">
 												<td th:text="${q.questionCommentNo}"></td>
-												<td th:text="${q.memberName}"></td>
 												<td th:text="${q.questionCommentContent}"></td>
+												<td th:text="${q.memberName}"></td>
 												<td th:text="${q.questionCommentDate}"></td>
 												<td th:text="${q.questionCommentIp}"></td>
 											</tr>

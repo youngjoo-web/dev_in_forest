@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.devinforest.service.AdminQuestionService;
 import com.devinforest.service.AdminService;
-import com.devinforest.vo.Question;
 
 @RestController
 public class AdminRestController {

@@ -8,7 +8,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
-		<title>관리자 질문 조회</title>
+		<title>질문 조회</title>
 		
 		<!-- Custom fonts for this template-->
 		<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
@@ -150,20 +150,20 @@
 									<table style="margin-top: 10px;" class="table table-bordered text-center">
 										<thead>
 											<tr>
-												<th class="darkColor" width="12%">질문 번호</th>
-												<th class="darkColor" width="12%">질문 작성자</th>
-												<th class="darkColor" width="12%">질문 제목</th>
-												<th class="darkColor" width="12%">질문 내공</th>
-												<th class="darkColor" width="12%">질문 생성일</th>
-												<th class="darkColor" width="12%">질문 수정일</th>
-												<th class="darkColor" width="12%">질문 작성 IP</th>
-												<th class="darkColor" width="12%">조회수</th>
+												<th class="darkColor" width="10%">질문 번호</th>
+												<th class="darkColor" width="%">질문 제목</th>
+												<th class="darkColor" width="5%">내공</th>
+												<th class="darkColor" width="10%">질문 작성자</th>
+												<th class="darkColor" width="15%">질문 작성일</th>
+												<th class="darkColor" width="15%">질문 수정일</th>
+												<th class="darkColor" width="10%">질문 작성 IP</th>
+												<th class="darkColor" width="5%">조회수</th>
 											</tr>
 											<tr th:each="q : ${questionList}">
 												<td th:text="${q.questionNo}"></td>
-												<td th:text="${q.memberName}"></td>
-												<td><a th:href="@{/admin/getQuestionOne(questionNo=${q.questionNo})}" th:text="${q.questionTitle}"></a></td>
+												<td><a th:href="@{/admin/getQuestionOne(questionNo=${q.questionNo})}" th:text="${#strings.abbreviate(q.questionTitle,20)}"></a></td>
 												<td th:text="${q.questionReputation}"></td>
+												<td th:text="${q.memberName}"></td>
 												<td th:text="${q.questionCreateDate}"></td>
 												<td th:text="${q.questionUpdateDate}"></td>
 												<td th:text="${q.questionIp}"></td>

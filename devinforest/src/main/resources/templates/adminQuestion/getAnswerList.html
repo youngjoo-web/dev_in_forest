@@ -8,7 +8,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
-		<title>관리자 답변 조회</title>
+		<title>답변 조회</title>
 		
 		<!-- Custom fonts for this template-->
 		<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
@@ -150,19 +150,19 @@
 									<table style="margin-top: 10px;" class="table table-bordered text-center">
 										<thead>
 											<tr>
-												<th class="darkColor" width="12%">답변 번호</th>
-												<th class="darkColor" width="12%">질문 번호</th>
-												<th class="darkColor" width="12%">답변 작성자</th>
-												<th class="darkColor" width="12%">답변 내용</th>
-												<th class="darkColor" width="12%">답변 생성일</th>
-												<th class="darkColor" width="12%">답변 수정일</th>
-												<th class="darkColor" width="12%">답변 작성 IP</th>
+												<th class="darkColor" width="10%">답변 번호</th>
+												<th class="darkColor" width="10%">질문 번호</th>
+												<th class="darkColor" width="">답변 내용</th>
+												<th class="darkColor" width="10%">답변 작성자</th>
+												<th class="darkColor" width="15%">답변 작성일</th>
+												<th class="darkColor" width="15%">답변 수정일</th>
+												<th class="darkColor" width="10%">답변 작성 IP</th>
 											</tr>
 											<tr th:each="a : ${answerList}">
 												<td th:text="${a.answerNo}"></td>
 												<td th:text="${a.questionNo}"></td>
+												<td><a th:href="@{/admin/getAnswerOne(questionNo=${a.questionNo})}" th:text="${#strings.abbreviate(a.answerContent,20)}"></a></td>
 												<td th:text="${a.memberName}"></td>
-												<td><a th:href="@{/admin/getAnswerOne(questionNo=${a.questionNo})}" th:text="${#strings.abbreviate(a.answerContent,3)}"></a></td>
 												<td th:text="${a.answerCreateDate}"></td>
 												<td th:text="${a.answerUpdateDate}"></td>
 												<td th:text="${a.answerIp}"></td>

@@ -8,7 +8,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
-		<title>관리자 질문 상세보기</title>
+		<title>답변 조회</title>
 		
 		<!-- Custom fonts for this template-->
 		<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
@@ -120,59 +120,57 @@
 							<h3 class="text-gray-800 mb-2 font-weight-bold">답변 조회</h3>
 						</div>
 						<hr>
-						<div class="card" style="padding:20px;">
-							<div>
+						<div>
+							<div class="card">
 								<table class="table" th:each="q : ${question}">
 									<tr>
-										<th width="10%">질문 번호</th>
+										<th width="10%" class="darkColor text-center">질문 번호</th>
 										<td class="darkColor" th:text="${q.questionNo}"></td>
-										<th width="10%">질문 작성자</th>
-										<td class="darkColor" th:text="${q.memberName}"></td>
-										<th width="10%">질문 내공</th>
+										<th width="10%" class="darkColor text-center">질문 내공</th>
 										<td class="darkColor" th:text="${q.questionReputation}"></td>
+										<th width="10%" class="darkColor text-center">질문 작성자</th>
+										<td class="darkColor" th:text="${q.memberName}"></td>
 									</tr>
 									<tr>
-										<th width="10%">질문 생성일</th>
+										<th width="10%" class="darkColor text-center">질문 작성일</th>
 										<td class="darkColor" th:text="${q.questionCreateDate}"></td>
-										<th width="10%">질문 수정일</th>
+										<th width="10%" class="darkColor text-center">질문 수정일</th>
 										<td class="darkColor" th:text="${q.questionUpdateDate}"></td>
-										<th width="10%">질문 작성  IP</th>
+										<th width="10%" class="darkColor text-center">질문 작성  IP</th>
 										<td class="darkColor" th:text="${q.questionIp}"></td>
-										<th width="10%">질문 조회수</th>
-										<td class="darkColor" th:text="${q.questionViews}"></td>
 									</tr>
 									<tr>
-										<th width="10%">질문 제목</th>
-										<td class="darkColor" th:text="${q.questionTitle}"></td>
+										<th width="10%" class="darkColor text-center">질문 제목</th>
+										<td colspan="5" class="darkColor" th:text="${q.questionTitle}"></td>
 									</tr>
 									<tr>
-										<th width="10%">질문 내용</th>
-										<td class="darkColor" colspan="3" th:text="${q.questionContent}"></td>
+										<th width="10%" class="darkColor text-center">질문 내용</th>
+										<td height="150px;" class="darkColor" colspan="5" th:text="${q.questionContent}"></td>
 									</tr>
 								</table>
 							</div>
-							<hr>
-							<div>
+							<br>
+							<div class="card">
 								<table class="table" th:each="a : ${answer}">
 									<tr>
-										<th width="10%">답변 번호</th>
+										<th width="10%" class="darkColor text-center">답변 번호</th>
 										<td class="darkColor" th:text="${a.answerNo}"></td>
-										<th width="10%">질문 번호</th>
+										<th width="10%" class="darkColor text-center">질문 번호</th>
 										<td class="darkColor" th:text="${a.questionNo}"></td>
-										<th width="10%">답변 작성자</th>
+										<th width="10%" class="darkColor text-center">답변 작성자</th>
 										<td class="darkColor" th:text="${a.memberName}"></td>
 									</tr>
 									<tr>
-										<th width="10%">답변 생성일</th>
+										<th width="10%" class="darkColor text-center">답변 작성일</th>
 										<td class="darkColor" th:text="${a.answerCreateDate}"></td>
-										<th width="10%">답변 수정일</th>
+										<th width="10%" class="darkColor text-center">답변 수정일</th>
 										<td class="darkColor" th:text="${a.answerUpdateDate}"></td>
-										<th width="10%">답변 IP</th>
+										<th width="10%" class="darkColor text-center">답변 작성 IP</th>
 										<td class="darkColor" th:text="${a.answerIp}"></td>
 									</tr>
 									<tr>
-										<th width="10%">질문 내용</th>
-										<td class="darkColor" colspan="3" th:text="${a.answerContent}"></td>
+										<th width="10%" class="darkColor text-center">답변 내용</th>
+										<td height="150px;" class="darkColor" colspan="5" th:text="${a.answerContent}"></td>
 									</tr>
 								</table>
 							</div>
