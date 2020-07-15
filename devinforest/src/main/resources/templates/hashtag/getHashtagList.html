@@ -24,8 +24,14 @@
 		
 		<style>
 			.tagBtn{
-			height: 40px;
-			width: 80px;
+			background-color: #e1ecf4;
+			color: #648ba7;
+			border-color: transparent;
+			}
+			.tagBtn:hover{
+			background-color: #96bfe4;
+			color: #3b7aa0;
+			border-color: transparent;
 			}
 		</style>
 		<script>
@@ -239,33 +245,66 @@
 	
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
-						
+					
+
 						<!-- 여기에 본문 넣으면댐 -->
 						<h1>해시태그 리스트</h1>
 						<br>
-						<form id="searchForm" method="get" th:action="@{/getHashtagList}">
-							<input type="text" name="searchWord">
-							<button type="submit" id="serachBtn" th:text="검색"></button>
+						<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="searchForm" method="get" th:action="@{/getHashtagList}">
+							<input style="width:300px;" type="text" class="form-control small"
+									placeholder="Search for..." aria-label="Search" name="searchWord"
+									aria-describedby="basic-addon2">
+							<button class="btn btn-success" type="submit" id="serachBtn" ><i class="fas fa-search fa-sm"></i></button>
 						</form>
 						<br>
-						<a th:href="@{/addHashtag}" th:text="태그추가"></a>
-							<br>
-								<span th:each="i,index :${hashtagList}">
-									<span th:if="${i.hashtagNo-1}%4==0">
-										<br>
-										<br>
-									</span>
-								<a type="button" th:value="${i.hashtagNo}" class="tagBtn btn btn-outline-primary" th:href="@{/getHashtagOne(hashtagNo=${i.hashtagNo})}"><span th:text="${i.hashtagName}"></span></a>
+						<br>
+						<div style="text-align:right; margin-right:450px;">
+							<a class="btn btn-outline-primary" th:href="@{/addHashtag}" th:text="태그추가"></a>
+						</div>
+							<hr>
+							<div class="card-deck" style="width:1200px;">
+								<div th:each="i,index :${hashtagList}">
 								
-							</span>
+									<!-- 
+									<div th:if="${index.index+1}%4==0">
+										카드줄바꿈
+									</div>
+									 -->
+								<div class="card" style="position:relative; width:270px; height:200px; margin-bottom: 10px;">
+								
+							    <div class="card-body text-center" style="text-align:left">
+							      	<!-- <label th:text="${index.index+1}"></label> -->
+							      	<div style="text-align:left">
+							      		<a type="button" th:value="${i.hashtagNo}" class="card-text tagBtn btn btn-outline-primary btn-sm" th:href="@{/getHashtagOne(hashtagNo=${i.hashtagNo})}" ><span th:text="${i.hashtagName}"></span></a>
+							      	</div>
+							      	<br>
+							      	<div style="text-align:left">
+							      		<p class="card-text" th:text="${i.hashtagContent}"></p>
+									</div>
+									<br>
+									<div style="position:absolute; right:5px; bottom:0px;">
+										<p class="card-text" th:text="${i.hashtagDate}"></p>
+							      	</div>
+							      
+							    </div>
+							  </div>	  
+								
+							</div>					
+							</div>
+							
+							
 						<hr>
-						<div th:if="${currentPage} > 1">
-							<a th:href="@{/getHashtagList(currentPage=${currentPage}-1)}">이전</a>
+						<div style="text-align:center; margin-right:430px;">
+							<span th:if="${currentPage} > 1">
+								<a style="margin-right:50px;" class="btn btn-outline-success" th:href="@{/getHashtagList(currentPage=${currentPage}-1)}">이전</a>
+							</span>
+							
+							<span th:if="${currentPage < lastPage}">
+								<a class="btn btn-outline-success" th:href="@{/getHashtagList(currentPage=${currentPage}+1)}">다음</a>
+							</span>
 						</div>
-						<div th:if="${currentPage < lastPage}">
-							<a th:href="@{/getHashtagList(currentPage=${currentPage}+1)}">다음</a>
-						</div>
-						
+						<br>
+						<br>
 						<!-- 여기에 본문 넣으면댐 -->
 						
 					</div>

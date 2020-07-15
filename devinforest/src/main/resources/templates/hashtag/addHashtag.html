@@ -86,11 +86,11 @@
 				return;
 			}
 			
-			if($('#hashtagContent').val().length < 3) {
-				$('#hashtagContentText').text("내용을 3자 이상 입력하세요");
+			if($('#hashtagContent').val().length < 3 || $('#hashtagContent').val().length > 43) {
+				$('#hashtagContentText').text("내용을 3~43자 입력하세요");
 				$('#hashtagContent').focus();
-				console.log("내용을 3자 이상 입력하세요 - 커밋 실패");
-				alert("내용을 3자 이상 입력하세요.");
+				console.log("내용을 3~43자 입력하세요 - 커밋 실패");
+				alert("내용을 3~43자 입력하세요");
 				return;
 			} else{
 				$('#hashtagContentText').empty();
@@ -304,24 +304,63 @@
 	
 					<!-- 내용 넣는 곳 -->
 					<div class="container-fluid pt-4 px-5 content">
-						
+					<!-- Content Row 1 -->
+					<div class="row mt-3">
+
+
 						<!-- 여기에 본문 넣으면댐 -->
-						<h1>hashtag 추가</h1>
-						<form method="post" th:action="@{/addHashtag}" id="addHashtagForm">
-							<div>
-								<input type="text" name="hashtagName" id="hashtagName" readonly="readonly">
-								<input type="text" name="hashtagName2" id="hashtagName2">
-								<button type="button" id="addCheckBtn">중복확인</button>
-								<div id="hashtagNameText"> </div>
+
+						<div class="col-xl-4 col-md-6 mb-4 px-3"></div>
+						<!-- col end -->
+						<!-- 관리자 설정 -->
+						<div class="col-xl-4 col-md-6 mb-4 px-3">
+							<div class="card shadow border-0 p-5">
+								<!-- card Header -->
+								<h4 class="text-dark font-weight-bold mb-4" align="center">Hashtag 생성</h4>
+								<!-- card Content -->
+								<div class="row text-center mb-2">
+									<div class="col-xl-12 mb-3">
+
+										<form method="post" th:action="@{/addHashtag}" id="addHashtagForm">
+											<div>
+												<input type="hidden" name="hashtagName" id="hashtagName" readonly="readonly">
+											</div>
+											<div class="row">
+												<div class="col-sm-7">
+													<span class="memberEmailArea"> 
+													<input class="form-control" type="text" name="hashtagName2" id="hashtagName2" placeholder="해시태그를 입력해주세요.">
+													</span>
+												</div>
+												<div class="col-sm-5">
+													<button id="addCheckBtn" type="button" class="btn btn-success btn-block ">중복확인</button>	
+												</div>
+												<div style="margin-left:10px;" id="hashtagNameText"> </div>
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-sm-12">
+													<textarea class="form-control" rows="10" cols="43" name="hashtagContent" id="hashtagContent"></textarea>
+												</div>
+												
+												<span style="margin-left:10px;" id="hashtagContentText"></span>
+											</div>
+											<br>
+											
+											<br>
+											<button class="btn btn-success btn-block" type="button" id="addBtn" th:text="생성"></button>
+
+
+										</form>
+										<br>
+										
+									</div>
+									<!-- row end -->
+								</div>
+								<!-- card end -->
 							</div>
-							<br>
-							<br>
-							<div>
-								<textarea rows="10" cols="20" name="hashtagContent" id="hashtagContent"></textarea>
-								<div id="hashtagContentText"> </div>
-							</div>
-							<button type="button" id="addBtn" th:text="생성"></button>
-						</form>
+							<!-- col end -->
+							<div class="col-xl-4 col-md-6 mb-4 px-3"></div>
+						</div>
 						<!-- 여기에 본문 넣으면댐 -->
 						
 					</div>
