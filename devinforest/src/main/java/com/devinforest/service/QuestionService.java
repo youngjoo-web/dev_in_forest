@@ -44,12 +44,6 @@ public class QuestionService {
 		
 		
 		List<Question> questionList = questionMapper.selectQuestionList(map);
-		System.out.println(questionList.get(0) + "<------- questionList questionNo");
-		
-//		List<Integer> questionNo = new ArrayList<Integer>();
-//		for(int i=0; i< questionList.size(); i++) {
-//			questionNo.add(questionList.indexOf(questionNo)); 
-//		}
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("lastPage", lastPage);

@@ -27,7 +27,8 @@
 		SELECT 
 			question_comment_no questionCommentNo,
 			member_name memberName,
-			question_comment_content questionCommentContent
+			question_comment_content questionCommentContent,
+			question_comment_ip questionCommentIp
 		FROM dev_question_comment
 		WHERE question_no = #{questionNo}
 		ORDER BY question_comment_date DESC
@@ -96,6 +97,7 @@
 	<insert id="insertAnswerComment" parameterType="com.devinforest.vo.AnswerComment">
 		INSERT INTO
 			dev_answer_comment(
+				question_no,
 				answer_no,
 				member_name,
 				answer_comment_content,
@@ -103,6 +105,7 @@
 				answer_comment_ip
 			)
 			VALUES(
+				#{questionNo},
 				#{answerNo},
 				#{memberName},
 				#{answerCommentContent},
@@ -116,7 +119,8 @@
 			answer_comment_no answerCommentNo,
 			answer_no answerNo,
 			member_name memberName,
-			answer_comment_content answerCommentContent
+			answer_comment_content answerCommentContent,
+			answer_comment_ip answerCommentIp
 		FROM dev_answer_comment
 		WHERE answer_no = #{answerNo}
 		ORDER BY answer_comment_date DESC
