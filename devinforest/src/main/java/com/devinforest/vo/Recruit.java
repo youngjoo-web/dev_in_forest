@@ -17,6 +17,7 @@ public class Recruit {
 	private String recruitTitle;
 	private String recruitContent;
 	private String recruitDate;
+	private String companyEmail;
 	public int getRecruitNo() {
 		return recruitNo;
 	}
@@ -113,6 +114,12 @@ public class Recruit {
 	public void setRecruitDate(String recruitDate) {
 		this.recruitDate = recruitDate;
 	}
+	public String getCompanyEmail() {
+		return companyEmail;
+	}
+	public void setCompanyEmail(String companyEmail) {
+		this.companyEmail = companyEmail;
+	}
 	@Override
 	public String toString() {
 		return "Recruit [recruitNo=" + recruitNo + ", companyKorName=" + companyKorName + ", companyEngName="
@@ -121,7 +128,7 @@ public class Recruit {
 				+ ", companyLink=" + companyLink + ", companyFoundation=" + companyFoundation + ", companyPhone="
 				+ companyPhone + ", companyAddress=" + companyAddress + ", companyAbout=" + companyAbout
 				+ ", recruitTitle=" + recruitTitle + ", recruitContent=" + recruitContent + ", recruitDate="
-				+ recruitDate + "]";
+				+ recruitDate + ", companyEmail=" + companyEmail + "]";
 	}
 	
 	

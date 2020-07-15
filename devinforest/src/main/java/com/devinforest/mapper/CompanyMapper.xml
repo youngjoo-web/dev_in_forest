@@ -11,6 +11,24 @@
 		WHERE company_email=#{companyEmail}
 		AND company_password=PASSWORD(#{companyPw})
 	</select>
+	<!-- 채용공고추가하면서 기업정보 수정 -->
+	<update id="updateCompanyByInsertRecruit" parameterType="com.devinforest.vo.Recruit">
+		UPDATE dev_company
+		SET
+		company_kor_name=#{companyKorName},
+		company_eng_name=#{companyEngName}, 
+		company_type = #{companyType}, 
+		company_address = #{companyAddress}, 
+		company_phone =#{companyPhone}, 
+		company_license=#{companyLicense},
+		company_link =#{companyLink}, 
+		company_ceo =#{companyCeo} , 
+		company_sales =#{companySales},
+		
+		company_about=#{companyAbout},
+		company_foundation =#{companyFoundation}
+		WHERE company_email=#{companyEmail}
+	</update>
 	<!-- 기업정보 수정 쿼리문 -->
 	<update id="updateCompany" parameterType="com.devinforest.vo.Company">
 		UPDATE dev_company

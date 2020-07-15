@@ -6,8 +6,37 @@
 	<!-- 채용공고추가 -->
 	<insert id="insertRecruit" parameterType="com.devinforest.vo.Recruit">
 		insert into dev_recruit
-		(company_kor_name, company_eng_name, company_license, company_sales, company_type, company_ceo, company_link, company_foundation, company_phone, company_address, company_about,recruit_title,recruit_content,company_reputation, recruit_date)
-		VALUES(#{companyKorName},#{companyEngName},#{companyLicense},#{companySales},#{companyType},#{companyCeo},#{companyLink},#{companyFoundation},#{companyPhone},#{companyAddress},#{companyAbout},#{recruitTitle},#{recruitContent},#{companyReputation},NOW())
+		(company_kor_name, 
+		company_eng_name, 
+		company_license, 
+		company_sales, 
+		company_type, 
+		company_ceo, 
+		company_link, 
+		company_foundation, 
+		company_phone, 
+		company_address, 
+		company_about,
+		recruit_title,
+		recruit_content,
+		company_reputation, 
+		recruit_date)
+		VALUES(
+		#{companyKorName},
+		#{companyEngName},
+		#{companyLicense},
+		#{companySales},
+		#{companyType},
+		#{companyCeo},
+		#{companyLink},
+		#{companyFoundation},
+		#{companyPhone},
+		#{companyAddress},
+		#{companyAbout},
+		#{recruitTitle},
+		#{recruitContent},
+		#{companyReputation},
+		NOW())
 	</insert>
 	<!-- 일반회원 채용공고 리스트 -->
 	<select id="selectRecruitList" parameterType="java.util.Map"

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.devinforest.mapper.CompanyMapper;
 import com.devinforest.mapper.RecruitMapper;
 import com.devinforest.vo.Recruit;
 
@@ -16,9 +17,13 @@ import com.devinforest.vo.Recruit;
 public class RecruitService {
 	@Autowired
 	private RecruitMapper recruitMapper;
+	@Autowired
+	private CompanyMapper companyMapper;
 	//채용공고 추가
 	public void addRecruit(Recruit recruit) {
 		recruitMapper.insertRecruit(recruit);
+		companyMapper.updateCompanyByInsertRecruit(recruit);
+		
 		return;
 	}
 	//채용공고 리스트 출력

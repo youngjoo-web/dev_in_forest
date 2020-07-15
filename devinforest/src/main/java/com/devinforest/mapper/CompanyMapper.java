@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.devinforest.vo.Company;
 import com.devinforest.vo.LoginCompany;
+import com.devinforest.vo.Recruit;
 
 @Mapper
 public interface CompanyMapper {
@@ -22,6 +23,8 @@ public interface CompanyMapper {
 	public LoginCompany selectLoginCompanyMamber(LoginCompany loginCompany);
 	//기업정보 상세보기
 	public Company selectCompanyInfo(LoginCompany loginCompany);
+	//채용공고 입력값 
+	public int updateCompanyByInsertRecruit(Recruit recruit);
 	//기업정보 업데이트
 	public void updateCompany(Company company);
 	//기업정보 업데이트 하기 전에 확인
