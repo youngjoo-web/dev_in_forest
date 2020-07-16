@@ -1,5 +1,7 @@
 package com.devinforest.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +15,7 @@ public class AnswerService {
 
 	@Autowired
 	private AnswerMapper answerMapper;
+	
 	
 	/* ---------- 답변  수정 ---------- */
 	public int modifyAnswer(Answer answer) {

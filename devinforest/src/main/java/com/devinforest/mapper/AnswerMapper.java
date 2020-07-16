@@ -20,4 +20,5 @@ public interface AnswerMapper {
 	public void deleteAnswer(Answer answer); // 게시글 답변 삭제
 	public void deleteAnswerAll(Question question); // 게시글 삭제를 위해 게시글의 모든 답변 삭제
 	public int answerListTotalCount();
+	
 }
