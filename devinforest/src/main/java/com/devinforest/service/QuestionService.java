@@ -20,7 +20,15 @@ public class QuestionService {
 	
 	@Autowired
 	private QuestionMapper questionMapper;
+	@Autowired
 	private HashtagMapper hashtagMapper;
+	
+	/* ---------- 질문 목록 ---------- */
+	public int getQuestionNoMax() {
+		System.out.println(questionMapper.selectQuestionNoMax()+"<--questionService questionMax");
+		return questionMapper.selectQuestionNoMax();
+	}
+	
 	/* ---------- 질문 목록 ---------- */
 	public Map<String, Object> getQuestionList(int currentPage, String searchWord) {
 		System.out.println(searchWord + " <-- Service searchWord");
@@ -62,6 +70,7 @@ public class QuestionService {
 	}
 	/* ---------- 질문 해시태그 생성 ---------- */
 	public int addQuestionHashtag(QuestionHashtag questionHashtag) {
+		System.out.println(questionHashtag+"<--questionService questionHashtag");
 		return hashtagMapper.insertQuestionHashtag(questionHashtag);
 	}
 

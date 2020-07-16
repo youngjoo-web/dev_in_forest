@@ -143,12 +143,14 @@ public class QuestionController {
 		
 		System.out.println(questionHashtag + "<--- add Question questionHashtag");
 		questionService.addQuestion(question);
-		System.out.println(question + " <--- addQuestion question");
-		int questionNo=question.getQuestionNo();
-		System.out.println(questionNo + "questionNo");
+		int questionNo = questionService.getQuestionNoMax();
+		System.out.println(questionNo + "<--questionNo");
 		System.out.println("질문추가");
 		
 		questionHashtag.setQuestionNo(questionNo);
+		
+		System.out.println(questionHashtag.getQuestionNo()+"<---questionNo");
+		System.out.println(questionHashtag + "<--- add Question questionHashtag");
 		questionService.addQuestionHashtag(questionHashtag);
 		System.out.println("질문의 해시태그추가");
 		return "redirect:/getQuestionList";
