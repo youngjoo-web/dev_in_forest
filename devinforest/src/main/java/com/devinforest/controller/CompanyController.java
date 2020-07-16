@@ -64,9 +64,6 @@ public class CompanyController {
 				   @RequestParam(defaultValue = "1") int currentPage,
 				   @RequestParam(defaultValue = "5") int rowPerPage,
 				   @RequestParam(defaultValue = "") String searchWord) {
-		if(session.getAttribute("loginMember")==null) {
-			return "redirect:/index";
-		}
 		Map<String, Object> map = companyService.getCompanyList(currentPage, rowPerPage, searchWord);
 		System.out.println(map.get("companyList"));
 		model.addAttribute("currentPage", currentPage);
@@ -76,8 +73,16 @@ public class CompanyController {
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("companyList", map.get("companyList"));
 		
+		
+		if(session.getAttribute("loginMember")==null) {
+			String memberName = "Guest";
+			model.addAttribute("memberName", memberName);
+			return "company/companyListForGuest";
+		}
+		
 		return "member/companyList";
 	}
+	
 	
 	//기업 회원가입 폼
 	@GetMapping("/addCompanyMember")

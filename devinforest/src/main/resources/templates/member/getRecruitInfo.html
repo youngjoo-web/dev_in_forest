@@ -94,8 +94,9 @@
 							th:href="@{/getMemberInfo(memberEmail=${session.loginMember.memberEmail})}">회원정보</a>
 						<a class="collapse-item" href="/getMemberList">회원리스트</a> <a
 							class="collapse-item" th:href="@{/getRecruitList}">채용 리스트</a> <a
-							class="collapse-item" th:href="@{/getMemberInfo(memberEmail=${session.loginMember.memberEmail})}">면접제의 리스트</a> <a
-							class="collapse-item" href="#">문의&신고</a>
+							class="collapse-item"
+							th:href="@{/getMemberInfo(memberEmail=${session.loginMember.memberEmail})}">면접제의
+							리스트</a> <a class="collapse-item" href="#">문의&신고</a>
 					</div>
 				</div></li>
 
@@ -149,8 +150,10 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">기업</h6>
 						<a class="collapse-item" th:href="@{/getCompanyList}">기업정보리스트</a>
-						<a class="collapse-item" th:href="@{/getMemberInfo(memberEmail=${session.loginMember.memberEmail})}">기업의 면접제의 리스트 </a> <a
-							class="collapse-item" th:href="@{/getRecruitList}">기업의 채용리스트</a>
+						<a class="collapse-item"
+							th:href="@{/getMemberInfo(memberEmail=${session.loginMember.memberEmail})}">기업의
+							면접제의 리스트 </a> <a class="collapse-item" th:href="@{/getRecruitList}">기업의
+							채용리스트</a>
 					</div>
 				</div></li>
 			<!-- 기업 끝 -->
@@ -315,15 +318,35 @@
 									</tr>
 								</table>
 							</div>
-							<form id="form" method="post" th:action="@{/addApply}">
-								<input id="recruitNo" type="hidden" name="recruitNo"
-									th:value="${recruit.recruitNo}"> 
-								<input id="memberEmail" type="hidden" name="memberEmail"
-									th:value="${session.loginMember.memberEmail}">
-								<button class="btn btn-sm pageBtn" type="submit">신청하기</button>
-							</form>
-							<span th:text="${applyMsg}"></span>
 							
+								
+									<div th:if="${suggestType!=''}">
+										<form method="post" action="/modifySuggestType">
+											<input type="hidden" name="recruitNo" th:value="${recruitNo}">
+											<input type="hidden" name="memberName"
+												th:value="${memberName}"> <input type="hidden"
+												name="suggestType" th:value="${suggestType}">
+											<button class="btn btn-sm pageBtn" type="submit">
+												<div th:if="${suggestType}=='Y'">거부하기</div>
+												<div th:if="${suggestType}=='N'">수락하기</div>
+											</button>
+										</form>
+									</div>
+
+								
+								<div th:if="${suggestType==''}">
+									<form id="form" method="post" th:action="@{/addApply}">
+										<input id="recruitNo" type="hidden" name="recruitNo"
+											th:value="${recruit.recruitNo}"> <input
+											id="memberEmail" type="hidden" name="memberEmail"
+											th:value="${session.loginMember.memberEmail}">
+										<button class="btn btn-sm pageBtn" type="submit">신청하기</button>
+									</form>
+							</div>
+							
+
+							<span th:text="${applyMsg}"></span>
+
 						</div>
 					</div>
 
@@ -399,7 +422,7 @@
 			type : 'POST',
 			data : {
 				'recruitNo' : recruitNo
-				
+
 			},
 			success : function(data) {
 				console.log(data);

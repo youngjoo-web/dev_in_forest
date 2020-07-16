@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexCotroller {
 	@GetMapping({"/", "/index"})
 	public String index(HttpSession session,Model model) {
-		if(session.getAttribute("loginMember")!=null) {
-			return "index/home";
-		}
+		
 		String memberName = "Guest";
 		model.addAttribute("memberName", memberName);
 		return "index/index";

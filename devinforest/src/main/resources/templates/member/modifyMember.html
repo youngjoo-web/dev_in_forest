@@ -25,24 +25,24 @@
 <link th:href="@{/css/addAdmin.css}" rel="stylesheet">
 
 <script
-   src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <style>
 .none {
-   border: 0px;
+	border: 0px;
 }
 
 .adminEmailArea {
-   border: 1px solid black;
-   padding: 1px;
+	border: 1px solid black;
+	padding: 1px;
 }
 
 .width1 {
-   width: 80px;
+	width: 80px;
 }
 
 .width2 {
-   width: 110px;
+	width: 110px;
 }
 </style>
 </head>
@@ -94,8 +94,9 @@
 							th:href="@{/getMemberInfo(memberEmail=${session.loginMember.memberEmail})}">회원정보</a>
 						<a class="collapse-item" href="/getMemberList">회원리스트</a> <a
 							class="collapse-item" th:href="@{/getRecruitList}">채용 리스트</a> <a
-							class="collapse-item" th:href="@{/getMemberInfo(memberEmail=${session.loginMember.memberEmail})}">면접제의 리스트</a> <a
-							class="collapse-item" href="#">문의&신고</a>
+							class="collapse-item"
+							th:href="@{/getMemberInfo(memberEmail=${session.loginMember.memberEmail})}">면접제의
+							리스트</a> <a class="collapse-item" href="#">문의&신고</a>
 					</div>
 				</div></li>
 
@@ -149,8 +150,10 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">기업</h6>
 						<a class="collapse-item" th:href="@{/getCompanyList}">기업정보리스트</a>
-						<a class="collapse-item" th:href="@{/getMemberInfo(memberEmail=${session.loginMember.memberEmail})}">기업의 면접제의 리스트 </a> <a
-							class="collapse-item" th:href="@{/getRecruitList}">기업의 채용리스트</a>
+						<a class="collapse-item"
+							th:href="@{/getMemberInfo(memberEmail=${session.loginMember.memberEmail})}">기업의
+							면접제의 리스트 </a> <a class="collapse-item" th:href="@{/getRecruitList}">기업의
+							채용리스트</a>
 					</div>
 				</div></li>
 			<!-- 기업 끝 -->
@@ -262,40 +265,53 @@
 						<div class="card-body">
 							<div class="table-responsive">
 								<h1>회원정보 수정폼</h1>
-								
+
 								<form id="form" method="post" th:action="@{/modifyMember}">
-										<input type="hidden" name="memberEmail" th:value="${member.memberEmail}"> 
-									<label>이름 : </label> 
-									<input id="memberName" type="hidden" name="memberName" th:value="${member.memberName}">
-									<input id="memberName2" type="text" name="memberName2" th:value="${member.memberName}">
-									<button id="nameCheckBtn" type="button"class=" btn btn-success ">중복확인</button>
-									<span id="nameMsg"></span>
-									<br>
-									<label>비밀번호 : </label> 
-									<input id="memberPw" type="text" name="memberPassword" th:value="${loginMember.memberPassword}">
-									<br> 
-									<label>주소 : </label> <input type="text" name="memberLocation" th:value="${member.memberLocation}"> 
-									<br> 
-									<label>사용자 전화번호 : </label> 
-									<input type="text" name="memberPhone" th:value="${member.memberPhone}"> 
-									<br> 
-									<label>사용자 링크: </label> 
-									<input type="text" name="memberLink" th:value="${member.memberLink}"> 
-									<br> 
-									<label>사용자 성별: </label> 
-									<select name="memberGender"
-										th:value="${member.memberGender}">
-										<option th:value="M">M</option>
-										<option th:value="F">F</option>
-									</select> 
-									<br> 
-									<label>생년월일: </label> 
-									<input id="birthCheck" type="Date" name="memberBirth" th:value="${member.memberBirth}"> 
-									<br> 
-									<label>사용자 정보 : </label> 
-									<input type="text" name="memberAbout" th:value="${member.memberAbout}"> 
-									<br>
-									<button id="signUpBtn"  class="btn btn-sm pageBtn"  type="button">정보수정</button>
+									<input type="hidden" name="memberEmail"
+										th:value="${member.memberEmail}"> <label>이름 :
+									</label> <input id="memberName" type="hidden" name="memberName"
+										th:value="${member.memberName}"> <input
+										id="memberName2" type="text" name="memberName2"
+										th:value="${member.memberName}">
+									<button id="nameCheckBtn" type="button"
+										class=" btn btn-success ">중복확인</button>
+									<span id="nameMsg"></span> <br> <label>비밀번호 : </label> <input
+										id="memberPw" type="text" name="memberPassword"
+										th:value="${loginMember.memberPassword}"> <br> <label>주소
+										: </label> <input type="text" name="memberLocation"
+										th:value="${member.memberLocation}"> <br> <label>사용자
+										전화번호 : </label> <input type="text" name="memberPhone"
+										th:value="${member.memberPhone}"> <br> <label>사용자
+										링크: </label> <input type="text" name="memberLink"
+										th:value="${member.memberLink}"> <br> <label>사용자
+										성별: </label>
+										
+									<div th:if="${member.memberGender}==''">
+										<select name="memberGender">
+											<option th:value="M">Male</option>
+											<option th:value="F">Female</option>
+										</select>
+									</div> 
+									<div th:if="${member.memberGender}=='F'">
+										<select name="memberGender">
+											<option th:value="F">Female</option>
+											<option th:value="M">Male</option>
+										</select>
+									</div>
+									<div th:if="${member.memberGender}=='M'">
+										<select name="memberGender">			
+											<option th:value="M">Male</option>
+											<option th:value="F">Female</option>
+										</select>
+									</div>
+									
+
+									<br> <label>생년월일: </label> <input id="birthCheck"
+										type="Date" name="memberBirth"
+										th:value="${member.memberBirth}"> <br> <label>사용자
+										정보 : </label> <input type="text" name="memberAbout"
+										th:value="${member.memberAbout}"> <br>
+									<button id="signUpBtn" class="btn btn-sm pageBtn" type="button">정보수정</button>
 								</form>
 							</div>
 						</div>

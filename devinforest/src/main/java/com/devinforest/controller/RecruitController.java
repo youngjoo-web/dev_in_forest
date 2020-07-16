@@ -45,11 +45,21 @@ public class RecruitController {
 	}
 	//채용공고  상세보기
 	@GetMapping("/getRecruitInfo")
-	public String getRecruitInfo(HttpSession session, Model model,@RequestParam(defaultValue = "1") int currentPage,
-			   @RequestParam(defaultValue = "5") int rowPerPage, int recruitNo) {
+	public String getRecruitInfo(HttpSession session, Model model,
+			   @RequestParam(defaultValue = "1") int currentPage,
+			   @RequestParam(defaultValue = "5") int rowPerPage, int recruitNo,
+			   @RequestParam(defaultValue = "") String memberName,
+			   @RequestParam(defaultValue = "") String suggestType) {
 		Recruit recruit = recruitService.getRecruitInfo(recruitNo);
+		
 		model.addAttribute("recruit", recruit);
+		System.out.println(memberName+"<---getRecruitInfo");
+		System.out.println(suggestType+"<---getRecruitInfo");
+		
 		if(session.getAttribute("loginMember")!=null) {
+			model.addAttribute("recruitNo", recruitNo);
+			model.addAttribute("memberName", memberName);
+			model.addAttribute("suggestType", suggestType);
 			return "member/getRecruitInfo";
 		}
 		if(session.getAttribute("loginCompany")!=null) {
@@ -82,6 +92,8 @@ public class RecruitController {
 			applyService.addApply(apply);
 			applyMsg="신청되었습니다.";
 		}
+		String suggestType="";
+		model.addAttribute("suggestType", suggestType);
 		model.addAttribute("applyMsg", applyMsg);
 		return "member/getRecruitInfo";
 	}

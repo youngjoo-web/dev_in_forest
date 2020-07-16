@@ -13,9 +13,14 @@ import com.devinforest.vo.Suggest;
 public class SuggestService {
 	@Autowired
 	private SuggestMapper suggestMapper;
+	
 	//면접제의 작성하기
 	public void addSuggest(Suggest suggest) {
-		suggestMapper.insertSuggest(suggest);
+		int checkNo = suggestMapper.checkSuggest(suggest);
+		if(checkNo==0) {
+			suggestMapper.insertSuggest(suggest);
+		}
+		
 		return;
 	}
 	//면접제의 리스트 출력

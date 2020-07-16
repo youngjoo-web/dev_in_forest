@@ -273,19 +273,19 @@
 									<thead>
 										<tr>
 											<th>면접제의 공고번호</th>
-											<th>회사이름</th>
+											<th>회원이름</th>
 											<th>내용</th>
 											<th>면접제의날짜</th>
-											<th>수락/거부</th>
+											<th>면접제의 여부</th>
 										</tr>
 									</thead>
 									<tbody>
 									<tr th:each="suggest :${suggestList}">
-											<td><a th:href="@{/}" th:text="${suggest.recruitNo}"></a></td>
-											<td><a th:href="@{/}" th:text="${suggest.memberName}"></a></td>
-											<td><a th:href="@{/}"
-												th:text="${suggest.suggestContent}"></a></td>
-											<td><a th:href="@{/}" th:text="${suggest.lastUpdate}"></a></td>
+											<td th:text="${suggest.recruitNo}"></td>
+											<td th:text="${suggest.memberName}"></td>
+											<td
+												th:text="${suggest.suggestContent}"></td>
+											<td th:text="${suggest.lastUpdate}"></td>
 											<td>
 												<div th:if="${suggest.suggestType}=='Y'">수락</div>
 												<div th:if="${suggest.suggestType}=='N'">거부</div>

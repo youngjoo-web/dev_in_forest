@@ -9,10 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.service.MemberService;
 import com.devinforest.service.RecruitService;
 import com.devinforest.service.SuggestService;
+import com.devinforest.vo.LoginCompany;
 import com.devinforest.vo.LoginMember;
 import com.devinforest.vo.Member;
 import com.devinforest.vo.Recruit;
@@ -38,18 +40,25 @@ public class SuggestController {
 	      return "company/addSuggest";
 	   }
 	@PostMapping("/addSuggest")
-	public String addSuggest(HttpSession session,Suggest suggest) {
+	public String addSuggestAndList(HttpSession session,Suggest suggest, Model model) {
 		if(session.getAttribute("loginCompany")==null) {
 			return "redirect:/index";
 		}
+		
 		System.out.println(suggest+"<---addsuggest");
 		suggestService.addSuggest(suggest);
-		return "company/companyHome";
+		List<Suggest>list=suggestService.getSuggestListForCompany(suggest.getCompanyName());
+		model.addAttribute("suggestList", list);
+		return "company/suggestList";
 	}
 	@GetMapping("/suggestList")
-	public String suggestList(HttpSession session, String companyName, Model model) {
+	public String suggestList(HttpSession session,@RequestParam(defaultValue = "") String companyName, Model model) {
 		if(session.getAttribute("loginCompany")==null) {
 			return "redirect:/index";
+		}
+		if(companyName=="") {
+			LoginCompany loginCompany = (LoginCompany)session.getAttribute("loginCompany");
+			companyName=loginCompany.getCompanyKorName();
 		}
 		System.out.println(companyName+"<---suggestList");
 		List<Suggest>list=suggestService.getSuggestListForCompany(companyName);

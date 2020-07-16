@@ -351,11 +351,19 @@
 									</thead>
 									<tbody>
 										<tr th:each="suggest :${suggestList}">
-											<td><a th:href="@{/}" th:text="${suggest.recruitNo}"></a></td>
-											<td><a th:href="@{/}" th:text="${suggest.companyName}"></a></td>
-											<td><a th:href="@{/}"
+											<td><a th:href="@{/getRecruitInfo(recruitNo=${suggest.recruitNo},
+																			  memberName=${member.memberName},
+																			  suggestType=${suggest.suggestType})}" th:text="${suggest.recruitNo}"></a></td>
+											<td><a th:href="@{/getRecruitInfo(recruitNo=${suggest.recruitNo},
+																			  memberName=${member.memberName},
+																			  suggestType=${suggest.suggestType})}" th:text="${suggest.companyName}"></a></td>
+											<td><a th:href="@{/getRecruitInfo(recruitNo=${suggest.recruitNo},
+																			  memberName=${member.memberName},
+																			  suggestType=${suggest.suggestType})}"
 												th:text="${suggest.suggestContent}"></a></td>
-											<td><a th:href="@{/}" th:text="${suggest.lastUpdate}"></a></td>
+											<td><a th:href="@{/getRecruitInfo(recruitNo=${suggest.recruitNo},
+																			  memberName=${member.memberName},
+																			  suggestType=${suggest.suggestType})}" th:text="${suggest.lastUpdate}"></a></td>
 											<td>
 											<form method="post" action="/modifySuggestType">
 												<input type="hidden" name ="recruitNo" th:value="${suggest.recruitNo}">
