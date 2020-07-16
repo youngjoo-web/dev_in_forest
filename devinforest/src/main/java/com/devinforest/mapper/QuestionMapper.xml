@@ -42,8 +42,10 @@
 			question_reputation questionReputation,
 			question_createdate questionCreateDate,
 			question_updatedate questionUpdateDate,
-			question_ip questionIp,
-			question_views questionViews
+			question_views questionViews,
+			question_num_of_votes questionNumOfVotes,
+			question_num_of_answers questionNumOfAnswers,
+			question_ip questionIp
 		FROM dev_question
 		WHERE question_title LIKE CONCAT('%', #{searchWord}, '%') 
 		ORDER BY question_createdate DESC
@@ -87,6 +89,41 @@
 		FROM dev_question
 		WHERE question_no = #{questionNo}
 	</select>
+	
+	<!-- 질문에 대한 답변 개수 -->
+	<select id="answersCountOne" resultType="int" parameterType="com.devinforest.vo.Question">
+		SELECT 
+			COUNT(*)
+		FROM dev_answer
+		WHERE question_no = #{questionNo}
+	</select>
+	<!-- 질문 리스트랑 상세보기 답변수를 같게 하기 위한 쿼리 -->
+	<update id="listAnswersCount" parameterType="int">
+		UPDATE 
+			dev_question
+		SET 
+			question_num_of_answers = #{answersCountOne}
+		WHERE
+			question_no = #{questionNo}
+	</update>
+	
+	<!-- 질문리스트 투표  개수  -->
+	<select id="votesCountOne" resultType="int" parameterType="com.devinforest.vo.Question">
+		SELECT
+			(SELECT COUNT(*) FROM dev_question_vote WHERE vote_point=1 AND question_no=#{questionNo})
+			-
+			(SELECT COUNT(*) FROM dev_question_vote WHERE vote_point=0 AND question_no=#{questionNo})
+		FROM DUAL
+	</select>
+	<!-- 질문 리스트랑 상세보기 투표수를 같게 하기 위한 쿼리 -->
+	<update id="listVotesCount" parameterType="int">
+		UPDATE 
+			dev_question
+		SET 
+			question_num_of_votes = #{votesCountOne}
+		WHERE
+			question_no = #{questionNo}
+	</update>
 	
 	<!-- 질문 리스트랑 상세보기 조회수 같게 하기 위한 쿼리 -->
 	<update id="listViewsCount" parameterType="int">

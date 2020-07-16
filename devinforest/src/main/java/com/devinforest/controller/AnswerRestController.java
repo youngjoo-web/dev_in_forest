@@ -26,7 +26,7 @@ public class AnswerRestController {
 		System.out.println(answer + " <----- AnswerRestController answer");
 		answerMapper.insertAnswer(answer);
 	}
-	
+	/* ---------- 답변 리스트 ---------- */
 	@GetMapping("/getAnswerList")
 	public Map<String, Object> answerList(Question question,
 			@RequestParam(value="currentPage", defaultValue="1") int currentPage) {

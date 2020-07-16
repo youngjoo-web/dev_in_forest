@@ -101,10 +101,23 @@ public class QuestionService {
 			questionMapper.listViewsCount(viewsCountOne, question.getQuestionNo());
 		}
 		
+		int answersCountOne = questionMapper.answersCountOne(question);
+		System.out.println(answersCountOne + "<--- questionService answersCount");
+		questionMapper.listAnswersCount(answersCountOne, question.getQuestionNo());
+		
+		int votesCountOne = questionMapper.votesCountOne(question);
+		System.out.println(votesCountOne + "<--- questionService votesCount");
+		questionMapper.listVotesCount(votesCountOne, question.getQuestionNo());
+		
+		int answersCount = questionMapper.answersCountOne(question);
+		int votesCount = questionMapper.votesCountOne(question);
+		
 		int viewsCount = questionMapper.viewsCountOne(question);
 		Question questionOne = questionMapper.selectQuestionOne(question); 
 			
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();		
+		map.put("answersCount", answersCount);
+		map.put("votesCount", votesCount);
 		map.put("viewsCount", viewsCount);
 		map.put("questionOne", questionOne);
 			

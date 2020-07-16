@@ -9,8 +9,9 @@ public class Question {
 	private String questionCreateDate;
 	private String questionUpdateDate;
 	private int questionViews;
+	private int questionNumOfAnswers;
+	private int questionNumOfVotes;
 	private String questionIp;
-
 	public int getQuestionNo() {
 		return questionNo;
 	}
@@ -59,18 +60,30 @@ public class Question {
 	public void setQuestionViews(int questionViews) {
 		this.questionViews = questionViews;
 	}
+	public int getQuestionNumOfAnswers() {
+		return questionNumOfAnswers;
+	}
+	public void setQuestionNumOfAnswers(int questionNumOfAnswers) {
+		this.questionNumOfAnswers = questionNumOfAnswers;
+	}
+	public int getQuestionNumOfVotes() {
+		return questionNumOfVotes;
+	}
+	public void setQuestionNumOfVotes(int questionNumOfVotes) {
+		this.questionNumOfVotes = questionNumOfVotes;
+	}
 	public String getQuestionIp() {
 		return questionIp;
 	}
 	public void setQuestionIp(String questionIp) {
 		this.questionIp = questionIp;
 	}
-	
 	@Override
 	public String toString() {
 		return "Question [questionNo=" + questionNo + ", memberName=" + memberName + ", questionTitle=" + questionTitle
 				+ ", questionContent=" + questionContent + ", questionReputation=" + questionReputation
 				+ ", questionCreateDate=" + questionCreateDate + ", questionUpdateDate=" + questionUpdateDate
-				+ ", questionViews=" + questionViews + ", questionIp=" + questionIp + "]";
+				+ ", questionViews=" + questionViews + ", questionNumOfAnswers=" + questionNumOfAnswers
+				+ ", questionNumOfVotes=" + questionNumOfVotes + ", questionIp=" + questionIp + "]";
 	}
 }
