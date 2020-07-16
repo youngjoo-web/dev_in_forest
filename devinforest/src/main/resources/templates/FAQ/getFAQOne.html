@@ -22,6 +22,13 @@
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		
+		<!-- 마크다운 에디터 CDN -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+  		<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+		<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
+		<script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
+		<!-- 마크다운 에디터 CDN 끝 -->
 		<style>
 			th{
 				text-align: center;
@@ -31,6 +38,11 @@
 		</style>
 	</head>
 	<body id="page-top">
+	<!-- 마크다운 뷰어 CDN -->
+	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
+	<script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
+	<!-- 마크다운 뷰어 CDN 끝 -->
 		<!-- Page Wrapper -->
 		<div id="wrapper">
 		
@@ -142,8 +154,9 @@
 							</div>
 							<hr>
 							<div class="card">
-								<div class="darkColor" style="padding:15px; height:300px; word-break:break-all; overflow: scroll;" th:text="${FAQ.noticeContent}">
-									
+								<div id="noticeContent" style="display: none" th:text="${FAQ.noticeContent}"></div>
+								<div style="flex-direction: row; flex-wrap: nowrap; padding:15px; height:300px; word-break:break-all; overflow: scroll;">
+									<div id="viewer" style="height: 300px; padding:0px 10px;"></div>
 								</div>
 							</div>
 							<hr>
@@ -215,6 +228,19 @@
 		<script th:src="@{/js/sb-admin-2.min.js}"></script>
 	</body>
 	<script>
+	let noticeContent = $('#noticeContent').text();
+	
+	console.log($('#noticeContent').text());
+	
+	const Viewer = toastui.Editor;
+	const { codeSyntaxHighlight } = Viewer.plugin;
+	const viewer = new Viewer({
+		  el: document.querySelector('#viewer'),
+		  height: 'auto',
+		  initialValue: noticeContent,
+		  plugins: [codeSyntaxHighlight]
+	});
+	
 	$('#modifyFQABtn').click(function(){
 		let result = confirm('FAQ를 수정하시겠습니까?');
 		
