@@ -73,6 +73,39 @@ public class QuestionService {
 		return returnMap;
 	}
 	
+	/* ---------- 질문 목록(해시태그검색) ---------- */
+	public Map<String, Object> getQuestionListByHashtag(int currentPage, String hashtag) {
+		System.out.println(hashtag + " <-- Service searchWord");
+		
+		
+		int rowPerPage = 5;
+		int beginRow = (currentPage -1) * rowPerPage;
+		int questionTotalRow = questionMapper.questionTotalRow(hashtag);
+		System.out.println(questionTotalRow + " <-- questionTotalRow");
+		int lastPage = questionTotalRow / rowPerPage;
+		if(questionTotalRow % rowPerPage != 0) {
+			lastPage += 1;
+		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("hashtag", hashtag);
+		map.put("beginRow", beginRow);
+		map.put("rowPerPage", rowPerPage);
+		
+		System.out.println(hashtag + " <--- searchWord");
+		System.out.println(beginRow + " <--- beginRow");
+		System.out.println(rowPerPage + " <--- rowPerPage");
+		System.out.println(lastPage + "<--  questionServicelastPage");
+		
+		
+		List<Question> questionList = questionMapper.selectQuestionList(map);
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("questionList", questionList);
+		
+		return returnMap;
+	}
+	
 	/* ---------- 질문 작성 ---------- */
 	public int addQuestion(Question question) {
 		
