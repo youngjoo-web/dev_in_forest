@@ -31,9 +31,14 @@
 		</style>
 	</head>
 	<body id="page-top">
+	
+		<script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
+	  	<!-- Editor's Plugin -->
+	  	<script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
+	  	
 		<!-- Page Wrapper -->
 		<div id="wrapper">
-		
+			
 			<!-- 사이드 바 -->
 			<div>
 				<div th:include="/include/adminSide::adminSideBar" style="height: 100%"></div>
@@ -127,7 +132,7 @@
 						<hr>
 						<div class="card" style="padding:20px;">
 							<div>
-								<table class="table">
+								<table class="table" style="margin: 0px;">
 									<tr>
 										<th width="10%">제목</th>
 										<td class="darkColor" colspan="3" th:text="${notice.noticeTitle}"></td>
@@ -142,8 +147,9 @@
 							</div>
 							<hr>
 							<div class="card">
-								<div class="darkColor" style="padding:15px; height:300px; word-break:break-all; overflow: scroll;" th:text="${notice.noticeContent}">
-									
+								<div id="noticeContent" th:text="${notice.noticeContent}" style="display: none"></div>
+								<div style="flex-direction: row; flex-wrap: nowrap;">
+									<div id="viewer" style="height: 300px; padding:0px 10px;"></div>
 								</div>
 							</div>
 							<hr>
@@ -213,8 +219,23 @@
 	
 		<!-- Custom scripts for all pages-->
 		<script th:src="@{/js/sb-admin-2.min.js}"></script>
+		
+		<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
+		<script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
 	</body>
 	<script>
+		let noticeContent = $('#noticeContent').text();
+		// 뷰어
+		const Viewer = toastui.Editor;
+		const { codeSyntaxHighlight } = Viewer.plugin;
+		const viewer = new Viewer({
+			  el: document.querySelector('#viewer'),
+			  height: '300px',
+			  initialValue: noticeContent,
+			  plugins: [codeSyntaxHighlight]
+		});
+	
 		$("#removeNoticeBtn").click(function(){
 			let result = confirm("게시글을 삭제 하시겠습니까?");
 			if(!result){

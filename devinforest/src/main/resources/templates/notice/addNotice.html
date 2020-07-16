@@ -21,8 +21,17 @@
 		<link th:href="@{/css/addAdmin.css}" rel="stylesheet">
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+	 	<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+	 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
+		<script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
 	</head>
 	<body id="page-top">
+		<!-- 마크다운 에디터 CDN -->
+		<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+		<script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
+		
 		<!-- Page Wrapper -->
 		<div id="wrapper">
 		
@@ -114,28 +123,33 @@
 					<div class="container-fluid pt-4 px-5 content">
 						
 						<div>
-							<h1>공지사항 작성</h1>
+							<h3 class="text-gray-800 mb-2 font-weight-bold">공지사항 작성</h3>
 						</div>
-						<div>
-							<form id="addNoticeForm" method="post" th:action="@{/addNotice}">
-								<div>
-									<span>제목</span>
-									<input id="noticeTitle" type="text" name="noticeTitle">
-								</div>
-								<div>
-									<span>내용</span>
-									<textarea id="noticeContent" rows="5" cols="20" name="noticeContent"></textarea>
-								</div>
-								<div>
-									<span>작성자</span>
-									<input type="text" value="로그인되있는 닉네임" readonly="readonly">
-								</div>
-								<div>
-									<button id="addNoticeBtn" type="button">작성완료</button>
-								</div>
-							</form>
+						<hr>
+						<div class="card" style="padding:20px;">
+							<div>
+								<form id="addNoticeForm" method="post" th:action="@{/addNotice}">
+									<div>
+										<span>제목</span>
+										<input class="form-control" id="noticeTitle" type="text" name="noticeTitle">
+									</div>
+									<div style="display: none">
+										<textarea id="noticeContent" rows="5" cols="20" name="noticeContent"></textarea>
+									</div>
+									<br>
+									<div id="editor"></div>
+									<br>
+									<div class="row">
+										<div class="col-md-6 text-left">
+											<button class="btn pageBtn" id="addNoticeBtn" type="button">작성완료</button>
+										</div>
+										<div class="col-md-6 text-right">
+											<a class="btn pageBtn" th:href="@{/getNoticeList}" >목록으로</a>
+										</div>
+									</div>
+								</form>
+							</div>
 						</div>
-						
 					</div>
 						<!-- /.container-fluid -->
 				</div>
@@ -191,9 +205,25 @@
 		<script th:src="@{/js/sb-admin-2.min.js}"></script>
 	</body>
 	<script>
+		// 에디터
+		const { Editor } = toastui;
+		const { codeSyntaxHighlight } = Editor.plugin;
+		const editor = new Editor({
+			  el: document.querySelector('#editor'),
+			  height: '300px',
+			  initialEditType: 'markdown',
+			  previewStyle: 'tab',
+			  plugins: [codeSyntaxHighlight]
+		});
 		$('#addNoticeBtn').click(function(){
 			let noticeTitle = $('#noticeTitle').val();
+			let noticeContent = editor.getMarkdown();
+			
+			console.log(noticeTitle+" <- Title");
+			console.log(noticeContent+" <- Content");
+			$('#noticeContent').text(noticeContent);
 			//console.log(noticeTitle.search(/\s/)+' <- 공백');
+			
 			if(noticeTitle == ''){
 				alert('제목을 입력해주세요.');
 				return;
