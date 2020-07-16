@@ -1,220 +1,236 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.QuestionMapper">
-	
-	<!-- 질문 목록(해시태그 검색) -->
-	<select id="selectQuestionListByHashtag" resultType="com.devinforest.vo.Question" parameterType="java.util.Map">
-	SELECT
-		dev_question.question_no questionNo,
-		dev_question.member_name memberName,
-		dev_question.question_title questionTitle,
-		dev_question.question_content questionContent,
-		dev_question.question_reputation questionReputation,
-		dev_question.question_createdate questionCreateDate,
-		dev_question.question_updatedate questionUpdateDate,
-		dev_question.question_ip questionIp,
-		dev_question.question_views questionViews,
-		dev_question_hashtag.hashtag_name hashtagName
-	FROM
-		dev_question_hashtag INNER JOIN dev_question ON
-		dev_question_hashtag.question_no = dev_question.question_no
-	WHERE 
-		dev_question_hashtag.hashtag_name = #{hashtagName}
-	ORDER BY dev_question.question_createdate DESC
-	LIMIT #{beginRow}, #{rowPerPage} 
-	</select>
-	
-	<!-- 가장 최근 questionNo -->
-	<select id="selectQuestionNoMax" resultType="int">
-		SELECT
-			MAX(question_no)
-		FROM
-			dev_question
-	</select>
-	
-	<!-- 삭제된 질문 총 개수 -->
-	<select id="deletedQuestionTotalRow" resultType="int" parameterType="String">
-		SELECT 
-			COUNT(*)
-		FROM
-			dev_question_back
-		WHERE question_title LIKE CONCAT('%',#{searchWord},'%')
-	</select>
-	
-	<!-- 질문 총 개수  -->
-	<select id="questionTotalRow" resultType="int" parameterType="String">
-		SELECT 
-			COUNT(*)
-		FROM
-			dev_question
-		WHERE question_title LIKE CONCAT('%',#{searchWord},'%')
-	</select>
-	
-	
-	<!-- 질문 목록(최근순)  -->
-	<select id="selectQuestionList" resultType="com.devinforest.vo.Question" parameterType="java.util.Map">
-		SELECT 
-			question_no questionNo,
-			member_name memberName,
-			question_title questionTitle,
-			question_content questionContent,
-			question_reputation questionReputation,
-			question_createdate questionCreateDate,
-			question_updatedate questionUpdateDate,
-			question_ip questionIp,
-			question_views questionViews
-		FROM dev_question
-		WHERE question_title LIKE CONCAT('%', #{searchWord}, '%') 
-		ORDER BY question_createdate DESC
-		LIMIT #{beginRow}, #{rowPerPage} 
-	</select>
-	
-	<!-- 질문 작성 -->
-	<insert id="insertQuestion" parameterType="com.devinforest.vo.Question">
-		INSERT INTO 
-			dev_question(
-				member_name,
-				question_title,
-				question_content,
-				question_reputation,
-				question_createdate,
-				question_updatedate,
-				question_ip
-			) VALUES(
-				#{memberName},
-				#{questionTitle},
-				#{questionContent},
-				#{questionReputation},
-				NOW(),
-				NOW(),
-				#{questionIp}
-				
-			)
-	</insert>
-	
-	<!-- 상세보기 -->
-	<select id="selectQuestionOne" resultType="com.devinforest.vo.Question" parameterType="com.devinforest.vo.Question">
-		SELECT 
-			question_no questionNo,
-			member_name memberName,
-			question_title questionTitle,
-			question_content questionContent,
-			question_reputation questionReputation,
-			question_createdate questionCreateDate,
-			question_updatedate questionUpdateDate,
-			question_ip questionIp
-		FROM dev_question
-		WHERE question_no = #{questionNo}
-	</select>
-	
-	<!-- 질문 리스트랑 상세보기 조회수 같게 하기 위한 쿼리 -->
-	<update id="listViewsCount" parameterType="int">
-	UPDATE
-		dev_question
-	SET
-		question_views = #{viewsCountOne}
-	WHERE 
-		question_no = #{questionNo}
-	
-	</update>
-	
-	<!-- 질문 조회수 +1 (별도 테이블) -->
-	<insert id="plusViews" parameterType="com.devinforest.vo.Question">
-		INSERT INTO 
-			dev_question_views(
-				question_no,
-				member_name
-			)
-		VALUES(
-			#{questionNo},
-			#{memberName}
-		)
-	</insert>
-	
-	<!-- 조회수 +1한 회원 체크 -->
-	<select id="viewsCheck" resultType="String" parameterType="com.devinforest.vo.Question">
-		SELECT 
-			member_name
-		FROM dev_question_views
-		WHERE question_no = #{questionNo}
-		AND member_name = #{memberName}
-	</select>
-	
-	<!-- 조회수 카운트(상세보기) -->
-	<select id="viewsCountOne" resultType="int" parameterType="com.devinforest.vo.Question">
-		SELECT 
-			COUNT(*)
-		FROM dev_question_views
-		WHERE question_no = #{questionNo}
-	</select>
-	
-	<!-- 질문 삭제 -->
-	<delete id="deleteQuestion" parameterType="com.devinforest.vo.Question">
-		DELETE FROM dev_question
-		WHERE question_no = #{questionNo}
-	</delete>
-	
-	
-	<!-- 질문 삭제 전 백업 추가 -->
-	<insert id="insertQuestionBack" parameterType="com.devinforest.vo.Question">
-		INSERT INTO 
-			dev_question_back(
-				question_no,
-				member_name,
-				question_title,
-				question_content,
-				question_reputation,
-				question_createdate,
-				question_updatedate,
-				question_content_back_date,
-				question_ip
-			) VALUES(
-				#{questionNo},
-				#{memberName},
-				#{questionTitle},
-				#{questionContent},
-				#{questionReputation},
-				#{questionCreateDate},
-				#{questionUpdateDate},
-				NOW(),
-				#{questionIp}
-			)
-	</insert>
-	
-	<!-- 삭제된 질문 목록 -->
-	<select id="selectRomovedQuestion" resultType="com.devinforest.vo.Question" parameterType="com.devinforest.vo.Question">
-		SELECT 
-			question_no questionNo,
-			member_name memberName,
-			question_title questionTitle,
-			question_content questionContent,
-			question_reputation reputation,
-			question_createdate questionCreateDate,
-			question_updatedate questionUpdateDate,
-			question_ip questionIp
-		FROM dev_question_back
-	</select>
-	
-	<!-- 질문 수정 -->
-	<update id="updateQuestion" parameterType="com.devinforest.vo.Question">
-		UPDATE dev_question 
-		SET
-			question_title = #{questionTitle},
-			question_content = #{questionContent},
-			question_reputation = #{questionReputation},
-			question_updatedate = NOW(),
-			question_ip = #{questionIp}
-		WHERE question_no = #{questionNo}
-	</update>
-	
-	<!-- 질문상세보기 투표 총 개수  -->
-	<select id="voteTotalCount" resultType="java.util.List" parameterType="java.util.List">
-		SELECT
-			(SELECT COUNT(*) FROM dev_question_vote WHERE vote_point=1 AND question_no=#{questionNo})
-			-
-			(SELECT COUNT(*) FROM dev_question_vote WHERE vote_point=0 AND question_no=#{questionNo})
-		FROM DUAL
-	</select>
+   
+
+   
+   <!-- 가장 최근 questionNo -->
+   <select id="selectQuestionNoMax" resultType="int">
+      SELECT
+         MAX(question_no)
+      FROM
+         dev_question
+   </select>
+   
+   <!-- 삭제된 질문 총 개수 -->
+   <select id="deletedQuestionTotalRow" resultType="int" parameterType="String">
+      SELECT 
+         COUNT(*)
+      FROM
+         dev_question_back
+      WHERE question_title LIKE CONCAT('%',#{searchWord},'%')
+   </select>
+   
+   <!-- 질문 총 개수  -->
+   <select id="questionTotalRow" resultType="int" parameterType="String">
+      SELECT 
+         COUNT(*)
+      FROM
+         dev_question
+      WHERE question_title LIKE CONCAT('%',#{searchWord},'%')
+   </select>
+   
+   <!-- 질문 목록(최근순)  -->
+   <select id="selectQuestionList" resultType="com.devinforest.vo.Question" parameterType="java.util.Map">
+      SELECT 
+         question_no questionNo,
+         member_name memberName,
+         question_title questionTitle,
+         question_content questionContent,
+         question_reputation questionReputation,
+         question_createdate questionCreateDate,
+         question_updatedate questionUpdateDate,
+         question_views questionViews,
+         question_num_of_votes questionNumOfVotes,
+         question_num_of_answers questionNumOfAnswers,
+         question_ip questionIp
+      FROM dev_question
+      WHERE question_title LIKE CONCAT('%', #{searchWord}, '%') 
+      ORDER BY question_createdate DESC
+      LIMIT #{beginRow}, #{rowPerPage} 
+   </select>
+   
+   <!-- 질문 작성 -->
+   <insert id="insertQuestion" parameterType="com.devinforest.vo.Question">
+      INSERT INTO 
+         dev_question(
+            member_name,
+            question_title,
+            question_content,
+            question_reputation,
+            question_createdate,
+            question_updatedate,
+            question_ip
+         ) VALUES(
+            #{memberName},
+            #{questionTitle},
+            #{questionContent},
+            #{questionReputation},
+            NOW(),
+            NOW(),
+            #{questionIp}
+            
+         )
+   </insert>
+   
+   <!-- 상세보기 -->
+   <select id="selectQuestionOne" resultType="com.devinforest.vo.Question" parameterType="com.devinforest.vo.Question">
+      SELECT 
+         question_no questionNo,
+         member_name memberName,
+         question_title questionTitle,
+         question_content questionContent,
+         question_reputation questionReputation,
+         question_createdate questionCreateDate,
+         question_updatedate questionUpdateDate,
+         question_ip questionIp
+      FROM dev_question
+      WHERE question_no = #{questionNo}
+   </select>
+   
+   <!-- 질문에 대한 답변 개수 -->
+   <select id="answersCountOne" resultType="int" parameterType="com.devinforest.vo.Question">
+      SELECT 
+         COUNT(*)
+      FROM dev_answer
+      WHERE question_no = #{questionNo}
+   </select>
+   <!-- 질문 리스트랑 상세보기 답변수를 같게 하기 위한 쿼리 -->
+   <update id="listAnswersCount" parameterType="int">
+      UPDATE 
+         dev_question
+      SET 
+         question_num_of_answers = #{answersCountOne}
+      WHERE
+         question_no = #{questionNo}
+   </update>
+   
+   <!-- 질문리스트 투표  개수  -->
+   <select id="votesCountOne" resultType="int" parameterType="com.devinforest.vo.Question">
+      SELECT
+         (SELECT COUNT(*) FROM dev_question_vote WHERE vote_point=1 AND question_no=#{questionNo})
+         -
+         (SELECT COUNT(*) FROM dev_question_vote WHERE vote_point=0 AND question_no=#{questionNo})
+      FROM DUAL
+   </select>
+   <!-- 질문 리스트랑 상세보기 투표수를 같게 하기 위한 쿼리 -->
+   <update id="listVotesCount" parameterType="int">
+      UPDATE 
+         dev_question
+      SET 
+         question_num_of_votes = #{votesCountOne}
+      WHERE
+         question_no = #{questionNo}
+   </update>
+   
+   <!-- 질문 리스트랑 상세보기 조회수 같게 하기 위한 쿼리 -->
+   <update id="listViewsCount" parameterType="int">
+   UPDATE
+      dev_question
+   SET
+      question_views = #{viewsCountOne}
+   WHERE 
+      question_no = #{questionNo}
+   
+   </update>
+   
+   <!-- 질문 조회수 +1 (별도 테이블) -->
+   <insert id="plusViews" parameterType="com.devinforest.vo.Question">
+      INSERT INTO 
+         dev_question_views(
+            question_no,
+            member_name
+         )
+      VALUES(
+         #{questionNo},
+         #{memberName}
+      )
+   </insert>
+   
+   <!-- 조회수 +1한 회원 체크 -->
+   <select id="viewsCheck" resultType="String" parameterType="com.devinforest.vo.Question">
+      SELECT 
+         member_name
+      FROM dev_question_views
+      WHERE question_no = #{questionNo}
+      AND member_name = #{memberName}
+   </select>
+   
+   <!-- 조회수 카운트(상세보기) -->
+   <select id="viewsCountOne" resultType="int" parameterType="com.devinforest.vo.Question">
+      SELECT 
+         COUNT(*)
+      FROM dev_question_views
+      WHERE question_no = #{questionNo}
+   </select>
+   
+   <!-- 질문 삭제 -->
+   <delete id="deleteQuestion" parameterType="com.devinforest.vo.Question">
+      DELETE FROM dev_question
+      WHERE question_no = #{questionNo}
+   </delete>
+   
+   
+   <!-- 질문 삭제 전 백업 추가 -->
+   <insert id="insertQuestionBack" parameterType="com.devinforest.vo.Question">
+      INSERT INTO 
+         dev_question_back(
+            question_no,
+            member_name,
+            question_title,
+            question_content,
+            question_reputation,
+            question_createdate,
+            question_updatedate,
+            question_content_back_date,
+            question_ip
+         ) VALUES(
+            #{questionNo},
+            #{memberName},
+            #{questionTitle},
+            #{questionContent},
+            #{questionReputation},
+            #{questionCreateDate},
+            #{questionUpdateDate},
+            NOW(),
+            #{questionIp}
+         )
+   </insert>
+   
+   <!-- 삭제된 질문 목록 -->
+   <select id="selectRomovedQuestion" resultType="com.devinforest.vo.Question" parameterType="com.devinforest.vo.Question">
+      SELECT 
+         question_no questionNo,
+         member_name memberName,
+         question_title questionTitle,
+         question_content questionContent,
+         question_reputation reputation,
+         question_createdate questionCreateDate,
+         question_updatedate questionUpdateDate,
+         question_ip questionIp
+      FROM dev_question_back
+   </select>
+   
+   <!-- 질문 수정 -->
+   <update id="updateQuestion" parameterType="com.devinforest.vo.Question">
+      UPDATE dev_question 
+      SET
+         question_title = #{questionTitle},
+         question_content = #{questionContent},
+         question_reputation = #{questionReputation},
+         question_updatedate = NOW(),
+         question_ip = #{questionIp}
+      WHERE question_no = #{questionNo}
+   </update>
+   
+   <!-- 질문상세보기 투표 총 개수  -->
+   <select id="voteTotalCount" resultType="java.util.List" parameterType="java.util.List">
+      SELECT
+         (SELECT COUNT(*) FROM dev_question_vote WHERE vote_point=1 AND question_no=#{questionNo})
+         -
+         (SELECT COUNT(*) FROM dev_question_vote WHERE vote_point=0 AND question_no=#{questionNo})
+      FROM DUAL
+   </select>
 </mapper>
