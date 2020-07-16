@@ -22,6 +22,7 @@
 		<!-- fontawesome -->
 		<script src="https://kit.fontawesome.com/yourcode.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<!-- 마크다운 에디터 CDN -->
 		<link
 		    rel="stylesheet"
 		    href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"
@@ -30,6 +31,7 @@
 		<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.css" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
 		<script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
+		<!-- 마크다운 에디터 CDN 끝 -->
 		<style>
 			#answer-flex-container {
 				display: flex;
@@ -43,7 +45,6 @@
 			let commentIp = $('#commentIp').val();
 			let answerContent = $('#addAnswerContent').val();
 			let questionContent = $('#questionContent').val();
-			let guest = 'guest'
 			let showMore = true;
 			let commentSwitch = true;
 			
@@ -141,10 +142,11 @@
 						});	
 					}
 			});
+			
 			// 질문 댓글 작성
 			$('#writeQuestionCommentBtn').click(function() {
 				$('#writeQuestionCommentBtn').empty();
-				$('#questionComment').append('<div style="width:400px;" class="input-group mb-3"><input  class="form-control" type="text" id="questionCommentContent"></input><div class="input-group-append"><button class="btn btn-outline-success btn-sm" type="button" id="writeBtn">작성</button></div></div>');
+				$('#questionComment').append('<br><div style="width:400px;" class="input-group mb-3"><input class="form-control" type="text" id="questionCommentContent"></input><div class="input-group-append"><button class="btn btn-outline-success btn-sm" type="button" id="writeBtn">작성</button></div></div>');
 				
 				$('#writeBtn').click(function() {
 					console.log("writeBtn click");
@@ -159,7 +161,7 @@
 							$('#questionCommentContent').remove();
 							$('#writeBtn').remove();
 							$('#questionCommentAllList').empty();
-							$('#writeQuestionCommentBtn').html('<a class="btn btn-outline-success btn-sm" id="writeQuestionCommentBtn" href="#">댓글 작성</a>');
+							$('#writeQuestionCommentBtn').html('<a btn-sm" id="writeQuestionCommentBtn" href="#">댓글 작성</a>');
 							console.log("질문 댓글 작성 성공");
 							let memberReputation = 5;
 							$.ajax({
@@ -388,14 +390,14 @@
 	 												'<div style="font-size: 18px;">' + item.answerContent +'</div>' +
 	 											'</div>');
 						$('#answerList').append('<div style="text-align: right;">by ' + item.memberName  + '(' + item.answerIp.substring(0, 7) + ')</div>');
-						$('#answerList').append('<div><button type="button" class="btn btn-outline-warning btn-sm" id="answerSelectBtn'+ item.answerNo +'">답변채택</button></div><br>');
+						$('#answerList').append('<div><button type="button" class="btn btn-outline-danger btn-sm" id="answerSelectBtn'+ item.answerNo +'">신고</button></div><br>');
 						$('#answerList').append('<div id="answerCommentList'+ item.answerNo +'">');
 						$('#answerList').append('<div id="answerCommentShowMore' + item.answerNo + '"></div>');
 						$('#answerList').append('</div>');
 						$('#answerList').append('<div id="answerCommentAllList' + item.answerNo + '">');
 						$('#answerList').append('<div id="answerCommentShowMoreAll' + item.answerNo + '"></div>');
 						$('#answerList').append('</div>');
-						$('#answerList').append('<div id="answerComment'+item.answerNo +'"><a class="btn btn-outline-success btn-sm" id="writeAnswerCommentBtn' + item.answerNo + '" href="#">댓글 작성</a></div>');					
+						$('#answerList').append('<br><div id="answerComment'+item.answerNo +'"><a id="writeAnswerCommentBtn' + item.answerNo + '" href="#">댓글 작성</a></div>');					
 						$('#answerList').append('<hr>');
 					});
 					
@@ -497,14 +499,12 @@
 					// 답변 채택
 					$.each(data['answerList'], function(index, item){
 						$('#answerSelectBtn' + item.answerNo).click(function(){
-							if(memberName == "Guest" || memberName != item.memberName) {
-								alert("질문자외에는 채택할 수 없습니다.");
+							if(memberName == "Guest") {
+								alert("Guest는 신고할 수 없습니다.");
 								return;
-							}
-							if (confirm("이 답변을 채택하시겠습니까?") == true){    //확인
-								
-							}else{   //취소
-							    return;
+							} else if(memberName == item.memberName) {
+								alert("자기 자신은 신고할 수 없습니다.");
+								return;
 							}
 						});
 					});
@@ -520,7 +520,7 @@
 									$('#answerCommentList' + item.answerNo).append('<div style="display:flex; justify-content: space-between;">' +
 																						'<div>' + item.answerCommentContent + '</div>' +
 																						'<div>by ' + item.memberName + '(' + item.answerCommentIp.substring(0, 7) + ')</div>' +
-																					'</div>');
+																				   '</div>');
 								});
 									if($(data).length >= 5) {
 										$('#answerCommentShowMore' + item.answerNo).append('<a id="answerCommentChangeRowPerPage'+ item.answerNo +'" href="#">show more comment</a>');
@@ -601,7 +601,7 @@
 																											'<div>' + item.answerCommentContent + '</div>' +
 																											'<div>by ' + item.memberName + '(' + item.answerCommentIp.substring(0, 7) + ')</div>' +
 																									   '</div>');
-														$('#answerComment' + item.answerNo).html('<a class="btn btn-outline-success btn-sm" id="writeAnswerCommentBtn' + item.answerNo + '" href="#">댓글 작성</a>');
+														$('#answerComment' + item.answerNo).html('<br><a id="writeAnswerCommentBtn' + item.answerNo + '" href="#">댓글 작성</a>');
 													});
 													if($(data).length >= 5) {
 														$('#answerCommentShowMore' + item.answerNo).empty();
@@ -619,7 +619,7 @@
 																														'<div>' + item.answerCommentContent + '</div>' +
 																														'<div>by ' + item.memberName + '(' + item.answerCommentIp.substring(0, 7) + ')</div>' +
 																												   '</div>');
-																	$('#answerComment' + item.answerNo).html('<a class="btn btn-outline-success btn-sm" id="writeAnswerCommentBtn' + item.answerNo + '" href="#">댓글 작성</a>');
+																	$('#answerComment' + item.answerNo).html('<br><a id="writeAnswerCommentBtn' + item.answerNo + '" href="#">댓글 작성</a>');
 																	$('#answerCommentChangeRowPerPage2' + item.answerNo).empty();
 																	
 																	console.log($(data).length + "<--- AnswerCommentList");
@@ -636,7 +636,7 @@
 																											'<div>' + item.answerCommentContent + '</div>' +
 																											'<div>by ' + item.memberName + '(' + item.answerCommentIp.substring(0, 7) + ')</div>' +
 																										'</div>');
-														$('#answerComment' + item.answerNo).html('<a class="btn btn-outline-success btn-sm" id="writeAnswerCommentBtn' + item.answerNo + '" href="#">댓글 작성</a>');
+														$('#answerComment' + item.answerNo).html('<br><a id="writeAnswerCommentBtn' + item.answerNo + '" href="#">댓글 작성</a>');
 													});
 													if($(data).length >= 5) {
 														$('#answerCommentShowMore' + item.answerNo).empty();
@@ -654,7 +654,7 @@
 																														  '<div>' + item.answerCommentContent + '</div>' +
 																														  '<div>by ' + item.memberName + '(' + item.answerCommentIp.substring(0, 7) + ')</div>' +
 																												   	  '</div>');
-																	$('#answerComment' + item.answerNo).html('<a class="btn btn-outline-success btn-sm" id="writeAnswerCommentBtn' + item.answerNo + '" href="#">댓글 작성</a>');
+																	$('#answerComment' + item.answerNo).html('<a id="writeAnswerCommentBtn' + item.answerNo + '" href="#">댓글 작성</a>');
 																	$('#answerCommentChangeRowPerPage' + item.answerNo).empty();
 																	
 																	console.log($(data).length + "<--- AnswerCommentList");
@@ -955,7 +955,7 @@
 						<div>
 							<span><a class="btn btn-outline-secondary btn-sm" th:href="@{/getQuestionList}">목록</a></span>
 							<span th:if="${memberName} == ${question.memberName}"><a class="btn btn-outline-warning btn-sm" th:href="@{/modifyQuestion(questionNo=${question.questionNo})}">수정</a></span>
-							<span th:if="${memberName} != ${question.memberName}"><a class="btn btn-outline-danger btn-sm" href="#">신고</a></span>
+							<span th:if="${memberName} != ${question.memberName}"><a id="reportBtn" class="btn btn-outline-danger btn-sm" href="#">신고</a></span>
 						</div>
 						
 						<hr>
@@ -967,7 +967,8 @@
 						<div id="questionCommentShowReturn"></div>
 						
 						<div id="questionComment">
-							<a th:if="${memberName} != 'Guest'" class="btn btn-outline-success btn-sm" id="writeQuestionCommentBtn" href="#">댓글 작성</a>
+							<br>
+							<a th:if="${memberName} != 'Guest'"  id="writeQuestionCommentBtn" href="#">댓글 작성</a>
 						</div>
 						<br>
 						<h2 id="answerTotalCount"></h2>
@@ -983,12 +984,14 @@
 						<button th:if="${memberName} != 'Guest'" class="btn btn-outline-success" id="addAnswerBtn">답변작성</button>
 						<div th:if="${memberName} == 'Guest'">답글을 작성하려면 <a th:href="@{/memberLogin}" th:text="로그인"></a>을 하세요.</div>
 						
+						<!-- 신고 팝업 -->
+						<form id="reportForm" method="post" th:action="@{javascript:openWindowPop('popup');}"></form>
+						
 						<!-- 값을 넘기기 위한 input -->
 						<input type="hidden" id="rowPerPage">
 						<input type="hidden" id="questionNo" th:value="${question.questionNo}">
 						<input type="hidden" id="memberName" th:value="${memberName}">
 						<input type="hidden" id="commentIp" th:value="${ip}">
-						
 					</div>
 						<!-- /.container-fluid -->
 				</div>
@@ -1043,4 +1046,12 @@
 		<!-- Custom scripts for all pages-->
 		<script th:src="@{/js/sb-admin-2.min.js}"></script>
 	</body>
+	<script>
+		$('#reportBtn').click(function(){
+			$('#reportForm').submit();
+			function openWindowPop(name) {
+				
+			}			
+		});
+	</script>
 </html>

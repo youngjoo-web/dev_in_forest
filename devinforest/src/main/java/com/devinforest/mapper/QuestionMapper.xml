@@ -6,7 +6,7 @@
 	
 	<!-- 삭제된 질문 총 개수 -->
 	<select id="deletedQuestionTotalRow" resultType="int" parameterType="String">
-	SELECT 
+		SELECT 
 			COUNT(*)
 		FROM
 			dev_question_back
@@ -88,6 +88,7 @@
 		question_no = #{questionNo}
 	
 	</update>
+	
 	<!-- 질문 조회수 +1 (별도 테이블) -->
 	<insert id="plusViews" parameterType="com.devinforest.vo.Question">
 		INSERT INTO 
