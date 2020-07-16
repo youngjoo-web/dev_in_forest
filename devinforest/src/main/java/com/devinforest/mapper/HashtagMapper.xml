@@ -4,6 +4,16 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.HashtagMapper">
 	
+	<!-- questionhastag 출력 -->
+	<select id="selectQuestionHashtagList" resultType="com.devinforest.vo.QuestionHashtag">
+		SELECT
+			question_no as questionNo,
+			hashtag_name as hashtagName,
+			member_name as memberName
+		FROM
+			dev_question_hashtag
+	</select>
+	
 	<!-- 질문의 해시태그 생성 -->
 	<insert id="insertQuestionHashtag" parameterType="com.devinforest.vo.QuestionHashtag">
 		INSERT INTO

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.devinforest.mapper.AnswerMapper;
 import com.devinforest.mapper.HashtagMapper;
 import com.devinforest.mapper.QuestionMapper;
 import com.devinforest.vo.Question;
@@ -22,8 +23,18 @@ public class QuestionService {
 	private QuestionMapper questionMapper;
 	@Autowired
 	private HashtagMapper hashtagMapper;
+	@Autowired
+	private AnswerMapper answerMapper;
+	/* ---------- 질문리스트 중 답변 개수 출력 ---------- */
+	public int getAnswerListTotalCount() {
+		return answerMapper.answerListTotalCount();
+	}
+	/* ---------- 질문 해시태그 리스트 출력 ---------- */
+	public List<QuestionHashtag> getQuestionHashtagList() {
+		return hashtagMapper.selectQuestionHashtagList();
+	}
 	
-	/* ---------- 질문 목록 ---------- */
+	/* ---------- 질문 중 가장 큰 번호 ---------- */
 	public int getQuestionNoMax() {
 		System.out.println(questionMapper.selectQuestionNoMax()+"<--questionService questionMax");
 		return questionMapper.selectQuestionNoMax();

@@ -16,4 +16,5 @@ public interface HashtagMapper {
 	public int hashtagCheck(String hashtagName);
 	public Hashtag selectHashtagOne(int hashtagNo);
 	public int insertQuestionHashtag(QuestionHashtag questionHashtag);
+	public List<QuestionHashtag> selectQuestionHashtagList(); // questionHashtag 리스트 출력
 }

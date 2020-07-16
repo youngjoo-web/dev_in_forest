@@ -38,14 +38,13 @@ public class QuestionController {
 		}
 		
 		Map<String, Object> questionList = questionService.getQuestionList(currentPage, searchWord);
-		
-		
-		
+		List<QuestionHashtag> questionHashtagList = questionService.getQuestionHashtagList();
 		
 		System.out.println(memberName+"<--memberName");
 		
 		model.addAttribute("memberName", memberName);
 		model.addAttribute("questionList", questionList.get("questionList"));
+		model.addAttribute("questionHashtagList", questionHashtagList);
 		model.addAttribute("lastPage", questionList.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
 		

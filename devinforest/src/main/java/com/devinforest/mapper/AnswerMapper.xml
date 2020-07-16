@@ -28,6 +28,14 @@
 			question_no = #{questionNo}
 	</select>
 	
+	<!-- 답변리스트에서   총 개수 -->
+	<select id="answerListTotalCount" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			dev_answer
+	</select>
+	
 	<!-- 답변 작성 -->
 	<insert id="insertAnswer" parameterType="com.devinforest.vo.Answer">
 		INSERT INTO 

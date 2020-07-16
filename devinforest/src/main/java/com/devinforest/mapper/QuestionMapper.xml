@@ -4,6 +4,8 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.QuestionMapper">
 	
+
+	
 	<!-- 가장 최근 questionNo -->
 	<select id="selectQuestionNoMax" resultType="int">
 		SELECT
@@ -186,7 +188,7 @@
 		WHERE question_no = #{questionNo}
 	</update>
 	
-	<!-- 질문 투표 총 개수  -->
+	<!-- 질문상세보기 투표 총 개수  -->
 	<select id="voteTotalCount" resultType="java.util.List" parameterType="java.util.List">
 		SELECT
 			(SELECT COUNT(*) FROM dev_question_vote WHERE vote_point=1 AND question_no=#{questionNo})
