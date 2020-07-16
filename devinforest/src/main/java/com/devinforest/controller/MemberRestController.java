@@ -38,11 +38,12 @@ public class MemberRestController {
 	}
 	@PostMapping("/checkRestoreEmail")
 	public String checkRestoreEmail(@RequestParam(value = "restorationTitle2") String restorationTitle) {
-		int checkNum=memberService.CheckMemberEmail(restorationTitle);
+		int checkNum=memberService.CheckRestoreEmail(restorationTitle);
+		System.out.println(checkNum+"<---checkNum MemberRest");
 		String restoreMsg=null;
 		if(checkNum==1) {
-			restoreMsg = "재가입가능한 이메일입니다.";
-		}else {
+			restoreMsg = "재가입할 수 있는 이메일입니다.";
+		}else{
 			restoreMsg = "재가입할 수 없는 이메일입니다.";
 		}
 		return restoreMsg;
