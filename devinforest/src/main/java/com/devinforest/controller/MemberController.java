@@ -196,6 +196,9 @@ public class MemberController {
 		loginMember.setMemberName(member.getMemberName());
 		member=memberService.getMemberInfo(loginMember);
 		model.addAttribute("member",member);
+		List<Suggest> suggestList = suggestService.getSuggestList(member.getMemberName());
+		System.out.println(suggestList+"<---memberInfo");
+		model.addAttribute("suggestList", suggestList);
 		return "member/memberInfo";
 	}
 	//회원정보 상세보기

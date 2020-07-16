@@ -69,7 +69,9 @@ public class MemberService {
 	}
 	//재가입 이메일 중복확인
 	public int CheckRestoreEmail(String restorationTitle) {
+		System.out.println(restorationTitle+"<---memberService");
 		return memberMapper.checkRestEmail(restorationTitle);
+		
 	}
 	// 이메일 중복확인
 	public int CheckMemberEmail(String memberEmail) {

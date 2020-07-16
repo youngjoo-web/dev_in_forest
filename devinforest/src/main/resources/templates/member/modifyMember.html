@@ -269,6 +269,7 @@
 									<input id="memberName" type="hidden" name="memberName" th:value="${member.memberName}">
 									<input id="memberName2" type="text" name="memberName2" th:value="${member.memberName}">
 									<button id="nameCheckBtn" type="button"class=" btn btn-success ">중복확인</button>
+									<span id="nameMsg"></span>
 									<br>
 									<label>비밀번호 : </label> 
 									<input id="memberPw" type="text" name="memberPassword" th:value="${loginMember.memberPassword}">
@@ -420,7 +421,7 @@
 		
 		let memberName2 = $('#memberName2').val();
 		$.ajax({
-            url:'/devinforest/checkMemberName'
+            url:'/checkMemberName'
             ,type:'POST'
             ,data:{'memberName2':memberName2}
             ,success : function(data) {
