@@ -270,16 +270,16 @@
 									</tr>
 									
 								</table>
-								<button type="submit" th:text="정보수정"></button>
+								<button class="btn btn-sm pageBtn" type="submit" th:text="정보수정"></button>
 							</form>
 								
 								
 							</div>
 							<br>
-							<form method="get" th:action="@{/companyInfo}">
+							<form method="get" th:action="@{/getCompanyInfo}">
 								<input type="hidden" name="companyEmail"
 									th:value="${session.loginCompany.companyEmail}">
-								<button type="submit">돌아가기</button>
+								<button class="btn btn-sm pageBtn" type="submit">돌아가기</button>
 							</form>
 							<br>
 							
