@@ -112,8 +112,8 @@
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Q&A</h6>
-						<a class="collapse-item" href="#">질문목록 </a> <a
-							class="collapse-item" href="#">답변목록</a>
+						<a class="collapse-item" th:href="@{/getQuestionListByCompany}">질문목록 </a> <a
+							class="collapse-item" th:href="@{/getQuestionListByCompany}">답변목록</a>
 					</div>
 				</div></li>
 			<!-- 공지&FAQ 관리 끝 -->
@@ -339,14 +339,14 @@
 									<div class="col-xl-12 mb-3">
 										<div class="card border-0 bg-light text-center">
 											<h5 class="text-dark font-weight-bold mx-1 my-5">
-												<a class="nav-link text-info" href="#">질문리스트</a>
+												<a class="nav-link text-info" th:href="@{/getQuestionListByCompany}">질문리스트</a>
 											</h5>
 										</div>
 									</div>
 									<div class="col-xl-12 mb-3">
 										<div class="card border-0 bg-light text-center">
 											<h5 class="text-dark font-weight-bold mx-1 my-5">
-												<a class="nav-link text-info" href="#">답변리스트</a>
+												<a class="nav-link text-info" th:href="@{/getQuestionListByCompany}">답변리스트</a>
 											</h5>
 										</div>
 									</div>

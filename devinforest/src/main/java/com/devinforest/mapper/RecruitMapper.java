@@ -5,11 +5,16 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.devinforest.vo.Apply;
 import com.devinforest.vo.Company;
 import com.devinforest.vo.Recruit;
 
 @Mapper
 public interface RecruitMapper {
+	//채용공고 삭제
+	   public int deleteRecruitByCompnay(Recruit recruit);
+	//채용공고 명성도제한 출력
+	public int selectRecruitReputation(Apply apply);
 	//통합 채용공고리스트 
 	public List<Recruit> selectRecruitList(Map<String, Object> map);
 	//채용공고리스트(면접제의용)

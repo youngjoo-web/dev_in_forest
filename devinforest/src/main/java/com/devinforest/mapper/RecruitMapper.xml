@@ -3,6 +3,16 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.RecruitMapper">
+	<!-- 채용공고 삭제 -->
+   <delete id="deleteRecruitByCompnay" parameterType="com.devinforest.vo.Recruit" >
+      DELETE
+      FROM dev_recruit
+      WHERE recruit_no =#{recruitNo}
+   </delete>
+	<!-- 채용공고 명성도 제한 -->
+	<select id="selectRecruitReputation" parameterType="com.devinforest.vo.Apply" resultType="int">
+		SELECT company_reputation FROM dev_recruit WHERE recruit_no = #{recruitNo}
+	</select>
 	<!-- 채용공고추가 -->
 	<insert id="insertRecruit" parameterType="com.devinforest.vo.Recruit">
 		insert into dev_recruit

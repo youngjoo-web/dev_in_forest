@@ -5,12 +5,15 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.devinforest.vo.Apply;
 import com.devinforest.vo.LoginMember;
 import com.devinforest.vo.Member;
 import com.devinforest.vo.Restoration;
 
 @Mapper
 public interface MemberMapper {
+	//회원 명성도 출력
+	public int selectMemberReputation(Apply apply);
 	//회원 재가입요청
 	public int insertRequestRestore(Restoration restoration);
 	//회원정보 수정

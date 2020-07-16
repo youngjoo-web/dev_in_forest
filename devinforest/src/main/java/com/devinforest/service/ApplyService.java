@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devinforest.mapper.ApplyMapper;
+import com.devinforest.mapper.MemberMapper;
+import com.devinforest.mapper.RecruitMapper;
 import com.devinforest.vo.Apply;
 
 @Service
@@ -16,7 +18,19 @@ import com.devinforest.vo.Apply;
 public class ApplyService {
 	@Autowired
 	private ApplyMapper applyMapper;
+	@Autowired
+	private MemberMapper memberMapper;
+	@Autowired
+	private RecruitMapper recruitMapper;
 	
+	//회원 명성도
+	public int getMemberReputation(Apply apply) {
+		return memberMapper.selectMemberReputation(apply);
+	}
+	//공고 명성도
+	public int getRecruitReputation(Apply apply) {
+		return recruitMapper.selectRecruitReputation(apply);
+	}
 	//지원자 리스트출력
 	public Map<String, Object> getApplyList(int currentPage, int rowPerPage, int recruitNo){
 		int beginRow=(currentPage-1)*rowPerPage;

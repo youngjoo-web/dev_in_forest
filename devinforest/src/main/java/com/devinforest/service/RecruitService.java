@@ -23,9 +23,12 @@ public class RecruitService {
 	public void addRecruit(Recruit recruit) {
 		recruitMapper.insertRecruit(recruit);
 		companyMapper.updateCompanyByInsertRecruit(recruit);
-		
 		return;
 	}
+	 public void removeRecruit(Recruit recruit) {
+	      recruitMapper.deleteRecruitByCompnay(recruit);
+	      return;
+	   }
 	//채용공고 리스트 출력
 	public Map<String, Object> getRecruitList(int currentPage, int rowPerPage, String searchWord){
 	int beginRow=(currentPage-1)*rowPerPage;
