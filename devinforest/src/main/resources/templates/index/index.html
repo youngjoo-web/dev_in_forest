@@ -7,7 +7,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
-		<title>타이틀 제목</title>
+		<title>지식의 숲이 완성되는 곳</title>
 		
 		<!-- Custom fonts for this template-->
 		<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
@@ -35,7 +35,7 @@
 			<!-- Sidebar - Brand -->
 			<a
 				class="sidebar-brand d-flex align-items-center justify-content-center"
-				th:href="@{/index}">
+				th:href="@{/home}">
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-tree"></i>
 				</div>
@@ -48,7 +48,7 @@
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
 				th:href="@{/home}"> <i class="fas fa-fw fa-tachometer-alt"></i>
-					<span>로그인</span></a></li>
+					<span>회원 홈</span></a></li>
 
 			<!-- Divider -->
 			<hr th:if="${memberName} != 'Guest'" class="sidebar-divider">
@@ -123,7 +123,9 @@
 						data-parent="#accordionSidebar">
 						<div class="bg-white py-2 collapse-inner rounded">
 							<h6 class="collapse-header">기업</h6>
-							<a class="collapse-item" th:href="@{/getCompanyList}">기업리스트</a>
+							<a class="collapse-item" th:href="@{/getCompanyList}">기업정보리스트</a>
+							<a class="collapse-item" href="#">기업의 면접제의 리스트 </a> <a
+								class="collapse-item" href="#">기업의 채용리스트</a>
 						</div>
 					</div></li>
 				<!-- 기업 끝 -->
@@ -146,7 +148,7 @@
 				<div id="content">
 	
 					<!-- 상단 바 -->
-					<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+					<nav style="background: #fff !important" class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
 	
 						<!-- Sidebar Toggle (Topbar) -->
 						<button id="sidebarToggleTop"
@@ -155,19 +157,23 @@
 						</button>
 	
 						<!-- 상단 검색창 -->
-						<form
-							class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-							<div class="input-group">
-								<input type="text" class="form-control bg-light border-0 small"
-									placeholder="Search for..." aria-label="Search"
-									aria-describedby="basic-addon2">
-								<div class="input-group-append">
-									<button class="btn btn-success" type="button">
-										<i class="fas fa-search fa-sm"></i>
-									</button>
+						<div style="padding-left: 50px; width:500px;">
+							<form
+								class="d-none d-sm-inline-block form-inline" style="width:1000px;">
+								<div class="input-group">
+									<input type="text" class="form-control bg-light border-0 small"
+										placeholder="Search for..." aria-label="Search"
+										aria-describedby="basic-addon2">
+									<div class="input-group-append">
+										<button class="btn btn-success" type="button">
+											<i class="fas fa-search fa-sm"></i>
+										</button>
+									</div>
 								</div>
-							</div>
-						</form>
+							</form>
+								
+						</div>
+						<a style="margin-left:950px" class="btn btn-success" th:href="@{/login}">로그인</a>
 						<!-- 상단 검색창 끝 -->
 	
 						<!-- Topbar Navbar -->
@@ -197,7 +203,6 @@
 									</form>
 								</div>
 							</li>
-	
 							<!-- 닉네임 나오는 곳 - 상단 바 -->
 							<li class="nav-item dropdown no-arrow">
 								<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -209,11 +214,6 @@
 									<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
 									<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 										로그아웃
-									</a>
-								</div>
-								<div th:unless="${memberName} != 'Guest'" class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-									<a class="dropdown-item" href="#" th:href="@{/memberLogin}" th:text="로그인">
-									<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 									</a>
 								</div>
 							</li>
