@@ -50,6 +50,9 @@
 					let memberReputation = $('#memberReputation').val();
 					let questionTitle = $('#questionTitle').val();
 					let questionContent = editor.getMarkdown();
+					let hashtagName = $('#hashtagName').val();
+					
+					console.log(hashtagName);
 					console.log(questionTitle);
 					console.log(questionContent);
 					console.log(memberName)
@@ -75,7 +78,7 @@
 							url: '/addQuestion',
 							type: 'POST',
 							async: false,
-							data: {'memberName' : memberName, 'questionTitle' : questionTitle, 'questionContent' : questionContent, 'questionReputation' : memberReputation, 'questionIp' : questionIp},
+							data: {'memberName' : memberName, 'questionTitle' : questionTitle, 'questionContent' : questionContent, 'questionReputation' : memberReputation, 'questionIp' : questionIp, 'hashtagName' : hashtagName},
 							success: function(data){
 								let memberReputation = 10;
 								$.ajax({
@@ -84,6 +87,7 @@
 									data: {'memberName' : memberName, 'memberReputation' : memberReputation},
 									success: function() {
 										console.log("내공 갱신 성공");
+										
 									}
 								});
 								location.href='/getQuestionList';
@@ -322,7 +326,12 @@
 								<input type="number" name="memberReputation" id="memberReputation" th:value=0>
 								<div id="reputationWarning"></div>
 							</div>
-						<br>
+							<br>
+							<div>
+								해시태그
+								<br>
+								<input class="form-control" type="text" name="hashtagName" id="hashtagName">
+							</div>
 						<div style="text-align:center">
 							<button class="btn btn-outline-success" type="button" id="addQuestionBtn">작성</button>
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;					

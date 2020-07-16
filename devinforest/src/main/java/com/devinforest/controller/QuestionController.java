@@ -17,6 +17,7 @@ import com.devinforest.service.QuestionService;
 import com.devinforest.vo.Answer;
 import com.devinforest.vo.LoginMember;
 import com.devinforest.vo.Question;
+import com.devinforest.vo.QuestionHashtag;
 
 @Controller
 public class QuestionController {
@@ -138,9 +139,18 @@ public class QuestionController {
    
 	// 질문 작성 실행
 	@PostMapping("/addQuestion")
-	public String addQuestion(Question question) {
-		System.out.println(question + " <--- addQuestion question");
+	public String addQuestion(Question question, QuestionHashtag questionHashtag) {
+		
+		System.out.println(questionHashtag + "<--- add Question questionHashtag");
 		questionService.addQuestion(question);
+		System.out.println(question + " <--- addQuestion question");
+		int questionNo=question.getQuestionNo();
+		System.out.println(questionNo + "questionNo");
+		System.out.println("질문추가");
+		
+		questionHashtag.setQuestionNo(questionNo);
+		questionService.addQuestionHashtag(questionHashtag);
+		System.out.println("질문의 해시태그추가");
 		return "redirect:/getQuestionList";
 	}
    

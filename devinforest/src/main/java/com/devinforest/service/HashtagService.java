@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.devinforest.mapper.HashtagMapper;
 import com.devinforest.vo.Hashtag;
+import com.devinforest.vo.QuestionHashtag;
 
 
 @Service
@@ -63,4 +64,5 @@ public class HashtagService {
 		
 		return hashtagMapper.insertHashtag(hashtag);
 	}
+
 }

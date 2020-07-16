@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.devinforest.vo.Hashtag;
+import com.devinforest.vo.QuestionHashtag;
 
 @Mapper
 public interface HashtagMapper {
@@ -14,4 +15,5 @@ public interface HashtagMapper {
 	public int hashtagTotalRow(String searchWord);
 	public int hashtagCheck(String hashtagName);
 	public Hashtag selectHashtagOne(int hashtagNo);
+	public int insertQuestionHashtag(QuestionHashtag questionHashtag);
 }

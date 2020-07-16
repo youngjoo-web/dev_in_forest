@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.devinforest.mapper.HashtagMapper;
 import com.devinforest.mapper.QuestionMapper;
 import com.devinforest.vo.Question;
+import com.devinforest.vo.QuestionHashtag;
 
 @Service
 @Transactional
@@ -18,7 +20,7 @@ public class QuestionService {
 	
 	@Autowired
 	private QuestionMapper questionMapper;
-	
+	private HashtagMapper hashtagMapper;
 	/* ---------- 질문 목록 ---------- */
 	public Map<String, Object> getQuestionList(int currentPage, String searchWord) {
 		System.out.println(searchWord + " <-- Service searchWord");
@@ -54,8 +56,16 @@ public class QuestionService {
 	
 	/* ---------- 질문 작성 ---------- */
 	public int addQuestion(Question question) {
+		
 		return questionMapper.insertQuestion(question);
+		
 	}
+	/* ---------- 질문 해시태그 생성 ---------- */
+	public int addQuestionHashtag(QuestionHashtag questionHashtag) {
+		return hashtagMapper.insertQuestionHashtag(questionHashtag);
+	}
+
+
 	
 	/* ---------- 질문 상세보기 ---------- */
 	public Map<String, Object> getQuestionOne(Question question) {
