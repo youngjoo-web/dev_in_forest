@@ -34,7 +34,6 @@
 	<body id="page-top">
 		<!-- 마크다운 에디터 CDN -->
 		<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-		<script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
 		<script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
 		<!-- 마크다운 에디터 CDN 끝 -->
 		<!-- Page Wrapper -->
@@ -130,25 +129,32 @@
 						<div>
 							<h1>FAQ 수정</h1>
 						</div>
-						<div>
+						<div style="display: none;">
 							<span th:text="${admin}+'님께서 수정중이십니다.'"></span>
 						</div>
-						<div>
+						<div class="form-group">
 							<form id="modifyFAQForm" method="post" th:action="@{/modifyFAQ}">
 								<input type="hidden" name="noticeNo" th:value="${FAQ.noticeNo}">
 								<div>
-									<input id="noticeTitle" type="text" name="noticeTitle" th:value="${FAQ.noticeTitle}">
+									<input id="noticeTitle" class="form-control" type="text" name="noticeTitle" th:value="${FAQ.noticeTitle}">
 								</div>
+								<br>
 								<div>
 									<div>
-										<textarea rows="5" cols="20" id="noticeContent" name="noticeContent" th:text="${FAQ.noticeContent}"></textarea>
+										<textarea rows="5" cols="20" id="noticeContent" name="noticeContent" th:text="${FAQ.noticeContent}" style="display: none;"></textarea>
 									</div>
 									<div id="editor"></div>
 								</div>
-								<button id="modifyFAQBtn" type="button">수정완료</button>
 							</form>
 						</div>
-						
+						<div class="row" style="padding: 0px 10px;">
+							<div class="col-sm-10 text-left">
+								<button id="modifyFAQBtn" class="btn pageBtn" type="button">수정완료</button>
+							</div>
+							<div class="col-sm-2 text-right">
+								<a class="btn pageBtn" th:href="@{/getFAQOne(noticeNo=${FAQ.noticeNo})}">돌아가기</a>
+							</div>
+						</div>
 					</div>
 						<!-- /.container-fluid -->
 				</div>
@@ -217,13 +223,12 @@
 	let noticeTitle = $('#noticeTitle').val();
 	
 	editor.setMarkdown($('#noticeContent').val());
-	let noticeContent = editor.getMarkdown();;
 	
 	console.log(noticeTitle);
 	console.log(noticeContent);
 	
 	$('#modifyFAQBtn').click(function(){
-		noticeContent = editor.getMarkdown();;
+		noticeContent = editor.getMarkdown();
 		
 		console.log(noticeTitle);
 		console.log(noticeContent);
