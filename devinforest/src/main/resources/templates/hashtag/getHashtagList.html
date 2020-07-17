@@ -275,7 +275,7 @@
 							    <div class="card-body text-center" style="text-align:left">
 							      	<!-- <label th:text="${index.index+1}"></label> -->
 							      	<div style="text-align:left">
-							      		<a type="button" th:value="${i.hashtagNo}" class="card-text tagBtn btn btn-outline-primary btn-sm" th:href="@{/getHashtagOne(hashtagNo=${i.hashtagNo})}" ><span th:text="${i.hashtagName}"></span></a>
+							      		<a type="button" th:value="${i.hashtagNo}" class="card-text tagBtn btn btn-outline-primary btn-sm" th:href="@{/getQuestionListByHashtag(hashtagName=${i.hashtagName})}" ><span th:text="${i.hashtagName}"></span></a>
 							      	</div>
 							      	<br>
 							      	<div style="text-align:left">

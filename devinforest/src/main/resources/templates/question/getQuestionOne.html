@@ -37,6 +37,20 @@
 				display: flex;
 				flex-direction: row;
 			}
+			.tagBtn{
+			background-color: #e1ecf4;
+			color: #648ba7;
+			border-color: transparent;
+			padding:0;
+			width: 50px; 
+			height: 25px;
+			border: 0;
+			}
+			.tagBtn:hover{
+			background-color: #96bfe4;
+			color: #3b7aa0;
+			border-color: transparent;
+			}
 		</style>
 		<script>
 		$(document).ready(function(){
@@ -779,7 +793,7 @@
 			<div class="sidebar-heading">해시태그</div>
 	
 			<!-- Nav Item - Charts -->
-			<li class="nav-item"><a class="nav-link" href="#"> <i
+			<li class="nav-item"><a class="nav-link" th:href="@{/getHashtagList}"> <i
 					class="fas fa-fw fa-folder"></i> <span>해시태그</span>
 			</a></li>
 	
@@ -941,10 +955,17 @@
 							<input type="hidden" id="questionContent" th:value="${question.questionContent}">
 							<div style="display:flex; flex-direction:column; justify-content: space-between; flex-wrap: nowrap;">
 								<div id="viewer"></div>
-								<div>여기다가 넣으셈</div>
+								<div>
+									<span th:each="qh : ${questionHashtagList}">
+							 			<span><a type="button" class="tagBtn btn btn-outline-primary" th:href="@{getQuestionListByHashtag(hashtagName=${qh.hashtagName})}" th:text="${qh.hashtagName}"></a></span>
+									</span>	
+								</div>
+								
 							</div>
-						</div>
 							
+						</div>
+						
+							 <br>
 						<div>
 							<span><a class="btn btn-outline-secondary btn-sm" th:href="@{/getQuestionList}">목록</a></span>
 							<span th:if="${memberName} == ${question.memberName}"><a class="btn btn-outline-warning btn-sm" th:href="@{/modifyQuestion(questionNo=${question.questionNo})}">수정</a></span>

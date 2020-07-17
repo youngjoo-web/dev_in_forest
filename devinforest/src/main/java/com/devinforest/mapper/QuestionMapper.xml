@@ -42,7 +42,7 @@
    </select>
    
    <!-- 해시태그로 검색한 질문 목록 -->
-   <select id="selectQUestionListByHashtag"  resultType="com.devinforest.vo.QuestionAndQuestionHashtag" parameterType="java.util.Map">
+   <select id="selectQuestionListByHashtag"  resultType="com.devinforest.vo.QuestionAndQuestionHashtag" parameterType="java.util.Map">
    		SELECT
 		dev_question.question_no questionNo,
 		dev_question.member_name memberName,

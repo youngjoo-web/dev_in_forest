@@ -11,7 +11,7 @@ import com.devinforest.vo.QuestionAndQuestionHashtag;
 @Mapper
 public interface QuestionMapper {
    public List<Question> selectQuestionList(Map<String, Object> map); // 질문 목록
-   public List<QuestionAndQuestionHashtag>selectQUestionListByHashtag(Map<String, Object> map); // 해시태그로 검색한 질문 목록
+   public List<QuestionAndQuestionHashtag>selectQuestionListByHashtag(Map<String, Object> map); // 해시태그로 검색한 질문 목록
    public int insertQuestion(Question question); // 질문 작성
    public Question selectQuestionOne(Question question); // 질문 상세보기
    public int plusViews(Question question); // 조회수 +1 

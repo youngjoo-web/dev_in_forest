@@ -20,6 +20,12 @@ public class HashtagService {
 	@Autowired
 	private HashtagMapper hashtagMapper;
 	
+	/* ---------- 해시태그 목록(페이징x) ---------- */
+	public List<Hashtag> getHashtagListAll(){
+		return hashtagMapper.selectHashtagListAll();
+	}
+	
+	
 	/* ---------- 해시태그 목록 ---------- */
 	public Map<String, Object> getHashtagList(int currentPage, String searchWord) {
 		System.out.println(searchWord + " <-- Service searchWord");

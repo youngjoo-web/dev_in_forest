@@ -4,6 +4,18 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.HashtagMapper">
 	
+	<!-- 한 question의 hastag들 출력 -->
+	<select id="selectQuestionHashtagOne" resultType="com.devinforest.vo.QuestionHashtag" parameterType="int">
+		SELECT
+			question_no as questionNo,
+			hashtag_name as hashtagName,
+			member_name as memberName
+		FROM
+			dev_question_hashtag
+		WHERE
+			question_no = #{questionNo}
+	</select>
+	
 	<!-- questionhastag 출력 -->
 	<select id="selectQuestionHashtagList" resultType="com.devinforest.vo.QuestionHashtag">
 		SELECT
@@ -38,7 +50,7 @@
 			hashtag_name = #{hashtagName}
 	</select>
 	<!-- 해시태그 하나 출력 -->
-	<select id="selectHashtagOne" resultType="com.devinforest.vo.Hashtag" parameterType="int" >
+	<select id="selectHashtagOne" resultType="com.devinforest.vo.Hashtag">
 		SELECT
 			hashtag_no hashtagNo,
 			hashtag_name hashtagName,
@@ -47,6 +59,7 @@
 		FROM dev_hashtag
 		WHERE hashtag_no = #{hashtagNo}
 	</select>
+	
 	<!-- 해시태그 리스트 출력 -->
 	<select id="selectHashtagList" resultType="com.devinforest.vo.Hashtag" parameterType="java.util.Map">
 		SELECT
@@ -57,6 +70,16 @@
 		FROM dev_hashtag
 		WHERE hashtag_name LIKE CONCAT('%', #{searchWord}, '%')
 		LIMIT #{beginRow}, #{rowPerPage} 
+	</select>
+	
+	<!-- 해시태그 리스트 출력(페이징 없음) -->
+	<select id="selectHashtagListAll" resultType="com.devinforest.vo.Hashtag" parameterType="java.util.Map">
+		SELECT
+			hashtag_no hashtagNo,
+			hashtag_name hashtagName,
+			hashtag_content hashtagContent,
+			hashtag_date hashtagDate
+		FROM dev_hashtag
 	</select>
 	
 	<!-- 해시태그 생성 -->

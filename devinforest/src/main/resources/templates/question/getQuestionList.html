@@ -160,7 +160,7 @@
 			
 
 			<!-- Nav Item - Charts -->
-			<li th:if="${accountKind} != 'C'" class="nav-item"><a class="nav-link" href="#"> <i
+			<li th:if="${accountKind} != 'C'" class="nav-item"><a class="nav-link" th:href="@{/getHashtagList}"> <i
 					class="fas fa-fw fa-folder"></i> <span>해시태그</span>
 			</a></li>
 
@@ -389,7 +389,7 @@
 							  <br>
 							 <span th:each="qh : ${questionHashtagList}">
 							 	<span th:if="${qh.questionNo} == ${ql.questionNo}">
-							 		<span><a type="button" class="tagBtn btn btn-outline-primary" href="#" th:text="${qh.hashtagName}"></a></span>
+							 		<span><a type="button" class="tagBtn btn btn-outline-primary" th:href="@{getQuestionListByHashtag(hashtagName=${qh.hashtagName})}"  th:text="${qh.hashtagName}"></a></span>
 							 	</span>
 							 </span>
 							<div th:text="${#strings.substring(ql.questionCreateDate, 0, 16)} + ' by ' + ${ql.memberName} + ' ('+ ${#strings.substring(ql.questionIp, 0, 7)} +')' "></div>

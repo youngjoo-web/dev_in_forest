@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.IPUtil;
+import com.devinforest.service.HashtagService;
 import com.devinforest.service.QuestionService;
 import com.devinforest.vo.Answer;
+import com.devinforest.vo.Hashtag;
 import com.devinforest.vo.LoginAdmin;
 import com.devinforest.vo.LoginCompany;
 import com.devinforest.vo.LoginMember;
@@ -26,6 +28,8 @@ public class QuestionController {
    
 	@Autowired 
 	private QuestionService questionService;
+	@Autowired
+	private HashtagService hashtagService;
 	
 	/* ---------- 질문 목록 ---------- */
 	@GetMapping("/getQuestionList")
@@ -76,6 +80,44 @@ public class QuestionController {
 		return "question/getQuestionList";
 	}
    
+	/* ---------- 해시태그 검색된 질문 목록 ---------- */
+	@GetMapping("/getQuestionListByHashtag")
+	public String getQuestionListByHashtag(Model model, HttpSession session,
+		@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+		@RequestParam(value="hashtagName", defaultValue="") String hashtagName) {
+		
+		String memberName = "Guest";
+		
+		if(session.getAttribute("loginMember") != null) {
+			memberName = ((LoginMember)session.getAttribute("loginMember")).getMemberName();
+		}
+		
+		Map<String, Object> questionListByHashtag = questionService.getQuestionListByHashtag(currentPage, hashtagName);
+		List<QuestionHashtag> questionHashtagList = questionService.getQuestionHashtagList();
+		
+		System.out.println(hashtagName+"<--hashtagName");
+		System.out.println(memberName+"<--memberName");
+		System.out.println(hashtagName+"<--questionController hashtagName");
+		System.out.println(questionListByHashtag.get("lastPage") +"<--lastPage");
+		System.out.println(questionListByHashtag.get("questionListByHashtag")+"<--questionListByHashtag1");
+		//System.out.println(questionListByHashtag+"<--questionListByHashtag2");
+		
+		model.addAttribute("hashtagName", hashtagName);
+		model.addAttribute("memberName", memberName);
+		model.addAttribute("questionList", questionListByHashtag.get("questionListByHashtag"));
+		model.addAttribute("questionHashtagList", questionHashtagList);
+		model.addAttribute("lastPage", questionListByHashtag.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		
+		
+//		System.out.println("↓QuestionController questionList↓");
+//		System.out.println(questionList.get("questionList"));
+//		System.out.println(currentPage + " <--- QuestionController currentPage");
+//		System.out.println(searchWord + " <--- QuestionController searchWord");
+		
+		return "question/getQuestionListByHashtag";
+	}
+	
 	/* ---------- 삭제된 질문 목록 ---------- */
 	@GetMapping("/getRemovedQuestionList")
 	public String getRemovedQuestionList(Model model, HttpSession session,
@@ -106,6 +148,8 @@ public class QuestionController {
 		return "question/getQuestionList";
 	}
 	
+	
+	
 	/* ---------- 질문 상세보기 ---------- */
 	@GetMapping("/getQuestionOne")
 	public String getQuestionOne(Model model, HttpSession session, Question question, Answer answer,
@@ -131,10 +175,12 @@ public class QuestionController {
 
 		question.setMemberName(memberName);
 					
+		List<QuestionHashtag> questionHashtagList=questionService.getQuestionHashtagOne(question.getQuestionNo());
 		Map<String, Object> map = questionService.getQuestionOne(question);
 		
 		// 질문
 		model.addAttribute("ip", getIp);
+		model.addAttribute("questionHashtagList", questionHashtagList);
 		model.addAttribute("memberName", memberName);
 		model.addAttribute("accountKind", accountKind);
 		model.addAttribute("question", map.get("questionOne"));
@@ -155,6 +201,9 @@ public class QuestionController {
 		
 		System.out.println(loginMember.getMemberName() + " <--- addQuestion memberName");
 		
+		List<Hashtag> hashtagList = hashtagService.getHashtagListAll();
+		
+		model.addAttribute("hashtagList", hashtagList);
 		model.addAttribute("memberName", loginMember.getMemberName());
 		model.addAttribute("ip", getIp);
 		System.out.println(loginMember.getMemberName()+"<--memberName");
