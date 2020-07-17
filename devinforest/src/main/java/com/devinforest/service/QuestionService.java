@@ -13,6 +13,7 @@ import com.devinforest.mapper.AnswerMapper;
 import com.devinforest.mapper.HashtagMapper;
 import com.devinforest.mapper.QuestionMapper;
 import com.devinforest.vo.Question;
+import com.devinforest.vo.QuestionAndQuestionHashtag;
 import com.devinforest.vo.QuestionHashtag;
 
 @Service
@@ -25,10 +26,18 @@ public class QuestionService {
 	private HashtagMapper hashtagMapper;
 	@Autowired
 	private AnswerMapper answerMapper;
+	
 	/* ---------- 질문리스트 중 답변 개수 출력 ---------- */
 	public int getAnswerListTotalCount() {
 		return answerMapper.answerListTotalCount();
 	}
+	
+	/* ---------- 질문리스트 중 답변 개수 출력 ---------- */
+	public int questionHashtagTotalRow(String hashtagName) {
+		return questionMapper.questionHashtagTotalRow(hashtagName);
+	}
+	
+	
 	/* ---------- 질문 해시태그 리스트 출력 ---------- */
 	public List<QuestionHashtag> getQuestionHashtagList() {
 		return hashtagMapper.selectQuestionHashtagList();
@@ -74,30 +83,30 @@ public class QuestionService {
 	}
 	
 	/* ---------- 질문 목록(해시태그검색) ---------- */
-	public Map<String, Object> getQuestionListByHashtag(int currentPage, String hashtag) {
-		System.out.println(hashtag + " <-- Service searchWord");
+	public Map<String, Object> getQuestionListByHashtag(int currentPage, String hashtagName) {
+		System.out.println(hashtagName + " <-- Service hashtagName");
 		
 		
 		int rowPerPage = 5;
 		int beginRow = (currentPage -1) * rowPerPage;
-		int questionTotalRow = questionMapper.questionTotalRow(hashtag);
+		int questionTotalRow = questionMapper.questionTotalRow(hashtagName);
 		System.out.println(questionTotalRow + " <-- questionTotalRow");
 		int lastPage = questionTotalRow / rowPerPage;
 		if(questionTotalRow % rowPerPage != 0) {
 			lastPage += 1;
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("hashtag", hashtag);
+		map.put("hashtagName", hashtagName);
 		map.put("beginRow", beginRow);
 		map.put("rowPerPage", rowPerPage);
 		
-		System.out.println(hashtag + " <--- searchWord");
+		System.out.println(hashtagName + " <--- hashtagName");
 		System.out.println(beginRow + " <--- beginRow");
 		System.out.println(rowPerPage + " <--- rowPerPage");
 		System.out.println(lastPage + "<--  questionServicelastPage");
 		
 		
-		List<Question> questionList = questionMapper.selectQuestionList(map);
+		List<QuestionAndQuestionHashtag> questionList = questionMapper.selectQUestionListByHashtag(map);
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("lastPage", lastPage);

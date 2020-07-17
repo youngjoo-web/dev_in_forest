@@ -32,6 +32,40 @@
       WHERE question_title LIKE CONCAT('%',#{searchWord},'%')
    </select>
    
+      <!-- 해시태그 검색 질문 총 개수  -->
+   <select id="questionHashtagTotalRow" resultType="int" parameterType="String">
+      SELECT 
+         COUNT(*)
+      FROM
+         dev_question_hashtag
+      WHERE hashtag_name = #{hashtagName}
+   </select>
+   
+   <!-- 해시태그로 검색한 질문 목록 -->
+   <select id="selectQUestionListByHashtag"  resultType="com.devinforest.vo.QuestionAndQuestionHashtag" parameterType="java.util.Map">
+   		SELECT
+		dev_question.question_no questionNo,
+		dev_question.member_name memberName,
+		dev_question.question_title questionTitle,
+		dev_question.question_content questionContent,
+		dev_question.question_reputation questionReputation,
+		dev_question.question_createdate questionCreateDate,
+		dev_question.question_updatedate questionUpdateDate,
+		dev_question.question_ip questionIp,
+		dev_question.question_views questionViews,
+		dev_question.question_num_of_votes questionNumOfVotes,
+        dev_question.question_num_of_answers questionNumOfAnswers,
+		dev_question_hashtag.hashtag_name hashtagName
+	FROM
+		dev_question_hashtag INNER JOIN dev_question ON
+		dev_question_hashtag.question_no = dev_question.question_no
+	WHERE 
+		dev_question_hashtag.hashtag_name = #{hashtagName}
+	ORDER BY dev_question.question_createdate DESC
+	LIMIT #{beginRow}, #{rowPerPage} 
+   
+   </select>
+   
    <!-- 질문 목록(최근순)  -->
    <select id="selectQuestionList" resultType="com.devinforest.vo.Question" parameterType="java.util.Map">
       SELECT 
