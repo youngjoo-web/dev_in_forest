@@ -7,6 +7,7 @@ public class Recruit {
 	private String companyLicense;
 	private int companyReputation;
 	private int companySales;
+	private int companyEmployees;
 	private String companyType;
 	private String companyCeo;
 	private String companyLink;
@@ -18,6 +19,23 @@ public class Recruit {
 	private String recruitContent;
 	private String recruitDate;
 	private String companyEmail;
+	
+	@Override
+	public String toString() {
+		return "Recruit [recruitNo=" + recruitNo + ", companyKorName=" + companyKorName + ", companyEngName="
+				+ companyEngName + ", companyLicense=" + companyLicense + ", companyReputation=" + companyReputation
+				+ ", companySales=" + companySales + ", companyEmployees=" + companyEmployees + ", companyType="
+				+ companyType + ", companyCeo=" + companyCeo + ", companyLink=" + companyLink + ", companyFoundation="
+				+ companyFoundation + ", companyPhone=" + companyPhone + ", companyAddress=" + companyAddress
+				+ ", companyAbout=" + companyAbout + ", recruitTitle=" + recruitTitle + ", recruitContent="
+				+ recruitContent + ", recruitDate=" + recruitDate + ", companyEmail=" + companyEmail + "]";
+	}
+	public int getCompanyEmployees() {
+		return companyEmployees;
+	}
+	public void setCompanyEmployees(int companyEmployees) {
+		this.companyEmployees = companyEmployees;
+	}
 	public int getRecruitNo() {
 		return recruitNo;
 	}
@@ -120,16 +138,7 @@ public class Recruit {
 	public void setCompanyEmail(String companyEmail) {
 		this.companyEmail = companyEmail;
 	}
-	@Override
-	public String toString() {
-		return "Recruit [recruitNo=" + recruitNo + ", companyKorName=" + companyKorName + ", companyEngName="
-				+ companyEngName + ", companyLicense=" + companyLicense + ", companyReputation=" + companyReputation
-				+ ", companySales=" + companySales + ", companyType=" + companyType + ", companyCeo=" + companyCeo
-				+ ", companyLink=" + companyLink + ", companyFoundation=" + companyFoundation + ", companyPhone="
-				+ companyPhone + ", companyAddress=" + companyAddress + ", companyAbout=" + companyAbout
-				+ ", recruitTitle=" + recruitTitle + ", recruitContent=" + recruitContent + ", recruitDate="
-				+ recruitDate + ", companyEmail=" + companyEmail + "]";
-	}
+	
 	
 	
 	

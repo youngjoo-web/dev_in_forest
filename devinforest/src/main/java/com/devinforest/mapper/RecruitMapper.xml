@@ -96,23 +96,25 @@
 	<!-- 채용공고 상세보기 -->
 	<select id="selectRecruitInfo" parameterType="int" resultType="com.devinforest.vo.Recruit">
 		SELECT
-        	recruit_no AS recruitNo,
-        	recruit_title AS recruitTitle,
-         	company_kor_name AS companyKorName,
-         	company_eng_name AS companyEngName,
-         	company_reputation AS companyReputation,
-         	company_license AS companyLicense,
-         	company_sales AS companySales, 
-         	company_type AS companyType,
-         	company_link AS companyLink,
-         	company_ceo AS companyCeo,
-         	company_foundation AS companyFoundation,
-         	company_phone AS companyPhone,
-         	company_address AS companyAddress,
-          	company_about AS companyAbout,
-          	recruit_content AS recruitContent,
-         	recruit_date AS recruitDate
-      FROM dev_recruit
+        	r.recruit_no AS recruitNo,
+        	r.recruit_title AS recruitTitle,
+         	c.company_kor_name AS companyKorName,
+         	c.company_eng_name AS companyEngName,
+         	c.company_reputation AS companyReputation,
+         	c.company_license AS companyLicense,
+         	c.company_sales AS companySales, 
+         	c.company_employees AS companyEmployees,
+         	c.company_type AS companyType,
+         	c.company_link AS companyLink,
+         	c.company_ceo AS companyCeo,
+         	c.company_foundation AS companyFoundation,
+         	c.company_phone AS companyPhone,
+         	c.company_address AS companyAddress,
+          	c.company_about AS companyAbout,
+          	r.recruit_content AS recruitContent,
+         	r.recruit_date AS recruitDate
+      FROM dev_recruit r INNER JOIN dev_company c 
+      on r.company_kor_name=c.company_kor_name
       WHERE recruit_no = #{recruitNo}
 	</select>
 	<!-- 채용공고 totalcount -->
