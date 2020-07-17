@@ -32,6 +32,20 @@ public class MemberController {
 	@Autowired
 	private SuggestService suggestService;
 	
+	//회원가입 및 로그인선택페이지
+	   @GetMapping("/login")
+	   public String login(HttpSession session){
+	      if(session.getAttribute("loginMember")!=null) {
+	         return "index/home";
+	      }
+	      if(session.getAttribute("loginCompany")!=null) {
+	         return "company/companyHome";
+	      }
+	      if(session.getAttribute("loginAdmin")!=null) {
+	         return "redirect:/adminHome";
+	      }
+	      return "index/login";
+	   }
 	//회원 재가입 요청
 	@GetMapping("/requestMemberRestore")
 	public String requestMemberRestore(HttpSession session) {
@@ -307,12 +321,9 @@ public class MemberController {
 	//로그인 아웃
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		if(session.getAttribute("loginMember")==null) {
-			return "redirect:/index";
-		}
-		if(session.getAttribute("loginCompany")==null) {
-			return "redirect:/index";
-		}
+		if(session.getAttribute("loginMember")==null && session.getAttribute("loginAdmin")==null && session.getAttribute("loginCompany")==null) {
+	         return "redirect:/index";
+	      }
 		session.invalidate();
 		return "redirect:/index";
 	}

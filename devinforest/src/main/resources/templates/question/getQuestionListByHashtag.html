@@ -7,7 +7,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
-		<title>타이틀 제목</title>
+		<title>questionList-hashtag</title>
 		
 		<!-- Custom fonts for this template-->
 		<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
@@ -21,94 +21,62 @@
 		<link th:href="@{/css/addAdmin.css}" rel="stylesheet">
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<link
-		    rel="stylesheet"
-		    href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"
-	 	/>
-	 	<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-	 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
-		<script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
 		<style>
-		#hashtagName{
-		width:150px;
-		}
-		</style>
-		<script>
-			$(document).ready(function(){
-				let memberName = $('#memberName').val();
-				let questionIp = $('#questionIp').val();
-				
-				
-				const { Editor } = toastui;
-				const { codeSyntaxHighlight } = Editor.plugin;
-				const editor = new Editor({
-					  el: document.querySelector('#editor'),
-					  height: '300px',
-					  initialEditType: 'markdown',
-					  previewStyle: 'tab',
-					  plugins: [codeSyntaxHighlight]
-				});
-				
-				
-				$('#addQuestionBtn').click(function(){
-					let memberReputationInit = 0;
-					let memberReputation = $('#memberReputation').val();
-					let questionTitle = $('#questionTitle').val();
-					let questionContent = editor.getMarkdown();
-					let hashtagName = $('#hashtagName').val();
-					
-					console.log(hashtagName);
-					console.log(questionTitle);
-					console.log(questionContent);
-					console.log(memberName)
-					console.log(questionIp)
-					console.log(memberReputation)
-					if($('#questionTitle').val().length < 10) {
-						$('#questionTitle').val("제목을 10자 이상 입력하세요.");
-						$('#questionTitle').focus();
-					} else if(questionContent < 20) {
-						editor.setMarkdown("내용을 20자 이상 입력하세요.");
-						editor.focus();
-					} else if($('#memberReputation').val() < 0) {
-						$('#questionTitle').empty();
-						$('#memberReputation').val(memberReputationInit);
-						$('#reputationWarning').css("color", "red");
-						$('#reputationWarning').text("내공은 0 미만으로 걸 수 없습니다.")
-						$('#memberReputation').focus();
-					} else if((0 < $('#memberReputation').val() && $('#memberReputation').val() < 50) || $('#memberReputation').val() > 999) {
-						$('#reputationWarning').css("color", "red");
-						$('#reputationWarning').text("내공은 최소 50부터  최대 999까지 걸 수 있습니다.");
-					} else {
-						$.ajax({
-							url: '/addQuestion',
-							type: 'POST',
-							async: false,
-							data: {'memberName' : memberName, 'questionTitle' : questionTitle, 'questionContent' : questionContent, 'questionReputation' : memberReputation, 'questionIp' : questionIp, 'hashtagName' : hashtagName},
-							success: function(data){
-								let memberReputation = 10;
-								$.ajax({
-									url: '/modifyMemberReputation',
-									type: 'POST',
-									data: {'memberName' : memberName, 'memberReputation' : memberReputation},
-									success: function() {
-										console.log("내공 갱신 성공");
-										
-									}
-								});
-								location.href='/getQuestionList';
-							}
-						});
-					}
-				});
-			});
-			
-		</script>
+			#header-flex-container {
+				display: flex;
+				justify-content: space-between;		
+			}
+			#body-flex-container {
+				margin-bottom: 30px;
+				display: flex;
+				justify-content: space-between;
+			}
+			#left-container {
+				display: flex;
+			}
+			#left-container > div {
+				margin-left: 10px;
+				padding: 5px;
+				border: 1.4px solid #5eba7d;
+				border-radius: 5px;
+				text-align: center;
+			}
+			#reputationBtn {
+				width:45px;
+				height:25px;
+				border: 0;
+				font-size: 13px;
+				background-color: #0077cc;
+			}
+			#center-container {
+				margin-left: 50px;
+			}
+			#center-container > a {
+				font-size: 20px;
+			}
+			#center-container > a:hover{
+				text-decoration: none;
+			}
+			#right-container > div {
+				display: inline-block;
+			}
+			.tagBtn{
+			background-color: #e1ecf4;
+			color: #648ba7;
+			border-color: transparent;
+			padding:0;
+			width: 50px; 
+			height: 25px;
+			border: 0;
+			}
+			.tagBtn:hover{
+			background-color: #96bfe4;
+			color: #3b7aa0;
+			border-color: transparent;
+			}
+	</style>
 	</head>
 	<body id="page-top">
-		<!-- 마크다운 에디터 CDN -->
-		<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-		<script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
-	
 		<!-- Page Wrapper -->
 		<div id="wrapper">
 		
@@ -168,7 +136,7 @@
 			<div class="sidebar-heading">해시태그</div>
 
 			<!-- Nav Item - Charts -->
-			<li class="nav-item"><a class="nav-link" href="#"> <i
+			<li class="nav-item"><a class="nav-link" th:href="@{/getHashtagList}"> <i
 					class="fas fa-fw fa-folder"></i> <span>해시태그</span>
 			</a></li>
 
@@ -311,53 +279,82 @@
 	
 					<!-- 내용 넣는 곳 -->
 					<div class="container pt-4 px-5 content">
+						
 						<!-- 여기에 본문 넣으면댐 -->
-						<h1>질문 작성</h1>
-						<br>
-							<div>
-								질문 제목
-								<br>
-								<input class="form-control" type="text" name="questionTitle" id="questionTitle">
-							</div>
+						<div id="header-flex-container">
+							<h1 th:text="'해시태그 - '+${hashtagName}"></h1>
 							<br>
-							<div>
-								질문 내용
-								<div id="editor"></div>
-							</div>
-							<br>
-							<div>
-								내공
-								<br>
-								<input type="number" name="memberReputation" id="memberReputation" th:value=0>
-								<div id="reputationWarning"></div>
-							</div>
-							<br>
-							<div>
-								해시태그
-							<select class="form-control" id="hashtagName" name="hashtagName">
-								<option value="">해시태그 선택</option>
-								<option th:each="hl : ${hashtagList}" th:text="${hl.hashtagName}" th:value="${hl.hashtagName}"></option>
-							</select>
-							</div>
 							
-								<br>
-								<!--  <input class="form-control" type="text" name="hashtagName" id="hashtagName"> -->
 							
-						<div style="text-align:center">
-							<button class="btn btn-outline-success" type="button" id="addQuestionBtn">작성</button>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;					
-							<a th:href="@{/getQuestionList}"><button class="btn btn-outline-secondary" type="button">취소</button></a>							
+							
+							<div th:if="${memberName} != 'Guest'">
+								<a class="btn btn-outline-success" th:href="@{/addQuestion(memberName=${memberName})}">질문하기</a>
+							</div>
 						</div>
-						<div>
-					       <input type="hidden" name="questionIp" id="questionIp" th:value="${ip}">
-					    </div>
-					    <div>
-					       <input type="hidden" name="memberName" id="memberName" th:value="${memberName}">
-					    </div>
+					<hr>
+					<br>
+					
+					
+					<div th:each="ql : ${questionList}" id="body-flex-container">
+						<div id="left-container">
+							<div>
+								<div th:text="${ql.questionViews}"></div>
+								<div>조회수</div>
+							</div>
+							<div>
+								<div th:text="${ql.questionNumOfVotes}"></div>
+								<div>투표수</div>
+							</div>
+							<div>
+								<div th:text="${ql.questionNumOfAnswers}"></div>
+								<div>답변수</div>
+							</div>	
+						</div>
+						<div id="center-container">
+							<span th:if="${ql.questionReputation} > 49"><button id="reputationBtn" class="btn btn-primary btn-sm" th:text="'+' + ${ql.questionReputation}" disabled></button></span>
+							<a th:href="@{/getQuestionOne(questionNo=${ql.questionNo})}" 
+							   th:text="${ql.questionTitle}"></a>
+							 <!-- 해시태그 넣기 -->
+							  <br>
+							 <span th:each="qh : ${questionHashtagList}">
+							 	<span th:if="${qh.questionNo} == ${ql.questionNo}">
+							 		<span><a type="button" class="tagBtn btn btn-outline-primary" th:href="@{getQuestionListByHashtag(hashtagName=${qh.hashtagName})}" th:text="${qh.hashtagName}"></a></span>
+							 	</span>
+							 </span>
+							<div th:text="${#strings.substring(ql.questionCreateDate, 0, 16)} + ' by ' + ${ql.memberName} + ' ('+ ${#strings.substring(ql.questionIp, 0, 7)} +')' "></div>
+						</div>
+						<hr>
+						<div id="right-container"></div>
+					</div>
+					
+					<hr>
+					<div th:if="${currentPage} > 1">
+						<a th:href="@{/getQuestionListByHashtag(currentPage=${currentPage}-1)}">이전</a>
+					</div>
+					<div th:if="${currentPage < lastPage}">
+						<a th:href="@{/getQuestionListByHashtag(currentPage=${currentPage}+1)}">다음</a>
+					</div>
+						
+						
+					</div>
+						<!-- /.container-fluid -->
+				</div>
+				<!-- End of Main Content -->
+		
+				<!-- 하단 저작권 -->
+				<footer class="sticky-footer bg-white">
+					<div class="container my-auto">
+						<div class="copyright text-center my-auto">
+							<span>Copyright &copy; Dev In Forest 2020</span>
+						</div>
+					</div>
+				</footer>
+				<!-- 하단 저작권 끝 -->
+		
+			</div>
 			<!-- End of Content Wrapper -->
 	
-					</div>
-		
+		</div>
 		<!-- End of Page Wrapper -->
 	
 		<!-- Scroll to Top Button-->
@@ -393,7 +390,4 @@
 		<!-- Custom scripts for all pages-->
 		<script th:src="@{/js/sb-admin-2.min.js}"></script>
 	</body>
-	<script>
-		
-	</script>
 </html>

@@ -32,9 +32,14 @@ public class QuestionService {
 		return answerMapper.answerListTotalCount();
 	}
 	
-	/* ---------- 질문리스트 중 답변 개수 출력 ---------- */
+	/* ---------- 해시태그를 사용한 질문의 총 개수 ---------- */
 	public int questionHashtagTotalRow(String hashtagName) {
 		return questionMapper.questionHashtagTotalRow(hashtagName);
+	}
+	
+	/* ---------- 해당 질문의 해시태그 리스트 출력 ---------- */
+	public List<QuestionHashtag> getQuestionHashtagOne(int questionNo) {
+		return hashtagMapper.selectQuestionHashtagOne(questionNo);
 	}
 	
 	
@@ -89,7 +94,7 @@ public class QuestionService {
 		
 		int rowPerPage = 5;
 		int beginRow = (currentPage -1) * rowPerPage;
-		int questionTotalRow = questionMapper.questionTotalRow(hashtagName);
+		int questionTotalRow = questionMapper.questionHashtagTotalRow(hashtagName);
 		System.out.println(questionTotalRow + " <-- questionTotalRow");
 		int lastPage = questionTotalRow / rowPerPage;
 		if(questionTotalRow % rowPerPage != 0) {
@@ -106,11 +111,11 @@ public class QuestionService {
 		System.out.println(lastPage + "<--  questionServicelastPage");
 		
 		
-		List<QuestionAndQuestionHashtag> questionList = questionMapper.selectQUestionListByHashtag(map);
+		List<QuestionAndQuestionHashtag> questionListByHashtag = questionMapper.selectQuestionListByHashtag(map);
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("lastPage", lastPage);
-		returnMap.put("questionList", questionList);
+		returnMap.put("questionListByHashtag", questionListByHashtag);
 		
 		return returnMap;
 	}
