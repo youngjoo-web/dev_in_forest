@@ -8,7 +8,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>기업정보 수정</title>
+<title>채용공고추가</title>
 
 <!-- Custom fonts for this template-->
 <link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
@@ -183,12 +183,7 @@
 							<form method="post" th:action="@{/addRecruit}">
 								<table class="table table-bordered" id="dataTable" width="100%"
 									cellspacing="0">
-									<tr>
-										<td>기업이메일</td>
-										<td>
-											<input type="text" name="companyEmail" th:value="${company.companyEmail}" readonly>
-										</td>
-									</tr>
+									
 									<tr>
 										<td>채용공고제목</td>
 										<td>
@@ -207,17 +202,38 @@
 											<input type="text" name="companyReputation">
 										</td>
 									</tr>
+								</table>
+									<br>
+								<table class="table table-bordered" id="dataTable" width="100%"
+									cellspacing="0">
+									<tr>
+										<td>기업이메일</td>
+										<td>
+											<input type="text" name="companyEmail" th:value="${company.companyEmail}" readonly>
+										</td>
+										<td>대표자명</td>
+										<td>
+											<input type="text" name="companyCeo" th:value="${company.companyCEO}">
+										</td>
+									</tr>
 									<tr>
 										<td>한글사명</td>
 										<td>
 											<input type="text" name="companyKorName" th:value="${company.companyKorName}">
 										</td>
+										<td>회사주소</td>
+										<td>
+											<input type="text" name="companyAddress" th:value="${company.companyAddress}">
+										</td>
 									</tr>
-
 									<tr>
 										<td>영문사명</td>
 										<td>
 											<input type="text" name="companyEngName" th:value="${company.companyEngName}">
+										</td>
+										<td>매출액</td>
+										<td>
+											<input type="text" name="companySales" th:value="${company.companySales}">
 										</td>
 									</tr>
 									<tr>
@@ -225,62 +241,44 @@
 										<td>
 											<input type="text" name="companyType" th:value="${company.companyType}">
 										</td>
-									</tr>
-									<tr>
-										<td>회사주소</td>
-										<td>
-											<input type="text" name="companyAddress" th:value="${company.companyAddress}">
-										</td>
-									</tr>
-									<tr>
-										<td>대표번호</td>
-										<td>
-											<input type="text" name="companyPhone" th:value="${company.companyPhone}">
-										</td>
-									</tr>
-									<tr>
-										<td>사업자등록번호</td>
-										<td>
-											<input type="text" name="companyLicense" th:value="${company.companyLicense}">
-										</td>
-									</tr>
-									<tr>
-										<td>회사홈페이지</td>
-										<td>
-											<input type="text" name="companyLink" th:value="${company.companyLink}">
-										</td>
-									</tr>
-									<tr>
-										<td>대표자명</td>
-										<td>
-											<input type="text" name="companyCeo" th:value="${company.companyCEO}">
-										</td>
-									</tr>
-									<tr>
-										<td>매출액</td>
-										<td>
-											<input type="text" name="companySales" th:value="${company.companySales}">
-										</td>
-									</tr>
-									<tr>
 										<td>사원수</td>
 										<td>
 											<input type="text" name="companyEmployees" th:value="${company.companyEmployees}">
 										</td>
 									</tr>
 									<tr>
-										<td>회사소개</td>
-										<td>
-											<input type="text" name="companyAbout" th:value="${company.companyAbout}">
-										</td>
+										<td>대표번호</td>
+										<td>사업자등록번호</td>
+										<td>회사홈페이지</td>
+										<td>설립일</td>
 									</tr>
 									<tr>
-										<td>설립일</td>
+										
+										<td>
+											<input type="text" name="companyPhone" th:value="${company.companyPhone}">
+										</td>
+										<td>
+											<input type="text" name="companyLicense" th:value="${company.companyLicense}">
+										</td>
+										<td>
+											<input type="text" name="companyLink" th:value="${company.companyLink}">
+										</td>
 										<td>
 											<input type="date" name="companyFoundation" th:value="${company.companyFoundation}">
 										</td>
 									</tr>
-									
+								</table>
+								<br>
+								<table class="table table-bordered" id="dataTable" width="100%"
+									cellspacing="0">
+									<tr>
+										<td>회사소개</td>
+									</tr>
+									<tr>
+										<td>
+											<input type="text" name="companyAbout" th:value="${company.companyAbout}">
+										</td>	
+									</tr>
 								</table>
 								<button class="btn btn-sm pageBtn" type="submit" th:text="채용공고추가"></button>
 							</form>

@@ -36,8 +36,14 @@ public class MemberController {
 	//회원가입 및 로그인선택페이지
 	@GetMapping("/login")
 	public String login(HttpSession session){
-		if(session.getAttribute("loginMember")!=null || session.getAttribute("loginCompany")!=null || session.getAttribute("loginAdmin")!=null) {
-			return "redirect:/index";
+		if(session.getAttribute("loginMember")!=null) {
+			return "index/home";
+		}
+		if(session.getAttribute("loginCompany")!=null) {
+			return "company/companyHome";
+		}
+		if(session.getAttribute("loginAdmin")!=null) {
+			return "redirect:/adminHome";
 		}
 		return "index/login";
 	}

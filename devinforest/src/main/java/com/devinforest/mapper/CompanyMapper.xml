@@ -24,7 +24,7 @@
 		company_link =#{companyLink}, 
 		company_ceo =#{companyCeo} , 
 		company_sales =#{companySales},
-		
+		company_employees =#{companyEmployees},
 		company_about=#{companyAbout},
 		company_foundation =#{companyFoundation}
 		WHERE company_email=#{companyEmail}
