@@ -221,17 +221,15 @@
 	});
 	
 	let noticeTitle = $('#noticeTitle').val();
+	let noticeContent = $('#noticeContent').val();
 	
-	editor.setMarkdown($('#noticeContent').val());
+	editor.setMarkdown(noticeContent);
 	
 	console.log(noticeTitle);
 	console.log(noticeContent);
 	
 	$('#modifyFAQBtn').click(function(){
 		noticeContent = editor.getMarkdown();
-		
-		console.log(noticeTitle);
-		console.log(noticeContent);
 		
 		$('#noticeContent').text(noticeContent);
 		
