@@ -79,7 +79,7 @@
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
 				th:href="@{/home}"> <i class="fas fa-fw fa-tachometer-alt"></i>
-					<span>회원 홈</span></a></li>
+					<span>홈</span></a></li>
 
 			<!-- Divider -->
 			<hr th:if="${memberName} != 'Guest'" class="sidebar-divider">
@@ -234,7 +234,7 @@
 							<!-- 닉네임 나오는 곳 - 상단 바 -->
 							<li class="nav-item dropdown no-arrow">
 								<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${memberName}"></span>
+									<span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${session.loginMember.memberName}"></span>
 									<img class="img-profile rounded-circle" th:src="@{/img/img.png}">
 								</a>
 								<!-- Dropdown - User Information -->
