@@ -100,7 +100,7 @@
         	r.recruit_title AS recruitTitle,
          	c.company_kor_name AS companyKorName,
          	c.company_eng_name AS companyEngName,
-         	c.company_reputation AS companyReputation,
+         	r.company_reputation AS companyReputation,
          	c.company_license AS companyLicense,
          	c.company_sales AS companySales, 
          	c.company_employees AS companyEmployees,
