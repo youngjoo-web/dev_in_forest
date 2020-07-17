@@ -131,9 +131,8 @@
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Q&A</h6>
-						<a class="collapse-item" href="#">질문하기 </a> <a
-							class="collapse-item" href="#">답변하기</a> <a class="collapse-item"
-							href="#">질문목록</a> <a class="collapse-item" href="#">답변목록</a>
+						<a class="collapse-item" th:href="@{/getQuestionList}">질문리스트</a>
+						<a class="collapse-item" th:href="@{/addQuestion(memberName=${session.loginMember.memberName})}">질문하기</a>  
 					</div>
 				</div></li>
 			<!-- 구분 줄 -->
