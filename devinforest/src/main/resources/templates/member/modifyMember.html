@@ -283,27 +283,24 @@
 										전화번호 : </label> <input type="text" name="memberPhone"
 										th:value="${member.memberPhone}"> <br> <label>사용자
 										링크: </label> <input type="text" name="memberLink"
-										th:value="${member.memberLink}"> <br> <label>사용자
-										성별: </label>
-										
-									<div th:if="${member.memberGender}==''">
-										<select name="memberGender">
+										th:value="${member.memberLink}"> <br> 
+										<label>사용자성별: </label>
+										<select th:if="${member.memberGender ==null}" name="memberGender" th:value="${member.memberGender}">			
 											<option th:value="M">Male</option>
 											<option th:value="F">Female</option>
 										</select>
-									</div> 
-									<div th:if="${member.memberGender}=='F'">
-										<select name="memberGender">
-											<option th:value="F">Female</option>
-											<option th:value="M">Male</option>
-										</select>
-									</div>
-									<div th:if="${member.memberGender}=='M'">
-										<select name="memberGender">			
+									
+										<select th:if="${member.memberGender}=='M'" name="memberGender" th:value="${member.memberGender}">			
 											<option th:value="M">Male</option>
 											<option th:value="F">Female</option>
 										</select>
-									</div>
+									
+									
+										<select th:if="${member.memberGender}=='F'" name="memberGender" th:value="${member.memberGender}">
+											<option th:value="F">Female</option>
+											<option th:value="M">Male</option>
+										</select>
+					
 									
 
 									<br> <label>생년월일: </label> <input id="birthCheck"
