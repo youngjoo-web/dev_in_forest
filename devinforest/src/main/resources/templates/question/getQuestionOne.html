@@ -939,10 +939,12 @@
 								</table>
 							</div>
 							<input type="hidden" id="questionContent" th:value="${question.questionContent}">
-							<div style="flex-direction: row; flex-wrap: nowrap;">
+							<div style="display:flex; flex-direction:column; justify-content: space-between; flex-wrap: nowrap;">
 								<div id="viewer"></div>
+								<div>여기다가 넣으셈</div>
 							</div>
 						</div>
+							
 						<div>
 							<span><a class="btn btn-outline-secondary btn-sm" th:href="@{/getQuestionList}">목록</a></span>
 							<span th:if="${memberName} == ${question.memberName}"><a class="btn btn-outline-warning btn-sm" th:href="@{/modifyQuestion(questionNo=${question.questionNo})}">수정</a></span>
@@ -974,7 +976,7 @@
 							<br>
 							<button class="btn btn-outline-success" id="addAnswerBtn">답변작성</button>
 						</div>
-							<div th:if="${accountKind} == 'M'">답변을 작성하려면 <a th:href="@{/memberLogin}" th:text="로그인"></a>을 하세요.</div>
+							<div th:if="${accountKind} == 'G'">답변을 작성하려면 <a th:href="@{/memberLogin}" th:text="로그인"></a>을 하세요.</div>
 						
 						<!-- 신고 팝업 -->
 						<form id="reportForm" method="post" th:action="@{javascript:openWindowPop('popup');}"></form>
