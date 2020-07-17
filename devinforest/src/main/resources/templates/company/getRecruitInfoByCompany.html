@@ -22,7 +22,9 @@
 
 <!--  addAdmin template -->
 <link th:href="@{/css/addAdmin.css}" rel="stylesheet">
-
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
+		<script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -44,8 +46,12 @@
 	width: 110px;
 }
 </style>
+
 </head>
 <body id="page-top">
+	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
+	  	<!-- Editor's Plugin -->
+	  	<script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 
@@ -274,7 +280,7 @@
 
 						</div>
 						<div class="col">
-							<a class="btn btn-sm pageBtn collapse-item" th:href="@{/}">채용공고수정</a>
+							<a class="btn btn-sm pageBtn collapse-item" th:href="@{/modifyRecruit(recruitNo=${recruit.recruitNo})}">채용공고수정</a>
 						</div>
 
 						<a class="collapse-item"
@@ -306,7 +312,12 @@
 								<td>내용</td>
 								<td th:text="${recruit.recruitContent}"></td>
 							</tr>
+							<tr>
+								<td>명성도제한</td>
+								<td th:text="${recruit.companyReputation}"></td>
+							</tr>
 						</table>
+						
 						<table class="table table-bordered" id="dataTable" width="100%"
 							cellspacing="0">
 							<tr>
@@ -327,6 +338,7 @@
 								<td th:text="${recruit.companyCeo}"></td>
 							</tr>
 						</table>
+						
 						<table class="table table-bordered" id="dataTable" width="100%"
 							cellspacing="0">
 							<tr>

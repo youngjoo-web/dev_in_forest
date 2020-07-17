@@ -3,8 +3,27 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.devinforest.mapper.RecruitMapper">
+	<!-- 채용공고 수정 -->
+	<update id="updateRecruitByCompany" parameterType="com.devinforest.vo.Recruit">
+		UPDATE dev_recruit
+	set company_kor_name=#{companyKorName}, 
+      company_eng_name=#{companyEngName}, 
+      company_license=#{companyLicense}, 
+      company_sales=#{companySales}, 
+      company_type=#{companyType}, 
+      company_ceo=#{companyCeo}, 
+      company_link=#{companyLink}, 
+      company_foundation=#{companyFoundation}, 
+      company_phone=#{companyPhone}, 
+      company_address=#{companyAddress}, 
+      company_about=#{companyAbout},
+      recruit_title=#{recruitTitle},
+      recruit_content=#{recruitContent},
+      company_reputation=#{companyReputation} 
+	WHERE recruit_no=#{recruitNo}  
+	</update>
 	<!-- 채용공고 삭제 -->
-   <delete id="deleteRecruitByCompnay" parameterType="com.devinforest.vo.Recruit" >
+   <delete id="deleteRecruitByCompany" parameterType="com.devinforest.vo.Recruit" >
       DELETE
       FROM dev_recruit
       WHERE recruit_no =#{recruitNo}

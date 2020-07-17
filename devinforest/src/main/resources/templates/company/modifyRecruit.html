@@ -46,12 +46,8 @@ $(document).ready(function(){
          previewStyle: 'tab',
          plugins: [codeSyntaxHighlight]
     });
-    $('#addRecruitBtn').click(function(){
-		
-		
-		
+    $('#modifyRecruitBtn').click(function(){
 		let recruitContent = editor.getMarkdown();
-		
 		$('#recruitContent').val(recruitContent);
 		console.log($('#recruitContent').val());
 		$('#form').submit();
@@ -226,14 +222,14 @@ $(document).ready(function(){
 					<div class="table-responsive">
 					
 					
-						<form id="form" method="post" th:action="@{/addRecruit}">
+						<form id="form" method="post" th:action="@{/modifyRecruit}">
 						
 							<table class="table table-bordered" id="dataTable" width="100%"
 								cellspacing="0">
 
 								<tr>
 									<td>채용공고제목</td>
-									<td><input type="text" name="recruitTitle"></td>
+									<td><input type="text" name="recruitTitle" th:value="${recruit.recruitTitle}"></td>
 								</tr>
 							</table>
 							<div id="editor"></div>
@@ -244,7 +240,7 @@ $(document).ready(function(){
 								cellspacing="0">
 								<tr>
 									<td>채용공고내공제한</td>
-									<td><input type="text" name="companyReputation"></td>
+									<td><input type="text" name="companyReputation" th:value="${recruit.companyReputation}"></td>
 								</tr>
 							</table>
 							
@@ -254,34 +250,34 @@ $(document).ready(function(){
 								<tr>
 									<td>기업이메일</td>
 									<td><input type="text" name="companyEmail"
-										th:value="${company.companyEmail}" readonly></td>
+										th:value="${recruit.companyEmail}" readonly></td>
 									<td>대표자명</td>
 									<td><input type="text" name="companyCeo"
-										th:value="${company.companyCEO}"></td>
+										th:value="${recruit.companyCeo}"></td>
 								</tr>
 								<tr>
 									<td>한글사명</td>
 									<td><input type="text" name="companyKorName"
-										th:value="${company.companyKorName}"></td>
+										th:value="${recruit.companyKorName}"></td>
 									<td>회사주소</td>
 									<td><input type="text" name="companyAddress"
-										th:value="${company.companyAddress}"></td>
+										th:value="${recruit.companyAddress}"></td>
 								</tr>
 								<tr>
 									<td>영문사명</td>
 									<td><input type="text" name="companyEngName"
-										th:value="${company.companyEngName}"></td>
+										th:value="${recruit.companyEngName}"></td>
 									<td>매출액</td>
 									<td><input type="text" name="companySales"
-										th:value="${company.companySales}"></td>
+										th:value="${recruit.companySales}"></td>
 								</tr>
 								<tr>
 									<td>산업분야</td>
 									<td><input type="text" name="companyType"
-										th:value="${company.companyType}"></td>
+										th:value="${recruit.companyType}"></td>
 									<td>사원수</td>
 									<td><input type="text" name="companyEmployees"
-										th:value="${company.companyEmployees}"></td>
+										th:value="${recruit.companyEmployees}"></td>
 								</tr>
 								<tr>
 									<td>대표번호</td>
@@ -292,13 +288,13 @@ $(document).ready(function(){
 								<tr>
 
 									<td><input type="text" name="companyPhone"
-										th:value="${company.companyPhone}"></td>
+										th:value="${recruit.companyPhone}"></td>
 									<td><input type="text" name="companyLicense"
-										th:value="${company.companyLicense}"></td>
+										th:value="${recruit.companyLicense}"></td>
 									<td><input type="text" name="companyLink"
-										th:value="${company.companyLink}"></td>
+										th:value="${recruit.companyLink}"></td>
 									<td><input type="date" name="companyFoundation"
-										th:value="${company.companyFoundation}"></td>
+										th:value="${recruit.companyFoundation}"></td>
 								</tr>
 							</table>
 							<br>
@@ -309,18 +305,20 @@ $(document).ready(function(){
 								</tr>
 								<tr>
 									<td><input type="text" name="companyAbout"
-										th:value="${company.companyAbout}"></td>
+										th:value="${recruit.companyAbout}"></td>
 								</tr>
 							</table>
 							<input type="hidden" id="recruitContent" name="recruitContent">
-							<button id="addRecruitBtn" class="btn btn-sm pageBtn" type="button" th:text="채용공고추가"></button>
+							<input type="hidden" name="recruitNo"
+								th:value="${recruit.recruitNo}">
+							<button id="modifyRecruitBtn" class="btn btn-sm pageBtn" type="button" th:text="수정하기"></button>
 						</form>
 
 
 
-						<form method="get" th:action="@{/companyInfo}">
-							<input type="hidden" name="companyEmail"
-								th:value="${session.loginCompany.companyEmail}">
+						<form method="get" th:action="@{/getRecruitInfo}">
+							<input type="hidden" name="recruitNo"
+								th:value="${recruit.recruitNo}">
 							<button class="btn btn-sm pageBtn" type="submit">돌아가기</button>
 						</form>
 						<br>

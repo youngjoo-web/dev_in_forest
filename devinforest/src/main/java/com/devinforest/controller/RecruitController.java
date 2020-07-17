@@ -46,6 +46,30 @@ public class RecruitController {
 			model.addAttribute("recruitList", map.get("recruitList"));
 			return "company/getRecruitListByCompany";
 		}
+	//채용공고 수정
+		@GetMapping("/modifyRecruit")
+		public String modifyRecruit(HttpSession session, Model model, int recruitNo) {
+			if(session.getAttribute("loginCompany")==null) {
+		         return "redirect:/index";
+		      }
+			Recruit recruit = recruitService.getRecruitInfo(recruitNo);
+			model.addAttribute("recruit", recruit);
+			return "company/modifyRecruit";
+		}
+		@PostMapping("/modifyRecruit")
+		public String modifyRecruit(HttpSession session, Model model,
+				@RequestParam(defaultValue = "1") int currentPage,
+				   @RequestParam(defaultValue = "5") int rowPerPage,
+				   @RequestParam(defaultValue = "") String searchWord,Recruit recruit) {
+			if(session.getAttribute("loginCompany")==null) {
+		         return "redirect:/index";
+		      }
+			recruitService.modifyRecruit(recruit);
+			Recruit checkRecruit = recruitService.getRecruitInfo(recruit.getRecruitNo());
+			
+			model.addAttribute("recruit", checkRecruit);
+			return "company/getRecruitInfoByCompany";
+		}
 	//채용공고 추가
 	   @GetMapping("/addRecruit")
 	   public String addRecruit(HttpSession session, Model model, String companyEmail) {
@@ -126,7 +150,7 @@ public class RecruitController {
 			   @RequestParam(defaultValue = "") String memberName,
 			   @RequestParam(defaultValue = "") String suggestType) {
 		Recruit recruit = recruitService.getRecruitInfo(recruitNo);
-		
+		System.out.println(recruit+"getRecruitInfo");
 		model.addAttribute("recruit", recruit);
 		System.out.println(memberName+"<---getRecruitInfo");
 		System.out.println(suggestType+"<---getRecruitInfo");

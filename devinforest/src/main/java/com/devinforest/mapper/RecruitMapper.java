@@ -11,8 +11,10 @@ import com.devinforest.vo.Recruit;
 
 @Mapper
 public interface RecruitMapper {
+	//채용공고 수정
+	public int updateRecruitByCompany(Recruit recruit);
 	//채용공고 삭제
-	   public int deleteRecruitByCompnay(Recruit recruit);
+	public int deleteRecruitByCompany(Recruit recruit);
 	//채용공고 명성도제한 출력
 	public int selectRecruitReputation(Apply apply);
 	//통합 채용공고리스트 

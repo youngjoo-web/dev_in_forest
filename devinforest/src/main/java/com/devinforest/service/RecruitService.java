@@ -19,6 +19,10 @@ public class RecruitService {
 	private RecruitMapper recruitMapper;
 	@Autowired
 	private CompanyMapper companyMapper;
+	//채용공고 수정
+	public int modifyRecruit(Recruit recruit) {
+		return recruitMapper.updateRecruitByCompany(recruit);
+	}
 	//채용공고 추가
 	public void addRecruit(Recruit recruit) {
 		recruitMapper.insertRecruit(recruit);
@@ -26,7 +30,7 @@ public class RecruitService {
 		return;
 	}
 	 public void removeRecruit(Recruit recruit) {
-	      recruitMapper.deleteRecruitByCompnay(recruit);
+	      recruitMapper.deleteRecruitByCompany(recruit);
 	      return;
 	   }
 	//채용공고 리스트 출력
