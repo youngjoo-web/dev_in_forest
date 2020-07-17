@@ -55,17 +55,8 @@
 			console.log(commentIp);
 			console.log(answerContent);
 			
-			const Editor = toastui.Editor;
-			const { codeSyntaxHighlight } = Editor.plugin;
-			const editor = new Editor({
-				  el: document.querySelector('#editor'),
-				  height: '300px',
-				  initialEditType: 'markdown',
-				  previewStyle: 'tab',
-				  plugins: [codeSyntaxHighlight]
-			});
-			
 			const Viewer = toastui.Editor;
+			const { codeSyntaxHighlight } = Viewer.plugin;
 			const viewer = new Viewer({
 				  el: document.querySelector('#viewer'),
 				  height: 'auto',
@@ -756,13 +747,13 @@
 					<span>회원 홈</span></a></li>
 	
 			<!-- Divider -->
-			<hr th:if="${memberName} != 'Guest'" class="sidebar-divider">
+			<hr th:if="${accountKind} == 'M'" class="sidebar-divider">
 	
 			<!-- Heading -->
-			<div th:if="${memberName} != 'Guest'" class="sidebar-heading">회원</div>
+			<div th:if="${accountKind} == 'M'" class="sidebar-heading">회원</div>
 	
 			<!-- Nav Item - 일반회원 관리 -->
-			<li th:if="${memberName} != 'Guest'" class="nav-item">
+			<li th:if="${accountKind} == 'M'" class="nav-item">
 				<a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapse1" aria-expanded="true"
 				aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i> <span>일반회원</span>
@@ -809,7 +800,7 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Q&A</h6>
 						<a class="collapse-item" th:href="@{/getQuestionList}">질문리스트</a>
-						<a th:if="${memberName} != 'Guest'" class="collapse-item" th:href="@{/addQuestion(memberName=${session.loginMember.memberName})}">질문하기</a>
+						<a th:if="${accountKind} == 'M'" class="collapse-item" th:href="@{/addQuestion(memberName=${memberName})}">질문하기</a>
 					</div>
 				</div></li>
 				<!-- 구분 줄 -->
@@ -932,7 +923,7 @@
 					<div class="container pt-4 px-5 content">
 						<div style="display:flex; justify-content: space-between;">
 							<h2 style="color: black; font-weight: bold;" th:text="${question.questionTitle}"></h2>
-							<div><a class="btn btn-outline-success" th:href="@{/addQuestion(memberName=${question.memberName})}">질문하기</a></div>
+							<div th:if="${accountKind} == 'M'"><a class="btn btn-outline-success" th:href="@{/addQuestion(memberName=${question.memberName})}">질문하기</a></div>
 						</div>
 						<span th:text="조회수 +' '+ ${viewsCount}"></span>
 						<span th:text="작성일 +' '+ ${#strings.substring(question.questionCreateDate, 0, 16)}"></span>
@@ -968,7 +959,7 @@
 						
 						<div id="questionComment">
 							<br>
-							<a th:if="${memberName} != 'Guest'"  id="writeQuestionCommentBtn" href="#">댓글 작성</a>
+							<a th:if="${accountKind} == 'M'"  id="writeQuestionCommentBtn" href="#">댓글 작성</a>
 						</div>
 						<br>
 						<h2 id="answerTotalCount"></h2>
@@ -978,11 +969,12 @@
 						<div id="addedAnswerList"></div>
 						
 						<!-- 답변 작성 -->
-						<div id="editor"></div>
-						<textarea th:if="${memberName} != 'Guest'" rows="5" cols="100" class="form-control" id="addAnswerContent" placeholder="Enter your answer"></textarea>
-						<br>
-						<button th:if="${memberName} != 'Guest'" class="btn btn-outline-success" id="addAnswerBtn">답변작성</button>
-						<div th:if="${memberName} == 'Guest'">답글을 작성하려면 <a th:href="@{/memberLogin}" th:text="로그인"></a>을 하세요.</div>
+						<div th:if="${accountKind} == 'M'">
+							<textarea rows="5" cols="100" class="form-control" id="addAnswerContent" placeholder="Enter your answer"></textarea>
+							<br>
+							<button class="btn btn-outline-success" id="addAnswerBtn">답변작성</button>
+						</div>
+							<div th:if="${accountKind} == 'M'">답변을 작성하려면 <a th:href="@{/memberLogin}" th:text="로그인"></a>을 하세요.</div>
 						
 						<!-- 신고 팝업 -->
 						<form id="reportForm" method="post" th:action="@{javascript:openWindowPop('popup');}"></form>

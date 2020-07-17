@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.IPUtil;
-import com.devinforest.service.AnswerService;
 import com.devinforest.service.QuestionService;
 import com.devinforest.vo.Answer;
+import com.devinforest.vo.LoginAdmin;
 import com.devinforest.vo.LoginMember;
 import com.devinforest.vo.Question;
 import com.devinforest.vo.QuestionHashtag;
@@ -25,8 +25,7 @@ public class QuestionController {
    
 	@Autowired 
 	private QuestionService questionService;
-	@Autowired
-	private AnswerService answerService;
+	
 	/* ---------- 질문 목록 ---------- */
 	@GetMapping("/getQuestionList")
 	public String getQuestionList(Model model, HttpSession session,
@@ -34,18 +33,27 @@ public class QuestionController {
 		@RequestParam(value="searchWord", defaultValue="") String searchWord) {
 		
 		String memberName = "Guest";
+		String accountKind = "G";
 		
 		if(session.getAttribute("loginMember") != null) {
 			memberName = ((LoginMember)session.getAttribute("loginMember")).getMemberName();
+			accountKind = ((LoginMember)session.getAttribute("loginMember")).getAccountKind();
+			System.out.println(memberName + " : " + accountKind + " <---- member Session");
+		} else if(session.getAttribute("loginAdmin") != null) {
+			memberName = ((LoginAdmin)session.getAttribute("loginAdmin")).getAdminName();
+			accountKind = ((LoginAdmin)session.getAttribute("loginAdmin")).getAccountKind();
+			System.out.println(memberName + " : " + accountKind+ " <---- admin Session");
 		}
 		
 		Map<String, Object> questionList = questionService.getQuestionList(currentPage, searchWord);
 		List<QuestionHashtag> questionHashtagList = questionService.getQuestionHashtagList();
 		
 		
-		System.out.println(memberName+"<--memberName");
+		System.out.println(memberName + " : " + accountKind+ " <---- Guest Session");
+		
 		
 		model.addAttribute("memberName", memberName);
+		model.addAttribute("accountKind", accountKind);
 		model.addAttribute("questionList", questionList.get("questionList"));
 		model.addAttribute("questionHashtagList", questionHashtagList);
 		model.addAttribute("lastPage", questionList.get("lastPage"));
@@ -97,14 +105,21 @@ public class QuestionController {
 		System.out.println(question.getQuestionNo() + "<-- questionNo");
 		
 		String memberName = "Guest";
+		String accountKind = "G";
 		
-		if(session.getAttribute("loginMember")!=null) {
-			memberName=((LoginMember)session.getAttribute("loginMember")).getMemberName();
+		if(session.getAttribute("loginMember") != null) {
+			memberName = ((LoginMember)session.getAttribute("loginMember")).getMemberName();
+			accountKind = ((LoginMember)session.getAttribute("loginMember")).getAccountKind();
+			System.out.println(memberName + " : " + accountKind + " <---- member Session");
+		} else if(session.getAttribute("loginAdmin") != null) {
+			memberName = ((LoginAdmin)session.getAttribute("loginAdmin")).getAdminName();
+			accountKind = ((LoginAdmin)session.getAttribute("loginAdmin")).getAccountKind();
+			System.out.println(memberName + " : " + accountKind+ " <---- admin Session");
 		}
 		
 		String getIp = IPUtil.getIPAddress();
 		
-		System.out.println(memberName + " <--- QuestionController memberName");
+		System.out.println(memberName + " : " + accountKind+ " <---- guest Session");
 
 		question.setMemberName(memberName);
 					
@@ -113,9 +128,9 @@ public class QuestionController {
 		// 질문
 		model.addAttribute("ip", getIp);
 		model.addAttribute("memberName", memberName);
+		model.addAttribute("accountKind", accountKind);
 		model.addAttribute("question", map.get("questionOne"));
 		model.addAttribute("viewsCount", map.get("viewsCount"));
-
 		
 		return "question/getQuestionOne";
 	}
@@ -153,7 +168,9 @@ public class QuestionController {
 		
 		System.out.println(questionHashtag.getQuestionNo()+"<---questionNo");
 		System.out.println(questionHashtag + "<--- add Question questionHashtag");
-		questionService.addQuestionHashtag(questionHashtag);
+		if(questionHashtag.getHashtagName() != "") {
+			questionService.addQuestionHashtag(questionHashtag);
+		}
 		System.out.println("질문의 해시태그추가");
 		return "redirect:/getQuestionList";
 	}
@@ -166,6 +183,7 @@ public class QuestionController {
 			return "redirect:/memberLogin";
 		}
 		Question modifyQuestion = questionService.getModifyQuestionOne(question);
+		System.out.println(modifyQuestion + "<----- modifyQuestion");
 		model.addAttribute("modifyQuestion", modifyQuestion);
 		return "question/modifyQuestion";
 	}
