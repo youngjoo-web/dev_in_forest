@@ -16,6 +16,7 @@ import com.devinforest.IPUtil;
 import com.devinforest.service.QuestionService;
 import com.devinforest.vo.Answer;
 import com.devinforest.vo.LoginAdmin;
+import com.devinforest.vo.LoginCompany;
 import com.devinforest.vo.LoginMember;
 import com.devinforest.vo.Question;
 import com.devinforest.vo.QuestionHashtag;
@@ -34,6 +35,7 @@ public class QuestionController {
 		
 		String memberName = "Guest";
 		String accountKind = "G";
+		String companyEmail = "";
 		
 		if(session.getAttribute("loginMember") != null) {
 			memberName = ((LoginMember)session.getAttribute("loginMember")).getMemberName();
@@ -43,6 +45,11 @@ public class QuestionController {
 			memberName = ((LoginAdmin)session.getAttribute("loginAdmin")).getAdminName();
 			accountKind = ((LoginAdmin)session.getAttribute("loginAdmin")).getAccountKind();
 			System.out.println(memberName + " : " + accountKind+ " <---- admin Session");
+		} else if(session.getAttribute("loginCompany") != null) {
+			memberName = ((LoginCompany)session.getAttribute("loginCompany")).getCompanyKorName();
+			accountKind = "C";
+			companyEmail = ((LoginCompany)session.getAttribute("loginCompany")).getCompanyEmail();
+			System.out.println(memberName + " : " + accountKind + " : " + companyEmail +" <---- company Session");
 		}
 		
 		Map<String, Object> questionList = questionService.getQuestionList(currentPage, searchWord);
@@ -54,6 +61,7 @@ public class QuestionController {
 		
 		model.addAttribute("memberName", memberName);
 		model.addAttribute("accountKind", accountKind);
+		model.addAttribute("companyEmail", companyEmail);
 		model.addAttribute("questionList", questionList.get("questionList"));
 		model.addAttribute("questionHashtagList", questionHashtagList);
 		model.addAttribute("lastPage", questionList.get("lastPage"));
