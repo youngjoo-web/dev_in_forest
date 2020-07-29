@@ -1,5 +1,6 @@
 package com.devinforest.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devinforest.IPUtil;
@@ -192,7 +194,9 @@ public class QuestionController {
 	/* ---------- 질문 작성하기 ---------- */
 	// 질문 작성 폼으로 이동
 	@GetMapping("/addQuestion")
-	public String addQuestion(Model model,HttpSession session, LoginMember loginMember) {
+	public String addQuestion(Model model, HttpSession session, LoginMember loginMember) {
+		
+		
 		if(session.getAttribute("loginMember")==null) {
 			return "redirect:/memberLogin";
 		}
@@ -213,7 +217,17 @@ public class QuestionController {
    
 	// 질문 작성 실행
 	@PostMapping("/addQuestion")
-	public String addQuestion(Question question, QuestionHashtag questionHashtag) {
+	public String addQuestion(Question question, QuestionHashtag questionHashtag, 
+			@RequestParam(value="selectHashtag1", required = false) String selectHashtag1, @RequestParam(value="selectHashtag2" ,required = false) String selectHashtag2, @RequestParam(value="selectHashtag3" ,required = false) String selectHashtag3,
+			@RequestParam(value="selectHashtag4" ,required = false) String selectHashtag4, @RequestParam(value="selectHashtag5" ,required = false) String selectHashtag5) {
+		
+		System.out.println("add - post");
+		
+		System.out.println(selectHashtag1+"<--selectHashtag1");
+		System.out.println(selectHashtag2+"<--selectHashtag2");
+		System.out.println(selectHashtag3+"<--selectHashtag3");
+		System.out.println(selectHashtag4+"<--selectHashtag4");
+		System.out.println(selectHashtag5+"<--selectHashtag5");
 		
 		System.out.println(questionHashtag + "<--- add Question questionHashtag");
 		questionService.addQuestion(question);
@@ -223,12 +237,34 @@ public class QuestionController {
 		
 		questionHashtag.setQuestionNo(questionNo);
 		
-		System.out.println(questionHashtag.getQuestionNo()+"<---questionNo");
-		System.out.println(questionHashtag + "<--- add Question questionHashtag");
-		if(questionHashtag.getHashtagName() != "") {
+		if(selectHashtag5 != "") {
+			questionHashtag.setHashtagName(selectHashtag5);
+			System.out.println(questionHashtag.toString() +"<--5");
 			questionService.addQuestionHashtag(questionHashtag);
 		}
+		if(selectHashtag4 != "") {
+			questionHashtag.setHashtagName(selectHashtag4);
+			System.out.println(questionHashtag.toString() +"<--4");
+			questionService.addQuestionHashtag(questionHashtag);
+		}
+		if(selectHashtag3 != "") {
+			questionHashtag.setHashtagName(selectHashtag3);
+			System.out.println(questionHashtag.toString() +"<--3");
+			questionService.addQuestionHashtag(questionHashtag);
+		}
+		if(selectHashtag2 != "") {
+			questionHashtag.setHashtagName(selectHashtag2);
+			System.out.println(questionHashtag.toString() +"<--2");
+			questionService.addQuestionHashtag(questionHashtag);
+		}
+		if(selectHashtag1 != "") {
+			questionHashtag.setHashtagName(selectHashtag1);
+			System.out.println(questionHashtag.toString() +"<--1");
+			questionService.addQuestionHashtag(questionHashtag);
+		}
+		
 		System.out.println("질문의 해시태그추가");
+		
 		return "redirect:/getQuestionList";
 	}
    

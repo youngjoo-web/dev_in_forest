@@ -24,6 +24,7 @@
 			member_name as memberName
 		FROM
 			dev_question_hashtag
+		ORDER BY hashtag_name ASC
 	</select>
 	
 	<!-- 질문의 해시태그 생성 -->
@@ -69,7 +70,7 @@
 			hashtag_date hashtagDate
 		FROM dev_hashtag
 		WHERE hashtag_name LIKE CONCAT('%', #{searchWord}, '%')
-		LIMIT #{beginRow}, #{rowPerPage} 
+		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
 	<!-- 해시태그 리스트 출력(페이징 없음) -->

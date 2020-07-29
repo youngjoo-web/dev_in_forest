@@ -386,7 +386,7 @@
 							<a th:href="@{/getQuestionOne(questionNo=${ql.questionNo})}" 
 							   th:text="${ql.questionTitle}"></a>
 							 <!-- 해시태그 넣기 -->
-							  <br>
+							 <br>
 							 <span th:each="qh : ${questionHashtagList}">
 							 	<span th:if="${qh.questionNo} == ${ql.questionNo}">
 							 		<span><a type="button" class="tagBtn btn btn-outline-primary" th:href="@{getQuestionListByHashtag(hashtagName=${qh.hashtagName})}"  th:text="${qh.hashtagName}"></a></span>

@@ -1,14 +1,17 @@
 package com.devinforest.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devinforest.mapper.HashtagMapper;
-import com.devinforest.vo.Hashtag;
+import com.devinforest.vo.QuestionHashtag;
 
 @RestController
 public class HashtagRestController {
@@ -30,5 +33,10 @@ public class HashtagRestController {
 			hashtagNameText = "사용할 수 있는 해시태그 입니다.";
 		}
 		return hashtagNameText;
+	}
+	@GetMapping("/getAddQuestionHastagList")
+	public List<QuestionHashtag> getAddQuestionHastagList() {
+		List<QuestionHashtag> hashtagList = hashtagMapper.selectQuestionHashtagList();
+		return hashtagList;
 	}
 }

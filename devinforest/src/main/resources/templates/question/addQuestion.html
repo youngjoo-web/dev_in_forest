@@ -50,19 +50,91 @@
 				});
 				
 				
+				$('#plusTagBtn').click(function(){
+					let hashtagOption= $('#hashtagName option:selected').val();
+					console.log(hashtagOption + "<----- hashtagOption");
+					
+					if(hashtagOption == ""){
+						alert("해시태그를 선택하세요.");
+					}
+					
+					if($('#selectHashtag1').text().length == 0) {
+						$('#selectHashtag1').text(hashtagOption);
+						selectHashtag1 = $('#selectHashtag1').text();
+						
+					}
+					else if($('#selectHashtag2').text().length == 0) {
+						if($('#selectHashtag1').text().length > 1 && hashtagOption != $('#selectHashtag1').text()) {				
+								$('#selectHashtag2').text(hashtagOption);
+								selectHashtag2 = $('#selectHashtag2').text();
+						} else{
+							alert("해시태그 중복입니다.");
+						}
+					}
+					else if($('#selectHashtag3').text().length == 0) {
+						if($('#selectHashtag2').text().length > 1 && hashtagOption != $('#selectHashtag2').text() && hashtagOption != $('#selectHashtag1').text() ) {
+							$('#selectHashtag3').text(hashtagOption);
+							selectHashtag3 = $('#selectHashtag3').text();
+						} else{
+							alert("해시태그 중복입니다.");
+						} 
+					}
+					else if($('#selectHashtag4').text().length == 0) {
+						if($('#selectHashtag3').text().length > 1  && hashtagOption != $('#selectHashtag3').text() && hashtagOption != $('#selectHashtag2').text() && hashtagOption != $('#selectHashtag1').text()) {
+							$('#selectHashtag4').text(hashtagOption);
+							selectHashtag4 = $('#selectHashtag4').text();
+						} else{
+							alert("해시태그 중복입니다.");
+						} 
+					}
+					else if($('#selectHashtag5').text().length == 0) {
+						if($('#selectHashtag4').text().length > 1  && hashtagOption != $('#selectHashtag4').text() && hashtagOption != $('#selectHashtag3').text() && hashtagOption != $('#selectHashtag2').text() && hashtagOption != $('#selectHashtag1').text()) {
+							$('#selectHashtag5').text(hashtagOption);
+							selectHashtag5 = $('#selectHashtag5').text();
+						} else{
+							alert("해시태그 중복입니다.");
+						} 
+					}
+					else if($('#selectHashtag5').text().length > 0 ) {
+						alert("해쉬태그를 더이상 추가할 수 없습니다.");
+					}
+
+				});
+				
 				$('#addQuestionBtn').click(function(){
 					let memberReputationInit = 0;
 					let memberReputation = $('#memberReputation').val();
 					let questionTitle = $('#questionTitle').val();
 					let questionContent = editor.getMarkdown();
 					let hashtagName = $('#hashtagName').val();
+				
+					if($('#selectHashtag5').text().length == 0){
+						selectHashtag5 = null;
+					}
+					if($('#selectHashtag4').text().length == 0){
+						selectHashtag4 = null;
+					}
+					if($('#selectHashtag3').text().length == 0){
+						selectHashtag3 = null;
+					}
+					if($('#selectHashtag2').text().length == 0){
+						selectHashtag2 = null;
+					}
+					if($('#selectHashtag1').text().length == 0){
+						selectHashtag1 = null;
+					}
 					
-					console.log(hashtagName);
-					console.log(questionTitle);
-					console.log(questionContent);
-					console.log(memberName)
-					console.log(questionIp)
-					console.log(memberReputation)
+					
+					console.log(questionTitle+"<--title");
+					console.log(questionContent+"<--content");
+					console.log(memberName+"<--name");
+					console.log(questionIp+"<--ip");
+					console.log(memberReputation+"<--reputation");
+					console.log(selectHashtag1);
+					console.log(selectHashtag2);
+					console.log(selectHashtag3);
+					console.log(selectHashtag4);
+					console.log(selectHashtag5);
 					if($('#questionTitle').val().length < 10) {
 						$('#questionTitle').val("제목을 10자 이상 입력하세요.");
 						$('#questionTitle').focus();
@@ -79,12 +151,14 @@
 						$('#reputationWarning').css("color", "red");
 						$('#reputationWarning').text("내공은 최소 50부터  최대 999까지 걸 수 있습니다.");
 					} else {
+						console.log("전송직전");
 						$.ajax({
 							url: '/addQuestion',
 							type: 'POST',
-							async: false,
-							data: {'memberName' : memberName, 'questionTitle' : questionTitle, 'questionContent' : questionContent, 'questionReputation' : memberReputation, 'questionIp' : questionIp, 'hashtagName' : hashtagName},
+							data: {'memberName' : memberName, 'questionTitle' : questionTitle, 'questionContent' : questionContent, 'questionReputation' : memberReputation, 'questionIp' : questionIp,
+									'selectHashtag1' : selectHashtag1 ,'selectHashtag2' : selectHashtag2, 'selectHashtag3' : selectHashtag3, 'selectHashtag4' : selectHashtag4, 'selectHashtag5' : selectHashtag5},
 							success: function(data){
+								console.log("데이터전송성공");
 								let memberReputation = 10;
 								$.ajax({
 									url: '/modifyMemberReputation',
@@ -267,7 +341,7 @@
 								aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
 							</a> <!-- Dropdown - Messages -->
 								<div
-									class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+									class="dropdown -menu dropdown-menu-right p-3 shadow animated--grow-in"
 									aria-labelledby="searchDropdown">
 									<form class="form-inline mr-auto w-100 navbar-search">
 										<div class="input-group">
@@ -332,12 +406,25 @@
 								<div id="reputationWarning"></div>
 							</div>
 							<br>
-							<div>
+							<div id="hashtagSelect">
 								해시태그
-							<select class="form-control" id="hashtagName" name="hashtagName">
-								<option value="">해시태그 선택</option>
-								<option th:each="hl : ${hashtagList}" th:text="${hl.hashtagName}" th:value="${hl.hashtagName}"></option>
-							</select>
+								<select class="form-control" id="hashtagName" name="hashtagName">
+									<option value="">해시태그 선택</option>
+									<option th:each="hl : ${hashtagList}" th:text="${hl.hashtagName}" th:value="${hl.hashtagName}"></option>
+								</select>
+							</div>
+							<br>
+							<div>
+								<span id="selectHashtag1"></span>
+								<span id="selectHashtag2"></span>
+								<span id="selectHashtag3"></span>
+								<span id="selectHashtag4"></span>
+								<span id="selectHashtag5"></span>
+							</div>
+							<br>
+							<div>
+								<span><button id="plusTagBtn" class="btn btn-primary btn-sm">추가</button></span>
+								<span><button id="minusTagBtn" class="btn btn-danger btn-sm">삭제</button></span>
 							</div>
 							
 								<br>
