@@ -32,6 +32,20 @@
 		#hashtagName{
 		width:150px;
 		}
+		.tagBtn{
+			background-color: #e1ecf4;
+			color: #648ba7;
+			border-color: transparent;
+			padding:0;
+			width: 50px; 
+			height: 25px;
+			border: 0;
+			}
+			.tagBtn:hover{
+			background-color: #96bfe4;
+			color: #3b7aa0;
+			border-color: transparent;
+			}
 		</style>
 		<script>
 			$(document).ready(function(){
@@ -50,6 +64,7 @@
 				});
 				
 				
+				
 				$('#plusTagBtn').click(function(){
 					let hashtagOption= $('#hashtagName option:selected').val();
 					console.log(hashtagOption + "<----- hashtagOption");
@@ -61,12 +76,15 @@
 					if($('#selectHashtag1').text().length == 0) {
 						$('#selectHashtag1').text(hashtagOption);
 						selectHashtag1 = $('#selectHashtag1').text();
+						$('#selectHashtag1').addClass('tagBtn btn btn-outline-primary');
+						
 						
 					}
 					else if($('#selectHashtag2').text().length == 0) {
 						if($('#selectHashtag1').text().length > 1 && hashtagOption != $('#selectHashtag1').text()) {				
 								$('#selectHashtag2').text(hashtagOption);
 								selectHashtag2 = $('#selectHashtag2').text();
+								$('#selectHashtag2').addClass('tagBtn btn btn-outline-primary');
 						} else{
 							alert("해시태그 중복입니다.");
 						}
@@ -75,6 +93,7 @@
 						if($('#selectHashtag2').text().length > 1 && hashtagOption != $('#selectHashtag2').text() && hashtagOption != $('#selectHashtag1').text() ) {
 							$('#selectHashtag3').text(hashtagOption);
 							selectHashtag3 = $('#selectHashtag3').text();
+							$('#selectHashtag3').addClass('tagBtn btn btn-outline-primary');
 						} else{
 							alert("해시태그 중복입니다.");
 						} 
@@ -83,6 +102,7 @@
 						if($('#selectHashtag3').text().length > 1  && hashtagOption != $('#selectHashtag3').text() && hashtagOption != $('#selectHashtag2').text() && hashtagOption != $('#selectHashtag1').text()) {
 							$('#selectHashtag4').text(hashtagOption);
 							selectHashtag4 = $('#selectHashtag4').text();
+							$('#selectHashtag4').addClass('tagBtn btn btn-outline-primary');
 						} else{
 							alert("해시태그 중복입니다.");
 						} 
@@ -91,6 +111,7 @@
 						if($('#selectHashtag4').text().length > 1  && hashtagOption != $('#selectHashtag4').text() && hashtagOption != $('#selectHashtag3').text() && hashtagOption != $('#selectHashtag2').text() && hashtagOption != $('#selectHashtag1').text()) {
 							$('#selectHashtag5').text(hashtagOption);
 							selectHashtag5 = $('#selectHashtag5').text();
+							$('#selectHashtag5').addClass('tagBtn btn btn-outline-primary');
 						} else{
 							alert("해시태그 중복입니다.");
 						} 
@@ -99,6 +120,38 @@
 						alert("해쉬태그를 더이상 추가할 수 없습니다.");
 					}
 
+				});
+				
+				$('#minusTagBtn').click(function(){
+					if($('#selectHashtag5').text().length != 0){
+						$('#selectHashtag5').empty();
+						$('#selectHashtag5').removeClass('tagBtn btn btn-outline-primary');
+						console.log($('#selectHashtag5').text());
+					}
+					else if($('#selectHashtag4').text().length != 0) {
+						$('#selectHashtag4').empty();
+						$('#selectHashtag4').removeClass('tagBtn btn btn-outline-primary');
+						console.log($('#selectHashtag4').text());
+					}
+					else if($('#selectHashtag3').text().length != 0) {
+						$('#selectHashtag3').empty();
+						$('#selectHashtag3').removeClass('tagBtn btn btn-outline-primary');
+						console.log($('#selectHashtag3').text());
+					}
+					else if($('#selectHashtag2').text().length != 0) {
+						$('#selectHashtag2').empty();
+						$('#selectHashtag2').removeClass('tagBtn btn btn-outline-primary');
+						console.log($('#selectHashtag2').text());
+					}
+					else if($('#selectHashtag1').text().length != 0) {
+						$('#selectHashtag1').empty();
+						$('#selectHashtag1').removeClass('tagBtn btn btn-outline-primary');
+						console.log($('#selectHashtag1').text());
+					}
+					else{
+						alert('등록된 해시태그가 없습니다.');
+					}
+					
 				});
 				
 				$('#addQuestionBtn').click(function(){
@@ -415,11 +468,12 @@
 							</div>
 							<br>
 							<div>
-								<span id="selectHashtag1"></span>
-								<span id="selectHashtag2"></span>
-								<span id="selectHashtag3"></span>
-								<span id="selectHashtag4"></span>
-								<span id="selectHashtag5"></span>
+							<a href="#" id="selectHashtag1" title="selectHashtag1" data-toggle="selectHashtag1" data-trigger="hover" data-content="content"></a>
+								
+								<span type="button" id="selectHashtag2" disabled></span>
+								<span type="button" id="selectHashtag3" disabled></span>
+								<span type="button" id="selectHashtag4" disabled></span>
+								<span type="button" id="selectHashtag5" disabled></span>
 							</div>
 							<br>
 							<div>
@@ -481,6 +535,8 @@
 		<script th:src="@{/js/sb-admin-2.min.js}"></script>
 	</body>
 	<script>
-		
+	$(document).ready(function(){
+		  $('[data-toggle="selectHashtag1"]').popover();   
+		});
 	</script>
 </html>
